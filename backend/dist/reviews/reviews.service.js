@@ -13,22 +13,29 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewsService = void 0;
+const user_model_1 = require("./../user/user.model");
 const reviews_model_1 = require("./reviews.model");
 const common_1 = require("@nestjs/common");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
+const mongoose_1 = require("mongoose");
 let ReviewsService = class ReviewsService {
-    constructor(ReviewsModel) {
+    constructor(ReviewsModel, UserModel) {
         this.ReviewsModel = ReviewsModel;
+        this.UserModel = UserModel;
     }
     async create(id, dto) {
-        const reveiw = this.ReviewsModel.create({
+        const reveiw = await this.ReviewsModel.create({
             userId: id,
             name: dto.name,
             productId: dto.productId,
             text: dto.text,
         });
-        if (reveiw)
+        if (reveiw) {
+            await this.UserModel.updateOne({ _id: id }, {
+                $push: { reviews: reveiw._id }
+            });
             return { message: 'Ваш отзыв принят' };
+        }
         throw new common_1.NotFoundException('Ваш отзыв не принят,попробуйте ещё раз');
     }
     async getUserReviews(id) {
@@ -55,17 +62,22 @@ let ReviewsService = class ReviewsService {
             return { message: 'отзыв обновлён' };
         throw new common_1.NotFoundException('отзыв не обновлён');
     }
-    async deleteReview(id) {
+    async deleteReview(userId, id) {
         const deletedReview = await this.ReviewsModel.findByIdAndDelete(id);
-        if (deletedReview)
+        if (deletedReview) {
+            await this.UserModel.updateOne({ _id: userId }, {
+                $pull: { reviews: new mongoose_1.Types.ObjectId(id) }
+            });
             return { message: 'отзыв удалён' };
+        }
         throw new common_1.NotFoundException('отзыв не удален');
     }
 };
 ReviewsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_typegoose_1.InjectModel)(reviews_model_1.ReviewsModel)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, nestjs_typegoose_1.InjectModel)(user_model_1.UserModel)),
+    __metadata("design:paramtypes", [Object, Object])
 ], ReviewsService);
 exports.ReviewsService = ReviewsService;
 //# sourceMappingURL=reviews.service.js.map

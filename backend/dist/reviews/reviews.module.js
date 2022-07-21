@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewsModule = void 0;
+const user_model_1 = require("./../user/user.model");
 const reviews_model_1 = require("./reviews.model");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
 const common_1 = require("@nestjs/common");
@@ -22,6 +23,14 @@ ReviewsModule = __decorate([
                     typegooseClass: reviews_model_1.ReviewsModel,
                     schemaOptions: {
                         collection: 'Reviews',
+                    },
+                },
+            ]),
+            nestjs_typegoose_1.TypegooseModule.forFeature([
+                {
+                    typegooseClass: user_model_1.UserModel,
+                    schemaOptions: {
+                        collection: 'User',
                     },
                 },
             ]),

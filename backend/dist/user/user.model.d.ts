@@ -1,3 +1,4 @@
+import { ReviewsModel } from './../reviews/reviews.model';
 import { CartModel } from './../cart/cart.model';
 import { ProductModel } from 'src/product/product.model';
 import { Ref } from '@typegoose/typegoose';
@@ -22,6 +23,7 @@ export declare class UserModel extends TimeStamps {
     email: string;
     password: string;
     cart: Ref<CartModel>[];
+    reviews: Ref<ReviewsModel>[];
     isAdmin?: boolean;
     favorites?: Ref<ProductModel>[];
     viewed?: Ref<ProductModel>[];

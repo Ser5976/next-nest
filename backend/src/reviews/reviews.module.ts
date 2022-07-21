@@ -1,3 +1,4 @@
+import { UserModel } from './../user/user.model';
 import { ReviewsModel } from './reviews.model';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { Module } from '@nestjs/common';
@@ -11,6 +12,14 @@ import { ReviewsService } from './reviews.service';
         typegooseClass: ReviewsModel,
         schemaOptions: {
           collection: 'Reviews',
+        },
+      },
+    ]),
+    TypegooseModule.forFeature([
+      {
+        typegooseClass: UserModel,
+        schemaOptions: {
+          collection: 'User',
         },
       },
     ]),

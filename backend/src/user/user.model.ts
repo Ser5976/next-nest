@@ -1,3 +1,4 @@
+import { ReviewsModel } from './../reviews/reviews.model';
 import { CartModel } from './../cart/cart.model';
 import { ProductModel } from 'src/product/product.model';
 import { prop, Ref } from '@typegoose/typegoose';
@@ -33,8 +34,12 @@ export class UserModel extends TimeStamps {
 
   @prop()
   password: string;
+
   @prop({ default: [], ref: () => CartModel })
   cart: Ref<CartModel>[];
+
+  @prop({ default: [], ref: () => ReviewsModel })
+  reviews: Ref<ReviewsModel>[];
 
   @prop({ default: false })
   isAdmin?: boolean;

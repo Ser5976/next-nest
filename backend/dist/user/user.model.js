@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModel = void 0;
+const reviews_model_1 = require("./../reviews/reviews.model");
 const cart_model_1 = require("./../cart/cart.model");
 const product_model_1 = require("../product/product.model");
 const typegoose_1 = require("@typegoose/typegoose");
@@ -66,6 +67,10 @@ __decorate([
     (0, typegoose_1.prop)({ default: [], ref: () => cart_model_1.CartModel }),
     __metadata("design:type", Array)
 ], UserModel.prototype, "cart", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ default: [], ref: () => reviews_model_1.ReviewsModel }),
+    __metadata("design:type", Array)
+], UserModel.prototype, "reviews", void 0);
 __decorate([
     (0, typegoose_1.prop)({ default: false }),
     __metadata("design:type", Boolean)

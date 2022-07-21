@@ -15,8 +15,7 @@ import {
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { User } from 'src/user/decorators/user.decorator';
-import { Types } from 'mongoose';
-import { async } from 'rxjs';
+
 
 @Controller('reviews')
 export class ReviewsController {
@@ -25,18 +24,18 @@ export class ReviewsController {
   @UsePipes(new ValidationPipe())
   @Post()
   @Auth()
-  async create(@User('_id') _id: Types.ObjectId, @Body() dto: ReviewsDto) {
+  async create(@User('_id',IdValidationPipe) _id: string, @Body() dto: ReviewsDto) {
     return this.ReviewsService.create(_id, dto);
   }
   // получение отзыва пользователя
   @Get('user-reviews')
   @Auth()
-  async getReviews(@User('_id') _id: string) {
+  async getReviews(@User('_id',IdValidationPipe) _id: string) {
     return this.ReviewsService.getUserReviews(_id);
   }
   //получение отзывов продукта
   @Get(':productId')
-  async getProductReviews(@Param('productId') productId: string) {
+  async getProductReviews(@Param('productId',IdValidationPipe) productId: string) {
     return this.ReviewsService.getProductReviews(productId);
   }
   //редактирование отзыва
@@ -47,13 +46,13 @@ export class ReviewsController {
     @Param('id', IdValidationPipe) id: string,
     @Body() dto: UpdateReviewDto,
   ) {
-    console.log('id:', id);
+   // console.log('id:', id);
     return this.ReviewsService.updateReview(id, dto);
   }
   //удаление отзыва
   @Delete(':id')
   @Auth()
-  async deleteRrview(@Param('id', IdValidationPipe) id: string) {
-    return this.ReviewsService.deleteReview(id);
+  async deleteRrview(@User('_id',IdValidationPipe) _id:string ,@Param('id', IdValidationPipe) id: string) {
+    return this.ReviewsService.deleteReview(_id,id);
   }
 }

@@ -20,7 +20,6 @@ const reviews_service_1 = require("./reviews.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const user_decorator_1 = require("../user/decorators/user.decorator");
-const mongoose_1 = require("mongoose");
 let ReviewsController = class ReviewsController {
     constructor(ReviewsService) {
         this.ReviewsService = ReviewsService;
@@ -35,34 +34,33 @@ let ReviewsController = class ReviewsController {
         return this.ReviewsService.getProductReviews(productId);
     }
     async updateReview(id, dto) {
-        console.log('id:', id);
         return this.ReviewsService.updateReview(id, dto);
     }
-    async deleteRrview(id) {
-        return this.ReviewsService.deleteReview(id);
+    async deleteRrview(_id, id) {
+        return this.ReviewsService.deleteReview(_id, id);
     }
 };
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Post)(),
     (0, auth_decorators_1.Auth)(),
-    __param(0, (0, user_decorator_1.User)('_id')),
+    __param(0, (0, user_decorator_1.User)('_id', id_validation_pipe_1.IdValidationPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [mongoose_1.Types.ObjectId, reviews_dto_1.ReviewsDto]),
+    __metadata("design:paramtypes", [String, reviews_dto_1.ReviewsDto]),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('user-reviews'),
     (0, auth_decorators_1.Auth)(),
-    __param(0, (0, user_decorator_1.User)('_id')),
+    __param(0, (0, user_decorator_1.User)('_id', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "getReviews", null);
 __decorate([
     (0, common_1.Get)(':productId'),
-    __param(0, (0, common_1.Param)('productId')),
+    __param(0, (0, common_1.Param)('productId', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
@@ -80,9 +78,10 @@ __decorate([
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)(),
-    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
+    __param(0, (0, user_decorator_1.User)('_id', id_validation_pipe_1.IdValidationPipe)),
+    __param(1, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "deleteRrview", null);
 ReviewsController = __decorate([

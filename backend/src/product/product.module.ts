@@ -1,3 +1,4 @@
+import { FileService } from './../file/file.service';
 import { ProductModel } from './product.model';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { Module } from '@nestjs/common';

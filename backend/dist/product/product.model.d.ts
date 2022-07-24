@@ -10,5 +10,6 @@ export declare class ProductModel extends TimeStamps {
     rating: Rating;
     price: number;
     oldPrice?: number;
+    files: string[];
 }
 export {};

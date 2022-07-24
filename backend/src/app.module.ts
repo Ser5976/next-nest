@@ -11,6 +11,11 @@ import { ViewedModule } from './viewed/viewed.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { RatingModule } from './rating/rating.module';
 import { CartModule } from './cart/cart.module';
+import { BrandModule } from './brand/brand.module';
+import { ProductTypeModule } from './product-type/product-type.module';
+import { CategoryModule } from './category/category.module';
+import { FileModule } from './file/file.module';
+
 
 @Module({
   imports: [
@@ -29,6 +34,10 @@ import { CartModule } from './cart/cart.module';
     ReviewsModule,
     RatingModule,
     CartModule,
+    BrandModule,
+    ProductTypeModule,
+    CategoryModule,
+    FileModule,
   ],
 })
 export class AppModule {}

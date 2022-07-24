@@ -1,3 +1,4 @@
+import { FileService } from './../file/file.service';
 import { ProductModel } from './product.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { Injectable } from '@nestjs/common';
@@ -8,8 +9,11 @@ export class ProductService {
   constructor(
     @InjectModel(ProductModel)
     private readonly ProductModel: ModelType<ProductModel>,
+
   ) {}
   async create(dto: { name: string }) {
-    return this.ProductModel.create(dto);
+return this.ProductModel.create(dto);
+
+  
   }
 }

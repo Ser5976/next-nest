@@ -19,4 +19,6 @@ export class ProductModel extends TimeStamps {
   price: number;
   @prop()
   oldPrice?: number;
+  @prop([String])
+  files:string[]
 }

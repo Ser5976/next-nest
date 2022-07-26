@@ -7,15 +7,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductTypeModule = void 0;
+const product_type_model_1 = require("./product-type.model");
 const common_1 = require("@nestjs/common");
+const nestjs_typegoose_1 = require("nestjs-typegoose");
 const product_type_controller_1 = require("./product-type.controller");
 const product_type_service_1 = require("./product-type.service");
 let ProductTypeModule = class ProductTypeModule {
 };
 ProductTypeModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            nestjs_typegoose_1.TypegooseModule.forFeature([
+                {
+                    typegooseClass: product_type_model_1.ProductTypeModel,
+                    schemaOptions: {
+                        collection: 'ProductType',
+                    },
+                },
+            ]),
+        ],
         controllers: [product_type_controller_1.ProductTypeController],
-        providers: [product_type_service_1.ProductTypeService]
+        providers: [product_type_service_1.ProductTypeService],
     })
 ], ProductTypeModule);
 exports.ProductTypeModule = ProductTypeModule;

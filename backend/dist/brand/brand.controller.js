@@ -37,6 +37,7 @@ let BrandController = class BrandController {
     }
 };
 __decorate([
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Post)(),
     (0, auth_decorators_1.Auth)('admin'),
     __param(0, (0, common_1.Body)()),

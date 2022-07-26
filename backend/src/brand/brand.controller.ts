@@ -11,6 +11,8 @@ import {
   Post,
   Put,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { BrandDto } from './dto/brand.dto';
 
@@ -18,6 +20,7 @@ import { BrandDto } from './dto/brand.dto';
 export class BrandController {
   constructor(private readonly BrandService: BrandService) {}
   //создание брэнда
+  @UsePipes(new ValidationPipe()) //валидация dto
   @Post()
   @Auth('admin')
   async createBrand(@Body() dto: BrandDto) {

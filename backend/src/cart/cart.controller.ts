@@ -1,7 +1,16 @@
 import { CartDto } from './dto/cart.dto';
 import { IdValidationPipe } from './../pipes/id.validation.pipe';
 import { CartService } from './cart.service';
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Put,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { User } from 'src/user/decorators/user.decorator';
 
@@ -9,6 +18,7 @@ import { User } from 'src/user/decorators/user.decorator';
 export class CartController {
   constructor(private readonly CartService: CartService) {}
   //добавление товара в корзину
+  @UsePipes(new ValidationPipe()) //валидация dto
   @Put()
   @Auth()
   async addCart(

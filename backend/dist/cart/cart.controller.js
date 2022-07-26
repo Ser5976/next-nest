@@ -37,6 +37,7 @@ let CartController = class CartController {
     }
 };
 __decorate([
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Put)(),
     (0, auth_decorators_1.Auth)(),
     __param(0, (0, user_decorator_1.User)('_id', id_validation_pipe_1.IdValidationPipe)),

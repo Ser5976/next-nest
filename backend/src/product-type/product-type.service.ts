@@ -1,3 +1,5 @@
+import { CategoryProductModel } from './../category-product/category-product.model';
+import { ProductModel } from 'src/product/product.model';
 import { ProductTypeDto } from './dto/product-type.dto';
 import { ProductTypeModel } from './product-type.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -9,6 +11,10 @@ export class ProductTypeService {
   constructor(
     @InjectModel(ProductTypeModel)
     private readonly ProductTypeModel: ModelType<ProductTypeModel>,
+    @InjectModel(ProductModel)
+    private readonly ProductModel: ModelType<ProductModel>,
+    @InjectModel(CategoryProductModel)
+    private readonly CategoryProductModel: ModelType<CategoryProductModel>,
   ) {}
   //создание типа товара
   async createProductType(dto: ProductTypeDto) {
@@ -24,9 +30,18 @@ export class ProductTypeService {
     if (!productsTypes) throw new NotFoundException('Типы не получены');
     return productsTypes;
   }
+
   // удаление типа товара
   async removeProductType(id: string) {
-    //написать,когда будут продукты: делать проверку о наличии товаров с таким типом и только потом удальть,удалить тип из категории
+    //делаем запрос на товары, если товар с таким типом существует, то не удаляем
+    const product = await this.ProductModel.findOne({ typeId: id });
+    if (product) return { message: 'Тип не удалён,использутся в товарах' };
+    // удаляем тип из категории
+    const category = await this.CategoryProductModel.updateMany(
+      {},
+      { $pull: { productType: id } },
+    );
+    //удаление типа
     const removeProductType = await this.ProductTypeModel.findByIdAndDelete(
       id,
     ).exec();

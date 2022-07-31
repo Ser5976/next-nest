@@ -13,12 +13,16 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductTypeService = void 0;
+const category_product_model_1 = require("./../category-product/category-product.model");
+const product_model_1 = require("../product/product.model");
 const product_type_model_1 = require("./product-type.model");
 const common_1 = require("@nestjs/common");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
 let ProductTypeService = class ProductTypeService {
-    constructor(ProductTypeModel) {
+    constructor(ProductTypeModel, ProductModel, CategoryProductModel) {
         this.ProductTypeModel = ProductTypeModel;
+        this.ProductModel = ProductModel;
+        this.CategoryProductModel = CategoryProductModel;
     }
     async createProductType(dto) {
         const productType = await this.ProductTypeModel.create(dto);
@@ -35,6 +39,10 @@ let ProductTypeService = class ProductTypeService {
         return productsTypes;
     }
     async removeProductType(id) {
+        const product = await this.ProductModel.findOne({ typeId: id });
+        if (product)
+            return { message: 'Тип не удалён,использутся в товарах' };
+        const category = await this.CategoryProductModel.updateMany({}, { $pull: { productType: id } });
         const removeProductType = await this.ProductTypeModel.findByIdAndDelete(id).exec();
         if (!removeProductType)
             throw new common_1.NotFoundException('Тип продукта не удалён');
@@ -44,7 +52,9 @@ let ProductTypeService = class ProductTypeService {
 ProductTypeService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_typegoose_1.InjectModel)(product_type_model_1.ProductTypeModel)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, nestjs_typegoose_1.InjectModel)(product_model_1.ProductModel)),
+    __param(2, (0, nestjs_typegoose_1.InjectModel)(category_product_model_1.CategoryProductModel)),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], ProductTypeService);
 exports.ProductTypeService = ProductTypeService;
 //# sourceMappingURL=product-type.service.js.map

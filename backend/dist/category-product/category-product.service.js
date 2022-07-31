@@ -13,12 +13,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryProductService = void 0;
+const product_model_1 = require("../product/product.model");
 const category_product_model_1 = require("./category-product.model");
 const common_1 = require("@nestjs/common");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
 let CategoryProductService = class CategoryProductService {
-    constructor(CategoryProductModel) {
+    constructor(CategoryProductModel, ProductModel) {
         this.CategoryProductModel = CategoryProductModel;
+        this.ProductModel = ProductModel;
     }
     async createCategoryProduct(dto) {
         const categoryProduct = await this.CategoryProductModel.create(dto);
@@ -34,7 +36,10 @@ let CategoryProductService = class CategoryProductService {
             throw new common_1.NotFoundException('Категории не получены');
         return categoryProduct;
     }
-    async removeProductType(id) {
+    async removeCategoryProduct(id) {
+        const product = await this.ProductModel.findOne({ categoryId: id });
+        if (product)
+            return { message: 'Категория не удалёна,использутся в товарах' };
         const removeCategoryProduct = await this.CategoryProductModel.findByIdAndDelete(id).exec();
         if (!removeCategoryProduct)
             throw new common_1.NotFoundException('Категория продукта не удалёна');
@@ -44,7 +49,8 @@ let CategoryProductService = class CategoryProductService {
 CategoryProductService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_typegoose_1.InjectModel)(category_product_model_1.CategoryProductModel)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, nestjs_typegoose_1.InjectModel)(product_model_1.ProductModel)),
+    __metadata("design:paramtypes", [Object, Object])
 ], CategoryProductService);
 exports.CategoryProductService = CategoryProductService;
 //# sourceMappingURL=category-product.service.js.map

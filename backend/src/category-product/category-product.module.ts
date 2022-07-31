@@ -1,3 +1,4 @@
+import { ProductModel } from 'src/product/product.model';
 import { BrandModel } from './../brand/brand.model';
 import { ProductTypeModel } from './../product-type/product-type.model';
 import { CategoryProductModel } from './category-product.model';
@@ -13,6 +14,14 @@ import { CategoryProductService } from './category-product.service';
         typegooseClass: CategoryProductModel,
         schemaOptions: {
           collection: 'CatecoryProduct',
+        },
+      },
+    ]),
+    TypegooseModule.forFeature([
+      {
+        typegooseClass: ProductModel,
+        schemaOptions: {
+          collection: 'Product',
         },
       },
     ]),

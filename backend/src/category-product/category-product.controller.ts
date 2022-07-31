@@ -3,7 +3,9 @@ import { CategoryProductService } from './category-product.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -27,5 +29,11 @@ export class CategoryProductController {
   @Auth()
   async getCategoryProduct() {
     return this.CategoryProductService.getCategoryProduct();
+  }
+  // удаление категории товара
+  @Delete(':id')
+  @Auth('admin')
+  async removeCategoryProduct(@Param('id') id: string) {
+    return this.CategoryProductService.removeCategoryProduct(id);
   }
 }

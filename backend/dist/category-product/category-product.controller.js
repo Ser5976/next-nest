@@ -27,6 +27,9 @@ let CategoryProductController = class CategoryProductController {
     async getCategoryProduct() {
         return this.CategoryProductService.getCategoryProduct();
     }
+    async removeCategoryProduct(id) {
+        return this.CategoryProductService.removeCategoryProduct(id);
+    }
 };
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
@@ -44,6 +47,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CategoryProductController.prototype, "getCategoryProduct", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, auth_decorators_1.Auth)('admin'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], CategoryProductController.prototype, "removeCategoryProduct", null);
 CategoryProductController = __decorate([
     (0, common_1.Controller)('category-product'),
     __metadata("design:paramtypes", [category_product_service_1.CategoryProductService])

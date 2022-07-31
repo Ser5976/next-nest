@@ -38,7 +38,7 @@ let ProductTypeService = class ProductTypeService {
         const removeProductType = await this.ProductTypeModel.findByIdAndDelete(id).exec();
         if (!removeProductType)
             throw new common_1.NotFoundException('Тип продукта не удалён');
-        return removeProductType;
+        return { message: 'Тип продукта удален' };
     }
 };
 ProductTypeService = __decorate([

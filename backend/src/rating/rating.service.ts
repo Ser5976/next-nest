@@ -4,7 +4,6 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 import { RatingModel } from './rating.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class RatingService {

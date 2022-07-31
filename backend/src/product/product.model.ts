@@ -1,4 +1,7 @@
-import { prop } from '@typegoose/typegoose';
+import { CategoryProductModel } from './../category-product/category-product.model';
+import { ProductTypeModel } from './../product-type/product-type.model';
+import { BrandModel } from './../brand/brand.model';
+import { prop, Ref } from '@typegoose/typegoose';
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 class Rating {
@@ -20,5 +23,11 @@ export class ProductModel extends TimeStamps {
   @prop()
   oldPrice?: number;
   @prop([String])
-  files:string[]
+  files: string[];
+  @prop({ ref: () => BrandModel })
+  brandId: Ref<BrandModel>;
+  @prop({ ref: () => ProductTypeModel })
+  typeId: Ref<ProductTypeModel>;
+  @prop({ ref: () => CategoryProductModel })
+  categoryId: Ref<CategoryProductModel>;
 }

@@ -13,21 +13,49 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
+const category_product_model_1 = require("./../category-product/category-product.model");
+const product_type_model_1 = require("./../product-type/product-type.model");
 const product_model_1 = require("./product.model");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("mongoose");
 let ProductService = class ProductService {
-    constructor(ProductModel) {
+    constructor(ProductModel, ProductTypeModel, CategoryProductModel) {
         this.ProductModel = ProductModel;
+        this.ProductTypeModel = ProductTypeModel;
+        this.CategoryProductModel = CategoryProductModel;
     }
     async create(dto) {
-        return this.ProductModel.create(dto);
+        const typeProduct = await this.ProductTypeModel.findById(dto.typeId);
+        const checkBrand = typeProduct.brand.includes(new mongoose_1.Types.ObjectId(dto.brandId));
+        if (!checkBrand) {
+            await this.ProductTypeModel.updateOne({ _id: dto.typeId }, {
+                $push: { brand: dto.brandId },
+            });
+        }
+        const categoryProduct = await this.CategoryProductModel.findById(dto.categoryId);
+        const checkType = categoryProduct.productType.includes(new mongoose_1.Types.ObjectId(dto.typeId));
+        if (!checkType) {
+            await this.CategoryProductModel.updateOne({ _id: dto.categoryId }, {
+                $push: { productType: dto.typeId },
+            });
+        }
+        const checkBrandCategory = categoryProduct.brand.includes(new mongoose_1.Types.ObjectId(dto.brandId));
+        if (!checkBrandCategory) {
+            await this.CategoryProductModel.updateOne({ _id: dto.categoryId }, {
+                $push: { brand: dto.brandId },
+            });
+        }
+        const product = await this.ProductModel.create(dto);
+        return product;
     }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_typegoose_1.InjectModel)(product_model_1.ProductModel)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, nestjs_typegoose_1.InjectModel)(product_type_model_1.ProductTypeModel)),
+    __param(2, (0, nestjs_typegoose_1.InjectModel)(category_product_model_1.CategoryProductModel)),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], ProductService);
 exports.ProductService = ProductService;
 //# sourceMappingURL=product.service.js.map

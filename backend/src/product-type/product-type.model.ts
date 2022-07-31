@@ -8,5 +8,5 @@ export class ProductTypeModel extends TimeStamps {
   @prop()
   name: string;
   @prop({ ref: () => BrandModel })
-  brand: Ref<BrandModel>;
+  brand: Ref<BrandModel>[];
 }

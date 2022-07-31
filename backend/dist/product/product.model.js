@@ -10,6 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductModel = void 0;
+const category_product_model_1 = require("./../category-product/category-product.model");
+const product_type_model_1 = require("./../product-type/product-type.model");
+const brand_model_1 = require("./../brand/brand.model");
 const typegoose_1 = require("@typegoose/typegoose");
 const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
 class Rating {
@@ -44,5 +47,17 @@ __decorate([
     (0, typegoose_1.prop)([String]),
     __metadata("design:type", Array)
 ], ProductModel.prototype, "files", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ ref: () => brand_model_1.BrandModel }),
+    __metadata("design:type", Object)
+], ProductModel.prototype, "brandId", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ ref: () => product_type_model_1.ProductTypeModel }),
+    __metadata("design:type", Object)
+], ProductModel.prototype, "typeId", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ ref: () => category_product_model_1.CategoryProductModel }),
+    __metadata("design:type", Object)
+], ProductModel.prototype, "categoryId", void 0);
 exports.ProductModel = ProductModel;
 //# sourceMappingURL=product.model.js.map

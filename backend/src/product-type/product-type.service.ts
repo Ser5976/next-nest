@@ -26,11 +26,12 @@ export class ProductTypeService {
   }
   // удаление типа товара
   async removeProductType(id: string) {
+    //написать,когда будут продукты: делать проверку о наличии товаров с таким типом и только потом удальть,удалить тип из категории
     const removeProductType = await this.ProductTypeModel.findByIdAndDelete(
       id,
     ).exec();
     if (!removeProductType)
       throw new NotFoundException('Тип продукта не удалён');
-    return removeProductType;
+    return { message: 'Тип продукта удален' };
   }
 }

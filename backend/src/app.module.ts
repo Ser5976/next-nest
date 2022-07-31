@@ -13,9 +13,8 @@ import { RatingModule } from './rating/rating.module';
 import { CartModule } from './cart/cart.module';
 import { BrandModule } from './brand/brand.module';
 import { ProductTypeModule } from './product-type/product-type.module';
-import { CategoryModule } from './category/category.module';
 import { FileModule } from './file/file.module';
-
+import { CategoryProductModule } from './category-product/category-product.module';
 
 @Module({
   imports: [
@@ -36,8 +35,8 @@ import { FileModule } from './file/file.module';
     CartModule,
     BrandModule,
     ProductTypeModule,
-    CategoryModule,
     FileModule,
+    CategoryProductModule,
   ],
 })
 export class AppModule {}

@@ -1,3 +1,6 @@
+import { CategoryProductModel } from './../category-product/category-product.model';
+import { ProductTypeModel } from './../product-type/product-type.model';
+import { ProductModel } from 'src/product/product.model';
 import { UpdateLogoDto } from './dto/updatelogo.dto';
 import { BrandDto } from './dto/brand.dto';
 import { BrandModel } from './brand.model';
@@ -10,6 +13,12 @@ export class BrandService {
   //создание брэнда
   constructor(
     @InjectModel(BrandModel) private readonly BrandModel: ModelType<BrandModel>,
+    @InjectModel(ProductModel)
+    private readonly ProductModel: ModelType<ProductModel>,
+    @InjectModel(ProductTypeModel)
+    private readonly ProductTypeModel: ModelType<ProductTypeModel>,
+    @InjectModel(CategoryProductModel)
+    private readonly CategoryProductModel: ModelType<CategoryProductModel>,
   ) {}
   async createBrand(dto: BrandDto) {
     const brand = await this.BrandModel.create(dto);
@@ -46,6 +55,21 @@ export class BrandService {
   }
   // удаление брэнда
   async removeBrand(id: string) {
+    //делаем запрос на товары, если товар с таким брэндом существует, то не удаляем
+    const product = await this.ProductModel.findOne({ brandId: id });
+
+    if (product) return { message: 'Брэнд не удалён,использутся в товарах' };
+    //удаляем брэнд из типа
+    const type = await this.ProductTypeModel.updateMany(
+      {},
+      { $pull: { brand: id } },
+    );
+    // удаляем брэнд из категории
+    const category = await this.CategoryProductModel.updateMany(
+      {},
+      { $pull: { brand: id } },
+    );
+    //удаление брэнда
     const deletedBrand = await this.BrandModel.findByIdAndDelete(id);
     if (!deletedBrand) throw new NotFoundException('Брэнд не удалён');
     return { message: 'брэнд удалён' };

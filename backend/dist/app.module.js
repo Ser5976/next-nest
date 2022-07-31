@@ -22,8 +22,8 @@ const rating_module_1 = require("./rating/rating.module");
 const cart_module_1 = require("./cart/cart.module");
 const brand_module_1 = require("./brand/brand.module");
 const product_type_module_1 = require("./product-type/product-type.module");
-const category_module_1 = require("./category/category.module");
 const file_module_1 = require("./file/file.module");
+const category_product_module_1 = require("./category-product/category-product.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -46,8 +46,8 @@ AppModule = __decorate([
             cart_module_1.CartModule,
             brand_module_1.BrandModule,
             product_type_module_1.ProductTypeModule,
-            category_module_1.CategoryModule,
             file_module_1.FileModule,
+            category_product_module_1.CategoryProductModule,
         ],
     })
 ], AppModule);

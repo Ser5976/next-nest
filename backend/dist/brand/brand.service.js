@@ -13,12 +13,18 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BrandService = void 0;
+const category_product_model_1 = require("./../category-product/category-product.model");
+const product_type_model_1 = require("./../product-type/product-type.model");
+const product_model_1 = require("../product/product.model");
 const brand_model_1 = require("./brand.model");
 const common_1 = require("@nestjs/common");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
 let BrandService = class BrandService {
-    constructor(BrandModel) {
+    constructor(BrandModel, ProductModel, ProductTypeModel, CategoryProductModel) {
         this.BrandModel = BrandModel;
+        this.ProductModel = ProductModel;
+        this.ProductTypeModel = ProductTypeModel;
+        this.CategoryProductModel = CategoryProductModel;
     }
     async createBrand(dto) {
         const brand = await this.BrandModel.create(dto);
@@ -47,6 +53,11 @@ let BrandService = class BrandService {
         return updateBrand;
     }
     async removeBrand(id) {
+        const product = await this.ProductModel.findOne({ brandId: id });
+        if (product)
+            return { message: 'Брэнд не удалён,использутся в товарах' };
+        const type = await this.ProductTypeModel.updateMany({}, { $pull: { brand: id } });
+        const category = await this.CategoryProductModel.updateMany({}, { $pull: { brand: id } });
         const deletedBrand = await this.BrandModel.findByIdAndDelete(id);
         if (!deletedBrand)
             throw new common_1.NotFoundException('Брэнд не удалён');
@@ -56,7 +67,10 @@ let BrandService = class BrandService {
 BrandService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_typegoose_1.InjectModel)(brand_model_1.BrandModel)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, nestjs_typegoose_1.InjectModel)(product_model_1.ProductModel)),
+    __param(2, (0, nestjs_typegoose_1.InjectModel)(product_type_model_1.ProductTypeModel)),
+    __param(3, (0, nestjs_typegoose_1.InjectModel)(category_product_model_1.CategoryProductModel)),
+    __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], BrandService);
 exports.BrandService = BrandService;
 //# sourceMappingURL=brand.service.js.map

@@ -1,11 +1,15 @@
+import { CategoryProductModel } from './../category-product/category-product.model';
+import { ProductTypeModel } from './../product-type/product-type.model';
+import { ProductDto } from './dto/product.dto';
 import { ProductModel } from './product.model';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+import { Types } from 'mongoose';
 export declare class ProductService {
     private readonly ProductModel;
-    constructor(ProductModel: ModelType<ProductModel>);
-    create(dto: {
-        name: string;
-    }): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
-        _id: import("mongoose").Types.ObjectId;
+    private readonly ProductTypeModel;
+    private readonly CategoryProductModel;
+    constructor(ProductModel: ModelType<ProductModel>, ProductTypeModel: ModelType<ProductTypeModel>, CategoryProductModel: ModelType<CategoryProductModel>);
+    create(dto: ProductDto): Promise<import("mongoose").Document<Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+        _id: Types.ObjectId;
     }>;
 }

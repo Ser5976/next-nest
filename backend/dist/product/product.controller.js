@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
+const product_dto_1 = require("./dto/product.dto");
 const product_service_1 = require("./product.service");
 const common_1 = require("@nestjs/common");
 let ProductController = class ProductController {
@@ -24,10 +25,11 @@ let ProductController = class ProductController {
     }
 };
 __decorate([
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [product_dto_1.ProductDto]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "create", null);
 ProductController = __decorate([

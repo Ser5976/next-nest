@@ -10,7 +10,7 @@ export declare class ProductTypeService {
     getProductType(): Promise<Omit<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductTypeModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
     }, never>[]>;
-    removeProductType(id: string): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductTypeModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
-        _id: import("mongoose").Types.ObjectId;
+    removeProductType(id: string): Promise<{
+        message: string;
     }>;
 }

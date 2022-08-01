@@ -1,8 +1,16 @@
 import { IsArray, IsNumber, IsString } from 'class-validator';
-
+class Characterictic {
+  title: string;
+  property: string;
+}
 export class ProductDto {
   @IsString()
   name: string;
+  @IsString()
+  description: string;
+
+  characteristic: Characterictic[];
+
   @IsString()
   brandId: string;
   @IsString()

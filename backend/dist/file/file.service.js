@@ -10,13 +10,16 @@ exports.FileService = void 0;
 const common_1 = require("@nestjs/common");
 const app_root_path_1 = require("app-root-path");
 const fs_extra_1 = require("fs-extra");
+const uuid = require("uuid");
 let FileService = class FileService {
     async uploadFile(files) {
         const uploadFolder = `${app_root_path_1.path}/uploads`;
         await (0, fs_extra_1.ensureDir)(uploadFolder);
         const filesUrls = await Promise.all(files.map(async (file) => {
-            await (0, fs_extra_1.writeFile)(`${uploadFolder}/${file.originalname}`, file.buffer);
-            return file.originalname;
+            const fileExtension = file.originalname.split('.').pop();
+            const fileName = uuid.v4() + '.' + fileExtension;
+            await (0, fs_extra_1.writeFile)(`${uploadFolder}/${fileName}`, file.buffer);
+            return fileName;
         }));
         return filesUrls;
     }

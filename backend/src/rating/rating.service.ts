@@ -25,12 +25,12 @@ export class RatingService {
     if (!newRating) throw new NotFoundException('ваша оценка не отправлена');
 
     //расчёт рейтинга
-
+    // находим количество оценок
     const numberRatings = await this.RatingModel.find({
       productId,
     })
       .count()
-      .exec(); // находим количество оценок
+      .exec();
     // console.log('число', numberRatings);
     //при помощи агрегации рассчитываем среднее значение
     const avgRating = await this.RatingModel.aggregate()
@@ -39,7 +39,8 @@ export class RatingService {
     // console.log(avgRating);
     if (!avgRating[0].average)
       throw new NotFoundException('рейтинг не рассчитан');
-    const estimation = avgRating[0].average.toFixed(1);
+
+    const estimation = avgRating[0].average.toFixed(1); //оценка, с одним числом после запятой(если нужно)
     // console.log('оценка:', estimation);
     // изменяем рейтинг в товаре
     const ratingProduct = await this.ProductModel.findByIdAndUpdate(productId, {

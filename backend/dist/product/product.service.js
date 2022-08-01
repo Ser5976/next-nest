@@ -47,7 +47,29 @@ let ProductService = class ProductService {
             });
         }
         const product = await this.ProductModel.create(dto);
+        if (!product)
+            throw new common_1.NotFoundException('Товар не создан');
         return product;
+    }
+    async byIdProduct(id) {
+        const product = await this.ProductModel.findById(id).exec();
+        if (!product)
+            throw new common_1.NotFoundException('Такого товара не существует!');
+        return product;
+    }
+    async updateProduct(id, dto) {
+        const newProduct = await this.ProductModel.findByIdAndUpdate(id, dto, {
+            new: true,
+        }).exec();
+        if (!newProduct)
+            throw new common_1.NotFoundException('Обнавление не произошло');
+        return newProduct;
+    }
+    async deleteProduct(id) {
+        const deleteProduct = await this.ProductModel.findByIdAndDelete(id).exec();
+        if (!deleteProduct)
+            throw new common_1.NotFoundException('Такого пользователя не существует');
+        return { message: 'Пользователь удалён' };
     }
 };
 ProductService = __decorate([

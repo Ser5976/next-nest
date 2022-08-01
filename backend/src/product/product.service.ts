@@ -4,7 +4,7 @@ import { ProductDto } from './dto/product.dto';
 import { FileService } from './../file/file.service';
 import { ProductModel } from './product.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { Types } from 'mongoose';
 
@@ -68,8 +68,30 @@ export class ProductService {
         },
       );
     }
-
     const product = await this.ProductModel.create(dto);
+    if (!product) throw new NotFoundException('Товар не создан');
     return product;
+  }
+  //получение товара
+  async byIdProduct(id: string) {
+    const product = await this.ProductModel.findById(id).exec();
+    if (!product) throw new NotFoundException('Такого товара не существует!');
+    return product;
+  }
+
+  // обнавление товара
+  async updateProduct(id: string, dto: ProductDto) {
+    const newProduct = await this.ProductModel.findByIdAndUpdate(id, dto, {
+      new: true,
+    }).exec();
+    if (!newProduct) throw new NotFoundException('Обнавление не произошло');
+    return newProduct;
+  }
+  // удаление товара
+  async deleteProduct(id: string) {
+    const deleteProduct = await this.ProductModel.findByIdAndDelete(id).exec();
+    if (!deleteProduct)
+      throw new NotFoundException('Такого пользователя не существует');
+    return { message: 'Пользователь удалён' };
   }
 }

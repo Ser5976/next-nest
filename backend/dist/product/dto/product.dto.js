@@ -11,12 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductDto = void 0;
 const class_validator_1 = require("class-validator");
+class Characterictic {
+}
 class ProductDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ProductDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ProductDto.prototype, "description", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

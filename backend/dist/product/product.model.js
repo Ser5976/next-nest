@@ -25,12 +25,30 @@ __decorate([
     (0, typegoose_1.prop)({ default: 0 }),
     __metadata("design:type", Number)
 ], Rating.prototype, "numberRatings", void 0);
-class ProductModel extends defaultClasses_1.TimeStamps {
+class Characteristic {
 }
 __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
+], Characteristic.prototype, "title", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", String)
+], Characteristic.prototype, "property", void 0);
+let ProductModel = class ProductModel extends defaultClasses_1.TimeStamps {
+};
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", String)
 ], ProductModel.prototype, "name", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", String)
+], ProductModel.prototype, "description", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ type: () => Characteristic }),
+    __metadata("design:type", Array)
+], ProductModel.prototype, "characteristic", void 0);
 __decorate([
     (0, typegoose_1.prop)({ type: () => Rating, _id: false, default: {} }),
     __metadata("design:type", Rating)
@@ -44,7 +62,7 @@ __decorate([
     __metadata("design:type", Number)
 ], ProductModel.prototype, "oldPrice", void 0);
 __decorate([
-    (0, typegoose_1.prop)([String]),
+    (0, typegoose_1.prop)(String),
     __metadata("design:type", Array)
 ], ProductModel.prototype, "files", void 0);
 __decorate([
@@ -59,5 +77,8 @@ __decorate([
     (0, typegoose_1.prop)({ ref: () => category_product_model_1.CategoryProductModel }),
     __metadata("design:type", Object)
 ], ProductModel.prototype, "categoryId", void 0);
+ProductModel = __decorate([
+    (0, typegoose_1.index)({ '$**': 'text' })
+], ProductModel);
 exports.ProductModel = ProductModel;
 //# sourceMappingURL=product.model.js.map

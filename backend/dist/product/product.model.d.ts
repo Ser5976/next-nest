@@ -7,10 +7,16 @@ declare class Rating {
     estimation: number;
     numberRatings: number;
 }
+declare class Characteristic {
+    title: string;
+    property: string;
+}
 export interface ProductModel extends Base {
 }
 export declare class ProductModel extends TimeStamps {
     name: string;
+    description: string;
+    characteristic: Characteristic[];
     rating: Rating;
     price: number;
     oldPrice?: number;

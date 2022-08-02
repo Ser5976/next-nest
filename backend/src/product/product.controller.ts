@@ -12,6 +12,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Auth } from 'src/auth/decorators/auth.decorators';
 
 @Controller('product')
 export class ProductController {
@@ -27,7 +28,11 @@ export class ProductController {
   async get(@Param('id', IdValidationPipe) id: string) {
     return await this.ProductServies.byIdProduct(id);
   }
-
+  // поиск товара по тексту(слова)
+  @Get('textSearch/:text')
+  async textSearch(@Param('text') text: string) {
+    return this.ProductServies.textSearch(text);
+  }
   //обновление товара
   @UsePipes(new ValidationPipe())
   @Put(':id')

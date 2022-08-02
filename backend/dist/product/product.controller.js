@@ -27,6 +27,9 @@ let ProductController = class ProductController {
     async get(id) {
         return await this.ProductServies.byIdProduct(id);
     }
+    async textSearch(text) {
+        return this.ProductServies.textSearch(text);
+    }
     async updateProduct(id, dto) {
         return this.ProductServies.updateProduct(id, dto);
     }
@@ -49,6 +52,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "get", null);
+__decorate([
+    (0, common_1.Get)('textSearch/:text'),
+    __param(0, (0, common_1.Param)('text')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "textSearch", null);
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Put)(':id'),

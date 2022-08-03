@@ -1,3 +1,4 @@
+import { QueryParametrsDto } from './dto/queryParametrs.dto';
 import { IdValidationPipe } from './../pipes/id.validation.pipe';
 import { ProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
@@ -9,10 +10,10 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Auth } from 'src/auth/decorators/auth.decorators';
 
 @Controller('product')
 export class ProductController {
@@ -23,6 +24,13 @@ export class ProductController {
   async create(@Body() dto: ProductDto) {
     return this.ProductServies.create(dto);
   }
+  //получение товаров(фильтрация,сортировка,пагинация)
+  @UsePipes(new ValidationPipe())
+  @Get('filter')
+  async getFilteredProducts(@Query() dto: QueryParametrsDto) {
+    return this.ProductServies.getFilteredProducts(dto);
+  }
+
   //получение товара
   @Get(':id')
   async get(@Param('id', IdValidationPipe) id: string) {

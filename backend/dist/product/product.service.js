@@ -51,6 +51,32 @@ let ProductService = class ProductService {
             throw new common_1.NotFoundException('Товар не создан');
         return product;
     }
+    async getFilteredProducts(dto) {
+        const { minPrice, maxPrice, page, limit } = dto;
+        let offset = Number(page) * Number(limit) - Number(limit);
+        let opition = {};
+        if (minPrice && maxPrice) {
+            const price = {
+                $gte: Number(minPrice),
+                $lte: Number(maxPrice),
+            };
+            delete dto.minPrice;
+            delete dto.maxPrice;
+            opition = Object.assign(Object.assign({}, dto), { price });
+        }
+        else {
+            opition = dto;
+        }
+        const allProduct = await this.ProductModel.find(opition)
+            .sort({ createdAt: 'desc' })
+            .skip(offset)
+            .limit(Number(limit));
+        const count = await this.ProductModel.find(opition).count();
+        const pageQty = Math.ceil(count / limit);
+        if (allProduct.length === 0)
+            throw new common_1.NotFoundException('Что то пошло не так');
+        return { allProduct, count, pageQty };
+    }
     async byIdProduct(id) {
         const product = await this.ProductModel.findById(id).exec();
         if (!product)

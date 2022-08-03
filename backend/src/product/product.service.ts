@@ -1,3 +1,4 @@
+import { QueryParametrsDto } from './dto/queryParametrs.dto';
 import { CategoryProductModel } from './../category-product/category-product.model';
 import { ProductTypeModel } from './../product-type/product-type.model';
 import { ProductDto } from './dto/product.dto';
@@ -71,6 +72,44 @@ export class ProductService {
     if (!product) throw new NotFoundException('Товар не создан');
     return product;
   }
+
+  //получение всех товаров(фильтрация,сортировка,пагинация)
+  async getFilteredProducts(dto: QueryParametrsDto) {
+    const { minPrice, maxPrice, page, limit } = dto;
+    //console.log(query);
+    //пагинация
+    let offset = Number(page) * Number(limit) - Number(limit);
+
+    //костыль по фильтрации,если квэри параметры есть,записываем в объект opition и запрос будет с фильтрацией
+    let opition = {};
+
+    // костыль для сравнение цены больше или ровно($gte) и меньше или ровно($lte)
+    if (minPrice && maxPrice) {
+      const price = {
+        $gte: Number(minPrice),
+        $lte: Number(maxPrice),
+      }; //формируем объект для цены{price:{$gte:число,$lte:число}}
+      delete dto.minPrice; // удаляем данные из объекта, которые нам  не нужны для запроса(это числовой диапазон)
+      delete dto.maxPrice;
+      // console.log(query);
+      opition = { ...dto, price };
+    } else {
+      opition = dto;
+    }
+
+    //console.log(opition);
+    const allProduct = await this.ProductModel.find(opition)
+      .sort({ createdAt: 'desc' })
+      .skip(offset)
+      .limit(Number(limit));
+    const count = await this.ProductModel.find(opition).count();
+    //рассчёт количества страниц,для пагинации
+    const pageQty = Math.ceil(count / limit);
+    if (allProduct.length === 0)
+      throw new NotFoundException('Что то пошло не так');
+    return { allProduct, count, pageQty };
+  }
+
   //получение товара
   async byIdProduct(id: string) {
     const product = await this.ProductModel.findById(id).exec();

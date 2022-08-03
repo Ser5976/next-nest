@@ -1,3 +1,4 @@
+import { QueryParametrsDto } from './dto/queryParametrs.dto';
 import { ProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
 export declare class ProductController {
@@ -5,6 +6,13 @@ export declare class ProductController {
     constructor(ProductServies: ProductService);
     create(dto: ProductDto): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & import("./product.model").ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
+    }>;
+    getFilteredProducts(dto: QueryParametrsDto): Promise<{
+        allProduct: (import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & import("./product.model").ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        count: number;
+        pageQty: number;
     }>;
     get(id: string): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & import("./product.model").ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;

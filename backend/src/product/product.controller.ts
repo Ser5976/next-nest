@@ -30,12 +30,23 @@ export class ProductController {
   async getFilteredProducts(@Query() dto: QueryParametrsDto) {
     return this.ProductServies.getFilteredProducts(dto);
   }
+  // получение популярных товаров
+  @Get('popular')
+  async getPopularProduct() {
+    return this.ProductServies.getPopularProduct();
+  }
+  // получение поcледних 6-ти товаров
+  @Get('latest')
+  async getLatestProduct() {
+    return this.ProductServies.getLatestProduct();
+  }
 
   //получение товара
   @Get(':id')
   async get(@Param('id', IdValidationPipe) id: string) {
     return await this.ProductServies.byIdProduct(id);
   }
+
   // поиск товара по тексту(слова)
   @Get('textSearch/:text')
   async textSearch(@Param('text') text: string) {

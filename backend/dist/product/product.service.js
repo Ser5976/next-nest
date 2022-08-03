@@ -79,6 +79,8 @@ let ProductService = class ProductService {
     }
     async byIdProduct(id) {
         const product = await this.ProductModel.findById(id).exec();
+        product.coundOpened = product.coundOpened + 1;
+        await product.save();
         if (!product)
             throw new common_1.NotFoundException('Такого товара не существует!');
         return product;
@@ -92,6 +94,26 @@ let ProductService = class ProductService {
         if (foundProduct.length === 0)
             throw new common_1.NotFoundException('Ничего не найдено');
         return foundProduct;
+    }
+    async getPopularProduct() {
+        const popularProduct = await this.ProductModel.find({
+            coundOpened: { $gt: 0 },
+        })
+            .sort({ coundOpened: -1 })
+            .limit(6)
+            .exec();
+        if (!popularProduct)
+            throw new common_1.NotFoundException('товары не получены');
+        return popularProduct;
+    }
+    async getLatestProduct() {
+        const latestProduct = await this.ProductModel.find()
+            .sort({ createdAt: 'desc' })
+            .limit(6)
+            .exec();
+        if (!latestProduct)
+            throw new common_1.NotFoundException('товары не получены');
+        return latestProduct;
     }
     async updateProduct(id, dto) {
         const newProduct = await this.ProductModel.findByIdAndUpdate(id, dto, {

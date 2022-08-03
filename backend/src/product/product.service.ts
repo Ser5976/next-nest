@@ -73,14 +73,13 @@ export class ProductService {
     return product;
   }
 
-  //получение всех товаров(фильтрация,сортировка,пагинация)
+  //получение  товаров(фильтрация,сортировка,пагинация)
   async getFilteredProducts(dto: QueryParametrsDto) {
     const { minPrice, maxPrice, page, limit } = dto;
     //console.log(query);
     //пагинация
     let offset = Number(page) * Number(limit) - Number(limit);
 
-    //костыль по фильтрации,если квэри параметры есть,записываем в объект opition и запрос будет с фильтрацией
     let opition = {};
 
     // костыль для сравнение цены больше или ровно($gte) и меньше или ровно($lte)
@@ -96,7 +95,6 @@ export class ProductService {
     } else {
       opition = dto;
     }
-
     //console.log(opition);
     const allProduct = await this.ProductModel.find(opition)
       .sort({ createdAt: 'desc' })
@@ -113,6 +111,9 @@ export class ProductService {
   //получение товара
   async byIdProduct(id: string) {
     const product = await this.ProductModel.findById(id).exec();
+    // костыль, изменяем countOpenend,чтобы вычислить какой продукт больше смотрели(популярный)
+    product.coundOpened = product.coundOpened + 1;
+    await product.save();
     if (!product) throw new NotFoundException('Такого товара не существует!');
     return product;
   }
@@ -130,8 +131,27 @@ export class ProductService {
       throw new NotFoundException('Ничего не найдено');
     return foundProduct;
   }
-
-  // обнавление товара
+  // получение популярных товаров
+  async getPopularProduct() {
+    const popularProduct = await this.ProductModel.find({
+      coundOpened: { $gt: 0 },
+    })
+      .sort({ coundOpened: -1 })
+      .limit(6)
+      .exec();
+    if (!popularProduct) throw new NotFoundException('товары не получены');
+    return popularProduct;
+  }
+  //получение последних 6-ти товаров
+  async getLatestProduct() {
+    const latestProduct = await this.ProductModel.find()
+      .sort({ createdAt: 'desc' })
+      .limit(6)
+      .exec();
+    if (!latestProduct) throw new NotFoundException('товары не получены');
+    return latestProduct;
+  }
+  // обновление товара
   async updateProduct(id: string, dto: ProductDto) {
     const newProduct = await this.ProductModel.findByIdAndUpdate(id, dto, {
       new: true,

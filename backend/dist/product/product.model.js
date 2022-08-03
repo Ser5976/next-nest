@@ -77,6 +77,10 @@ __decorate([
     (0, typegoose_1.prop)({ ref: () => category_product_model_1.CategoryProductModel }),
     __metadata("design:type", Object)
 ], ProductModel.prototype, "categoryId", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ default: 0 }),
+    __metadata("design:type", Number)
+], ProductModel.prototype, "coundOpened", void 0);
 ProductModel = __decorate([
     (0, typegoose_1.index)({ '$**': 'text' })
 ], ProductModel);

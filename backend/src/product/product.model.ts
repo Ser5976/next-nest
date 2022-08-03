@@ -41,4 +41,6 @@ export class ProductModel extends TimeStamps {
   typeId: Ref<ProductTypeModel>;
   @prop({ ref: () => CategoryProductModel })
   categoryId: Ref<CategoryProductModel>;
+  @prop({ default: 0 })
+  coundOpened: number;
 }

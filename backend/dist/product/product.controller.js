@@ -28,6 +28,12 @@ let ProductController = class ProductController {
     async getFilteredProducts(dto) {
         return this.ProductServies.getFilteredProducts(dto);
     }
+    async getPopularProduct() {
+        return this.ProductServies.getPopularProduct();
+    }
+    async getLatestProduct() {
+        return this.ProductServies.getLatestProduct();
+    }
     async get(id) {
         return await this.ProductServies.byIdProduct(id);
     }
@@ -57,6 +63,18 @@ __decorate([
     __metadata("design:paramtypes", [queryParametrs_dto_1.QueryParametrsDto]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getFilteredProducts", null);
+__decorate([
+    (0, common_1.Get)('popular'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getPopularProduct", null);
+__decorate([
+    (0, common_1.Get)('latest'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getLatestProduct", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),

@@ -24,5 +24,6 @@ export declare class ProductModel extends TimeStamps {
     brandId: Ref<BrandModel>;
     typeId: Ref<ProductTypeModel>;
     categoryId: Ref<CategoryProductModel>;
+    coundOpened: number;
 }
 export {};

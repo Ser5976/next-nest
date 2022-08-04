@@ -1,8 +1,9 @@
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-export interface NewsModel extends Base {
+export interface StoreReviewsModel extends Base {
 }
-export declare class NewsModel extends TimeStamps {
+export declare class StoreReviewsModel extends TimeStamps {
     name: string;
+    email: string;
     text: string;
     response: string;
 }

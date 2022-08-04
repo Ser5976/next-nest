@@ -9,22 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewsModel = void 0;
+exports.StoreReviewsModel = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
-class NewsModel extends defaultClasses_1.TimeStamps {
+class StoreReviewsModel extends defaultClasses_1.TimeStamps {
 }
 __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
-], NewsModel.prototype, "name", void 0);
+], StoreReviewsModel.prototype, "name", void 0);
 __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
-], NewsModel.prototype, "text", void 0);
+], StoreReviewsModel.prototype, "email", void 0);
 __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
-], NewsModel.prototype, "response", void 0);
-exports.NewsModel = NewsModel;
-//# sourceMappingURL=news.model.js.map
+], StoreReviewsModel.prototype, "text", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", String)
+], StoreReviewsModel.prototype, "response", void 0);
+exports.StoreReviewsModel = StoreReviewsModel;
+//# sourceMappingURL=store-reviews.model.js.map

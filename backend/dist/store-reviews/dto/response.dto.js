@@ -9,22 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewsModel = void 0;
-const typegoose_1 = require("@typegoose/typegoose");
-const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
-class NewsModel extends defaultClasses_1.TimeStamps {
+exports.ResponseDto = void 0;
+const class_validator_1 = require("class-validator");
+class ResponseDto {
 }
 __decorate([
-    (0, typegoose_1.prop)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], NewsModel.prototype, "name", void 0);
-__decorate([
-    (0, typegoose_1.prop)(),
-    __metadata("design:type", String)
-], NewsModel.prototype, "text", void 0);
-__decorate([
-    (0, typegoose_1.prop)(),
-    __metadata("design:type", String)
-], NewsModel.prototype, "response", void 0);
-exports.NewsModel = NewsModel;
-//# sourceMappingURL=news.model.js.map
+], ResponseDto.prototype, "response", void 0);
+exports.ResponseDto = ResponseDto;
+//# sourceMappingURL=response.dto.js.map

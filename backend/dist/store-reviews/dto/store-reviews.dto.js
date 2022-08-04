@@ -9,22 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewsModel = void 0;
-const typegoose_1 = require("@typegoose/typegoose");
-const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
-class NewsModel extends defaultClasses_1.TimeStamps {
+exports.StoreReviewsDto = void 0;
+const class_validator_1 = require("class-validator");
+class StoreReviewsDto {
 }
 __decorate([
-    (0, typegoose_1.prop)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], NewsModel.prototype, "name", void 0);
+], StoreReviewsDto.prototype, "name", void 0);
 __decorate([
-    (0, typegoose_1.prop)(),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], NewsModel.prototype, "text", void 0);
+], StoreReviewsDto.prototype, "emaile", void 0);
 __decorate([
-    (0, typegoose_1.prop)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], NewsModel.prototype, "response", void 0);
-exports.NewsModel = NewsModel;
-//# sourceMappingURL=news.model.js.map
+], StoreReviewsDto.prototype, "text", void 0);
+exports.StoreReviewsDto = StoreReviewsDto;
+//# sourceMappingURL=store-reviews.dto.js.map

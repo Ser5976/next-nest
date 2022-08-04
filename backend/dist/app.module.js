@@ -24,6 +24,7 @@ const brand_module_1 = require("./brand/brand.module");
 const product_type_module_1 = require("./product-type/product-type.module");
 const file_module_1 = require("./file/file.module");
 const category_product_module_1 = require("./category-product/category-product.module");
+const news_module_1 = require("./news/news.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -48,6 +49,7 @@ AppModule = __decorate([
             product_type_module_1.ProductTypeModule,
             file_module_1.FileModule,
             category_product_module_1.CategoryProductModule,
+            news_module_1.NewsModule,
         ],
     })
 ], AppModule);

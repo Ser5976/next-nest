@@ -12,30 +12,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewsController = void 0;
+exports.ForCustomersController = void 0;
 const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
-const news_dto_1 = require("./dto/news.dto");
-const news_service_1 = require("./news.service");
+const for_customers_dto_1 = require("./dto/for-customers.dto");
+const for_customers_service_1 = require("./for-customers.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
-let NewsController = class NewsController {
-    constructor(NewsService) {
-        this.NewsService = NewsService;
+let ForCustomersController = class ForCustomersController {
+    constructor(ForCustomersService) {
+        this.ForCustomersService = ForCustomersService;
     }
     async createNews(dto) {
-        return this.NewsService.createNews(dto);
+        return this.ForCustomersService.createData(dto);
     }
-    async getAllNews() {
-        return this.NewsService.getAllNews();
+    async getAllData() {
+        return this.ForCustomersService.getAllData();
     }
     async getNews(id) {
-        return this.NewsService.getNews(id);
+        return this.ForCustomersService.getData(id);
     }
     async updateNews(id, dto) {
-        return this.NewsService.updateNews(id, dto);
+        return this.ForCustomersService.updateData(id, dto);
     }
     async deleteNews(id) {
-        return this.NewsService.deleteNews(id);
+        return this.ForCustomersService.deleteData(id);
     }
 };
 __decorate([
@@ -44,22 +44,22 @@ __decorate([
     (0, auth_decorators_1.Auth)('admin'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [news_dto_1.NewsDto]),
+    __metadata("design:paramtypes", [for_customers_dto_1.ForCustomersDto]),
     __metadata("design:returntype", Promise)
-], NewsController.prototype, "createNews", null);
+], ForCustomersController.prototype, "createNews", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], NewsController.prototype, "getAllNews", null);
+], ForCustomersController.prototype, "getAllData", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], NewsController.prototype, "getNews", null);
+], ForCustomersController.prototype, "getNews", null);
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Put)(':id'),
@@ -67,9 +67,9 @@ __decorate([
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, news_dto_1.NewsDto]),
+    __metadata("design:paramtypes", [String, for_customers_dto_1.ForCustomersDto]),
     __metadata("design:returntype", Promise)
-], NewsController.prototype, "updateNews", null);
+], ForCustomersController.prototype, "updateNews", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)('admin'),
@@ -77,10 +77,10 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], NewsController.prototype, "deleteNews", null);
-NewsController = __decorate([
-    (0, common_1.Controller)('news'),
-    __metadata("design:paramtypes", [news_service_1.NewsService])
-], NewsController);
-exports.NewsController = NewsController;
-//# sourceMappingURL=news.controller.js.map
+], ForCustomersController.prototype, "deleteNews", null);
+ForCustomersController = __decorate([
+    (0, common_1.Controller)('for-customers'),
+    __metadata("design:paramtypes", [for_customers_service_1.ForCustomersService])
+], ForCustomersController);
+exports.ForCustomersController = ForCustomersController;
+//# sourceMappingURL=for-customers.controller.js.map

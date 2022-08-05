@@ -17,6 +17,7 @@ import { FileModule } from './file/file.module';
 import { CategoryProductModule } from './category-product/category-product.module';
 import { NewsModule } from './news/news.module';
 import { StoreReviewsModule } from './store-reviews/store-reviews.module';
+import { ForCustomersModule } from './for-customers/for-customers.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { StoreReviewsModule } from './store-reviews/store-reviews.module';
     CategoryProductModule,
     NewsModule,
     StoreReviewsModule,
+    ForCustomersModule,
   ],
 })
 export class AppModule {}

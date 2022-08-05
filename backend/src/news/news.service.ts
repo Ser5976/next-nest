@@ -32,7 +32,7 @@ export class NewsService {
     return news;
   }
   // редактирование статьи
-  async updetNews(id: string, dto) {
+  async updateNews(id: string, dto: NewsDto) {
     const newNews = await this.NewsModel.findByIdAndUpdate(id, dto, {
       new: true,
     });

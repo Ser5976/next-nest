@@ -38,7 +38,7 @@ let NewsService = class NewsService {
             throw new common_1.NotFoundException('Что то пошло не так,статья не получена');
         return news;
     }
-    async updetNews(id, dto) {
+    async updateNews(id, dto) {
         const newNews = await this.NewsModel.findByIdAndUpdate(id, dto, {
             new: true,
         });

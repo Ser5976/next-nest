@@ -42,7 +42,7 @@ export class NewsController {
     @Param('id', IdValidationPipe) id: string,
     @Body() dto: NewsDto,
   ) {
-    return this.NewsService.updetNews(id, dto);
+    return this.NewsService.updateNews(id, dto);
   }
   // удаление  статьи
   @Delete(':id')

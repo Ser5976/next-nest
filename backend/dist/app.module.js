@@ -27,6 +27,7 @@ const category_product_module_1 = require("./category-product/category-product.m
 const news_module_1 = require("./news/news.module");
 const store_reviews_module_1 = require("./store-reviews/store-reviews.module");
 const for_customers_module_1 = require("./for-customers/for-customers.module");
+const slider_module_1 = require("./slider/slider.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -54,6 +55,7 @@ AppModule = __decorate([
             news_module_1.NewsModule,
             store_reviews_module_1.StoreReviewsModule,
             for_customers_module_1.ForCustomersModule,
+            slider_module_1.SliderModule,
         ],
     })
 ], AppModule);

@@ -19,6 +19,7 @@ import { NewsModule } from './news/news.module';
 import { StoreReviewsModule } from './store-reviews/store-reviews.module';
 import { ForCustomersModule } from './for-customers/for-customers.module';
 import { SliderModule } from './slider/slider.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { SliderModule } from './slider/slider.module';
     StoreReviewsModule,
     ForCustomersModule,
     SliderModule,
+    OrderModule,
   ],
 })
 export class AppModule {}

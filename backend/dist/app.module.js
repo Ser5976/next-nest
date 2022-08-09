@@ -28,6 +28,7 @@ const news_module_1 = require("./news/news.module");
 const store_reviews_module_1 = require("./store-reviews/store-reviews.module");
 const for_customers_module_1 = require("./for-customers/for-customers.module");
 const slider_module_1 = require("./slider/slider.module");
+const order_module_1 = require("./order/order.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -56,6 +57,7 @@ AppModule = __decorate([
             store_reviews_module_1.StoreReviewsModule,
             for_customers_module_1.ForCustomersModule,
             slider_module_1.SliderModule,
+            order_module_1.OrderModule,
         ],
     })
 ], AppModule);

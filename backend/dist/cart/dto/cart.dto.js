@@ -26,10 +26,6 @@ __decorate([
     __metadata("design:type", Number)
 ], CartDto.prototype, "price", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], CartDto.prototype, "oldPrice", void 0);
-__decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CartDto.prototype, "picture", void 0);

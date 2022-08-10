@@ -10,7 +10,6 @@ export class CartDto {
   @IsNumber()
   price: number;
 
-  @IsNumber()
   oldPrice?: number;
 
   @IsString()

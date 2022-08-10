@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto ">
+      <main className="p-10 ">
         <h1 className="text-lg font-semibold ">Привет!</h1>
       </main>
     </div>

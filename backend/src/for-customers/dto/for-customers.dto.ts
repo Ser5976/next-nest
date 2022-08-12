@@ -5,4 +5,6 @@ export class ForCustomersDto {
   title: string;
   @IsString()
   description: string;
+  @IsString()
+  slug: string;
 }

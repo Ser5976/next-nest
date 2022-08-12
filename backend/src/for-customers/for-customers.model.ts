@@ -8,4 +8,6 @@ export class ForCustomersModel extends TimeStamps {
   title: string;
   @prop()
   description: string;
+  @prop()
+  slug: string;
 }

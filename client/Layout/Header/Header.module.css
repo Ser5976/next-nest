@@ -1,0 +1,43 @@
+.header {
+  @apply flex flex-col h-auto  bg-slate-50;
+}
+.header1 {
+  @apply h-[50px]  border border-b-gray-200 flex items-center justify-end pr-24 gap-5 text-gray-600 text-base;
+}
+.header1 a {
+  @apply hover:text-red-700;
+}
+.header2 {
+  @apply flex items-center justify-center  gap-5 py-6;
+}
+.search {
+  @apply relative w-96;
+}
+.input {
+  @apply bg-gray-50 border  text-gray-900 text-sm rounded-full  
+  w-full p-2.5 outline-none
+  placeholder-gray-400 placeholder:text-base shadow-sm hover:bg-white;
+}
+.searchButton {
+  @apply absolute top-0 bottom-0 right-0 bg-red-400 w-[36px] h-full 
+  rounded-r-full hover:bg-red-500;
+}
+.searchButton * {
+  @apply fill-white m-auto;
+}
+.logo {
+  @apply text-3xl font-bold  text-red-400 italic hover:text-red-500;
+}
+.catalog {
+  @apply relative;
+}
+.catalog button {
+  @apply text-gray-600 border rounded-full shadow-sm py-2.5 pl-10 pr-5 text-base hover:bg-white;
+}
+.catalog span {
+  @apply absolute top-2.5 bottom-0 left-0 bg-red-400 w-[28px] h-[28px] mx-2 
+    rounded-full;
+}
+.catalog span * {
+  @apply fill-white mt-1.5 ml-1.5;
+}

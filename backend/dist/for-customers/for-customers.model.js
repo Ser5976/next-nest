@@ -22,5 +22,9 @@ __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
 ], ForCustomersModel.prototype, "description", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", String)
+], ForCustomersModel.prototype, "slug", void 0);
 exports.ForCustomersModel = ForCustomersModel;
 //# sourceMappingURL=for-customers.model.js.map

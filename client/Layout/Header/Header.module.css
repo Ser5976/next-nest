@@ -41,3 +41,15 @@
 .catalog span * {
   @apply fill-white mt-1.5 ml-1.5;
 }
+.account {
+  @apply relative;
+}
+.accountButton {
+  @apply text-gray-600 text-base border rounded-full shadow-sm py-2.5 px-8 hover:bg-white;
+}
+.icons1 {
+  @apply absolute fill-gray-600 w-5 h-5 top-3.5 left-2;
+}
+.icons2 {
+  @apply absolute fill-gray-600 w-5 h-5 top-4 right-2;
+}

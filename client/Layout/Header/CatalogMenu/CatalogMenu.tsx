@@ -8,10 +8,8 @@ export const CatalogMenu = ({
   showCatalog,
   ...props
 }: CatalogMenuProps): JSX.Element => {
-  console.log(showCatalog);
   return (
     <div
-      id="dropdown"
       className={cn(className, styles.show, {
         [styles.hidden]: showCatalog,
       })}
@@ -20,7 +18,7 @@ export const CatalogMenu = ({
       <div className={styles.wrapper}>
         <ul className={styles.block1}>
           <li>
-            <a href="#">Dashboard</a>
+            <a href="#">Dashboardddddddddddddddddddddddddddd</a>
           </li>
           <li>
             <a href="#">Settings</a>

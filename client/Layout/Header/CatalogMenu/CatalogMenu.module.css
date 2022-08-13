@@ -11,7 +11,7 @@
   @apply py-5 text-base text-gray-700 w-[250px] border-r border-r-gray-200;
 }
 .block1 a {
-  @apply block py-2 px-4 hover:bg-pink-50 text-gray-600 text-base hover:text-red-400;
+  @apply block py-2 px-4 hover:bg-pink-50 text-gray-600 text-base hover:text-red-400 truncate;
 }
 .block2 {
   @apply w-2/3;

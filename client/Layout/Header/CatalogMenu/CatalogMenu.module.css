@@ -1,17 +1,32 @@
+.catalog {
+  @apply relative;
+}
+.catalog button {
+  @apply text-gray-600 border rounded-full shadow-sm py-2.5 pl-10 pr-5 text-base hover:bg-white;
+}
+.catalog span {
+  @apply absolute top-2.5 bottom-0 left-0 bg-red-400 w-[28px] h-[28px] mx-2 
+    rounded-full;
+}
+.catalog span * {
+  @apply fill-white mt-1.5 ml-1.5;
+}
+
+/* выпадающий список */
 .hidden {
   display: none;
 }
 .show {
-  @apply fixed z-10 w-screen h-screen bg-white shadow overflow-y-scroll;
+  @apply fixed  top-[192px] z-10 w-screen h-screen bg-white shadow overflow-y-scroll;
 }
 .wrapper {
-  @apply w-2/3 mx-auto flex gap-5  py-5;
+  @apply w-3/4 mx-auto flex gap-5  py-5;
 }
 .block1 {
   @apply py-5 text-base text-gray-700 w-[250px] border-r border-r-gray-200;
 }
 .block1 a {
-  @apply block py-2 px-4 hover:bg-pink-50 text-gray-600 text-base hover:text-red-400 truncate;
+  @apply block py-2 px-4 hover:bg-pink-50 text-gray-600 text-base hover:text-red-400 text-ellipsis overflow-hidden;
 }
 .block2 {
   @apply w-2/3;
@@ -20,11 +35,12 @@
   @apply text-lg font-semibold text-gray-600;
 }
 .productType {
-  @apply grid grid-cols-3 gap-y-5 text-gray-600;
+  @apply grid grid-cols-3 gap-5  text-gray-600;
 }
-.productType a {
-  @apply hover:text-red-400;
+.productType li {
+  @apply text-ellipsis overflow-hidden hover:text-red-400;
 }
+
 .brands {
   @apply flex gap-3 flex-wrap py-5;
 }

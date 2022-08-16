@@ -11,7 +11,8 @@ export const useClickOutside = (initialIsVisible: boolean): Iout => {
   const ref = useRef<HTMLElement>(null);
 
   const handleClickOutside = (event: any) => {
-    if (event.path[0] !== ref.current) {
+    // if (event.path[0] !== ref.current) такой вариант работает, но есть варианты когда косячит
+    if (ref.current && !ref.current.contains(event.target)) {
       setIsShow(true);
     }
   };

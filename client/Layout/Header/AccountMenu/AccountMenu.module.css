@@ -1,0 +1,33 @@
+.account {
+  @apply relative border rounded-full shadow-sm py-2.5 px-8 hover:bg-white  text-gray-600 text-base;
+}
+
+.icons1 {
+  @apply absolute fill-gray-600 w-5 h-5 top-3.5 left-2;
+}
+.icons2 {
+  @apply absolute fill-gray-600 w-5 h-5 top-4 right-2;
+}
+/* выпадающий список */
+.hidden {
+  display: none;
+}
+.show {
+  @apply fixed  top-[125px] right-[230px]   z-10  bg-white shadow-md rounded-md;
+}
+.link {
+  @apply relative pl-8 block py-1 hover:bg-red-50 hover:text-red-400;
+}
+.favourites {
+  @apply absolute top-2.5 left-3 fill-gray-600;
+}
+.bage {
+  @apply inline-flex  justify-center w-5 h-5 absolute top-2 right-3 
+                    rounded-full bg-blue-500 text-white text-xs font-bold;
+}
+.link:hover .favourites {
+  @apply fill-red-400;
+}
+.link:hover .bage {
+  @apply bg-red-400;
+}

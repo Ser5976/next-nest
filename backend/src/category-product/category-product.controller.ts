@@ -26,7 +26,6 @@ export class CategoryProductController {
   }
   // получение категории товаров
   @Get()
-  @Auth()
   async getCategoryProduct() {
     return this.CategoryProductService.getCategoryProduct();
   }

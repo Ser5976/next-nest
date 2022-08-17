@@ -5,10 +5,12 @@ import { HeaderProps } from './Header.props';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { CatalogMenu } from './CatalogMenu/CatalogMenu';
 import { AccountMenu } from './AccountMenu/AccountMenu';
+import { BsCart } from 'react-icons/bs';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const auth = false;
   const showAccount = false;
+  const count = 5;
 
   return (
     <>
@@ -42,8 +44,14 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
               <AiOutlineSearch />
             </button>
           </div>
+
           <AccountMenu />
-          <button>5</button>
+
+          <button className={styles.cart}>
+            Корзина
+            <BsCart className={styles.cartIcon} />
+            {count >= 1 ? <span className={styles.bage}>{count}</span> : null}
+          </button>
         </div>
         <div className="   bg-gradient-to-l from-lime-400 via-amber-400 to-red-400">
           <ul className=" flex   justify-center text-white text-base items-center ">

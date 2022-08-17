@@ -11,16 +11,18 @@ export const CatalogMenu = ({
   ...props
 }: CatalogMenuProps): JSX.Element => {
   const { ref, isShow, setIsShow } = useClickOutside(true); //кастомный хук (используем для закрытия dropdown по клику снаружи)
-  const catalogRef = ref;
 
   return (
     <>
-      <div className={cn(className, styles.catalog)} {...props}>
-        <button ref={catalogRef} onClick={() => setIsShow(!isShow)}>
-          Каталог товаров
-        </button>
+      <button
+        className={cn(className, styles.catalog)}
+        ref={ref}
+        onClick={() => setIsShow(!isShow)}
+        {...props}
+      >
+        Каталог товаров
         <span>{isShow ? <SiScrollreveal /> : <AiOutlineClose />}</span>
-      </div>
+      </button>
 
       {/* выпадающий список */}
       <div

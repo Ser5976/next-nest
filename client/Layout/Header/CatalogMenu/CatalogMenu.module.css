@@ -1,9 +1,7 @@
 .catalog {
-  @apply relative;
+  @apply relative text-gray-600 border rounded-full shadow-sm py-2.5 pl-10 pr-5 text-base hover:bg-white;
 }
-.catalog button {
-  @apply text-gray-600 border rounded-full shadow-sm py-2.5 pl-10 pr-5 text-base hover:bg-white;
-}
+
 .catalog span {
   @apply absolute top-2.5 bottom-0 left-0 bg-red-400 w-[28px] h-[28px] mx-2 
     rounded-full;

@@ -12,6 +12,7 @@ import { ImExit } from 'react-icons/im';
 import { VscEye } from 'react-icons/vsc';
 import { VscFeedback } from 'react-icons/vsc';
 import { MdPersonOutline } from 'react-icons/md';
+import { BsPerson } from 'react-icons/bs';
 
 export const AccountMenu = ({
   className,
@@ -31,7 +32,7 @@ export const AccountMenu = ({
         {...props}
       >
         {auth ? (
-          <VscAccount className={styles.icons1} />
+          <BsPerson className={styles.icons1} />
         ) : (
           <MdExitToApp className={styles.icons1} />
         )}
@@ -84,7 +85,7 @@ export const AccountMenu = ({
               </Link>
               <Link href="#">
                 <a className={styles.link}>
-                  <MdPersonOutline className={styles.favourites} />
+                  <BsPerson className={styles.favourites} />
                   Личные данные
                 </a>
               </Link>

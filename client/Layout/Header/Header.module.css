@@ -28,3 +28,13 @@
 .logo {
   @apply text-3xl font-bold  text-red-400 italic hover:text-red-500;
 }
+.cart {
+  @apply relative border rounded-full shadow-sm py-2.5 px-8 hover:bg-white  text-gray-600 text-base;
+}
+.cartIcon {
+  @apply absolute fill-gray-600 w-5 h-5 top-3.5 left-2;
+}
+.bage {
+  @apply inline-flex  justify-center w-5 h-5 absolute top-1 right-3 border-2 border-white
+  rounded-full bg-red-400 text-white text-xs;
+}

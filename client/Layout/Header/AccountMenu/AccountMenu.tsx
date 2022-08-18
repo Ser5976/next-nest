@@ -3,24 +3,22 @@ import styles from './AccountMenu.module.css';
 import Link from 'next/link';
 import { AccountMenuProps } from './AccountMenu.props';
 import { useClickOutside } from '../../../hook/clickOutside';
-import { VscAccount } from 'react-icons/vsc';
 import { MdExitToApp } from 'react-icons/md';
-import { MdOutlineManageAccounts } from 'react-icons/md';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { ImExit } from 'react-icons/im';
 import { VscEye } from 'react-icons/vsc';
 import { VscFeedback } from 'react-icons/vsc';
-import { MdPersonOutline } from 'react-icons/md';
-import { BsPerson } from 'react-icons/bs';
+import { BsPerson, BsPersonFill } from 'react-icons/bs';
 
 export const AccountMenu = ({
   className,
+  setShowModal, // открытие модалки логина
   ...props
 }: AccountMenuProps): JSX.Element => {
   const { ref, isShow, setIsShow } = useClickOutside(true); //кастомный хук (используем для закрытия
   //dropdown по клику снаружи)
-  const auth = true;
+  const auth = false;
   const count = 5;
 
   return (
@@ -97,9 +95,14 @@ export const AccountMenu = ({
             </button>
           </div>
         ) : (
-          <div className=" flex flex-col py-5 w-[200px] items-center">
-            <MdOutlineManageAccounts className=" w-[50px] h-[50px] top-0 right-0 fill-slate-400 " />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ">
+          <div className=" flex flex-col py-5 w-[150px] items-center">
+            <BsPersonFill className=" w-[30px] h-[30px] top-0 right-0 fill-gray-400 mb-3" />
+            <button
+              className="bg-blue-500 w-20  self-center text-white text-base active:bg-blue-600 font-bold 
+              px-5 py-2 rounded shadow hover:shadow-lg outline-none 
+             focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              onClick={() => setShowModal(true)}
+            >
               Вход
             </button>
           </div>

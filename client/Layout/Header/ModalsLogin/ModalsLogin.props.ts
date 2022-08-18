@@ -5,10 +5,8 @@ import {
   SetStateAction,
 } from 'react';
 
-export interface AccountMenuProps
-  extends DetailedHTMLProps<
-    HTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+export interface ModalsLoginProps
+  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }

@@ -6,8 +6,12 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { CatalogMenu } from './CatalogMenu/CatalogMenu';
 import { AccountMenu } from './AccountMenu/AccountMenu';
 import { BsCart } from 'react-icons/bs';
+import { useState } from 'react';
+import { ModalsLogin } from './ModalsLogin/ModalsLogin';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
+  const [showModal, setShowModal] = useState(false);
+
   const auth = false;
   const showAccount = false;
   const count = 5;
@@ -45,7 +49,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
             </button>
           </div>
 
-          <AccountMenu />
+          <AccountMenu setShowModal={setShowModal} />
 
           <button className={styles.cart}>
             Корзина
@@ -90,6 +94,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
           </ul>
         </div>
       </header>
+      <ModalsLogin setShowModal={setShowModal} showModal={showModal} />
     </>
   );
 };

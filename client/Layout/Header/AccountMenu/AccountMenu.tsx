@@ -13,7 +13,6 @@ import { BsPerson, BsPersonFill } from 'react-icons/bs';
 
 export const AccountMenu = ({
   className,
-  setShowModal, // открытие модалки логина
   ...props
 }: AccountMenuProps): JSX.Element => {
   const { ref, isShow, setIsShow } = useClickOutside(true); //кастомный хук (используем для закрытия
@@ -95,16 +94,17 @@ export const AccountMenu = ({
             </button>
           </div>
         ) : (
-          <div className=" flex flex-col py-5 w-[150px] items-center">
+          <div className=" flex flex-col py-5 w-[250px] items-center">
             <BsPersonFill className=" w-[30px] h-[30px] top-0 right-0 fill-gray-400 mb-3" />
-            <button
-              className="bg-blue-500 w-20  self-center text-white text-base active:bg-blue-600 font-bold 
+            <Link href="/auth">
+              <a
+                className="bg-blue-500 w-20  self-center text-white text-base active:bg-blue-600 font-bold 
               px-5 py-2 rounded shadow hover:shadow-lg outline-none 
              focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              onClick={() => setShowModal(true)}
-            >
-              Вход
-            </button>
+              >
+                Вход
+              </a>
+            </Link>
           </div>
         )}
       </div>

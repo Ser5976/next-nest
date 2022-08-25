@@ -7,7 +7,6 @@ import { CatalogMenu } from './CatalogMenu/CatalogMenu';
 import { AccountMenu } from './AccountMenu/AccountMenu';
 import { BsCart } from 'react-icons/bs';
 import { useState } from 'react';
-import { ModalsLogin } from './ModalsLogin/ModalsLogin';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
@@ -34,7 +33,9 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
           </Link>
         </ul>
         <div className={styles.header2}>
-          <button className={styles.logo}>TrainingProject</button>
+          <Link href="/">
+            <a className={styles.logo}>TrainingProject</a>
+          </Link>
 
           <CatalogMenu />
 
@@ -49,7 +50,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
             </button>
           </div>
 
-          <AccountMenu setShowModal={setShowModal} />
+          <AccountMenu />
 
           <button className={styles.cart}>
             Корзина
@@ -94,7 +95,6 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
           </ul>
         </div>
       </header>
-      <ModalsLogin setShowModal={setShowModal} showModal={showModal} />
     </>
   );
 };

@@ -1,0 +1,90 @@
+import cn from 'classnames';
+import { AuthProps } from './Auth.props';
+import styles from './Auth.module.css';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { IAuth } from './interfaceAuth';
+import { Input } from '../../ui/Input/Input';
+import { Button } from '../../ui/Button/Button';
+
+export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
+  // выбор авторизации(логин или регистрация)
+  const [type, setType] = useState<'login' | 'registration'>('login');
+
+  const handleType = () => {
+    if (type === 'login') {
+      setType('registration');
+    } else {
+      setType('login');
+    }
+  };
+
+  //react-hook-form для работы с формой
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IAuth>({
+    mode: 'onChange',
+  });
+
+  //получаем данные из формы
+  const onSubmit: SubmitHandler<IAuth> = (data) => {
+    try {
+      if (type === 'login') {
+        console.log('Login:', data);
+      } else {
+        console.log('Registr:', data);
+      }
+      reset(); // очистка формы
+      setType('login'); //переход на логин
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className={cn(className, styles.wrapper)} {...props}>
+      <div className={styles.modal}>
+        <h3 className="text-lg text-gray-600 font-medium text-center">
+          {type === 'login' ? 'Вход' : 'Регистрация'}
+        </h3>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            type="email"
+            placeholder="email"
+            {...register('email', {
+              required: 'Обязательное поле для заполнения',
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Неправильный формат электронной почты',
+              },
+            })}
+            error={errors.email}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            {...register('password', {
+              required: 'Обязательное поле для заполнения',
+              minLength: {
+                value: 5,
+                message: 'Пароль должен содержать не менее 5 символов',
+              },
+            })}
+            error={errors.password}
+          />
+
+          <Button type="submit" className="self-center">
+            {type === 'login' ? 'Войти' : 'Зарегистрироваться'}
+          </Button>
+        </form>
+        <button className={styles.button} onClick={handleType}>
+          {type === 'login' ? 'Регистрация' : 'Назад'}
+        </button>
+      </div>
+    </div>
+  );
+};

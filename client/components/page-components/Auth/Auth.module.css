@@ -1,0 +1,18 @@
+.wrapper {
+  @apply flex  justify-center  min-h-screen;
+}
+.modal {
+  @apply mt-12 border-0 rounded-lg shadow-lg relative flex flex-col  py-10 px-5 w-1/3  h-1/2 bg-slate-200 outline-none focus:outline-none min-w-[250px];
+}
+
+.form {
+  @apply py-5 px-3 flex flex-col space-y-7 justify-center;
+}
+.buttonSubmit {
+  @apply bg-blue-500   self-center text-white active:bg-blue-600 font-bold 
+  text-base px-6 py-3 rounded shadow hover:shadow-lg outline-none 
+ focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
+}
+.button {
+  @apply text-sm text-blue-500 hover:text-blue-600;
+}

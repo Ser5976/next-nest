@@ -10,6 +10,10 @@ import { ImExit } from 'react-icons/im';
 import { VscEye } from 'react-icons/vsc';
 import { VscFeedback } from 'react-icons/vsc';
 import { BsPerson, BsPersonFill } from 'react-icons/bs';
+import { logout } from '../../../store/auth/authActoins';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../store/store';
+import { useState } from 'react';
 
 export const AccountMenu = ({
   className,
@@ -17,9 +21,14 @@ export const AccountMenu = ({
 }: AccountMenuProps): JSX.Element => {
   const { ref, isShow, setIsShow } = useClickOutside(true); //кастомный хук (используем для закрытия
   //dropdown по клику снаружи)
-  const auth = false;
+  const [auth, setAuth] = useState(true);
   const count = 5;
-
+  const dispatch = useDispatch<AppDispatch>();
+  const exit = async () => {
+    await dispatch(logout());
+    setAuth(false);
+    setIsShow(false);
+  };
   return (
     <>
       <button
@@ -88,7 +97,10 @@ export const AccountMenu = ({
               </Link>
             </ul>
             <div className="px-5 m-3 bg-transparent border-b"></div>
-            <button className=" relative pl-8 hover:bg-red-50 w-full flex justify-start text-red-400 py-1">
+            <button
+              className=" relative pl-8 hover:bg-red-50 w-full flex justify-start text-red-400 py-1"
+              onClick={exit}
+            >
               <ImExit className=" absolute top-2.5 left-3 fill-red-400 " />
               Выход
             </button>
@@ -97,13 +109,7 @@ export const AccountMenu = ({
           <div className=" flex flex-col py-5 w-[250px] items-center">
             <BsPersonFill className=" w-[30px] h-[30px] top-0 right-0 fill-gray-400 mb-3" />
             <Link href="/auth">
-              <a
-                className="bg-blue-500 w-20  self-center text-white text-base active:bg-blue-600 font-bold 
-              px-5 py-2 rounded shadow hover:shadow-lg outline-none 
-             focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              >
-                Вход
-              </a>
+              <a className={styles.entry}>Вход</a>
             </Link>
           </div>
         )}

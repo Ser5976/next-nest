@@ -4,9 +4,8 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button } from '../components/ui/Button/Button';
-
 import { Layout } from '../Layout/Layout';
-import { authorization, selectProfile } from '../store/reducers/authSlice';
+import { example, selectProfile } from '../store/exampleSlice';
 import { wrapper } from '../store/store';
 
 const por = {
@@ -47,7 +46,7 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
+/* export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
     store.dispatch(authorization(por));
     // console.log('env:', process.env.HOST_API);
@@ -57,6 +56,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       },
     };
   }
-);
+); */
 
 export default Home;

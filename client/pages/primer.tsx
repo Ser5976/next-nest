@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Layout } from '../Layout/Layout';
-import { authorization, selectProfile } from '../store/reducers/authSlice';
+import { authorization, selectProfile } from '../store/exampleSlice';
 import { wrapper } from '../store/store';
 
 const Primer: NextPage = () => {
@@ -25,10 +25,7 @@ const Primer: NextPage = () => {
  */
   return (
     <Layout title="Home page" description="Тренировочный проект eCommerce">
-      <h1 className=" text-lg font-bold">
-        {' '}
-        Токен: {auth.authData.refreshToken}
-      </h1>
+      <h1 className=" text-lg font-bold"> Токен:</h1>
     </Layout>
   );
 };

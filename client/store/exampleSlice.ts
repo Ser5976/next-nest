@@ -1,4 +1,4 @@
-import { AppState } from './../store';
+import { AppState } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
@@ -16,11 +16,11 @@ const initialState = {
   authData: {} as IauthData,
 };
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const exampleSlice = createSlice({
+  name: 'example',
   initialState,
   reducers: {
-    authorization: (state, action: PayloadAction<IauthData>) => {
+    example: (state, action: PayloadAction<IauthData>) => {
       state.authData = action.payload;
     },
     logaut: (state) => {
@@ -31,17 +31,17 @@ export const authSlice = createSlice({
     [HYDRATE]: (state, action) => {
       // console.log('HYDRATE', action.payload);
 
-      if (!action.payload.authReducer.authData) {
+      if (!action.payload.exampleReducer.authData) {
         return state;
       }
 
-      state.authData = action.payload.authReducer.authData;
+      state.authData = action.payload.example.authData;
       // console.log('Стейт общий:', state.authData);
     },
   },
 });
 
-export const { authorization } = authSlice.actions;
-export const selectProfile = (state: AppState) => state.authReducer;
+export const { example } = exampleSlice.actions;
+export const selectProfile = (state: AppState) => state.exampleReducer;
 
-export default authSlice.reducer;
+export default exampleSlice.reducer;

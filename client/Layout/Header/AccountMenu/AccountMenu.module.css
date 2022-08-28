@@ -8,7 +8,7 @@
 .icons2 {
   @apply absolute fill-gray-600 w-5 h-5 top-4 right-2;
 }
-/* выпадающий список */
+/* выпадающий список 1 */
 .hidden {
   display: none;
 }
@@ -30,4 +30,11 @@
 }
 .link:hover .bage {
   @apply bg-red-400;
+}
+
+/* выпадающий список 2 */
+.entry {
+  @apply bg-blue-500 w-20  self-center text-white text-base active:bg-blue-600 font-bold 
+  px-5 py-2 rounded shadow hover:shadow-lg outline-none 
+ focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
 }

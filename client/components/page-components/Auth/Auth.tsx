@@ -9,8 +9,10 @@ import { Button } from '../../ui/Button/Button';
 import { login, registration } from '../../../store/auth/authActoins';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
+import { useAuthRedirect } from './useAuthRedirect';
 
 export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
+  useAuthRedirect(); // вернёмся на ту страницу с которой нас редиректнули
   // выбор авторизации(логин или регистрация)
   const [type, setType] = useState<'login' | 'registration'>('login');
   const dispatch = useDispatch<AppDispatch>();

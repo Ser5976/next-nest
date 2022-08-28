@@ -30,7 +30,7 @@ export const authSlice = createSlice({
     //ошибка
     [registration.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
-      console.log(action.payload);
+      state.user = null;
     },
     //---логин---
     //период загрузки
@@ -45,7 +45,7 @@ export const authSlice = createSlice({
     //ошибка
     [login.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
-      console.log(action.payload);
+      state.user = null;
     },
     //---логаут---
     //удаляем юзера из стейта

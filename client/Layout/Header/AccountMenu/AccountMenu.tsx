@@ -13,21 +13,21 @@ import { BsPerson, BsPersonFill } from 'react-icons/bs';
 import { logout } from '../../../store/auth/authActoins';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';
-import { useState } from 'react';
+import { useData } from '../../../store/auth/useData'; //кастомных хук получение данных из стора
 
 export const AccountMenu = ({
   className,
   ...props
 }: AccountMenuProps): JSX.Element => {
-  const { ref, isShow, setIsShow } = useClickOutside(true); //кастомный хук (используем для закрытия
-  //dropdown по клику снаружи)
-  const [auth, setAuth] = useState(true);
+  //кастомный хук (используем для закрытия dropdown по клику снаружи)
+  const { ref, isShow, setIsShow } = useClickOutside(true);
+
+  const { authReducer } = useData();
+
   const count = 5;
   const dispatch = useDispatch<AppDispatch>();
   const exit = async () => {
     await dispatch(logout());
-    setAuth(false);
-    setIsShow(false);
   };
   return (
     <>
@@ -37,7 +37,7 @@ export const AccountMenu = ({
         onClick={() => setIsShow(!isShow)}
         {...props}
       >
-        {auth ? (
+        {authReducer.user ? (
           <BsPerson className={styles.icons1} />
         ) : (
           <MdExitToApp className={styles.icons1} />
@@ -52,13 +52,13 @@ export const AccountMenu = ({
 
       {/* меню список */}
       <div className={cn(styles.show, { [styles.hidden]: isShow })}>
-        {auth ? (
+        {authReducer.user ? (
           <div className="  h-[270px] w-[250px] ">
             <div className=" text-center text-lg text-gray-600 font-medium mt-3">
               Аккаунт
             </div>
             <div className=" text-center text-xs text-gray-500">
-              gray050976@mail.ru
+              {authReducer.user.email}
             </div>
             <div className="px-5 m-3 bg-transparent border-b"></div>
             <ul>

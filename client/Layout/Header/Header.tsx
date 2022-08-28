@@ -9,10 +9,6 @@ import { BsCart } from 'react-icons/bs';
 import { useState } from 'react';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
-  const [showModal, setShowModal] = useState(false);
-
-  const auth = false;
-  const showAccount = false;
   const count = 5;
 
   return (

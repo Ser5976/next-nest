@@ -6,16 +6,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IAuth } from './interfaceAuth';
 import { Input } from '../../ui/Input/Input';
 import { Button } from '../../ui/Button/Button';
-import { login, registration } from '../../../store/auth/authActoins';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../store/store';
 import { useAuthRedirect } from './useAuthRedirect';
+import { useActions } from '../../../store/useActions'; // кастомный хук для получения экшенов(диспач уже в нём и типизация)
 
 export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
   useAuthRedirect(); // вернёмся на ту страницу с которой нас редиректнули
   // выбор авторизации(логин или регистрация)
   const [type, setType] = useState<'login' | 'registration'>('login');
-  const dispatch = useDispatch<AppDispatch>();
+
+  const { login, registration } = useActions();
 
   const handleType = () => {
     if (type === 'login') {
@@ -40,10 +39,10 @@ export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
     try {
       if (type === 'login') {
         console.log('Login:', data);
-        dispatch(login(data));
+        login(data);
       } else {
         console.log('Registr:', data);
-        dispatch(registration(data));
+        registration(data);
       }
       reset(); // очистка формы
       setType('login'); //переход на логин

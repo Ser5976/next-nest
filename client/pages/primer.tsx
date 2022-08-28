@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Layout } from '../Layout/Layout';
-import { authorization, selectProfile } from '../store/exampleSlice';
+//import { authorization, selectProfile } from '../store/exampleSlice';
 import { wrapper } from '../store/store';
 
 const Primer: NextPage = () => {
-  const auth = useSelector(selectProfile);
+  // const auth = useSelector(selectProfile);
   const rout = useRouter();
 
   /* const funs = async () => {

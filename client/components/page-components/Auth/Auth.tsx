@@ -16,6 +16,7 @@ export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
 
   const { login, registration } = useActions();
 
+  // выбор регистрация или логин
   const handleType = () => {
     if (type === 'login') {
       setType('registration');

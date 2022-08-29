@@ -1,12 +1,15 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button } from '../components/ui/Button/Button';
 import { Layout } from '../Layout/Layout';
-import { example, selectProfile } from '../store/exampleSlice';
+import { IUser } from '../store/auth/interface.auth';
+
 import { wrapper } from '../store/store';
+import { useData } from '../store/useData';
 
 const por = {
   user: {
@@ -20,7 +23,11 @@ const por = {
 
 const Home: NextPage = () => {
   // console.log(props.category);
-  const auth = useSelector(selectProfile);
+  const { authReducer } = useData();
+  const [user, setUser] = useState<IUser | null>(null);
+  useEffect(() => {
+    setUser(authReducer.user);
+  }, [authReducer.user]);
 
   return (
     <Layout title="Home page" description="Тренировочный проект eCommerce">
@@ -28,8 +35,8 @@ const Home: NextPage = () => {
         <main className="p-10 grow ">
           <h1 className="text-lg font-semibold ">Начало!</h1>
         </main>
-        <h1 className=" text-lg"> Токен:{auth.authData.refreshToken}</h1>
-        <Link href="/primer">
+        <h1 className=" text-lg"> Токен:{user?.email}</h1>
+        <Link href="/abaut">
           <a>Пример</a>
         </Link>
         <button

@@ -10,10 +10,10 @@ import { ImExit } from 'react-icons/im';
 import { VscEye } from 'react-icons/vsc';
 import { VscFeedback } from 'react-icons/vsc';
 import { BsPerson, BsPersonFill } from 'react-icons/bs';
-import { logout } from '../../../store/auth/authActoins';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../store/store';
-import { useData } from '../../../store/auth/useData'; //кастомных хук получение данных из стора
+import { useData } from '../../../store/useData'; //кастомных хук получение данных из стора
+import { useEffect, useState } from 'react';
+import { IUser } from '../../../store/auth/interface.auth';
+import { useActions } from '../../../store/useActions'; //кастомный хук получение экшенов(крутяк, useDispatch уже в нём)
 
 export const AccountMenu = ({
   className,
@@ -23,11 +23,18 @@ export const AccountMenu = ({
   const { ref, isShow, setIsShow } = useClickOutside(true);
 
   const { authReducer } = useData();
-
+  const { logout } = useActions();
+  //костыль,чтобы обойти ошибку гидрации,не знаю как это решить правильно.
+  //суть в том ,что данные на прямую из стора,через useData,рендерется и на серваке, а данных сервак не получает,
+  // а клиент получает и происходит конфликт,useEffect этот вопрос решает.
+  const [user, setUser] = useState<IUser | null>(null);
+  useEffect(() => {
+    setUser(authReducer.user);
+  }, [authReducer.user]);
   const count = 5;
-  const dispatch = useDispatch<AppDispatch>();
-  const exit = async () => {
-    await dispatch(logout());
+  // удаления данных авторизации
+  const handleLogout = () => {
+    logout();
   };
   return (
     <>
@@ -37,7 +44,7 @@ export const AccountMenu = ({
         onClick={() => setIsShow(!isShow)}
         {...props}
       >
-        {authReducer.user ? (
+        {user ? (
           <BsPerson className={styles.icons1} />
         ) : (
           <MdExitToApp className={styles.icons1} />
@@ -52,13 +59,13 @@ export const AccountMenu = ({
 
       {/* меню список */}
       <div className={cn(styles.show, { [styles.hidden]: isShow })}>
-        {authReducer.user ? (
+        {user ? (
           <div className="  h-[270px] w-[250px] ">
             <div className=" text-center text-lg text-gray-600 font-medium mt-3">
               Аккаунт
             </div>
             <div className=" text-center text-xs text-gray-500">
-              {authReducer.user.email}
+              {user.email}
             </div>
             <div className="px-5 m-3 bg-transparent border-b"></div>
             <ul>
@@ -99,7 +106,7 @@ export const AccountMenu = ({
             <div className="px-5 m-3 bg-transparent border-b"></div>
             <button
               className=" relative pl-8 hover:bg-red-50 w-full flex justify-start text-red-400 py-1"
-              onClick={exit}
+              onClick={handleLogout}
             >
               <ImExit className=" absolute top-2.5 left-3 fill-red-400 " />
               Выход

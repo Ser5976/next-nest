@@ -1,4 +1,3 @@
-import { AppState } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
@@ -42,6 +41,5 @@ export const exampleSlice = createSlice({
 });
 
 export const { example } = exampleSlice.actions;
-export const selectProfile = (state: AppState) => state.exampleReducer;
 
 export default exampleSlice.reducer;

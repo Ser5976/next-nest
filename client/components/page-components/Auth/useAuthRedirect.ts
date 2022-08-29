@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useData } from '../../../store/auth/useData';
+import { useData } from '../../../store/useData';
 
 // хук ,который делает редирек
 export const useAuthRedirect = () => {

@@ -15,6 +15,6 @@ export interface IAuthResponse extends ITokens {
   user: IUser;
 }
 export interface IInitialState {
-  user: IUserState | null;
+  user: IUser | null;
   isLoading: boolean;
 }

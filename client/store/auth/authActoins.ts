@@ -6,14 +6,15 @@ import { IAuthResponse } from './interface.auth'; // типизация респ
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { AuthService } from './auth.service'; //сервисы запросов на бэкэнд (авторизация)
 
 //регистрация
 export const registration = createAsyncThunk(
   'auth/register',
   async (data: IAuth, thunkApp) => {
     try {
-      //делаем запрос и получаем данные по регистрации
-      const response = await axios.post<IAuthResponse>(API.auth.register, data);
+      // получаем данные по регистрации
+      const response = await AuthService.register(data);
       // общая функция: записываем юзера в localStorage и в куки токены(auth.helper)
       if (response.data.accessToken) {
         saveToStorage(response.data);
@@ -38,7 +39,7 @@ export const login = createAsyncThunk(
   async (data: IAuth, thunkApp) => {
     try {
       //делаем запрос и получаем данные по авторизации
-      const response = await axios.post<IAuthResponse>(API.auth.login, data);
+      const response = await AuthService.login(data);
       // общая функция: записываем юзера в localStorage и в куки токены(auth.helper)
       if (response.data.accessToken) {
         saveToStorage(response.data);
@@ -57,36 +58,27 @@ export const login = createAsyncThunk(
   }
 );
 // логаут
+//удаляем токены из куки,удаляем юзера из локал
 export const logout = createAsyncThunk('auth/logout', async () => {
   try {
-    await removeTokensStorage(); //удаляем токены из куки
-    await localStorage.removeItem('user'); //удаляем юзера из локал
+    await AuthService.logout();
   } catch (error: any) {
     console.log(error);
   }
 });
-//// проверка токена,получение нового токина, или выход из авторизации, если токен не валиден
+// проверка токена,получение нового токина, или выход из авторизации, если токен не валиден
 export const checkAuth = createAsyncThunk(
   'auth/check-auth',
   async (_, thunkApp) => {
-    const refreshToken = Cookies.get('refreshToken'); //получение refreshToken из куки
-
     try {
-      //делаем запрос и получаем данные по adnjhbpfwbb
-      const response = await axios.post<IAuthResponse>(API.auth.checkAuth, {
-        refreshToken,
-      });
-      // общая функция: записываем юзера в localStorage и в куки токены(auth.helper)
-      if (response.data.accessToken) {
-        saveToStorage(response.data);
-      }
+      //делаем запрос и получаем данные по авторизации
+      const response = await AuthService.getNewTokens(); //получем refresh из куки,делаем запрос,
+      //проверяем refresh , обновляем токены и записываем в куки и юзера в локал
       return response.data;
     } catch (error: any) {
-      console.log(error);
       // обработка ошибки и отправка сообщения пользователю при помощи toas
-      toast.error('Пожалуйства авторизируйтись занова!');
+      //  toast.error('Пожалуйства авторизируйтись занова!');
       thunkApp.dispatch(logout()); //выход из авторизации
-
       thunkApp.rejectWithValue(error);
     }
   }

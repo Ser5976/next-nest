@@ -13,6 +13,8 @@ import { BsPerson, BsPersonFill } from 'react-icons/bs';
 import { useData } from '../../../store/useData'; //кастомных хук получение данных из стора
 import { useEffect, useState } from 'react';
 import { IUser } from '../../../store/auth/interface.auth';
+import { GrUserAdmin } from 'react-icons/gr';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { useActions } from '../../../store/useActions'; //кастомный хук получение экшенов(крутяк, useDispatch уже в нём)
 
 export const AccountMenu = ({
@@ -60,7 +62,7 @@ export const AccountMenu = ({
       {/* меню список */}
       <div className={cn(styles.show, { [styles.hidden]: isShow })}>
         {user ? (
-          <div className="  h-[270px] w-[250px] ">
+          <div className="  h-[auto] w-[250px] ">
             <div className=" text-center text-lg text-gray-600 font-medium mt-3">
               Аккаунт
             </div>
@@ -71,7 +73,7 @@ export const AccountMenu = ({
             <ul>
               <Link href="#">
                 <a className={styles.link}>
-                  <MdOutlineFavoriteBorder className={styles.favourites} />
+                  <MdOutlineFavoriteBorder className={styles.icons3} />
                   {count >= 1 ? (
                     <span className={styles.bage}>{count}</span>
                   ) : null}
@@ -80,7 +82,7 @@ export const AccountMenu = ({
               </Link>
               <Link href="#">
                 <a className={styles.link}>
-                  <VscEye className={styles.favourites} />
+                  <VscEye className={styles.icons3} />
                   {count >= 1 ? (
                     <span className={styles.bage}>{count}</span>
                   ) : null}
@@ -89,7 +91,7 @@ export const AccountMenu = ({
               </Link>
               <Link href="#">
                 <a className={styles.link}>
-                  <VscFeedback className={styles.favourites} />
+                  <VscFeedback className={styles.icons3} />
                   {count >= 1 ? (
                     <span className={styles.bage}>{count}</span>
                   ) : null}
@@ -98,10 +100,18 @@ export const AccountMenu = ({
               </Link>
               <Link href="#">
                 <a className={styles.link}>
-                  <BsPerson className={styles.favourites} />
+                  <BsPerson className={styles.icons3} />
                   Личные данные
                 </a>
               </Link>
+              {user.isAdmin ? (
+                <Link href="#">
+                  <a className={styles.link}>
+                    <MdOutlineAdminPanelSettings className={styles.icons3} />
+                    Админ панель
+                  </a>
+                </Link>
+              ) : null}
             </ul>
             <div className="px-5 m-3 bg-transparent border-b"></div>
             <button

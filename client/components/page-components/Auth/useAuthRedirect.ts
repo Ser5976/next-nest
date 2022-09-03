@@ -6,11 +6,18 @@ import { useData } from '../../../store/useData';
 export const useAuthRedirect = () => {
   const { authReducer } = useData();
 
-  const { query, push } = useRouter();
+  const { query, push, back } = useRouter();
 
-  const redirect = query.redirect ? String(query.redirect) : '/';
+  const redirect = query.redirect && String(query.redirect);
 
   useEffect(() => {
-    if (authReducer.user) push(redirect);
+    if (authReducer.user && redirect) {
+      push(redirect);
+      return;
+    }
+    if (authReducer.user) {
+      console.log('редерект');
+      back();
+    }
   }, [authReducer.user, redirect, push]);
 };

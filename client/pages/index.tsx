@@ -2,7 +2,6 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button } from '../components/ui/Button/Button';
 import { Layout } from '../Layout/Layout';
@@ -38,6 +37,12 @@ const Home: NextPage = () => {
         <h1 className=" text-lg"> Токен:{user?.email}</h1>
         <Link href="/abaut">
           <a>Пример</a>
+        </Link>
+        <Link href="/profile">
+          <a>Профайл</a>
+        </Link>
+        <Link href="/admin">
+          <a>Админ</a>
         </Link>
         <button
           onClick={() => {

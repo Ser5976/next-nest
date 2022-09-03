@@ -8,6 +8,7 @@ import { Input } from '../../ui/Input/Input';
 import { Button } from '../../ui/Button/Button';
 import { useAuthRedirect } from './useAuthRedirect';
 import { useActions } from '../../../store/useActions'; // кастомный хук для получения экшенов(диспач уже в нём и типизация)
+import { useRouter } from 'next/router';
 
 export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
   useAuthRedirect(); // вернёмся на ту страницу с которой нас редиректнули
@@ -16,6 +17,8 @@ export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
 
   const { login, registration } = useActions();
 
+  const router = useRouter();
+  console.log(router);
   // выбор регистрация или логин
   const handleType = () => {
     if (type === 'login') {

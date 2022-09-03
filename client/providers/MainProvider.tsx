@@ -1,15 +1,13 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
+import { TypeComponentAuthFields } from './auth/auth.types';
+import AuthProvider from './auth/AuthProvider';
 import Toast from './toast/Toast';
 
-export interface MainPrviderProps {
-  children: ReactNode;
-}
-
-const MainProvider: FC<MainPrviderProps> = ({ children }) => {
+const MainProvider: FC<TypeComponentAuthFields> = ({ children, Component }) => {
   return (
     <>
       <Toast />
-      {children}
+      <AuthProvider Component={Component}>{children}</AuthProvider>
     </>
   );
 };

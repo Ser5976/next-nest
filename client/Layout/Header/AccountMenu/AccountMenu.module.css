@@ -18,14 +18,14 @@
 .link {
   @apply relative pl-8 block py-1 hover:bg-red-50 hover:text-red-400;
 }
-.favourites {
+.icons3 {
   @apply absolute top-2.5 left-3 fill-gray-600;
 }
 .bage {
   @apply inline-flex  justify-center w-5 h-5 absolute top-2 right-3 
                     rounded-full bg-blue-500 text-white text-xs font-bold;
 }
-.link:hover .favourites {
+.link:hover .icons3 {
   @apply fill-red-400;
 }
 .link:hover .bage {

@@ -59,10 +59,10 @@ let AuthService = class AuthService {
     async generatePairToken(userId) {
         const data = { _id: userId };
         const refreshToken = await this.jwtService.signAsync(data, {
-            expiresIn: '15d',
+            expiresIn: 120,
         });
         const accessToken = await this.jwtService.signAsync(data, {
-            expiresIn: '24h',
+            expiresIn: 60,
         });
         return { refreshToken, accessToken };
     }

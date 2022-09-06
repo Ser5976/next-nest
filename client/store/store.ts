@@ -1,12 +1,12 @@
 import { configureStore, ThunkAction, combineReducers } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { Action } from 'redux';
-import exampleReducer from './exampleSlice';
 import authReducer from './auth/authSlice';
+import forCustomersReducer from './customers/customersSlice';
 
 const rootReducer = combineReducers({
-  exampleReducer,
   authReducer,
+  forCustomersReducer,
 });
 
 export const makeStore = () =>

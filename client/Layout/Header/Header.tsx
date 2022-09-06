@@ -6,27 +6,24 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { CatalogMenu } from './CatalogMenu/CatalogMenu';
 import { AccountMenu } from './AccountMenu/AccountMenu';
 import { BsCart } from 'react-icons/bs';
-import { useState } from 'react';
+import { useData } from '../../store/useData';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const count = 5;
+  const { forCustomersReducer } = useData();
 
   return (
     <>
       <header className={cn(className, styles.header)} {...props}>
         <ul className={styles.header1}>
-          <Link href="#">
-            <a>Доставка</a>
-          </Link>
-          <Link href="#">
-            <a>Оплата</a>
-          </Link>
-          <Link href="#">
-            <a>О нас</a>
-          </Link>
-          <Link href="#">
-            <a>Контакты</a>
-          </Link>
+          {forCustomersReducer.isLoading && <h1>Идёт загрузка...</h1>}
+          {forCustomersReducer.forCustomers?.map((article) => {
+            return (
+              <Link key={article._id} href={article.slug}>
+                <a>{article.title}</a>
+              </Link>
+            );
+          })}
         </ul>
         <div className={styles.header2}>
           <Link href="/">

@@ -1,11 +1,14 @@
 import axios from 'axios';
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Button } from '../components/ui/Button/Button';
+import { API } from '../constants/url';
 import { Layout } from '../Layout/Layout';
 import { IUser } from '../store/auth/interface.auth';
+import { getForCustomers } from '../store/customers/customersSlice';
+import { IArticle } from '../store/customers/interface.customers';
 
 import { wrapper } from '../store/store';
 import { useData } from '../store/useData';
@@ -20,7 +23,7 @@ const por = {
   accessToken: 'jsxndkjc',
 };
 
-const Home: NextPage = () => {
+const Home: NextPage<HomeProps> = (props) => {
   // console.log(props.category);
   const { authReducer } = useData();
   const [user, setUser] = useState<IUser | null>(null);
@@ -58,16 +61,28 @@ const Home: NextPage = () => {
   );
 };
 
-/* export const getServerSideProps = wrapper.getServerSideProps(
+// подключаем редакс к getStaticProps при помощи wrapper
+export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
   (store) => async () => {
-    store.dispatch(authorization(por));
-    // console.log('env:', process.env.HOST_API);
-    return {
-      props: {
-        por,
-      },
-    };
+    try {
+      //получение ForCustomers (для клиентов)
+      const { data } = await axios.get<IArticle[]>(API.customers);
+      // отправляем данные в редакс
+      store.dispatch(getForCustomers(data));
+
+      return { props: { forCustomers: data } };
+    } catch (error) {
+      return {
+        props: {
+          forCustomers: [],
+        },
+      };
+    }
   }
-); */
+);
+
+interface HomeProps {
+  forCustomers: IArticle[];
+}
 
 export default Home;

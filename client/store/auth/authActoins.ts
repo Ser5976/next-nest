@@ -77,7 +77,7 @@ export const checkAuth = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       // обработка ошибки и отправка сообщения пользователю при помощи toas
-      //  toast.error('Пожалуйства авторизируйтись занова!');
+      toast.error('Пожалуйства авторизируйтись занова!');
       thunkApp.dispatch(logout()); //выход из авторизации
       thunkApp.rejectWithValue(error);
     }

@@ -42,7 +42,6 @@ __decorate([
 ], ProductTypeController.prototype, "createProductType", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, auth_decorators_1.Auth)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

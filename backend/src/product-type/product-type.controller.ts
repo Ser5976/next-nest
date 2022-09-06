@@ -24,7 +24,6 @@ export class ProductTypeController {
   }
   // получение типов товаров
   @Get()
-  @Auth()
   async getProductType() {
     return this.ProductTypeService.getProductType();
   }

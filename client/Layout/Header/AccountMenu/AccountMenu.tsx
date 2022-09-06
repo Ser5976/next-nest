@@ -13,7 +13,6 @@ import { BsPerson, BsPersonFill } from 'react-icons/bs';
 import { useData } from '../../../store/useData'; //кастомных хук получение данных из стора
 import { useEffect, useState } from 'react';
 import { IUser } from '../../../store/auth/interface.auth';
-import { GrUserAdmin } from 'react-icons/gr';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { useActions } from '../../../store/useActions'; //кастомный хук получение экшенов(крутяк, useDispatch уже в нём)
 

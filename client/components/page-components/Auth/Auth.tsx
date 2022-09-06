@@ -18,7 +18,7 @@ export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
   const { login, registration } = useActions();
 
   const router = useRouter();
-  console.log(router);
+  //console.log(router);
   // выбор регистрация или логин
   const handleType = () => {
     if (type === 'login') {

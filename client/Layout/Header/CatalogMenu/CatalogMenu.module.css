@@ -23,25 +23,6 @@
 .block1 {
   @apply py-5 text-base text-gray-700 w-[250px] border-r border-r-gray-200;
 }
-.block1 a {
+.block1 li {
   @apply block py-2 px-4 hover:bg-pink-50 text-gray-600 text-base hover:text-red-400 text-ellipsis overflow-hidden;
-}
-.block2 {
-  @apply w-2/3;
-}
-.block2 h1 {
-  @apply text-lg font-semibold text-gray-600;
-}
-.productType {
-  @apply grid grid-cols-3 gap-5  text-gray-600;
-}
-.productType li {
-  @apply text-ellipsis overflow-hidden hover:text-red-400;
-}
-
-.brands {
-  @apply flex gap-3 flex-wrap py-5;
-}
-.brands li {
-  @apply border rounded-full py-2 px-3 text-xs uppercase hover:text-red-400 hover:bg-pink-50 text-gray-500;
 }

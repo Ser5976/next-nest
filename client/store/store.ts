@@ -3,10 +3,12 @@ import { createWrapper } from 'next-redux-wrapper';
 import { Action } from 'redux';
 import authReducer from './auth/authSlice';
 import forCustomersReducer from './customers/customersSlice';
+import categoryProducReducer from './category-product/catecoryProductSlice';
 
 const rootReducer = combineReducers({
   authReducer,
   forCustomersReducer,
+  categoryProducReducer,
 });
 
 export const makeStore = () =>
@@ -16,10 +18,9 @@ export const makeStore = () =>
   });
 
 //типизация стора
-export type AppDispatch = AppStore['dispatch'];
+//export type AppDispatch = AppStore['dispatch'];
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<AppStore['getState']>; // типизация общего стейта
-//export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action>;
 
 export const wrapper = createWrapper<AppStore>(makeStore);

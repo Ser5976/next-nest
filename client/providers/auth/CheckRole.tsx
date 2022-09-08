@@ -10,7 +10,7 @@ const CheckRole: FC<TypeComponentAuthFields> = ({
   Component: { isOnlyAdmin, isOnlyUser },
 }) => {
   console.log('чек Рол');
-  const { fetchForCustomers } = useActions();
+  // const { fetchForCustomers } = useActions();
   const { authReducer, forCustomersReducer } = useData();
 
   //-----------------------данные для Header----------------------------------//
@@ -21,13 +21,13 @@ const CheckRole: FC<TypeComponentAuthFields> = ({
   //с этих страниц делаем запрос за данными и записываем в редакc, а Header берёт данные из редакса
 
   //forCustomers
-  useEffect(() => {
+  /* useEffect(() => {
     //если данные в сторе есть ,то запрос не делаем
     if (forCustomersReducer.forCustomers?.length === 0) {
-      fetchForCustomers(); // активируем  экшен ,который делает запрос forCustomers и записывает данные в стор,
+      // fetchForCustomers(); // активируем  экшен ,который делает запрос forCustomers и записывает данные в стор,
       //которые потом использует Header
     }
-  }, [forCustomersReducer.forCustomers]);
+  }, [forCustomersReducer.forCustomers]); */
   //----------------------------------------------------------//
 
   const { user } = authReducer; // получаем user

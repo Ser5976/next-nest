@@ -53,14 +53,18 @@ export const CatalogMenu = ({
       >
         <div className={styles.wrapper}>
           <ul className={styles.block1}>
-            {categoryProduct.map((category) => {
+            {categoryProduct.length === 0 && <h1>Нет данных!</h1>}
+            {categoryProduct.map((element) => {
               return (
                 <li
-                  key={category._id}
-                  className="cursor-pointer"
-                  onMouseMove={() => selectCategory(category.name)}
+                  key={element._id}
+                  className={cn({
+                    [styles.li]: element.name !== category?.name,
+                    [styles.activ]: element.name === category?.name,
+                  })}
+                  onMouseMove={() => selectCategory(element.name)}
                 >
-                  {category.name}
+                  {element.name}
                 </li>
               );
             })}

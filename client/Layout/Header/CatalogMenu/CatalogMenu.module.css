@@ -23,6 +23,9 @@
 .block1 {
   @apply py-5 text-base text-gray-700 w-[250px] border-r border-r-gray-200;
 }
-.block1 li {
-  @apply block py-2 px-4 hover:bg-pink-50 text-gray-600 text-base hover:text-red-400 text-ellipsis overflow-hidden;
+.li {
+  @apply block py-2 px-4 hover:bg-pink-50 text-gray-600 text-base hover:text-red-400 text-ellipsis overflow-hidden cursor-pointer;
+}
+.activ {
+  @apply block py-2 px-4  bg-pink-50  text-base text-red-400 text-ellipsis overflow-hidden cursor-pointer;
 }

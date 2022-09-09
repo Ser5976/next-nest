@@ -8,6 +8,7 @@ export const Category = ({
 }: CategoryProps): JSX.Element => {
   return (
     <div className={styles.block2} {...props}>
+      {category === undefined && <h1>Нет данных!</h1>}
       <h1>{category?.name}</h1>
 
       <ul className={styles.brands}>

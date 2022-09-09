@@ -10,13 +10,15 @@ import { useData } from '../../store/useData';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const count = 5;
-  const { forCustomersReducer } = useData();
+  const { forCustomersReducer, productTypeReducer } = useData();
 
   return (
     <>
       <header className={cn(className, styles.header)} {...props}>
         <ul className={styles.header1}>
-          {forCustomersReducer.isLoading && <h1>Идёт загрузка...</h1>}
+          {forCustomersReducer.forCustomers.length === 0 && (
+            <h1>Нет данных!</h1>
+          )}
           {forCustomersReducer.forCustomers?.map((article) => {
             return (
               <Link key={article._id} href={article.slug}>
@@ -53,38 +55,18 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
         </div>
         <div className="   bg-gradient-to-l from-lime-400 via-amber-400 to-red-400">
           <ul className=" flex   justify-center text-white text-base items-center ">
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5 truncate max-w-[200px]">
-                Холодильникииииииии
-              </a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Смартфоны</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Матрасы</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Кондиционеры</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Микроволновки</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Ноутбуки</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Стиралки</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Морозилки</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Кофеварки</a>
-            </Link>
-            <Link href="#">
-              <a className=" hover:bg-red-400 py-3 px-5">Мультиварки</a>
-            </Link>
+            {productTypeReducer.productType.length === 0 && (
+              <h1 className="py-3 px-5">Нет данных!</h1>
+            )}
+            {productTypeReducer.productType.slice(0, 11).map((element) => {
+              return (
+                <Link href={element._id} key={element._id}>
+                  <a className=" hover:bg-red-400 py-3 px-5 truncate max-w-[200px]">
+                    {element.name}
+                  </a>
+                </Link>
+              );
+            })}
           </ul>
         </div>
       </header>

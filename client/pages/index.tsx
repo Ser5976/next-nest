@@ -13,6 +13,8 @@ import { getForCustomers } from '../store/customers/customersSlice';
 import { IArticle } from '../store/customers/interface.customers';
 
 import { wrapper } from '../store/store';
+import { getProductType } from '../store/type-product/catecoryProductSlice';
+import { IType } from '../store/type-product/interface.typeProduct';
 import { useData } from '../store/useData';
 
 const por = {
@@ -68,23 +70,27 @@ export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
   (store) => async () => {
     try {
       //---------- для Header-----------------------------------//
-      //получение ForCustomers (для клиентов)
+      //получение forCustomers (для клиентов)
       const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
       // отправляем данные в редакс
       store.dispatch(getForCustomers(forCustomers));
 
-      // получение CategoryProduct
+      // получение categoryProduct
       const { data: categoryProduct } = await axios.get<ICategoryProduct[]>(
         API.categoryProduct
       );
       store.dispatch(getCategoryProduct(categoryProduct));
+      //получение productType
+      const { data: productType } = await axios.get<IType[]>(API.productType);
+      store.dispatch(getProductType(productType));
       //----------------------------------------------------------//
-      return { props: { forCustomers, categoryProduct } };
+      return { props: { forCustomers, categoryProduct, productType } };
     } catch (error) {
       return {
         props: {
           forCustomers: [],
           categoryProduct: [],
+          productType: [],
         },
       };
     }
@@ -94,6 +100,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
 interface HomeProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
+  productType: IType[];
 }
 
 export default Home;

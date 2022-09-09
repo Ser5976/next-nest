@@ -6,4 +6,5 @@ export const API = {
   },
   customers: process.env.NEXT_PUBLIC_DOMAIN + '/api/for-customers',
   categoryProduct: process.env.NEXT_PUBLIC_DOMAIN + '/api/category-product',
+  productType: process.env.NEXT_PUBLIC_DOMAIN + '/api/product-type',
 };

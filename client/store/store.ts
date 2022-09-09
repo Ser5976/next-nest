@@ -4,11 +4,13 @@ import { Action } from 'redux';
 import authReducer from './auth/authSlice';
 import forCustomersReducer from './customers/customersSlice';
 import categoryProducReducer from './category-product/catecoryProductSlice';
+import productTypeReducer from './type-product/catecoryProductSlice';
 
 const rootReducer = combineReducers({
   authReducer,
   forCustomersReducer,
   categoryProducReducer,
+  productTypeReducer,
 });
 
 export const makeStore = () =>

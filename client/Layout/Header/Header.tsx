@@ -21,7 +21,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
           )}
           {forCustomersReducer.forCustomers?.map((article) => {
             return (
-              <Link key={article._id} href={article.slug}>
+              <Link key={article._id} href={`/for-customers/${article.slug}`}>
                 <a>{article.title}</a>
               </Link>
             );

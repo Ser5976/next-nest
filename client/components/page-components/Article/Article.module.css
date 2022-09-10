@@ -1,0 +1,9 @@
+.wrapper {
+  @apply flex max-w-screen-lg mx-auto space-x-5 items-baseline;
+}
+.customers {
+  @apply w-1/3;
+}
+.article {
+  @apply w-2/3;
+}

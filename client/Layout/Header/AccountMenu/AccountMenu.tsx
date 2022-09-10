@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { IUser } from '../../../store/auth/interface.auth';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { useActions } from '../../../store/useActions'; //кастомный хук получение экшенов(крутяк, useDispatch уже в нём)
+import { useRouter } from 'next/router';
 
 export const AccountMenu = ({
   className,
@@ -22,7 +23,7 @@ export const AccountMenu = ({
 }: AccountMenuProps): JSX.Element => {
   //кастомный хук (используем для закрытия dropdown по клику снаружи)
   const { ref, isShow, setIsShow } = useClickOutside(true);
-
+  const router = useRouter();
   const { authReducer } = useData();
   const { logout } = useActions();
   //костыль,чтобы обойти ошибку гидрации,не знаю как это решить правильно.
@@ -35,6 +36,7 @@ export const AccountMenu = ({
   const count = 5;
   // удаления данных авторизации
   const handleLogout = () => {
+    //  router.push('/');
     logout();
   };
   return (

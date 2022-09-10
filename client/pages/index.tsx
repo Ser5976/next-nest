@@ -41,10 +41,7 @@ const Home: NextPage<HomeProps> = (props) => {
         <main className="p-10 grow ">
           <h1 className="text-lg font-semibold ">Начало!</h1>
         </main>
-        <h1 className=" text-lg"> Токен:{user?.email}</h1>
-        <Link href="/abaut">
-          <a>Пример</a>
-        </Link>
+
         <Link href="/profile">
           <a>Профайл</a>
         </Link>

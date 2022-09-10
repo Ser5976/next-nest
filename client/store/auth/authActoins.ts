@@ -60,11 +60,7 @@ export const login = createAsyncThunk(
 // логаут
 //удаляем токены из куки,удаляем юзера из локал
 export const logout = createAsyncThunk('auth/logout', async () => {
-  try {
-    await AuthService.logout();
-  } catch (error: any) {
-    console.log(error);
-  }
+  await AuthService.logout();
 });
 // проверка токена,получение нового токина, или выход из авторизации, если токен не валиден
 export const checkAuth = createAsyncThunk(

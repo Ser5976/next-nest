@@ -28,8 +28,8 @@ let ForCustomersController = class ForCustomersController {
     async getAllData() {
         return this.ForCustomersService.getAllData();
     }
-    async getNews(id) {
-        return this.ForCustomersService.getData(id);
+    async getNews(slug) {
+        return this.ForCustomersService.getData(slug);
     }
     async updateNews(id, dto) {
         return this.ForCustomersService.updateData(id, dto);
@@ -54,8 +54,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ForCustomersController.prototype, "getAllData", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
+    (0, common_1.Get)(':slug'),
+    __param(0, (0, common_1.Param)('slug')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

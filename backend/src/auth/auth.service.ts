@@ -69,11 +69,11 @@ export class AuthService {
     const data = { _id: userId };
 
     const refreshToken = await this.jwtService.signAsync(data, {
-      expiresIn: 120,
+      expiresIn: '15d',
     });
 
     const accessToken = await this.jwtService.signAsync(data, {
-      expiresIn: 60,
+      expiresIn: '1h',
     });
 
     return { refreshToken, accessToken };

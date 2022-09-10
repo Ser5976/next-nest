@@ -30,9 +30,9 @@ export class ForCustomersController {
     return this.ForCustomersService.getAllData();
   }
   // получение  данных
-  @Get(':id')
-  async getNews(@Param('id', IdValidationPipe) id: string) {
-    return this.ForCustomersService.getData(id);
+  @Get(':slug')
+  async getNews(@Param('slug') slug: string) {
+    return this.ForCustomersService.getData(slug);
   }
   // редактирование данных
   @UsePipes(new ValidationPipe())

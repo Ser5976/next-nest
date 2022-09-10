@@ -10,7 +10,7 @@ export declare class ForCustomersService {
     getAllData(): Promise<(import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ForCustomersModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
-    getData(id: string): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ForCustomersModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+    getData(slug: string): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ForCustomersModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
     }>;
     updateData(id: string, dto: ForCustomersDto): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ForCustomersModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {

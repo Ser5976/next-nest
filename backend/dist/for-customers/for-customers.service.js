@@ -32,8 +32,8 @@ let ForCustomersService = class ForCustomersService {
             throw new common_1.NotFoundException('Что то пошло не так,данные не получены');
         return data;
     }
-    async getData(id) {
-        const data = await this.ForCustomersModel.findById(id);
+    async getData(slug) {
+        const data = await this.ForCustomersModel.findOne({ slug: slug });
         if (!data)
             throw new common_1.NotFoundException('Что то пошло не так,данные не получены');
         return data;

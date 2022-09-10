@@ -25,8 +25,8 @@ export class ForCustomersService {
     return data;
   }
   // получение данных
-  async getData(id: string) {
-    const data = await this.ForCustomersModel.findById(id);
+  async getData(slug: string) {
+    const data = await this.ForCustomersModel.findOne({ slug: slug });
     if (!data)
       throw new NotFoundException('Что то пошло не так,данные не получены');
     return data;

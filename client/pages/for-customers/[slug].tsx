@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { GetStaticProps } from 'next';
-import React from 'react';
+import { GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
+import Article from '../../components/page-components/Article/Article';
 import { API } from '../../constants/url';
 import { Layout } from '../../Layout/Layout';
-import { NextPageAuth } from '../../providers/auth/auth.types';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
 import { ICategoryProduct } from '../../store/category-product/interface.categoryProduct';
 import { getForCustomers } from '../../store/customers/customersSlice';
@@ -12,18 +12,36 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
-const ProfilePage: NextPageAuth = () => {
+const ForCustomers: NextPage<ForCustomersProps> = ({ article }) => {
+  const router = useRouter();
+
   return (
-    <Layout title="Профиль">
-      <div>ProfilePage</div>
+    <Layout title="For customers">
+      {/* это из-за fallback: true,если не сделать услувие, build покажеть ошибку */}
+      {router.isFallback ? (
+        <h1>Идёт загрузка...</h1>
+      ) : (
+        <Article article={article} />
+      )}
     </Layout>
   );
 };
-ProfilePage.isOnlyUser = true; //только для авторизованных
-
+// прописываем пути
+export const getStaticPaths = async () => {
+  const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
+  const paths = forCustomers.map((article) => {
+    return { params: { slug: article.slug } };
+  });
+  return {
+    paths: paths,
+    fallback: true, //это для того ,чтобы подгружались новые динамические пути
+  };
+};
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<ProfileProps> =
-  wrapper.getStaticProps((store) => async () => {
+export const getStaticProps: GetStaticProps<ForCustomersProps> =
+  wrapper.getStaticProps((store) => async (cxt) => {
+    const { params } = cxt;
+
     try {
       //---------- для Header-----------------------------------//
       //получение forCustomers (для клиентов)
@@ -40,22 +58,30 @@ export const getStaticProps: GetStaticProps<ProfileProps> =
       const { data: productType } = await axios.get<IType[]>(API.productType);
       store.dispatch(getProductType(productType));
       //----------------------------------------------------------//
-      return { props: { forCustomers, categoryProduct, productType } };
+
+      //--------- получем индивидуальные данные для страницы------//
+      const { data: article } = await axios.get<IArticle>(
+        `${API.customers}/${params?.slug}`
+      );
+
+      return { props: { forCustomers, categoryProduct, productType, article } };
     } catch (error) {
       return {
         props: {
           forCustomers: [],
           categoryProduct: [],
           productType: [],
+          article: {} as IArticle,
         },
       };
     }
   });
 
-interface ProfileProps {
+interface ForCustomersProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
+  article: IArticle;
 }
 
-export default ProfilePage;
+export default ForCustomers;

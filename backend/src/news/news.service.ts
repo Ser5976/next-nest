@@ -17,9 +17,9 @@ export class NewsService {
       throw new NotFoundException('Что то пошло не так,статья не сохранена');
     return news;
   }
-  // получение статей
+  // получение статей,сортировка ставит последнюю созданную статью в начало
   async getAllNews() {
-    const news = await this.NewsModel.find();
+    const news = await this.NewsModel.find().sort({ createdAt: 'desc' });
     if (!news)
       throw new NotFoundException('Что то пошло не так,статьи не получены');
     return news;

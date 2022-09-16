@@ -27,7 +27,7 @@ let NewsService = class NewsService {
         return news;
     }
     async getAllNews() {
-        const news = await this.NewsModel.find();
+        const news = await this.NewsModel.find().sort({ createdAt: 'desc' });
         if (!news)
             throw new common_1.NotFoundException('Что то пошло не так,статьи не получены');
         return news;

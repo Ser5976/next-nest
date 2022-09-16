@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
-import Article from '../../components/page-components/Article/Article';
+import dynamic from 'next/dynamic';
+import { INews } from '../../components/page-components/News-List/NewsList.props';
 import { API } from '../../constants/url';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
@@ -11,40 +11,24 @@ import { IArticle } from '../../store/customers/interface.customers';
 import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
+// из-за форматирования даты в компоненте News происходит конфликт с серваком ( на серваке дата из базы а на клиенте отформатированная)
+// поэтому при помощи динамического импорта выключаем ssr
+const NewsList = dynamic(
+  () => import('../../components/page-components/News-List/NewsList'),
+  { ssr: false }
+);
 
-const ForCustomers: NextPage<ForCustomersProps> = ({
-  article,
-  forCustomers,
-}) => {
-  const router = useRouter();
-
+const NewsPage: NextPage<NewsPageProps> = ({ news }) => {
   return (
-    <Layout title="For customers">
-      {/* это из-за fallback: true,если не сделать услувие, build покажеть ошибку */}
-      {router.isFallback ? (
-        <h1>Идёт загрузка...</h1>
-      ) : (
-        <Article article={article} forCustomers={forCustomers} />
-      )}
+    <Layout title="News">
+      <NewsList news={news} />
     </Layout>
   );
 };
-// прописываем пути
-export const getStaticPaths = async () => {
-  const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
-  const paths = forCustomers.map((article) => {
-    return { params: { slug: article.slug } };
-  });
-  return {
-    paths: paths,
-    fallback: true, //это для того ,чтобы подгружались новые динамические пути
-  };
-};
-// подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<ForCustomersProps> =
-  wrapper.getStaticProps((store) => async (cxt) => {
-    const { params } = cxt;
 
+// подключаем редакс к getStaticProps при помощи wrapper
+export const getStaticProps: GetStaticProps<NewsPageProps> =
+  wrapper.getStaticProps((store) => async () => {
     try {
       //---------- для Header-----------------------------------//
       //получение forCustomers (для клиентов)
@@ -63,28 +47,26 @@ export const getStaticProps: GetStaticProps<ForCustomersProps> =
       //----------------------------------------------------------//
 
       //--------- получем индивидуальные данные для страницы------//
-      const { data: article } = await axios.get<IArticle>(
-        `${API.customers}/${params?.slug}`
-      );
+      const { data: news } = await axios.get<INews[]>(API.news);
 
-      return { props: { forCustomers, categoryProduct, productType, article } };
+      return { props: { forCustomers, categoryProduct, productType, news } };
     } catch (error) {
       return {
         props: {
           forCustomers: [],
           categoryProduct: [],
           productType: [],
-          article: {} as IArticle,
+          news: [],
         },
       };
     }
   });
 
-interface ForCustomersProps {
+interface NewsPageProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
-  article: IArticle;
+  news: INews[];
 }
 
-export default ForCustomers;
+export default NewsPage;

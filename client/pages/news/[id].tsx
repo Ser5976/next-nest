@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
-import Article from '../../components/page-components/Article/Article';
+import NewsItem from '../../components/page-components/News-Item/NewsItem';
+import { INews } from '../../components/page-components/News-List/NewsList.props';
 import { API } from '../../constants/url';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
@@ -12,36 +12,32 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
-const ForCustomers: NextPage<ForCustomersProps> = ({
-  article,
-  forCustomers,
-}) => {
-  const router = useRouter();
-
+const NewsProfile: NextPage<NewsProfileProps> = ({ news }) => {
+  console.log(news);
   return (
-    <Layout title="For customers">
-      {/* это из-за fallback: true,если не сделать услувие, build покажеть ошибку */}
-      {router.isFallback ? (
-        <h1>Идёт загрузка...</h1>
-      ) : (
-        <Article article={article} forCustomers={forCustomers} />
-      )}
+    <Layout title="News">
+      <NewsItem news={news} />
     </Layout>
   );
 };
-// прописываем пути
+
 export const getStaticPaths = async () => {
-  const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
-  const paths = forCustomers.map((article) => {
-    return { params: { slug: article.slug } };
+  const { data: news } = await axios.get<INews[]>(API.news);
+  const paths = news.slice(0, 3).map((p) => {
+    //.slice обрезаем массив ,чтобы не загружать все пути.Это мы делаем когда у нас дахерища страниц ,чтобы build был быстрей
+    // но fallback должен быть true,чтобы пути ,которых нет, погружались
+    return {
+      params: { id: p._id },
+    };
   });
   return {
-    paths: paths,
-    fallback: true, //это для того ,чтобы подгружались новые динамические пути
+    paths,
+    fallback: true,
   };
 };
+
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<ForCustomersProps> =
+export const getStaticProps: GetStaticProps<NewsProfileProps> =
   wrapper.getStaticProps((store) => async (cxt) => {
     const { params } = cxt;
 
@@ -63,28 +59,28 @@ export const getStaticProps: GetStaticProps<ForCustomersProps> =
       //----------------------------------------------------------//
 
       //--------- получем индивидуальные данные для страницы------//
-      const { data: article } = await axios.get<IArticle>(
-        `${API.customers}/${params?.slug}`
+      const { data: news } = await axios.get<INews>(
+        `${API.news}/${params?.id}`
       );
-
-      return { props: { forCustomers, categoryProduct, productType, article } };
+      console.log(news);
+      return { props: { forCustomers, categoryProduct, productType, news } };
     } catch (error) {
       return {
         props: {
           forCustomers: [],
           categoryProduct: [],
           productType: [],
-          article: {} as IArticle,
+          news: {} as INews,
         },
       };
     }
   });
 
-interface ForCustomersProps {
+interface NewsProfileProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
-  article: IArticle;
+  news: INews;
 }
 
-export default ForCustomers;
+export default NewsProfile;

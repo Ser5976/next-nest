@@ -40,12 +40,15 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = (): JSX.Element => {
   return (
     <nav aria-label="breadcrumbs">
       <ul className="breadcrumb">
-        <a href="/"> home / </a>
+        <Link href="/">
+          {' '}
+          <a> home </a>
+        </Link>
 
         {breadcrumbs.map((breadcrumb, i) => {
           return (
-            <Link href={breadcrumb.href}>
-              <a key={breadcrumb.href}>{breadcrumb.breadcrumb} / </a>
+            <Link href={breadcrumb.href} key={breadcrumb.href}>
+              <a>{breadcrumb.breadcrumb} </a>
             </Link>
           );
         })}

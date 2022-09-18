@@ -21,7 +21,11 @@ const NewsList = dynamic(
 const NewsPage: NextPage<NewsPageProps> = ({ news }) => {
   return (
     <Layout title="News">
-      <NewsList news={news} />
+      {news.length === 0 ? (
+        <h1 className=" text-center text-base mt-5">Данных нет!!!</h1>
+      ) : (
+        <NewsList news={news} />
+      )}
     </Layout>
   );
 };

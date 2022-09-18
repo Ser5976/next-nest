@@ -6,8 +6,7 @@ import { useActions } from '../../store/useActions';
 import { TypeComponentAuthFields } from './auth.types';
 
 const DynamicCheckRole = dynamic(() => import('./CheckRole'), { ssr: false }); //динамический импорт,
-//а ёще мы отменяем серверный рендеринг
-//все страницы, которые будут попадать в провайдер CheckRole будут рендериться на клиенте(админка и профайл)
+//отменяем серверный рендеринг компонента CheckRole, чтобы не  конфликтовать с сервером(данные по user,о них сервер не знает)
 
 //ента основной провайдер
 const AuthProvider: FC<TypeComponentAuthFields> = ({

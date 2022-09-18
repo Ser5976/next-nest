@@ -18,9 +18,11 @@ export class StoreReviewsService {
       throw new NotFoundException('Что то пошло не так,отзыв не создан');
     return storeReviews;
   }
-  // получение отзывов
+  // получение отзывов(сортиравка:последний будет первым)
   async getStoreReviews() {
-    const storeReviews = await this.StoreReviewsModel.find();
+    const storeReviews = await this.StoreReviewsModel.find().sort({
+      createdAt: 'desc',
+    });
     if (!storeReviews)
       throw new NotFoundException('Что то пошло не так,отзывы не получены');
     return storeReviews;

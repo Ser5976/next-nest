@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { fetchForCustomers } from './customersActoins';
 import { IInitialState, IArticle } from './interface.customers';
 
 const initialState: IInitialState = {
@@ -29,23 +28,6 @@ export const forCustomersSlice = createSlice({
       }
 
       state.forCustomers = action.payload.forCustomersReducer.forCustomers;
-    },
-    //---запись  данных в стор, вызов экшена делаем с клиента---
-    //период загрузки
-    [fetchForCustomers.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    //загружено
-    [fetchForCustomers.fulfilled.type]: (
-      state,
-      action: PayloadAction<IArticle[]>
-    ) => {
-      state.isLoading = false;
-      state.forCustomers = action.payload;
-    },
-    //ошибка
-    [fetchForCustomers.rejected.type]: (state) => {
-      state.isLoading = false;
     },
   },
 });

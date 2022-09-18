@@ -27,7 +27,9 @@ let StoreReviewsService = class StoreReviewsService {
         return storeReviews;
     }
     async getStoreReviews() {
-        const storeReviews = await this.StoreReviewsModel.find();
+        const storeReviews = await this.StoreReviewsModel.find().sort({
+            createdAt: 'desc',
+        });
         if (!storeReviews)
             throw new common_1.NotFoundException('Что то пошло не так,отзывы не получены');
         return storeReviews;

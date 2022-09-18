@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import NewsItem from '../../components/page-components/News-Item/NewsItem';
 import { INews } from '../../components/page-components/News-List/NewsList.props';
 import { API } from '../../constants/url';
@@ -13,7 +14,11 @@ import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
 const NewsProfile: NextPage<NewsProfileProps> = ({ news }) => {
-  console.log(news);
+  const router = useRouter();
+  if (router.isFallback) {
+    return <h1 className=" text-center mt-5">Идёт загрузка...</h1>;
+  }
+
   return (
     <Layout title="News">
       <NewsItem news={news} />
@@ -62,7 +67,7 @@ export const getStaticProps: GetStaticProps<NewsProfileProps> =
       const { data: news } = await axios.get<INews>(
         `${API.news}/${params?.id}`
       );
-      console.log(news);
+      // console.log(news);
       return { props: { forCustomers, categoryProduct, productType, news } };
     } catch (error) {
       return {

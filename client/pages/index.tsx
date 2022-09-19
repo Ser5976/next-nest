@@ -1,63 +1,21 @@
 import axios from 'axios';
 import type { GetStaticProps, NextPage } from 'next';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { Button } from '../components/ui/Button/Button';
+import Home from '../components/page-components/Home/Home';
+import { INews } from '../components/page-components/News-List/NewsList.props';
 import { API } from '../constants/url';
 import { Layout } from '../Layout/Layout';
-import { IUser } from '../store/auth/interface.auth';
 import { getCategoryProduct } from '../store/category-product/catecoryProductSlice';
 import { ICategoryProduct } from '../store/category-product/interface.categoryProduct';
 import { getForCustomers } from '../store/customers/customersSlice';
 import { IArticle } from '../store/customers/interface.customers';
-
 import { wrapper } from '../store/store';
 import { getProductType } from '../store/type-product/catecoryProductSlice';
 import { IType } from '../store/type-product/interface.typeProduct';
-import { useData } from '../store/useData';
 
-const por = {
-  user: {
-    _id: 'nxkd,c',
-    email: 'nncmkd,c',
-    isAdmin: true,
-  },
-  refreshToken: 'jhnkjcndm',
-  accessToken: 'jsxndkjc',
-};
-
-const Home: NextPage<HomeProps> = (props) => {
-  // console.log(props.category);
-  const { authReducer } = useData();
-  const [user, setUser] = useState<IUser | null>(null);
-  useEffect(() => {
-    setUser(authReducer.user);
-  }, [authReducer.user]);
-
+const HomePage: NextPage<HomeProps> = ({ news }) => {
   return (
     <Layout title="Home page" description="Тренировочный проект eCommerce">
-      <div className=" min-h-screen">
-        <main className="p-10 grow ">
-          <h1 className="text-lg font-semibold ">Начало!</h1>
-        </main>
-
-        <Link href="/profile">
-          <a>Профайл</a>
-        </Link>
-        <Link href="/admin">
-          <a>Админ</a>
-        </Link>
-        <button
-          onClick={() => {
-            toast.error('Привет приятель');
-          }}
-        >
-          Toastr Success
-        </button>
-        <Button>Образец</Button>
-        <Button apperance="small">Образец</Button>
-      </div>
+      <Home news={news} />
     </Layout>
   );
 };
@@ -80,14 +38,18 @@ export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
       //получение productType
       const { data: productType } = await axios.get<IType[]>(API.productType);
       store.dispatch(getProductType(productType));
-      //----------------------------------------------------------//
-      return { props: { forCustomers, categoryProduct, productType } };
+      //------------- данные для Home ---------------------------------//
+      //новости
+      const { data: news } = await axios.get<INews[]>(API.news);
+
+      return { props: { forCustomers, categoryProduct, productType, news } };
     } catch (error) {
       return {
         props: {
           forCustomers: [],
           categoryProduct: [],
           productType: [],
+          news: [],
         },
       };
     }
@@ -98,6 +60,7 @@ interface HomeProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
+  news: INews[];
 }
 
-export default Home;
+export default HomePage;

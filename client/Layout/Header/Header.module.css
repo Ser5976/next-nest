@@ -5,7 +5,7 @@
   @apply h-[50px]  border border-b-gray-200 flex items-center justify-end pr-24 gap-5 text-gray-600 text-base;
 }
 .header1 a {
-  @apply hover:text-red-700;
+  @apply hover:text-red-500;
 }
 .header2 {
   @apply flex items-center justify-center  gap-5 py-6;

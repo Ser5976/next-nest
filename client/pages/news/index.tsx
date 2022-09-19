@@ -11,7 +11,7 @@ import { IArticle } from '../../store/customers/interface.customers';
 import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
-// из-за форматирования даты в компоненте News происходит конфликт с серваком ( на серваке дата из базы а на клиенте отформатированная)
+// из-за форматирования даты в компоненте NewsList происходит конфликт с серваком ( на серваке дата из базы а на клиенте отформатированная)
 // поэтому при помощи динамического импорта выключаем ssr
 const NewsList = dynamic(
   () => import('../../components/page-components/News-List/NewsList'),

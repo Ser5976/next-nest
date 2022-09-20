@@ -1,8 +1,9 @@
-import axios from 'axios';
 import type { GetStaticProps, NextPage } from 'next';
 import Home from '../components/page-components/Home/Home';
+import { HomeServise } from '../components/page-components/Home/home.service';
 import { INews } from '../components/page-components/News-List/NewsList.props';
-import { API } from '../constants/url';
+import { IStoreReviews } from '../components/page-components/StoreReviews-List/StoreReviewsList.props';
+import { HeaderService } from '../header-service/header.service';
 import { Layout } from '../Layout/Layout';
 import { getCategoryProduct } from '../store/category-product/catecoryProductSlice';
 import { ICategoryProduct } from '../store/category-product/interface.categoryProduct';
@@ -12,10 +13,12 @@ import { wrapper } from '../store/store';
 import { getProductType } from '../store/type-product/catecoryProductSlice';
 import { IType } from '../store/type-product/interface.typeProduct';
 
-const HomePage: NextPage<HomeProps> = ({ news }) => {
+const HomePage: NextPage<HomeProps> = ({ news, reviews }) => {
+  console.log('reviews:', reviews);
+  console.log('news:', news);
   return (
     <Layout title="Home page" description="Тренировочный проект eCommerce">
-      <Home news={news} />
+      <Home news={news} reviews={reviews} />
     </Layout>
   );
 };
@@ -23,36 +26,28 @@ const HomePage: NextPage<HomeProps> = ({ news }) => {
 // подключаем редакс к getStaticProps при помощи wrapper
 export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
   (store) => async () => {
-    try {
-      //---------- для Header-----------------------------------//
-      //получение forCustomers (для клиентов)
-      const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
-      // отправляем данные в редакс
-      store.dispatch(getForCustomers(forCustomers));
+    //---------- для Header-----------------------------------//
+    //получение forCustomers (для клиентов)
+    const forCustomers = await HeaderService.getForCustomers(); // кастомный сервис для запроса  для клиентов
+    // отправляем данные в редакс
+    store.dispatch(getForCustomers(forCustomers));
 
-      // получение categoryProduct
-      const { data: categoryProduct } = await axios.get<ICategoryProduct[]>(
-        API.categoryProduct
-      );
-      store.dispatch(getCategoryProduct(categoryProduct));
-      //получение productType
-      const { data: productType } = await axios.get<IType[]>(API.productType);
-      store.dispatch(getProductType(productType));
-      //------------- данные для Home ---------------------------------//
-      //новости
-      const { data: news } = await axios.get<INews[]>(API.news);
+    // получение categoryProduct
+    const categoryProduct = await HeaderService.getСategoryProduct(); // кастомный сервис для запроса  категории продуктов
+    store.dispatch(getCategoryProduct(categoryProduct));
+    //получение productType
+    const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
+    store.dispatch(getProductType(productType));
 
-      return { props: { forCustomers, categoryProduct, productType, news } };
-    } catch (error) {
-      return {
-        props: {
-          forCustomers: [],
-          categoryProduct: [],
-          productType: [],
-          news: [],
-        },
-      };
-    }
+    //------------- данные для Home ---------------------------------//
+    //новости
+    const news = await HomeServise.getNews(); // кастомный сервис для запроса новостей
+    //отзывы
+    const reviews = await HomeServise.getReviews(); //кастомный сервис для запроса отзывов
+
+    return {
+      props: { forCustomers, categoryProduct, productType, news, reviews },
+    };
   }
 );
 
@@ -61,6 +56,7 @@ interface HomeProps {
   categoryProduct: ICategoryProduct[];
   productType: IType[];
   news: INews[];
+  reviews: IStoreReviews[];
 }
 
 export default HomePage;

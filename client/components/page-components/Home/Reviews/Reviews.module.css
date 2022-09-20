@@ -1,0 +1,6 @@
+.container {
+  @apply border border-lime-400  p-5 mt-5;
+}
+.error {
+  @apply h-80 border mb-10;
+}

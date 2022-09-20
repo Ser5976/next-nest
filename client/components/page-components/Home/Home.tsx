@@ -2,8 +2,9 @@ import styles from './Home.module.css';
 import { FC } from 'react';
 import { HomeProps } from './Home.props';
 import News from './News/News';
+import Reviews from './Reviews/Reviews';
 
-const Home: FC<HomeProps> = ({ news }): JSX.Element => {
+const Home: FC<HomeProps> = ({ news, reviews }): JSX.Element => {
   return (
     <div className={styles.container}>
       <div className={styles.section1}>
@@ -15,7 +16,7 @@ const Home: FC<HomeProps> = ({ news }): JSX.Element => {
       </div>
       <div className={styles.section2}>
         <News news={news} />
-        <div className=" w-full border h-96 ">отзывы</div>
+        <Reviews reviews={reviews} />
       </div>
     </div>
   );

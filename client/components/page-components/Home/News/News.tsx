@@ -29,7 +29,7 @@ const News: FC<NewsProps> = ({ news }): JSX.Element => {
                       {n.name}
                     </a>
                   </Link>
-                  <p className=" truncate">{n.text}</p>
+                  <p className=" text-xs truncate">{n.text}</p>
                 </li>
               );
             })}

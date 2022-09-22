@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { GetStaticProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
+import { HomeServise } from '../../components/page-components/Home/home.service';
 import { IStoreReviews } from '../../components/page-components/StoreReviews-List/StoreReviewsList.props';
-import { API } from '../../constants/url';
+import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
 import { ICategoryProduct } from '../../store/category-product/interface.categoryProduct';
@@ -37,39 +37,25 @@ const StoreReviewsPage: NextPage<StoreReviewsProps> = ({ reviews }) => {
 
 export const getStaticProps: GetStaticProps<StoreReviewsProps> =
   wrapper.getStaticProps((store) => async () => {
-    try {
-      //---------- для Header-----------------------------------//
-      //получение forCustomers (для клиентов)
-      const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
-      // отправляем данные в редакс
-      store.dispatch(getForCustomers(forCustomers));
+    //---------- для Header-----------------------------------//
+    //получение forCustomers (для клиентов)
+    const forCustomers = await HeaderService.getForCustomers(); // кастомный сервис для запроса  для клиентов
+    // отправляем данные в редакс
+    store.dispatch(getForCustomers(forCustomers));
 
-      // получение categoryProduct
-      const { data: categoryProduct } = await axios.get<ICategoryProduct[]>(
-        API.categoryProduct
-      );
-      store.dispatch(getCategoryProduct(categoryProduct));
-      //получение productType
-      const { data: productType } = await axios.get<IType[]>(API.productType);
-      store.dispatch(getProductType(productType));
-      //----------------------------------------------------------//
+    // получение categoryProduct
+    const categoryProduct = await HeaderService.getСategoryProduct(); // кастомный сервис для запроса  категории продуктов
+    store.dispatch(getCategoryProduct(categoryProduct));
+    //получение productType
+    const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
+    store.dispatch(getProductType(productType));
+    //----------------------------------------------------------//
 
-      //--------- получем индивидуальные данные для страницы------//
-      const { data: reviews } = await axios.get<IStoreReviews[]>(
-        API.storeReviews
-      );
+    //--------- получем индивидуальные данные для страницы------//
 
-      return { props: { forCustomers, categoryProduct, productType, reviews } };
-    } catch (error) {
-      return {
-        props: {
-          forCustomers: [],
-          categoryProduct: [],
-          productType: [],
-          reviews: [],
-        },
-      };
-    }
+    const reviews = await HomeServise.getReviews(); //кастомный сервис для запроса отзывов
+
+    return { props: { forCustomers, categoryProduct, productType, reviews } };
   });
 
 interface StoreReviewsProps {

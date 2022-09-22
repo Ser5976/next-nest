@@ -2,6 +2,7 @@ import axios from 'axios';
 import { GetStaticProps } from 'next';
 import React from 'react';
 import { API } from '../../constants/url';
+import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { NextPageAuth } from '../../providers/auth/auth.types';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
@@ -24,32 +25,20 @@ ProfilePage.isOnlyUser = true; //только для авторизованны�
 // подключаем редакс к getStaticProps при помощи wrapper
 export const getStaticProps: GetStaticProps<ProfileProps> =
   wrapper.getStaticProps((store) => async () => {
-    try {
-      //---------- для Header-----------------------------------//
-      //получение forCustomers (для клиентов)
-      const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
-      // отправляем данные в редакс
-      store.dispatch(getForCustomers(forCustomers));
+    //---------- для Header-----------------------------------//
+    //получение forCustomers (для клиентов)
+    const forCustomers = await HeaderService.getForCustomers(); // кастомный сервис для запроса  для клиентов
+    // отправляем данные в редакс
+    store.dispatch(getForCustomers(forCustomers));
 
-      // получение categoryProduct
-      const { data: categoryProduct } = await axios.get<ICategoryProduct[]>(
-        API.categoryProduct
-      );
-      store.dispatch(getCategoryProduct(categoryProduct));
-      //получение productType
-      const { data: productType } = await axios.get<IType[]>(API.productType);
-      store.dispatch(getProductType(productType));
-      //----------------------------------------------------------//
-      return { props: { forCustomers, categoryProduct, productType } };
-    } catch (error) {
-      return {
-        props: {
-          forCustomers: [],
-          categoryProduct: [],
-          productType: [],
-        },
-      };
-    }
+    // получение categoryProduct
+    const categoryProduct = await HeaderService.getСategoryProduct(); // кастомный сервис для запроса  категории продуктов
+    store.dispatch(getCategoryProduct(categoryProduct));
+    //получение productType
+    const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
+    store.dispatch(getProductType(productType));
+    //----------------------------------------------------------//
+    return { props: { forCustomers, categoryProduct, productType } };
   });
 
 interface ProfileProps {

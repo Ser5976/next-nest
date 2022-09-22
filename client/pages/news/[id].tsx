@@ -2,8 +2,10 @@ import axios from 'axios';
 import { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import NewsItem from '../../components/page-components/News-Item/NewsItem';
+import { NewsItemService } from '../../components/page-components/News-Item/newsitem.service';
 import { INews } from '../../components/page-components/News-List/NewsList.props';
 import { API } from '../../constants/url';
+import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
 import { ICategoryProduct } from '../../store/category-product/interface.categoryProduct';
@@ -46,39 +48,24 @@ export const getStaticProps: GetStaticProps<NewsProfileProps> =
   wrapper.getStaticProps((store) => async (cxt) => {
     const { params } = cxt;
 
-    try {
-      //---------- для Header-----------------------------------//
-      //получение forCustomers (для клиентов)
-      const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
-      // отправляем данные в редакс
-      store.dispatch(getForCustomers(forCustomers));
+    //---------- для Header-----------------------------------//
+    //получение forCustomers (для клиентов)
+    const forCustomers = await HeaderService.getForCustomers(); // кастомный сервис для запроса  для клиентов
+    // отправляем данные в редакс
+    store.dispatch(getForCustomers(forCustomers));
 
-      // получение categoryProduct
-      const { data: categoryProduct } = await axios.get<ICategoryProduct[]>(
-        API.categoryProduct
-      );
-      store.dispatch(getCategoryProduct(categoryProduct));
-      //получение productType
-      const { data: productType } = await axios.get<IType[]>(API.productType);
-      store.dispatch(getProductType(productType));
-      //----------------------------------------------------------//
+    // получение categoryProduct
+    const categoryProduct = await HeaderService.getСategoryProduct(); // кастомный сервис для запроса  категории продуктов
+    store.dispatch(getCategoryProduct(categoryProduct));
+    //получение productType
+    const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
+    store.dispatch(getProductType(productType));
+    //----------------------------------------------------------//
 
-      //--------- получем индивидуальные данные для страницы------//
-      const { data: news } = await axios.get<INews>(
-        `${API.news}/${params?.id}`
-      );
-      // console.log(news);
-      return { props: { forCustomers, categoryProduct, productType, news } };
-    } catch (error) {
-      return {
-        props: {
-          forCustomers: [],
-          categoryProduct: [],
-          productType: [],
-          news: {} as INews,
-        },
-      };
-    }
+    //--------- получем индивидуальные данные для страницы------//
+    const news = await NewsItemService.getNewsItem(params?.id); //кастомный сервис для запроса отдельной новости
+    // console.log(news);
+    return { props: { forCustomers, categoryProduct, productType, news } };
   });
 
 interface NewsProfileProps {

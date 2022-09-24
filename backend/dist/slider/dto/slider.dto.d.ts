@@ -1,3 +1,5 @@
 export declare class SliderDto {
-    picture: string[];
+    picture: string;
+    typeId: string;
+    text: string;
 }

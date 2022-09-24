@@ -1,1 +1,1 @@
-{"version":3,"file":"slider.dto.js","sourceRoot":"","sources":["../../../src/slider/dto/slider.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAoD;AAEpD,MAAa,SAAS;CAIrB;AADC;IAFC,IAAA,yBAAO,GAAE;IACT,IAAA,0BAAQ,EAAC,EAAE,IAAI,EAAE,IAAI,EAAE,CAAC;;0CACP;AAHpB,8BAIC"}
+{"version":3,"file":"slider.dto.js","sourceRoot":"","sources":["../../../src/slider/dto/slider.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA2C;AAE3C,MAAa,SAAS;CAOrB;AALC;IADC,IAAA,0BAAQ,GAAE;;0CACK;AAEhB;IADC,IAAA,0BAAQ,GAAE;;yCACI;AAEf;IADC,IAAA,0BAAQ,GAAE;;uCACE;AANf,8BAOC"}

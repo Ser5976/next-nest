@@ -9,4 +9,5 @@ export const API = {
   productType: process.env.NEXT_PUBLIC_DOMAIN + '/api/product-type',
   news: process.env.NEXT_PUBLIC_DOMAIN + '/api/news',
   storeReviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/store-reviews',
+  slider: process.env.NEXT_PUBLIC_DOMAIN + '/api/slider',
 };

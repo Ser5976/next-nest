@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SliderController = void 0;
 const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
-const pictureDelete_dto_1 = require("./dto/pictureDelete.dto");
 const slider_dto_1 = require("./dto/slider.dto");
 const slider_service_1 = require("./slider.service");
 const common_1 = require("@nestjs/common");
@@ -24,16 +23,13 @@ let SliderController = class SliderController {
         this.SliderService = SliderService;
     }
     async createSlider(dto) {
-        return this.SliderService.createSlider(dto);
+        return this.SliderService.addPicture(dto);
     }
     async getSlider() {
         return this.SliderService.getSlider();
     }
-    async deletePicture(id, dto) {
-        return this.SliderService.deletePicture(id, dto);
-    }
-    async addPicture(id, dto) {
-        return this.SliderService.addPicture(id, dto);
+    async deletePicture(id) {
+        return this.SliderService.deletePicture(id);
     }
 };
 __decorate([
@@ -53,24 +49,13 @@ __decorate([
 ], SliderController.prototype, "getSlider", null);
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
-    (0, common_1.Put)('delete/:id'),
+    (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)(),
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
-    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, pictureDelete_dto_1.PictureDeleteDto]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], SliderController.prototype, "deletePicture", null);
-__decorate([
-    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
-    (0, common_1.Put)('add/:id'),
-    (0, auth_decorators_1.Auth)(),
-    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, slider_dto_1.SliderDto]),
-    __metadata("design:returntype", Promise)
-], SliderController.prototype, "addPicture", null);
 SliderController = __decorate([
     (0, common_1.Controller)('slider'),
     __metadata("design:paramtypes", [slider_service_1.SliderService])

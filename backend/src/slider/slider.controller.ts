@@ -1,14 +1,13 @@
 import { IdValidationPipe } from './../pipes/id.validation.pipe';
-import { PictureDeleteDto } from './dto/pictureDelete.dto';
 import { SliderDto } from './dto/slider.dto';
 import { SliderService } from './slider.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
-  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -22,7 +21,7 @@ export class SliderController {
   @Post()
   @Auth('admin')
   async createSlider(@Body() dto: SliderDto) {
-    return this.SliderService.createSlider(dto);
+    return this.SliderService.addPicture(dto);
   }
   @Get()
   async getSlider() {
@@ -30,22 +29,9 @@ export class SliderController {
   }
   //удаление картинки
   @UsePipes(new ValidationPipe())
-  @Put('delete/:id')
+  @Delete(':id')
   @Auth()
-  async deletePicture(
-    @Param('id', IdValidationPipe) id: string,
-    @Body() dto: PictureDeleteDto,
-  ) {
-    return this.SliderService.deletePicture(id, dto);
-  }
-  //добавление картинки
-  @UsePipes(new ValidationPipe())
-  @Put('add/:id')
-  @Auth()
-  async addPicture(
-    @Param('id', IdValidationPipe) id: string,
-    @Body() dto: SliderDto,
-  ) {
-    return this.SliderService.addPicture(id, dto);
+  async deletePicture(@Param('id', IdValidationPipe) id: string) {
+    return this.SliderService.deletePicture(id);
   }
 }

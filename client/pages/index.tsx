@@ -3,6 +3,7 @@ import Home from '../components/page-components/Home/Home';
 import { HomeServise } from '../components/page-components/Home/home.service';
 import { INews } from '../components/page-components/News-List/NewsList.props';
 import { IStoreReviews } from '../components/page-components/StoreReviews-List/StoreReviewsList.props';
+import { ISlider } from '../components/ui/Slider/Slider.props';
 import { HeaderService } from '../header-service/header.service';
 import { Layout } from '../Layout/Layout';
 import { getCategoryProduct } from '../store/category-product/catecoryProductSlice';
@@ -13,12 +14,12 @@ import { wrapper } from '../store/store';
 import { getProductType } from '../store/type-product/catecoryProductSlice';
 import { IType } from '../store/type-product/interface.typeProduct';
 
-const HomePage: NextPage<HomeProps> = ({ news, reviews }) => {
+const HomePage: NextPage<HomeProps> = ({ news, reviews, sliders }) => {
   console.log('reviews:', reviews);
   console.log('news:', news);
   return (
     <Layout title="Home page" description="Тренировочный проект eCommerce">
-      <Home news={news} reviews={reviews} />
+      <Home news={news} reviews={reviews} sliders={sliders} />
     </Layout>
   );
 };
@@ -44,9 +45,18 @@ export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
     const news = await HomeServise.getNews(); // кастомный сервис для запроса новостей
     //отзывы
     const reviews = await HomeServise.getReviews(); //кастомный сервис для запроса отзывов
+    // слайдер
+    const sliders = await HomeServise.getSlider(); //кастомный сервис для запроса слайдер
 
     return {
-      props: { forCustomers, categoryProduct, productType, news, reviews },
+      props: {
+        forCustomers,
+        categoryProduct,
+        productType,
+        news,
+        reviews,
+        sliders,
+      },
     };
   }
 );
@@ -57,6 +67,7 @@ interface HomeProps {
   productType: IType[];
   news: INews[];
   reviews: IStoreReviews[];
+  sliders: ISlider[];
 }
 
 export default HomePage;

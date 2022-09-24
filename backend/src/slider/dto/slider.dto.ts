@@ -1,7 +1,10 @@
-import { IsArray, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class SliderDto {
-  @IsArray()
-  @IsString({ each: true })
-  picture: string[];
+  @IsString()
+  picture: string;
+  @IsString()
+  typeId: string;
+  @IsString()
+  text: string;
 }

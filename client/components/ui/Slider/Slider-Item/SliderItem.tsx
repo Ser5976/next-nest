@@ -4,7 +4,7 @@ import { SliderItemProps } from './SliderItem.props';
 import Image from 'next/image';
 
 const SliderItem: FC<SliderItemProps> = ({ slider }): JSX.Element => {
-  console.log(slider);
+  //console.log(slider);
   return (
     <div className={styles.slide}>
       <Image

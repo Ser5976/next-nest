@@ -1,5 +1,5 @@
 .container {
-  @apply border border-lime-400  p-5 mt-5;
+  @apply border border-lime-400  p-5 mt-16;
 }
 .error {
   @apply h-80 border mb-10;

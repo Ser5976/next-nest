@@ -5,6 +5,34 @@ import axios from 'axios';
 import { IStoreReviews } from '../StoreReviews-List/StoreReviewsList.props';
 import { ISlider } from '../../ui/Slider/Slider.props';
 
+export interface ICharacteristic {
+  title: string;
+  property: string;
+  _id: string;
+}
+
+export interface IProduct {
+  _id: string;
+  name: string;
+  description: string;
+  characteristic: ICharacteristic[];
+
+  rating: {
+    estimation: number;
+    numberRatings: number;
+  };
+  price: number;
+  oldPrice: number;
+  files: string[];
+  brandId: string;
+  typeId: string;
+  categoryId: string;
+  coundOpened: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 // получение новостей
 export const HomeServise = {
   async getNews() {
@@ -40,6 +68,18 @@ export const HomeServise = {
     } catch (error) {
       const slider: ISlider[] = [];
       return slider;
+    }
+  },
+  //получение популярных продуктов
+  async getPopular() {
+    try {
+      const { data: popular } = await axios.get<IProduct[]>(
+        API.products.popular
+      );
+      return popular;
+    } catch (error) {
+      const popular: IProduct[] = [];
+      return popular;
     }
   },
 };

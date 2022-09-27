@@ -139,6 +139,7 @@ export class ProductService {
       .sort({ coundOpened: -1 })
       .limit(6)
       .exec();
+
     if (!popularProduct) throw new NotFoundException('товары не получены');
     return popularProduct;
   }

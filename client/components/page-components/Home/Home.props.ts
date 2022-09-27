@@ -1,3 +1,4 @@
+import { IProduct } from './home.service';
 import { ISlider } from './../../ui/Slider/Slider.props';
 import { IStoreReviews } from './../StoreReviews-List/StoreReviewsList.props';
 import { INews } from '../News-List/NewsList.props';
@@ -8,4 +9,5 @@ export interface HomeProps
   news: INews[];
   reviews: IStoreReviews[];
   sliders: ISlider[];
+  popular: IProduct[];
 }

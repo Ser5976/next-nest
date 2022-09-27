@@ -1,0 +1,22 @@
+.wrapper {
+  @apply flex w-[250px] m-2;
+}
+.picture {
+  @apply w-2/3 pr-2;
+}
+
+.productdata {
+  @apply w-1/3;
+}
+.link {
+  @apply h-[40px] overflow-hidden text-xs text-blue-400 hover:text-red-400 underline block relative;
+}
+.link:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(180deg, transparent, #fff 85%);
+}

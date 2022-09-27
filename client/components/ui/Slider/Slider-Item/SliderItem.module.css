@@ -1,5 +1,5 @@
 .slide {
-  @apply relative h-72 overflow-hidden;
+  @apply relative h-[350px] overflow-hidden;
 }
 .image {
   @apply object-cover object-center;

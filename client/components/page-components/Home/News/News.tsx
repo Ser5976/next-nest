@@ -9,7 +9,12 @@ const News: FC<NewsProps> = ({ news }): JSX.Element => {
   return (
     <div className={cn({ [styles.error]: news.length === 0 })}>
       {news.length === 0 ? (
-        <h1 className=" text-center text-base mt-5">Данных нет!!!</h1>
+        <>
+          <h1 className=" font-semibold text-gray-600 underline ">
+            Новости компании
+          </h1>
+          <h3 className=" text-center text-base mt-5">Данных нет!!!</h3>
+        </>
       ) : (
         <>
           <Link href="/news">

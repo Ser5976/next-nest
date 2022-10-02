@@ -67,6 +67,7 @@ let ProductService = class ProductService {
         else {
             opition = dto;
         }
+        console.log(opition);
         const allProduct = await this.ProductModel.find(opition)
             .sort({ createdAt: 'desc' })
             .skip(offset)

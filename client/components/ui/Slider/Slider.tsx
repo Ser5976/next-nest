@@ -7,11 +7,19 @@ import SliderItem from './Slider-Item/SliderItem';
 
 const Slider: FC<SliderProps> = ({ sliders }): JSX.Element => {
   return (
-    <Carousel infiniteLoop autoPlay showThumbs={false}>
-      {sliders.map((img) => {
-        return <SliderItem slider={img} key={img._id} />;
-      })}
-    </Carousel>
+    <>
+      {sliders.length === 0 ? (
+        <div className={styles.error}>
+          <h1 className=" text-center pt-10">Слайдов нет!!!</h1>
+        </div>
+      ) : (
+        <Carousel infiniteLoop autoPlay showThumbs={false}>
+          {sliders.map((img) => {
+            return <SliderItem slider={img} key={img._id} />;
+          })}
+        </Carousel>
+      )}
+    </>
   );
 };
 

@@ -17,7 +17,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
       <header className={cn(className, styles.header)} {...props}>
         <ul className={styles.header1}>
           {forCustomersReducer.forCustomers.length === 0 && (
-            <h1>Нет данных!</h1>
+            <h1>Нет данных!!!</h1>
           )}
           {forCustomersReducer.forCustomers?.map((article) => {
             return (
@@ -56,11 +56,11 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
         <div className="   bg-gradient-to-l from-lime-400 via-amber-400 to-red-400">
           <ul className=" flex   justify-center text-white text-base items-center ">
             {productTypeReducer.productType.length === 0 && (
-              <h1 className="py-3 px-5">Нет данных!</h1>
+              <h1 className="py-3 px-5">Нет данных!!!</h1>
             )}
             {productTypeReducer.productType.slice(0, 11).map((element) => {
               return (
-                <Link href={element._id} key={element._id}>
+                <Link href={`/${element._id}`} key={element._id}>
                   <a className=" hover:bg-red-400 py-3 px-5 truncate max-w-[200px]">
                     {element.name}
                   </a>

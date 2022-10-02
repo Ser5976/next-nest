@@ -9,10 +9,19 @@ const ProductPopular: FC<ProductPopularProps> = ({ popular }): JSX.Element => {
   return (
     <div>
       <h1 className="font-semibold text-gray-600 mb-2">Популярные товары</h1>
-      <div className={styles.container}>
-        {popular.map((item) => {
-          return <PopularItem key={item._id} popular={item} />;
+      <div
+        className={cn({
+          [styles.container]: popular.length !== 0,
+          [styles.error]: popular.length === 0,
         })}
+      >
+        {popular.length === 0 ? (
+          <h1 className=" text-center mt-10">Данных нет!!!</h1>
+        ) : (
+          popular.map((item) => {
+            return <PopularItem key={item._id} popular={item} />;
+          })
+        )}
       </div>
     </div>
   );

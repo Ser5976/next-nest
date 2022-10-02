@@ -65,7 +65,10 @@ export const getStaticProps: GetStaticProps<NewsProfileProps> =
     //--------- получем индивидуальные данные для страницы------//
     const news = await NewsItemService.getNewsItem(params?.id); //кастомный сервис для запроса отдельной новости
     // console.log(news);
-    return { props: { forCustomers, categoryProduct, productType, news } };
+    return {
+      props: { forCustomers, categoryProduct, productType, news },
+      revalidate: 10,
+    };
   });
 
 interface NewsProfileProps {

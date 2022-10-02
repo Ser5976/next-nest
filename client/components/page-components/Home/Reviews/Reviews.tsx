@@ -12,12 +12,11 @@ const Reviews: FC<ReviewsProps> = ({ reviews }): JSX.Element => {
         [styles.error]: reviews?.length === 0,
       })}
     >
+      <h1 className=" font-semibold text-gray-600 ">Отзывы покупателей</h1>
       {reviews?.length === 0 ? (
         <h1 className=" text-center text-base mt-5">Данных нет!!!</h1>
       ) : (
         <>
-          <h1 className=" font-semibold text-gray-600 ">Отзывы покупателей</h1>
-
           <ul>
             {reviews?.slice(0, 1).map((r) => {
               return (

@@ -67,7 +67,10 @@ export const getStaticProps: GetStaticProps<ForCustomersProps> =
 
     const article = await ArticleService.getArticle(params?.slug); //кастомный сервис для запроса   станиц для клиентов
 
-    return { props: { forCustomers, categoryProduct, productType, article } };
+    return {
+      props: { forCustomers, categoryProduct, productType, article },
+      revalidate: 10,
+    };
   });
 
 interface ForCustomersProps {

@@ -53,7 +53,7 @@ export const CatalogMenu = ({
       >
         <div className={styles.wrapper}>
           <ul className={styles.block1}>
-            {categoryProduct.length === 0 && <h1>Нет данных!</h1>}
+            {categoryProduct.length === 0 && <h1>Нет данных!!!</h1>}
             {categoryProduct.map((element) => {
               return (
                 <li

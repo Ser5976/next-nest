@@ -12,5 +12,6 @@ export const API = {
   slider: process.env.NEXT_PUBLIC_DOMAIN + '/api/slider',
   products: {
     popular: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/popular',
+    product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/filter',
   },
 };

@@ -36,7 +36,10 @@ export const getStaticProps: GetStaticProps<AuthProps> = wrapper.getStaticProps(
     const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
     store.dispatch(getProductType(productType));
     //----------------------------------------------------------//
-    return { props: { forCustomers, categoryProduct, productType } };
+    return {
+      props: { forCustomers, categoryProduct, productType },
+      revalidate: 10,
+    };
   }
 );
 

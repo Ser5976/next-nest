@@ -37,7 +37,10 @@ export const getStaticProps: GetStaticProps<AdminProps> =
     const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
     store.dispatch(getProductType(productType));
     //----------------------------------------------------------//
-    return { props: { forCustomers, categoryProduct, productType } };
+    return {
+      props: { forCustomers, categoryProduct, productType },
+      revalidate: 10,
+    };
   });
 
 interface AdminProps {

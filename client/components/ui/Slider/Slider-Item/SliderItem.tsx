@@ -9,9 +9,11 @@ const SliderItem: FC<SliderItemProps> = ({ slider }): JSX.Element => {
     <div className={styles.slide}>
       <Image
         layout="fill"
+        objectFit="cover"
+        objectPosition="bottom"
         className={styles.image}
         src={`${process.env.NEXT_PUBLIC_DOMAIN}/${slider.picture}`}
-        alt="картинка"
+        alt="изображения нет"
         unoptimized
         priority
       />

@@ -55,7 +55,10 @@ export const getStaticProps: GetStaticProps<StoreReviewsProps> =
 
     const reviews = await HomeServise.getReviews(); //кастомный сервис для запроса отзывов
 
-    return { props: { forCustomers, categoryProduct, productType, reviews } };
+    return {
+      props: { forCustomers, categoryProduct, productType, reviews },
+      revalidate: 10,
+    };
   });
 
 interface StoreReviewsProps {

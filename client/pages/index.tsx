@@ -65,6 +65,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
         sliders,
         popular,
       },
+      revalidate: 10,
     };
   }
 );

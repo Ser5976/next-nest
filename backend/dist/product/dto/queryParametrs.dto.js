@@ -17,9 +17,5 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], QueryParametrsDto.prototype, "page", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", Number)
-], QueryParametrsDto.prototype, "limit", void 0);
 exports.QueryParametrsDto = QueryParametrsDto;
 //# sourceMappingURL=queryParametrs.dto.js.map

@@ -75,8 +75,8 @@ export class ProductService {
 
   //получение  товаров(фильтрация,сортировка,пагинация)
   async getFilteredProducts(dto: QueryParametrsDto) {
-    const { minPrice, maxPrice, page, limit } = dto;
-    //console.log(query);
+    const { minPrice, maxPrice, page, limit = 1 } = dto;
+    console.log(dto);
     //пагинация
     let offset = Number(page) * Number(limit) - Number(limit);
 
@@ -90,6 +90,8 @@ export class ProductService {
       }; //формируем объект для цены{price:{$gte:число,$lte:число}}
       delete dto.minPrice; // удаляем данные из объекта, которые нам  не нужны для запроса(это числовой диапазон)
       delete dto.maxPrice;
+      delete dto.limit;
+
       // console.log(query);
       opition = { ...dto, price };
     } else {

@@ -7,56 +7,56 @@ import { useRouter } from 'next/router';
 const Pagination: FC<PaginationProps> = ({
   count, //количество всех товаров
   pageQty, //количество страниц
-  type, // выбранный тип товара
-  filter, // //данные, которые выбраны для фильтации(это брэнд и диапазон цены или просто брэнд)
-  selectedPath, // выбранный путь
+  page, //номер страницы
+  limit, //количество товаров на странице
 }): JSX.Element => {
-  const router = useRouter();
-  //из-за того, что я сделал два вида динамического роутинга(для примера) приходиться больше
-  //заморачиваться с условиями
-  // при помощи этой функции мы получаем из адресной строки номер страницы
-  const receiveSearchPage = () => {
-    let searchPage;
-    if (router.query.page) {
-      return (searchPage = router.query.page);
+  const { query, push } = useRouter();
+
+  // расчёт просмотренных товаров
+  const viewedProduct = () => {
+    let quatity = page * limit;
+    if (quatity > Number(count)) {
+      const quatityInterim = limit * (page - 1);
+      const remainsP = quatity - Number(count);
+      return (quatity = quatityInterim + remainsP);
     }
-    if (router.query.filter?.length === 2) {
-      searchPage = router.query.filter;
-      return searchPage[1];
-    }
-    return (searchPage = '1');
-  };
-  // console.log('searhPage:', Number(receiveSearchPage()));
-  // при помощи этой функции мы получаем  путь к следующей страницы
-  const receivePath = (numberPage: number) => {
-    let pathPage;
-    if (selectedPath === 'page') {
-      return (pathPage = `/${type}/page/${numberPage}`);
-    }
-    if (selectedPath === 'filter') {
-      return (pathPage = `/${type}/filter/${filter}/${numberPage}`);
-    }
+    return quatity;
   };
 
+  //формируем ссылку и изменяем номер страницы
   const handlePageClick = (event: any) => {
-    router.push(`${receivePath(event?.selected + 1)}`);
+    //при помощи window.location.search получаем параметры запроса из адресной сторки(всё ,что после вопроса)
+    // при помощи конструктора new URLSearchParams обрабатываем их
+    // при помощи Object.fromEntries трансформируем их в объект
+    const objectQuery = {
+      ...Object.fromEntries(new URLSearchParams(window.location.search)),
+    };
+    // меняем номер страницы
+    objectQuery.page = event?.selected + 1;
+    //при помощи конструктора new URLSearchParams трансформируем наш объект обратно параметры запроса
+    const params = new URLSearchParams(objectQuery);
+    // формируем ссылку
+    push(`/products/${query.typeId}?${params.toString()}`);
   };
   return (
     <div>
+      <div className=" text-gray-500 mt-10 text-xs text-center">
+        Просмотрено {viewedProduct()} из {count}
+      </div>
       <ReactPaginate
         breakLabel="..."
-        nextLabel="вперёд >"
+        nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
-        pageCount={pageQty}
-        previousLabel="< назад"
-        //  renderOnZeroPageCount={null}
+        pageCount={Number(pageQty)}
+        previousLabel="<"
         containerClassName={styles.pagination}
         pageLinkClassName={styles.pageNum}
         previousClassName={styles.pageNum}
         nextLinkClassName={styles.pageNum}
         activeLinkClassName={styles.active}
-        forcePage={Number(receiveSearchPage()) - 1}
+        disabledClassName={styles.disabled}
+        forcePage={page - 1}
       />
     </div>
   );

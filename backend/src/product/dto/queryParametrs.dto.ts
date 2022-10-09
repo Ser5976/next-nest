@@ -4,8 +4,8 @@ export class QueryParametrsDto {
   typeId: string;
   @IsString()
   page: string;
-  @IsString()
-  limit: number;
+
+  limit?: number;
 
   brandId?: string;
 

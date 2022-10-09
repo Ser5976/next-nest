@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import { FC, useEffect } from 'react';
-import { useActions } from '../../store/useActions';
+import { FC } from 'react';
 import { useData } from '../../store/useData';
 import { TypeComponentAuthFields } from './auth.types';
 
@@ -29,7 +28,11 @@ const CheckRole: FC<TypeComponentAuthFields> = ({
   //если не аторизован, страницы с isOnlyUser редиректим на страницу auth
   if (isOnlyUser && user && !user.isAdmin) return <>{children}</>;
   else {
-    router.pathname !== '/auth' && router.replace('/auth');
+    router.pathname !== '/auth' &&
+      router.replace(`/auth?redirect=${router.asPath}`); //так мы записываем путь той страницы с которой нас
+    //редиректнули на авторизацию, он запишится в объект query(в router ),
+    //а потом на странице авторизации возмём и за пушим туда
+    //откуда редиректнули(при помощи кастомного хука useAuthRedirect  )
     return null;
   }
 };

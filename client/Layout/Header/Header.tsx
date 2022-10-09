@@ -60,7 +60,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
             )}
             {productTypeReducer.productType.slice(0, 11).map((element) => {
               return (
-                <Link href={`/${element._id}`} key={element._id}>
+                <Link href={`/products/${element._id}`} key={element._id}>
                   <a className=" hover:bg-red-400 py-3 px-5 truncate max-w-[200px]">
                     {element.name}
                   </a>

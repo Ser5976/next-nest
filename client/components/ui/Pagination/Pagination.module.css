@@ -1,23 +1,13 @@
 .pagination {
-  display: flex;
-  list-style: none;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 5rem;
-  font-size: 1.2rem;
-  gap: 5px;
+  @apply flex list-none items-center justify-center my-5 text-[#0072BC] gap-[1px];
 }
 .pageNum {
-  padding: 8px 15px;
-  cursor: pointer;
-  border-radius: 3px;
-  font-weight: 400;
+  @apply px-3 py-1 cursor-pointer rounded-[1px] font-normal hover:bg-[#0072BC] hover:text-white;
 }
-.pageNum:hover {
-  background-color: #5ab1bb;
-  color: #fff;
-}
+
 .active {
-  background-color: #5ab1bb;
-  color: #fff;
+  @apply bg-[#0072BC] text-white;
+}
+.disabled {
+  @apply hidden;
 }

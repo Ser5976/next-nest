@@ -28,7 +28,6 @@ export class SliderController {
     return this.SliderService.getSlider();
   }
   //удаление картинки
-  @UsePipes(new ValidationPipe())
   @Delete(':id')
   @Auth()
   async deletePicture(@Param('id', IdValidationPipe) id: string) {

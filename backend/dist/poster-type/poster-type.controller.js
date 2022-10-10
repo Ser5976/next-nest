@@ -12,24 +12,23 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SliderController = void 0;
-const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
-const slider_dto_1 = require("./dto/slider.dto");
-const slider_service_1 = require("./slider.service");
+exports.PosterTypeController = void 0;
+const poster_type_service_1 = require("./poster-type.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
-let SliderController = class SliderController {
-    constructor(SliderService) {
-        this.SliderService = SliderService;
+const poster_type_dto_1 = require("./dto/poster-type.dto");
+let PosterTypeController = class PosterTypeController {
+    constructor(PosterTypeService) {
+        this.PosterTypeService = PosterTypeService;
     }
-    async createSlider(dto) {
-        return this.SliderService.addPicture(dto);
+    async createPoster(dto) {
+        return this.PosterTypeService.createPoster(dto);
     }
-    async getSlider() {
-        return this.SliderService.getSlider();
+    async getPoster(typeId) {
+        return this.PosterTypeService.getPoster(typeId);
     }
-    async deletePicture(id) {
-        return this.SliderService.deletePicture(id);
+    async deletePicture(typeId) {
+        return this.PosterTypeService.deletePoster(typeId);
     }
 };
 __decorate([
@@ -38,26 +37,27 @@ __decorate([
     (0, auth_decorators_1.Auth)('admin'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [slider_dto_1.SliderDto]),
+    __metadata("design:paramtypes", [poster_type_dto_1.PosterTypeDto]),
     __metadata("design:returntype", Promise)
-], SliderController.prototype, "createSlider", null);
+], PosterTypeController.prototype, "createPoster", null);
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], SliderController.prototype, "getSlider", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    (0, auth_decorators_1.Auth)(),
-    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
+    (0, common_1.Get)(':typeId'),
+    __param(0, (0, common_1.Param)('typeId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], SliderController.prototype, "deletePicture", null);
-SliderController = __decorate([
-    (0, common_1.Controller)('slider'),
-    __metadata("design:paramtypes", [slider_service_1.SliderService])
-], SliderController);
-exports.SliderController = SliderController;
-//# sourceMappingURL=slider.controller.js.map
+], PosterTypeController.prototype, "getPoster", null);
+__decorate([
+    (0, common_1.Delete)(':typeId'),
+    (0, auth_decorators_1.Auth)(),
+    __param(0, (0, common_1.Param)('typeId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], PosterTypeController.prototype, "deletePicture", null);
+PosterTypeController = __decorate([
+    (0, common_1.Controller)('poster-type'),
+    __metadata("design:paramtypes", [poster_type_service_1.PosterTypeService])
+], PosterTypeController);
+exports.PosterTypeController = PosterTypeController;
+//# sourceMappingURL=poster-type.controller.js.map

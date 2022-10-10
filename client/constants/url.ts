@@ -14,4 +14,5 @@ export const API = {
     popular: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/popular',
     product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/filter',
   },
+  poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
 };

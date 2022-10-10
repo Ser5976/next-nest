@@ -25,9 +25,17 @@ let FileService = class FileService {
     }
     async removeFile(dto) {
         const uploadFolder = `${app_root_path_1.path}/uploads`;
-        await Promise.all(dto.files.map(async (file) => {
-            await (0, fs_extra_1.remove)(`${uploadFolder}/${file}`);
-        }));
+        if (typeof dto.files !== 'string') {
+            await Promise.all(dto.files.map(async (file) => {
+                await (0, fs_extra_1.remove)(`${uploadFolder}/${file}`);
+            }));
+        }
+        else {
+            const clear = async () => {
+                await (0, fs_extra_1.remove)(`${uploadFolder}/${dto.files}`);
+            };
+            clear();
+        }
         return { message: 'файл удалён' };
     }
 };

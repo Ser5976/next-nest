@@ -20,6 +20,7 @@ import { StoreReviewsModule } from './store-reviews/store-reviews.module';
 import { ForCustomersModule } from './for-customers/for-customers.module';
 import { SliderModule } from './slider/slider.module';
 import { OrderModule } from './order/order.module';
+import { PosterTypeModule } from './poster-type/poster-type.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { OrderModule } from './order/order.module';
     ForCustomersModule,
     SliderModule,
     OrderModule,
+    PosterTypeModule,
   ],
 })
 export class AppModule {}

@@ -1,5 +1,7 @@
 import { GetStaticProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
+import { ProductsService } from '../../components/page-components/Products/products.service';
+import { IPoster } from '../../components/page-components/Products/ProductsList.props';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
@@ -9,8 +11,10 @@ import { IArticle } from '../../store/customers/interface.customers';
 import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
-//import ProductsList from '../../components/page-components/Products/ProductsList';
 
+// данные и пагинация рендерится на клиенте
+
+// динамический роут из за window.location
 const ProductsList = dynamic(
   () => import('../../components/page-components/Products/ProductsList'),
   { ssr: false }
@@ -19,12 +23,16 @@ const ProductsList = dynamic(
 const Products: NextPage<ProductsProps> = ({
   typeId, //id типа товара, выбранного из адресной строки
   productType, // массив типов товара
+  poster, //картинка и текст для страницы с типом товаров
 }) => {
   return (
     <Layout title=" Products" description="Тренировочный проект eCommerce">
       <div>
-        Товары
-        <ProductsList typeId={typeId} productType={productType} />
+        <ProductsList
+          typeId={typeId}
+          productType={productType}
+          poster={poster}
+        />
       </div>
     </Layout>
   );
@@ -60,6 +68,8 @@ export const getStaticProps: GetStaticProps<ProductsProps> =
     //получение productType
     const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
     store.dispatch(getProductType(productType));
+    // получение постера для типа товаров
+    const poster = await ProductsService.getPosterType(params?.typeId);
 
     return {
       props: {
@@ -67,6 +77,7 @@ export const getStaticProps: GetStaticProps<ProductsProps> =
         categoryProduct,
         productType,
         typeId: params?.typeId,
+        poster,
       },
       revalidate: 10,
     };
@@ -77,6 +88,7 @@ interface ProductsProps {
   categoryProduct: ICategoryProduct[];
   productType: IType[];
   typeId: string | string[] | undefined;
+  poster: IPoster;
 }
 
 export default Products;

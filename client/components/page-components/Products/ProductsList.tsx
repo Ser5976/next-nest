@@ -10,6 +10,7 @@ import Pagination from '../../ui/Pagination/Pagination';
 const ProductsList: FC<ProductsListProps> = ({
   productType, // массив типов товара
   typeId, //id типа товара, выбранного из адресной строки
+  poster, //картинка и текст для страницы с типом товаров
 }): JSX.Element => {
   const router = useRouter();
   const { query } = router;
@@ -49,6 +50,7 @@ const ProductsList: FC<ProductsListProps> = ({
     <div>
       <h1>Типы</h1>
       <h1>{typeName?.name}</h1>
+      <h1>{poster?.text}</h1>
       {error ? (
         <h1 className=" text-center font-semibold text-red-600">
           Что то пошло не так!

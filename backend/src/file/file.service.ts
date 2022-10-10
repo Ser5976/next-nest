@@ -21,13 +21,22 @@ export class FileService {
     return filesUrls; //возвращаем массив юрлов
   }
   // удаление файла
-  async removeFile(dto: { files: string[] }) {
+  async removeFile(dto: { files: string[] | string }) {
     const uploadFolder = `${path}/uploads`; //определяем путь к  папке из которой будем удалять файлы
-    await Promise.all(
-      dto.files.map(async (file) => {
-        await remove(`${uploadFolder}/${file}`);
-      }),
-    );
+
+    if (typeof dto.files !== 'string') {
+      await Promise.all(
+        dto.files.map(async (file) => {
+          await remove(`${uploadFolder}/${file}`);
+        }),
+      );
+    } else {
+      const clear = async () => {
+        await remove(`${uploadFolder}/${dto.files}`);
+      };
+      clear();
+    }
+
     return { message: 'файл удалён' };
   }
 }

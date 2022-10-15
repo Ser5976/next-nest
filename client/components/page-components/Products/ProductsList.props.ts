@@ -22,5 +22,5 @@ export interface ProductsListProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   typeId: string | string[] | undefined;
   productType: IType[];
-  poster: IPoster;
+  poster: IPoster | null;
 }

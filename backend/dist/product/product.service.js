@@ -52,7 +52,7 @@ let ProductService = class ProductService {
         return product;
     }
     async getFilteredProducts(dto) {
-        const { minPrice, maxPrice, page, limit = 1 } = dto;
+        const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
         console.log(dto);
         let offset = Number(page) * Number(limit) - Number(limit);
         let opition = {};

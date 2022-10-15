@@ -75,7 +75,7 @@ export class ProductService {
 
   //получение  товаров(фильтрация,сортировка,пагинация)
   async getFilteredProducts(dto: QueryParametrsDto) {
-    const { minPrice, maxPrice, page, limit = 1 } = dto;
+    const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
     console.log(dto);
     //пагинация
     let offset = Number(page) * Number(limit) - Number(limit);

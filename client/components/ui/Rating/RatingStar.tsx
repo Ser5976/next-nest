@@ -11,7 +11,7 @@ const RatingStar: FC<RatingStarProps> = ({
   let initialRating = (rating.estimation * 100) / 5; // переводим полученную оценку рэйтинга в проценты
   //т.к. этого хочет ента библиотека
   const [rat, setRat] = useState(initialRating);
-  console.log(rat);
+  // console.log(rat);
   const handleRating = (rate: number) => {
     setRat(rate);
   };

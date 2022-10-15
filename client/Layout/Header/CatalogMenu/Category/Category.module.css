@@ -7,7 +7,7 @@
 .productType {
   @apply grid grid-cols-3 gap-5  text-gray-600;
 }
-.productType li {
+.productType a {
   @apply text-ellipsis overflow-hidden hover:text-red-400;
 }
 

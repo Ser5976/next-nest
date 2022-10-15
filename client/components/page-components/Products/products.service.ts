@@ -24,7 +24,7 @@ export const ProductsService = {
       );
       return poster;
     } catch (error) {
-      const poster = {} as IPoster;
+      const poster = null;
       return poster;
     }
   },

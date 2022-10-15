@@ -1,0 +1,18 @@
+.sort {
+  @apply flex items-center justify-between  border-b mt-4 py-5;
+}
+.link {
+  @apply text-xs text-blue-400 hover:text-red-400 underline block mr-5 cursor-pointer;
+}
+.activeRating {
+  @apply text-xs text-red-400 underline block mr-5;
+}
+.price {
+  @apply relative;
+}
+.activePrice {
+  @apply text-xs text-red-400 underline block mr-5 cursor-pointer;
+}
+.icons {
+  @apply absolute   top-1 right-[-12px];
+}

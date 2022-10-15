@@ -88,7 +88,7 @@ interface ProductsProps {
   categoryProduct: ICategoryProduct[];
   productType: IType[];
   typeId: string | string[] | undefined;
-  poster: IPoster;
+  poster: IPoster | null;
 }
 
 export default Products;

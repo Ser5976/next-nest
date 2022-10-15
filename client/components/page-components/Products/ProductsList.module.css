@@ -1,0 +1,18 @@
+.container {
+  @apply flex max-w-screen-xl mx-auto   min-h-screen  pt-10 px-2 gap-3;
+}
+.section1 {
+  @apply w-2/3 p-3;
+}
+.poster {
+  @apply flex bg-gradient-to-l from-lime-400 via-amber-400 to-red-400 h-32 overflow-hidden;
+}
+.text {
+  @apply text-2xl text-white font-sans font-bold w-1/2 text-center pt-2;
+}
+.image {
+  @apply w-1/2 relative;
+}
+.section2 {
+  @apply w-1/3 p-3 border;
+}

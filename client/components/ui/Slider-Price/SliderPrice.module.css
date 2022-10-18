@@ -1,0 +1,16 @@
+.slider {
+  @apply p-5 border w-[285px] mx-auto;
+}
+
+.inputs {
+  @apply flex gap-1 mb-4;
+}
+.inputs label {
+  @apply flex items-center;
+}
+.inputs span {
+  @apply text-gray-600 mr-2;
+}
+.inputs input {
+  @apply w-[90px] h-7 border-2 border-gray-400 rounded-sm px-1 text-gray-600;
+}

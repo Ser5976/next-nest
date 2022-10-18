@@ -13,6 +13,3 @@
 .image {
   @apply w-1/2 relative;
 }
-.section2 {
-  @apply w-1/3 p-3 border;
-}

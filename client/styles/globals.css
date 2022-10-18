@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/*удаление стилей из инпута number*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  /* margin: 0;*/
+}
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 /* стили для билиотеки уведомлений */
 @import 'react-toastify/dist/ReactToastify.css';
 
@@ -9,5 +21,32 @@
 .carousel {
   @apply flex items-center bg-gradient-to-l from-lime-400 via-amber-400 to-red-400 p-1 opacity-80 z-20;
 }
-.carousel .slide {
+
+/*для сладера-ползунка*/
+.horizontal-slider {
+  @apply w-[245px] h-[50px];
+}
+
+.example-thumb {
+  @apply bg-red-400 cursor-pointer rounded-sm;
+}
+
+.example-track {
+  @apply relative  bg-slate-300;
+}
+
+.example-track.example-track-1 {
+  @apply bg-lime-400;
+}
+
+.example-track.example-track-2 {
+  @apply bg-slate-300;
+}
+
+.horizontal-slider .example-track {
+  @apply top-[20px] h-[4px] border border-gray-500;
+}
+
+.horizontal-slider .example-thumb {
+  @apply top-[14px] w-[10px] h-[15px];
 }

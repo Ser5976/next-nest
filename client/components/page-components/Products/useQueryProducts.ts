@@ -6,12 +6,14 @@ export const useQueryProducts = (
   objectQuery: any, //объект с параметрами запроса
   rating: boolean, // сортировка по рейтигу
   priceDown: boolean, // сортировка по цене вниз
-  priceUp: boolean //сортировка пр цене вверх
+  priceUp: boolean, //сортировка пр цене вверх
+  typeId: string | string[] | undefined
 ) => {
   return useQuery(
     ['product list', objectQuery],
     () => ProductsService.getProduct(objectQuery),
     {
+      enabled: !!typeId, //это для того чтобы запрос проходил когда typeId уже был
       //для сротировки товаров(по рейтингу, по цене)пишем херову тучу условий
       select: (data) => {
         let productsSort = data.allProduct;

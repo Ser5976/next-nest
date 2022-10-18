@@ -3,6 +3,7 @@ import { FC } from 'react';
 import ReactPaginate from 'react-paginate';
 import { PaginationProps } from './Pagination.props';
 import { useRouter } from 'next/router';
+import { brandIdHandler } from './utility';
 
 const Pagination: FC<PaginationProps> = ({
   count, //количество всех товаров
@@ -16,9 +17,9 @@ const Pagination: FC<PaginationProps> = ({
   const viewedProduct = () => {
     let quatity = page * limit;
     if (quatity > Number(count)) {
-      const quatityInterim = limit * (page - 1);
-      const remainsP = quatity - Number(count);
-      return (quatity = quatityInterim + remainsP);
+      const difference = quatity - Number(count);
+
+      return (quatity = quatity - difference);
     }
     return quatity;
   };
@@ -31,12 +32,27 @@ const Pagination: FC<PaginationProps> = ({
     const objectQuery = {
       ...Object.fromEntries(new URLSearchParams(window.location.search)),
     };
+    //если brandId это массив значений то удаляем brandId изo bjectQuery  т.к URLSearchParams
+    //не формирует значение в массив, а добвляет только последнее значение
+    if (typeof query.brandId === 'object') {
+      delete objectQuery.brandId;
+    }
+    //добавляем brandId  вручную  берём массив из query.brandId , из роутера.
+    //но чтобы превратить query.brandId в строку параметров пришлось наворатить кучу говна
+    // костыль brandIdHandler, который возращает строку параметров из brandId, если он массив.
+
     // меняем номер страницы
     objectQuery.page = event?.selected + 1;
+
     //при помощи конструктора new URLSearchParams трансформируем наш объект обратно параметры запроса
+    console.log('brandIdHandler :', brandIdHandler(query.brandId));
     const params = new URLSearchParams(objectQuery);
     // формируем ссылку
-    push(`/products/${query.typeId}?${params.toString()}`);
+    push(
+      `/products/${query.typeId}?${params.toString()}${brandIdHandler(
+        query.brandId
+      )}`
+    );
   };
   return (
     <div>

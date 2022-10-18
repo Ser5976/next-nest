@@ -53,7 +53,7 @@ let ProductService = class ProductService {
     }
     async getFilteredProducts(dto) {
         const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
-        console.log(dto);
+        console.log('Dto:', dto);
         let offset = Number(page) * Number(limit) - Number(limit);
         let opition = {};
         if (minPrice && maxPrice) {
@@ -69,7 +69,7 @@ let ProductService = class ProductService {
         else {
             opition = dto;
         }
-        console.log(opition);
+        console.log('Option:', opition);
         const allProduct = await this.ProductModel.find(opition)
             .sort({ createdAt: 'desc' })
             .skip(offset)

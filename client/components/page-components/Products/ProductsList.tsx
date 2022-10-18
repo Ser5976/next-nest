@@ -9,6 +9,7 @@ import ProductItem from './ProductItem/ProductItem';
 import { useSortCustom } from './useSortCustom';
 import { useQueryProducts } from './useQueryProducts';
 import Sort from './Sort/Sort'; //компонент для сортировки (по цене,рейтингу)
+import Filter from './Filter/Filter';
 
 const ProductsList: FC<ProductsListProps> = ({
   productType, // массив типов товара
@@ -17,8 +18,8 @@ const ProductsList: FC<ProductsListProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const { query } = router;
-  const [limit, setLimit] = useState<number>(3);
-
+  const [limit, setLimit] = useState<number>(2);
+  console.log('query:', query);
   //это для сортировки(по рентингу,по цене)замутил примитивный кастомный хук
   const { rating, priceUp, priceDown, toggleRating, toogglePrice } =
     useSortCustom();
@@ -31,13 +32,20 @@ const ProductsList: FC<ProductsListProps> = ({
   // при помощи конструктора new URLSearchParams обрабатываем их
   // при помощи Object.fromEntries трансформируем их в объект
   // и добавляем в наш объект
-  const objectQuery = {
+  const objectQuery: any = {
     typeId,
     page,
     limit,
     ...Object.fromEntries(new URLSearchParams(window.location.search)),
   };
-  // console.log('Объект запроса', objectQuery)
+  //добавляем brandId  вручную т.к. если у него  будет несколько значений
+  //URLSearchParams не формирует значение в массив, а query, из роутера, формирует
+  if (typeof query.brandId === 'object') {
+    objectQuery.brandId = query.brandId;
+  }
+
+  console.log('window', window.location.search);
+  console.log('Объект запроса', objectQuery);
   //кастомный хук в который входит useQuery из
   // билиотеки react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
@@ -45,7 +53,7 @@ const ProductsList: FC<ProductsListProps> = ({
     isLoading,
     data: products,
     error,
-  } = useQueryProducts(objectQuery, rating, priceDown, priceUp);
+  } = useQueryProducts(objectQuery, rating, priceDown, priceUp, typeId);
 
   // console.log('response:', products);
 
@@ -102,7 +110,7 @@ const ProductsList: FC<ProductsListProps> = ({
             </div>
           )}
         </div>
-        <div className={styles.section2}></div>
+        <Filter typeName={typeName} />
       </div>
       {Number(products?.pageQty) > 1 && (
         <Pagination

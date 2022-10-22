@@ -5,12 +5,13 @@ import { SortProps } from './Sort.props';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 
 const Sort: FC<SortProps> = ({
-  rating,
-  priceDown,
-  priceUp,
-  toggleRating,
-  toogglePrice,
+  rating, //булевое значение по рейтингу
+  priceDown, //булевое значение по цене снижающейся
+  priceUp, //булевое значение по цене растущей
+  toggleRating, //функция изменяющая булевое значение по рейтингу
+  toogglePrice, //функция изменяющая булевое значение по цене
 }): JSX.Element => {
+  // все булевые значения мы так же передаем в useQueryProducts (useQury) где и делаем сортировку
   return (
     <div className={styles.sort}>
       <div className=" text-xs font-semibold text-gray-600 ">

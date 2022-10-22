@@ -25,9 +25,9 @@ export const Category = ({
       <ul className={styles.productType}>
         {category?.productType.map((type) => {
           return (
-            <Link href={`/products/${type._id}`} key={type._id}>
-              <a>{type.name}</a>
-            </Link>
+            <a href={`/products/${type._id}`} key={type._id}>
+              {type.name}
+            </a>
           );
         })}
       </ul>

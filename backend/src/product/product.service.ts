@@ -105,8 +105,7 @@ export class ProductService {
     const count = await this.ProductModel.find(opition).count();
     //рассчёт количества страниц,для пагинации
     const pageQty = Math.ceil(count / limit);
-    if (allProduct.length === 0)
-      throw new NotFoundException('Что то пошло не так');
+
     return { allProduct, count, pageQty };
   }
 

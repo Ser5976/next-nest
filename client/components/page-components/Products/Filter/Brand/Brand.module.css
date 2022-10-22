@@ -1,0 +1,12 @@
+.container {
+  @apply p-5 border w-[285px] mx-auto  my-4;
+}
+.brand {
+  @apply w-1/2;
+}
+.container h1 {
+  @apply text-gray-600 mb-4 text-sm font-semibold;
+}
+.container label {
+  @apply text-gray-600;
+}

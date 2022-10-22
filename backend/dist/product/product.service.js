@@ -76,8 +76,6 @@ let ProductService = class ProductService {
             .limit(Number(limit));
         const count = await this.ProductModel.find(opition).count();
         const pageQty = Math.ceil(count / limit);
-        if (allProduct.length === 0)
-            throw new common_1.NotFoundException('Что то пошло не так');
         return { allProduct, count, pageQty };
     }
     async byIdProduct(id) {

@@ -9,7 +9,7 @@ const SliderPrice: FC<SliderPriceProps> = ({
 }): JSX.Element => {
   return (
     <div className={styles.slider}>
-      <h1 className=" text-gray-600 mb-4">Цена, б.р.</h1>
+      <h1 className=" text-gray-800 mb-4 text-sm font-semibold">Цена, б.р.</h1>
       <div className={styles.inputs}>
         <label>
           <span>от</span>

@@ -18,9 +18,9 @@ const ProductsList: FC<ProductsListProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const { query } = router;
-  const [limit, setLimit] = useState<number>(2);
+  const [limit, setLimit] = useState<number>(4);
   console.log('query:', query);
-  //это для сортировки(по рентингу,по цене)замутил примитивный кастомный хук
+  //это для сортировки(по рейтингу,по цене)замутил примитивный кастомный хук
   const { rating, priceUp, priceDown, toggleRating, toogglePrice } =
     useSortCustom();
 
@@ -44,7 +44,7 @@ const ProductsList: FC<ProductsListProps> = ({
     objectQuery.brandId = query.brandId;
   }
 
-  console.log('window', window.location.search);
+  //  console.log('window', window.location.search);
   console.log('Объект запроса', objectQuery);
   //кастомный хук в который входит useQuery из
   // билиотеки react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
@@ -97,11 +97,17 @@ const ProductsList: FC<ProductsListProps> = ({
             toogglePrice={toogglePrice}
           />
           {error ? (
-            <h1 className=" text-center font-semibold text-red-600">
+            <h1 className=" text-center font-semibold text-red-600 mt-2">
               Что то пошло не так!
             </h1>
           ) : isLoading ? (
-            <h1 className="text-center font-semibold">Загрузка...</h1>
+            <h1 className="text-center font-semibold  text-gray-600 mt-2">
+              Загрузка...
+            </h1>
+          ) : products?.allProduct.length === 0 ? (
+            <h1 className=" text-center font-semibold text-gray-600 mt-2">
+              Товаров по данному запросу не найдено!
+            </h1>
           ) : (
             <div>
               {products?.allProduct?.map((product) => {

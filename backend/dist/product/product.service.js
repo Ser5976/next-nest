@@ -86,14 +86,12 @@ let ProductService = class ProductService {
             throw new common_1.NotFoundException('Такого товара не существует!');
         return product;
     }
-    async textSearch(text) {
+    async textSearch(dto) {
         const foundProduct = await this.ProductModel.find({
-            $text: { $search: text, $caseSensitive: false },
+            $text: { $search: dto.text, $caseSensitive: false },
         }, { score: { $meta: 'textScore' } })
             .sort({ score: { $meta: 'textScore' } })
             .exec();
-        if (foundProduct.length === 0)
-            throw new common_1.NotFoundException('Ничего не найдено');
         return foundProduct;
     }
     async getPopularProduct() {

@@ -3,7 +3,6 @@ import { FC } from 'react';
 import ReactPaginate from 'react-paginate';
 import { PaginationProps } from './Pagination.props';
 import { useRouter } from 'next/router';
-import { brandIdHandler } from './utility';
 
 const Pagination: FC<PaginationProps> = ({
   count, //количество всех товаров
@@ -12,6 +11,34 @@ const Pagination: FC<PaginationProps> = ({
   limit, //количество товаров на странице
 }): JSX.Element => {
   const { query, push } = useRouter();
+  //находим базовый url,используем его в создании полной адресной строки
+  const baseUrl = process.env.NEXT_PUBLIC_DOMAIN;
+  // создаём объект в котором будем формировать адресную строку при помощи конструктора(new URL(l))
+  const productsUrl = new URL('products', baseUrl);
+  // все данные ,которые нам нужны для запроса, содержаться в объекте query(useRouter)
+  //но у него (если у него будет значение масссив ) не мапит массив из-за типизации
+  // поэтому создаём новый объект с его помощью
+  let objQuery: any = {};
+  for (const key in query) {
+    objQuery[key] = query[key];
+  }
+  // удаляем из объекта свойства page и typeId, page(номер страницы)-будем менят дальше
+  // typeId это параметр и он должен всегда стоять сразу после основного адреса,
+  //а при создании адреса при помощи конструктора это не получается
+  delete objQuery.page;
+  delete objQuery.typeId;
+  console.log('Page:', objQuery);
+  // создаём непосредственно поисковую часть адреса
+  // пришлось костыльнуть из-за значения массива(brandId)
+  for (const key in objQuery) {
+    if (typeof objQuery[key] === 'object') {
+      objQuery[key].map((a: string) => {
+        productsUrl.searchParams.append(key, a);
+      });
+    } else {
+      productsUrl.searchParams.append(key, String(query[key]));
+    }
+  }
 
   // расчёт просмотренных товаров
   const viewedProduct = () => {
@@ -24,35 +51,14 @@ const Pagination: FC<PaginationProps> = ({
     return quatity;
   };
 
-  //формируем ссылку и изменяем номер страницы
+  //добавляем в адресс изменённый номер страницы и формируем полный адрес
   const handlePageClick = (event: any) => {
-    //при помощи window.location.search получаем параметры запроса из адресной сторки(всё ,что после вопроса)
-    // при помощи конструктора new URLSearchParams обрабатываем их
-    // при помощи Object.fromEntries трансформируем их в объект
-    const objectQuery = {
-      ...Object.fromEntries(new URLSearchParams(window.location.search)),
-    };
-    //если brandId это массив значений то удаляем brandId изo bjectQuery  т.к URLSearchParams
-    //не формирует значение в массив, а добвляет только последнее значение
-    if (typeof query.brandId === 'object') {
-      delete objectQuery.brandId;
-    }
-    //добавляем brandId  вручную  берём массив из query.brandId , из роутера.
-    //но чтобы превратить query.brandId в строку параметров пришлось наворатить кучу говна
-    // костыль brandIdHandler, который возращает строку параметров из brandId, если он массив.
+    productsUrl.searchParams.append('page', event?.selected + 1);
 
-    // меняем номер страницы
-    objectQuery.page = event?.selected + 1;
+    //  console.log('ProductsUrl:', productsUrl);
 
-    //при помощи конструктора new URLSearchParams трансформируем наш объект обратно параметры запроса
-    console.log('brandIdHandler :', brandIdHandler(query.brandId));
-    const params = new URLSearchParams(objectQuery);
     // формируем ссылку
-    push(
-      `/products/${query.typeId}?${params.toString()}${brandIdHandler(
-        query.brandId
-      )}`
-    );
+    push(`/products/${query.typeId}${productsUrl.search}`);
   };
   return (
     <div>

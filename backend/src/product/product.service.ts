@@ -1,3 +1,4 @@
+import { SearchDto } from './dto/search.dto';
 import { QueryParametrsDto } from './dto/queryParametrs.dto';
 import { CategoryProductModel } from './../category-product/category-product.model';
 import { ProductTypeModel } from './../product-type/product-type.model';
@@ -119,17 +120,16 @@ export class ProductService {
     return product;
   }
   //текстовый поиск товара(по слову), score-находит наибольшее совпадиние
-  async textSearch(text: string) {
+  async textSearch(dto: SearchDto) {
     const foundProduct = await this.ProductModel.find(
       {
-        $text: { $search: text, $caseSensitive: false },
+        $text: { $search: dto.text, $caseSensitive: false },
       },
       { score: { $meta: 'textScore' } },
     )
       .sort({ score: { $meta: 'textScore' } })
       .exec();
-    if (foundProduct.length === 0)
-      throw new NotFoundException('Ничего не найдено');
+
     return foundProduct;
   }
   // получение популярных товаров

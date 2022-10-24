@@ -1,3 +1,4 @@
+import { SearchDto } from './dto/search.dto';
 import { QueryParametrsDto } from './dto/queryParametrs.dto';
 import { IdValidationPipe } from './../pipes/id.validation.pipe';
 import { ProductDto } from './dto/product.dto';
@@ -40,18 +41,17 @@ export class ProductController {
   async getLatestProduct() {
     return this.ProductServies.getLatestProduct();
   }
-
+  // поиск товара по тексту(слова)
+  @Get('search')
+  async textSearch(@Query() dto: SearchDto) {
+    return this.ProductServies.textSearch(dto);
+  }
   //получение товара
   @Get(':id')
   async get(@Param('id', IdValidationPipe) id: string) {
     return await this.ProductServies.byIdProduct(id);
   }
 
-  // поиск товара по тексту(слова)
-  @Get('textSearch/:text')
-  async textSearch(@Param('text') text: string) {
-    return this.ProductServies.textSearch(text);
-  }
   //обновление товара
   @UsePipes(new ValidationPipe())
   @Put(':id')

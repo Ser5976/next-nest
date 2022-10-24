@@ -13,6 +13,7 @@ export const API = {
   products: {
     popular: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/popular',
     product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/filter',
+    search: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/search',
   },
   poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
 };

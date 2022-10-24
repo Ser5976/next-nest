@@ -1,6 +1,6 @@
+import { ProductsService } from './products.service'; //сервис для запроса на сервак
 import { useQuery } from 'react-query'; //билиотека react-query,которая работает с запросами
 //(получает,кэширует,синхронизирует,обновляет)useQuery работает с GET запросами
-import { ProductsService } from './products.service'; //сервис для запроса на сервак
 
 export const useQueryProducts = (
   objectQuery: any, //объект с параметрами запроса

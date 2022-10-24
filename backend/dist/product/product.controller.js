@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
+const search_dto_1 = require("./dto/search.dto");
 const queryParametrs_dto_1 = require("./dto/queryParametrs.dto");
 const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
 const product_dto_1 = require("./dto/product.dto");
@@ -34,11 +35,11 @@ let ProductController = class ProductController {
     async getLatestProduct() {
         return this.ProductServies.getLatestProduct();
     }
+    async textSearch(dto) {
+        return this.ProductServies.textSearch(dto);
+    }
     async get(id) {
         return await this.ProductServies.byIdProduct(id);
-    }
-    async textSearch(text) {
-        return this.ProductServies.textSearch(text);
     }
     async updateProduct(id, dto) {
         return this.ProductServies.updateProduct(id, dto);
@@ -76,19 +77,19 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getLatestProduct", null);
 __decorate([
+    (0, common_1.Get)('search'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "textSearch", null);
+__decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "get", null);
-__decorate([
-    (0, common_1.Get)('textSearch/:text'),
-    __param(0, (0, common_1.Param)('text')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], ProductController.prototype, "textSearch", null);
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Put)(':id'),

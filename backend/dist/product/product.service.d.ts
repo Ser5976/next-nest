@@ -1,3 +1,4 @@
+import { SearchDto } from './dto/search.dto';
 import { QueryParametrsDto } from './dto/queryParametrs.dto';
 import { CategoryProductModel } from './../category-product/category-product.model';
 import { ProductTypeModel } from './../product-type/product-type.model';
@@ -23,7 +24,7 @@ export declare class ProductService {
     byIdProduct(id: string): Promise<import("mongoose").Document<Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: Types.ObjectId;
     }>;
-    textSearch(text: string): Promise<(import("mongoose").Document<Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+    textSearch(dto: SearchDto): Promise<(import("mongoose").Document<Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: Types.ObjectId;
     })[]>;
     getPopularProduct(): Promise<(import("mongoose").Document<Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {

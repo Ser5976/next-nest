@@ -7,9 +7,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ProductItem from './ProductItem/ProductItem';
 import { useSortCustom } from './useSortCustom';
-import { useQueryProducts } from './useQueryProducts';
 import Sort from './Sort/Sort'; //компонент для сортировки (по цене,рейтингу)
 import Filter from './Filter/Filter';
+import { useQueryProducts } from './useQueryProducts'; //кастомный хук в который входит useQuery
 
 const ProductsList: FC<ProductsListProps> = ({
   productType, // массив типов товара
@@ -18,7 +18,7 @@ const ProductsList: FC<ProductsListProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const { query } = router;
-  const [limit, setLimit] = useState<number>(4);
+  const [limit, setLimit] = useState<number>(1);
   console.log('query:', query);
   //это для сортировки(по рейтингу,по цене)замутил примитивный кастомный хук
   const { rating, priceUp, priceDown, toggleRating, toogglePrice } =
@@ -28,23 +28,11 @@ const ProductsList: FC<ProductsListProps> = ({
   const page = Number(query.page ? query.page : '1');
 
   //формируем объек запроса
-  //при помощи window.location.search получаем параметры запроса из адресной сторки(всё ,что после вопроса)
-  // при помощи конструктора new URLSearchParams обрабатываем их
-  // при помощи Object.fromEntries трансформируем их в объект
-  // и добавляем в наш объект
   const objectQuery: any = {
-    typeId,
     page,
     limit,
-    ...Object.fromEntries(new URLSearchParams(window.location.search)),
+    ...query,
   };
-  //добавляем brandId  вручную т.к. если у него  будет несколько значений
-  //URLSearchParams не формирует значение в массив, а query, из роутера, формирует
-  if (typeof query.brandId === 'object') {
-    objectQuery.brandId = query.brandId;
-  }
-
-  //  console.log('window', window.location.search);
   console.log('Объект запроса', objectQuery);
   //кастомный хук в который входит useQuery из
   // билиотеки react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
@@ -59,6 +47,7 @@ const ProductsList: FC<ProductsListProps> = ({
 
   //маленький кастылек для вывода названия типа товаров
   const typeName = productType?.find((el) => el._id === typeId);
+
   return (
     <>
       <div className={styles.container}>

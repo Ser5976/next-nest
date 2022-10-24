@@ -40,7 +40,7 @@ const Brand: FC<BrandProps> = ({
                   checked={checked[brand.name] ? checked[brand.name] : false}
                   onChange={(e) => checkboxHandler(e, brand.name)}
                 />{' '}
-                {brand.name}
+                <span>{brand.name}</span>
               </label>
             </div>
           );

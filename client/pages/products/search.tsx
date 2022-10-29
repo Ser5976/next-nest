@@ -14,7 +14,6 @@ import { IType } from '../../store/type-product/interface.typeProduct';
 const Search = () => {
   return (
     <Layout title="Search">
-      <h1 className=" text-lg font-bold text-center mt-10">Поиск</h1>
       <SearchPage />
     </Layout>
   );

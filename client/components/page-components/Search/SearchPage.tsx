@@ -3,7 +3,6 @@ import { FC, useEffect, useState } from 'react';
 import { SearchPageProps } from './SearchPage.props';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useQuery } from 'react-query';
 import ProductItem from '../Products/ProductItem/ProductItem';
 import { SearchService } from './search.service';
@@ -18,7 +17,9 @@ const SearchPage: FC<SearchPageProps> = ({}): JSX.Element => {
     isLoading,
     data: foundProduct,
     error,
-  } = useQuery(['product list', query], () => SearchService.getSearch(query));
+  } = useQuery(['product list', query], () => SearchService.getSearch(query), {
+    enabled: !!query.text,
+  });
 
   return (
     <>

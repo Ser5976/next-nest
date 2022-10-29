@@ -18,6 +18,7 @@ const ProductItem: FC<ProductItemProps> = ({
             src={`${process.env.NEXT_PUBLIC_DOMAIN}/${product.files[0]}`}
             alt="изображения нет"
             unoptimized
+            priority
           />
         </div>
       </div>

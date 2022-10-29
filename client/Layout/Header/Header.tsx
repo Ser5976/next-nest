@@ -7,6 +7,7 @@ import { CatalogMenu } from './CatalogMenu/CatalogMenu';
 import { AccountMenu } from './AccountMenu/AccountMenu';
 import { BsCart } from 'react-icons/bs';
 import { useData } from '../../store/useData';
+import { SearchInput } from './SearchInput/SearchInput';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const count = 5;
@@ -33,17 +34,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
           </Link>
 
           <CatalogMenu />
-
-          <div className={styles.search}>
-            <input
-              type="text"
-              className={styles.input}
-              placeholder="Поиск товаров . . ."
-            />
-            <button className={styles.searchButton}>
-              <AiOutlineSearch />
-            </button>
-          </div>
+          <SearchInput />
 
           <AccountMenu />
 

@@ -33,7 +33,7 @@ const SliderPrice: FC<SliderPriceProps> = ({
           value={price}
           onChange={(value, index) => {
             setPrice(value);
-            console.log(`onChange: ${JSON.stringify({ value, index })}`);
+            // console.log(`onChange: ${JSON.stringify({ value, index })}`);
           }}
           className="horizontal-slider"
           thumbClassName="example-thumb"

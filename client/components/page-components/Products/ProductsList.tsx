@@ -18,14 +18,18 @@ const ProductsList: FC<ProductsListProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const { query } = router;
-  const [limit, setLimit] = useState<number>(1);
-  console.log('query:', query);
+  const [limit, setLimit] = useState<number>(1); //стейт для лимита
+
+  //номер активной сраницы.Через useState не делал, потому что router.query при первом рендеринге даёт undef.
+  const page = Number(query.page ? query.page : '1');
+
+  //маленький костыль для вывода названия типа товаров
+  const typeName = productType?.find((el) => el._id === typeId);
+  // console.log('query:', query);
+
   //это для сортировки(по рейтингу,по цене)замутил примитивный кастомный хук
   const { rating, priceUp, priceDown, toggleRating, toogglePrice } =
     useSortCustom();
-
-  //номер активной сраницы.Через useState что то глючит
-  const page = Number(query.page ? query.page : '1');
 
   //формируем объек запроса
   const objectQuery: any = {
@@ -33,7 +37,8 @@ const ProductsList: FC<ProductsListProps> = ({
     limit,
     ...query,
   };
-  console.log('Объект запроса', objectQuery);
+
+  //console.log('Объект запроса', objectQuery);
   //кастомный хук в который входит useQuery из
   // билиотеки react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
@@ -44,9 +49,6 @@ const ProductsList: FC<ProductsListProps> = ({
   } = useQueryProducts(objectQuery, rating, priceDown, priceUp, typeId);
 
   // console.log('response:', products);
-
-  //маленький кастылек для вывода названия типа товаров
-  const typeName = productType?.find((el) => el._id === typeId);
 
   return (
     <>

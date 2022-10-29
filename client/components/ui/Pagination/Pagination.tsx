@@ -27,8 +27,11 @@ const Pagination: FC<PaginationProps> = ({
   //а при создании адреса при помощи конструктора это не получается
   delete objQuery.page;
   delete objQuery.typeId;
-  console.log('Page:', objQuery);
-  // создаём непосредственно поисковую часть адреса
+  // console.log('Page:', objQuery);
+  // создаём непосредственно поисковую часть адреса, т.е. мы вносим данные в свойтво search ,
+  //который находится в объекте productsUrl
+  //все данные записываются в строку как query параметры(?свойство=значение&)
+  // а потом мы берём эти данные productsUrl.search и вставляем в адресную строку
   // пришлось костыльнуть из-за значения массива(brandId)
   for (const key in objQuery) {
     if (typeof objQuery[key] === 'object') {

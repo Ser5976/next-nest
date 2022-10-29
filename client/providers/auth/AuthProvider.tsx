@@ -19,10 +19,10 @@ const AuthProvider: FC<TypeComponentAuthFields> = ({
   //  при загрузки проверяем если авторизован  запускаем checkAuth - проверяем валидность токенов,если всё норм обновляем токены
   //если нет делаем логаут
   useEffect(() => {
-    console.log('Привет я в провайдере ');
+    // console.log('Привет я в провайдере ');
     const refreshToken = Cookies.get('refreshToken');
     if (refreshToken) {
-      console.log('Привет я в провайдере чекаут');
+      //  console.log('Привет я в провайдере чекаут');
       checkAuth();
     }
   }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps

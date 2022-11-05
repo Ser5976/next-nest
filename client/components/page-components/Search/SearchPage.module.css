@@ -1,6 +1,6 @@
 .container {
   @apply flex max-w-screen-md mx-auto   min-h-screen  pt-10 px-2 justify-center;
 }
-.section1 {
+.section {
   @apply p-3;
 }

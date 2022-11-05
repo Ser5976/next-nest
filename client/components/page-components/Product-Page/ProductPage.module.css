@@ -1,0 +1,64 @@
+.container {
+  @apply max-w-screen-lg mx-auto   min-h-screen  pt-10 px-2;
+}
+.breadcrumbs {
+  @apply flex relative;
+}
+.breadcrumbs a {
+  @apply text-sm text-gray-600 underline hover:text-red-400 mr-[15px];
+}
+.icons {
+  @apply absolute top-[7px] left-[53px] h-3 w-3;
+}
+.name {
+  @apply text-2xl text-gray-600 font-semibold mt-5 mb-2;
+}
+.ratingStar {
+  @apply flex justify-between;
+}
+.link {
+  @apply relative mr-80;
+}
+.link span {
+  @apply absolute top-2 left-0 pl-9 block py-1 text-xs text-blue-400 hover:text-red-400 underline;
+}
+
+.icons3 {
+  @apply absolute top-2 left-2  fill-red-400 h-5 w-5;
+}
+.main {
+  @apply flex py-2;
+}
+.section1 {
+}
+.arrayImg {
+  @apply p-2 border my-1 cursor-pointer rounded-sm;
+}
+.active {
+  @apply border-4 border-red-400 rounded-sm;
+}
+.section2 {
+  @apply flex-grow;
+}
+.img {
+  @apply mx-auto w-80;
+}
+.section3 {
+  @apply border-l w-80 pl-10;
+}
+
+.oldPrice {
+  @apply text-lg line-through text-gray-400;
+}
+.price {
+  @apply text-3xl text-gray-600;
+}
+.cart {
+  @apply h-10 my-5 rounded-sm;
+}
+.summary {
+  @apply border-b flex mt-10;
+}
+.characteristic {
+  @apply border-t border-x py-3 px-7;
+}

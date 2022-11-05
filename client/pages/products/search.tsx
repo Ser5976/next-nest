@@ -20,7 +20,7 @@ const Search = () => {
 };
 
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<ErrorProps> =
+export const getStaticProps: GetStaticProps<SearchProps> =
   wrapper.getStaticProps((store) => async () => {
     //---------- для Header-----------------------------------//
     //получение forCustomers (для клиентов)
@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps<ErrorProps> =
     };
   });
 
-interface ErrorProps {
+interface SearchProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];

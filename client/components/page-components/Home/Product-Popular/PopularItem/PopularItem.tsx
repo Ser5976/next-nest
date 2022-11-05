@@ -25,12 +25,12 @@ const PopularItem: FC<PopularItemProps> = ({ popular }): JSX.Element => {
         />
       </div>
       <div className={styles.productData}>
-        <Link href={`#`}>
+        <Link href={`/products/productId/${popular._id}`}>
           <a className={styles.link}>{popular.name}</a>
         </Link>
-        <div className={styles.rating}>
-          <RatingStar rating={popular.rating} />
-        </div>
+
+        <RatingStar rating={popular.rating} />
+
         <div>{popular.price} р.</div>
       </div>
     </div>

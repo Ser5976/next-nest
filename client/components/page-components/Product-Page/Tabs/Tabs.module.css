@@ -1,0 +1,30 @@
+.container {
+  @apply mt-10;
+}
+.tabs {
+  @apply flex;
+}
+.tab {
+  @apply relative px-7 py-3 border-b border-red-400 text-sm text-blue-400  underline  cursor-pointer;
+}
+.activeTab {
+  @apply relative px-7 py-3  border-x border-t border-red-400 text-sm font-semibold text-gray-600 cursor-pointer;
+}
+.review {
+  @apply absolute top-2 right-4 text-xs text-gray-400;
+}
+.empty {
+  @apply flex-grow border-b border-red-400;
+}
+.contents {
+  @apply p-5 flex;
+}
+.content {
+  @apply hidden;
+}
+.activeContent {
+  @apply block w-2/3 text-xs;
+}
+.button {
+  @apply text-sm my-5 rounded-sm;
+}

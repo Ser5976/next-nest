@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import { ProductItemProps } from './ProductItem.props';
 import Image from 'next/image';
 import RatingStar from '../../../ui/Rating/RatingStar';
+import Link from 'next/link';
 
 const ProductItem: FC<ProductItemProps> = ({
   product, // товар
@@ -23,7 +24,10 @@ const ProductItem: FC<ProductItemProps> = ({
         </div>
       </div>
       <div className={styles.section2}>
-        <div className={styles.name}>{product.name}</div>
+        <Link href={`/products/productId/${product._id}`}>
+          <a className={styles.name}>{product.name}</a>
+        </Link>
+
         <div className={styles.description}>{product.description}</div>
       </div>
       <div className={styles.section3}>

@@ -51,6 +51,12 @@ let ProductService = class ProductService {
             throw new common_1.NotFoundException('Товар не создан');
         return product;
     }
+    async getProducts() {
+        const products = await this.ProductModel.find().exec();
+        if (!products)
+            throw new common_1.NotFoundException('товары не получены');
+        return products;
+    }
     async getFilteredProducts(dto) {
         const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
         console.log('Dto:', dto);
@@ -70,13 +76,13 @@ let ProductService = class ProductService {
             opition = dto;
         }
         console.log('Option:', opition);
-        const allProduct = await this.ProductModel.find(opition)
+        const filteredProducts = await this.ProductModel.find(opition)
             .sort({ createdAt: 'desc' })
             .skip(offset)
             .limit(Number(limit));
         const count = await this.ProductModel.find(opition).count();
         const pageQty = Math.ceil(count / limit);
-        return { allProduct, count, pageQty };
+        return { filteredProducts, count, pageQty };
     }
     async byIdProduct(id) {
         const product = await this.ProductModel.findById(id).exec();
@@ -94,16 +100,16 @@ let ProductService = class ProductService {
             .exec();
         return foundProduct;
     }
-    async getPopularProduct() {
-        const popularProduct = await this.ProductModel.find({
+    async getPopularProducts() {
+        const popularProducts = await this.ProductModel.find({
             coundOpened: { $gt: 0 },
         })
             .sort({ coundOpened: -1 })
             .limit(6)
             .exec();
-        if (!popularProduct)
+        if (!popularProducts)
             throw new common_1.NotFoundException('товары не получены');
-        return popularProduct;
+        return popularProducts;
     }
     async getLatestProduct() {
         const latestProduct = await this.ProductModel.find()

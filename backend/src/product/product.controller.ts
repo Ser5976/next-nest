@@ -25,6 +25,11 @@ export class ProductController {
   async create(@Body() dto: ProductDto) {
     return this.ProductServies.create(dto);
   }
+  // получение всех товаров
+  @Get()
+  async getProducts() {
+    return this.ProductServies.getProducts();
+  }
   //получение товаров(фильтрация,сортировка,пагинация)
   @UsePipes(new ValidationPipe())
   @Get('filter')
@@ -33,8 +38,8 @@ export class ProductController {
   }
   // получение популярных товаров
   @Get('popular')
-  async getPopularProduct() {
-    return this.ProductServies.getPopularProduct();
+  async getPopularProducts() {
+    return this.ProductServies.getPopularProducts();
   }
   // получение поcледних 6-ти товаров
   @Get('latest')

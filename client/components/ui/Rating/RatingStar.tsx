@@ -5,28 +5,27 @@ import { Rating } from 'react-simple-star-rating'; // по дэфолту звё
 //  у svg дисплей block ,меняем его на inline ,чтобы стали горизонтально(см. RatingStar.module.css)
 
 const RatingStar: FC<RatingStarProps> = ({
-  rating,
+  rating = { estimation: 0, numberRatings: 0 },
   readonly = true,
+  size = 'small',
+  numberRating = true,
 }): JSX.Element => {
   let initialRating = (rating.estimation * 100) / 5; // переводим полученную оценку рэйтинга в проценты
   //т.к. этого хочет ента библиотека
-  const [rat, setRat] = useState(initialRating);
-  // console.log(rat);
-  const handleRating = (rate: number) => {
-    setRat(rate);
-  };
+
   return (
     <div className={styles.app}>
       <Rating
-        onClick={handleRating}
-        ratingValue={rat}
+        ratingValue={initialRating}
         allowHalfIcon
-        size={16}
+        size={size === 'small' ? 16 : 20}
         readonly={readonly} //только для чтения,изменять нельзя
       />
-      <span className=" block text-xs text-gray-400">
-        отзывов: {rating.numberRatings}
-      </span>
+      {numberRating && (
+        <span className=" block text-xs text-gray-400">
+          оценок: {rating.numberRatings}
+        </span>
+      )}
     </div>
   );
 };

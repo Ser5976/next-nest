@@ -11,7 +11,7 @@
   @apply w-2/3 p-3;
 }
 .name {
-  @apply text-blue-400 hover:text-red-400 underline cursor-pointer;
+  @apply text-blue-400 hover:text-red-400 underline;
 }
 .description {
   @apply text-xs;

@@ -11,24 +11,24 @@ export const useQueryProducts = (
 ) => {
   return useQuery(
     ['product list', objectQuery],
-    () => ProductsService.getProduct(objectQuery),
+    () => ProductsService.getFilteredProducts(objectQuery),
     {
       enabled: !!typeId, //это для того чтобы запрос проходил когда typeId уже был
       //для сротировки товаров(по рейтингу, по цене)пишем херову тучу условий
       select: (data) => {
-        let productsSort = data.allProduct;
+        let productsSort = data.filteredProducts;
         if (rating) {
-          productsSort = data.allProduct.sort((a, b) =>
+          productsSort = data.filteredProducts.sort((a, b) =>
             a.rating.estimation > b.rating.estimation ? -1 : 1
           );
         }
         if (priceDown) {
-          productsSort = data.allProduct.sort((a, b) =>
+          productsSort = data.filteredProducts.sort((a, b) =>
             a.price > b.price ? -1 : 1
           );
         }
         if (priceUp) {
-          productsSort = data.allProduct.sort((a, b) =>
+          productsSort = data.filteredProducts.sort((a, b) =>
             a.price > b.price ? 1 : -1
           );
         }

@@ -12,8 +12,11 @@ export const API = {
   slider: process.env.NEXT_PUBLIC_DOMAIN + '/api/slider',
   products: {
     popular: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/popular',
-    product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/filter',
+    filterProduct: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/filter',
     search: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/search',
+    allProducts: process.env.NEXT_PUBLIC_DOMAIN + '/api/product',
   },
+  product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product',
   poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
+  reviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews',
 };

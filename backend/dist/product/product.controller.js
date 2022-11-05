@@ -26,11 +26,14 @@ let ProductController = class ProductController {
     async create(dto) {
         return this.ProductServies.create(dto);
     }
+    async getProducts() {
+        return this.ProductServies.getProducts();
+    }
     async getFilteredProducts(dto) {
         return this.ProductServies.getFilteredProducts(dto);
     }
-    async getPopularProduct() {
-        return this.ProductServies.getPopularProduct();
+    async getPopularProducts() {
+        return this.ProductServies.getPopularProducts();
     }
     async getLatestProduct() {
         return this.ProductServies.getLatestProduct();
@@ -57,6 +60,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "create", null);
 __decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getProducts", null);
+__decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Get)('filter'),
     __param(0, (0, common_1.Query)()),
@@ -69,7 +78,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], ProductController.prototype, "getPopularProduct", null);
+], ProductController.prototype, "getPopularProducts", null);
 __decorate([
     (0, common_1.Get)('latest'),
     __metadata("design:type", Function),

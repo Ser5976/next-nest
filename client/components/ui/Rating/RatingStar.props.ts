@@ -6,6 +6,8 @@ export interface IRating {
 
 export interface RatingStarProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  rating: IRating;
+  rating?: IRating | undefined;
   readonly?: boolean; // false-можно изменить рэтинг
+  size?: 'large' | 'small';
+  numberRating?: boolean;
 }

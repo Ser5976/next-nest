@@ -73,6 +73,13 @@ export class ProductService {
     if (!product) throw new NotFoundException('Товар не создан');
     return product;
   }
+  // получение всех товаров
+  async getProducts() {
+    const products = await this.ProductModel.find().exec();
+
+    if (!products) throw new NotFoundException('товары не получены');
+    return products;
+  }
 
   //получение  товаров(фильтрация,сортировка,пагинация)
   async getFilteredProducts(dto: QueryParametrsDto) {
@@ -99,7 +106,7 @@ export class ProductService {
       opition = dto;
     }
     console.log('Option:', opition);
-    const allProduct = await this.ProductModel.find(opition)
+    const filteredProducts = await this.ProductModel.find(opition)
       .sort({ createdAt: 'desc' })
       .skip(offset)
       .limit(Number(limit));
@@ -107,7 +114,7 @@ export class ProductService {
     //рассчёт количества страниц,для пагинации
     const pageQty = Math.ceil(count / limit);
 
-    return { allProduct, count, pageQty };
+    return { filteredProducts, count, pageQty };
   }
 
   //получение товара
@@ -133,16 +140,16 @@ export class ProductService {
     return foundProduct;
   }
   // получение популярных товаров
-  async getPopularProduct() {
-    const popularProduct = await this.ProductModel.find({
+  async getPopularProducts() {
+    const popularProducts = await this.ProductModel.find({
       coundOpened: { $gt: 0 },
     })
       .sort({ coundOpened: -1 })
       .limit(6)
       .exec();
 
-    if (!popularProduct) throw new NotFoundException('товары не получены');
-    return popularProduct;
+    if (!popularProducts) throw new NotFoundException('товары не получены');
+    return popularProducts;
   }
   //получение последних 6-ти товаров
   async getLatestProduct() {

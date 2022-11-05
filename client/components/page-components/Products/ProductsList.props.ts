@@ -13,7 +13,7 @@ export interface IPoster {
 }
 
 export interface IFilteredProduct {
-  allProduct: IProduct[];
+  filteredProducts: IProduct[];
   count: number;
   pageQty: number;
 }

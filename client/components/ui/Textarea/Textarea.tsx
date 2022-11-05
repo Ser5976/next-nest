@@ -1,28 +1,19 @@
-import { InputProps } from './Input.props';
-import styles from './Input.module.css';
+import { TextareaProps } from './Textarea.props';
+import styles from './Textarea.module.css';
 import cn from 'classnames';
 import { ForwardedRef, forwardRef } from 'react';
 import { RiErrorWarningLine } from 'react-icons/ri';
-export const Input = forwardRef(
+export const Textarea = forwardRef(
   (
-    {
-      className,
-      error,
-      type,
-      placeholder,
-      scale = 'larg',
-      ...props
-    }: InputProps,
-    ref: ForwardedRef<HTMLInputElement>
+    { className, error, placeholder, rows, ...props }: TextareaProps,
+    ref: ForwardedRef<HTMLTextAreaElement>
   ): JSX.Element => {
     return (
       <div className={cn(className, styles.inputWrapper)}>
-        <input
-          type={type}
+        <textarea
+          rows={rows}
           placeholder={placeholder}
-          className={cn({
-            [styles.inputSmall]: scale === 'small',
-            [styles.input]: scale === 'larg',
+          className={cn(styles.textarea, {
             [styles.error]: error,
           })}
           ref={ref}
@@ -39,4 +30,4 @@ export const Input = forwardRef(
     );
   }
 );
-Input.displayName = 'Input'; // это чтобы build не ругался
+Textarea.displayName = 'TextArea'; // это чтобы build не ругался

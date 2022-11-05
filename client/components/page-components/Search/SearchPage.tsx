@@ -1,5 +1,5 @@
 import styles from './SearchPage.module.css';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { SearchPageProps } from './SearchPage.props';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -24,7 +24,7 @@ const SearchPage: FC<SearchPageProps> = ({}): JSX.Element => {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.section1}>
+        <div className={styles.section}>
           <Link href="/">
             <a className=" text-sm text-gray-600 underline hover:text-red-400  ">
               Главная

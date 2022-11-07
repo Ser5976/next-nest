@@ -1,19 +1,18 @@
 import styles from './Tabs.module.css';
 import cn from 'classnames';
 import { FC, useState } from 'react';
-import Link from 'next/link';
 import { TabsProps } from './Tabs.props';
 import { useQuery } from 'react-query';
-import { IReviews, ProductService } from '../product.service';
-import { dateFormatting } from '../../../../utils/date-formatting';
+import { ProductService } from '../product.service'; // сервис для запросов
 import { Button } from '../../../ui/Button/Button';
 import ReviewForm from '../Review-Form/ReviewForm';
 import { useData } from '../../../../store/useData';
 import { useRouter } from 'next/router';
+import Review from '../Review/Review';
 
 const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
   const router = useRouter();
-  const { authReducer } = useData();
+  const { authReducer } = useData(); // данные о авторизации
   // флаг чтобы менять вкладки
   const [activeTab, setActiveTab] = useState('summary');
   // флаг для открытие формы  "добавить отзыв"
@@ -23,7 +22,8 @@ const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
     if (authReducer.user) {
       setOpenForm(true);
     } else {
-      router.replace(`/auth?redirect=${router.asPath}`);
+      router.replace(`/auth?redirect=${router.asPath}`); // вписываем в путь квэри парметрт,чтобы редеректнуть обратно
+      //(в auth специально сделали хук для этого)
     }
   };
   // при помощи useQuery получаю отзывы
@@ -31,9 +31,14 @@ const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
     isLoading,
     data: reviews,
     error,
-  } = useQuery(['product list', product._id], () =>
-    ProductService.getReviews(product._id)
+  } = useQuery(
+    ['reviews', product._id],
+    () => ProductService.getReviews(product._id),
+    {
+      enabled: !!product._id,
+    }
   );
+
   return (
     <div className={styles.container}>
       <div className={styles.tabs}>
@@ -94,7 +99,9 @@ const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
                 Добавить отзыв
               </Button>
             )}
-            {openForm && <ReviewForm />}
+            {openForm && (
+              <ReviewForm product={product} setOpenForm={setOpenForm} />
+            )}
           </div>
           {error ? (
             <h1 className=" text-center font-semibold text-red-600 mt-2">
@@ -109,19 +116,7 @@ const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
               Отзывов нет!
             </h1>
           ) : (
-            <ul>
-              {reviews?.map((r: IReviews) => {
-                return (
-                  <li className="py-2" key={r._id}>
-                    <h1 className=" font-semibold">{r.name}</h1>
-                    <span className=" text-xs text-gray-400">
-                      {dateFormatting(r.createdAt)}
-                    </span>
-                    <p>{r.text}</p>
-                  </li>
-                );
-              })}
-            </ul>
+            <Review review={reviews} />
           )}
         </div>
       </div>

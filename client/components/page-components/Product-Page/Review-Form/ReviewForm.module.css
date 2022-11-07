@@ -1,11 +1,14 @@
+.wrapper {
+  @apply relative flex-col  bg-gray-200 p-4;
+}
 .form {
-  @apply flex-col bg-gray-200 p-4;
+  @apply flex-col py-2;
 }
 .input {
-  @apply mt-1 mb-3;
+  @apply mt-1 mb-6;
 }
 .textarea {
-  @apply mt-1 mb-3;
+  @apply mt-1 mb-6;
 }
 .button {
   @apply bg-blue-500   text-white  font-bold 
@@ -14,4 +17,7 @@
 }
 .rating svg {
   @apply inline-block;
+}
+.icon {
+  @apply absolute top-2 right-2 fill-gray-400 hover:fill-red-400 w-6 h-6 cursor-pointer;
 }

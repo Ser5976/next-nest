@@ -3,19 +3,20 @@ import { UpdateReviewDto } from './dto/update.review.dto';
 import { ReviewsDto } from './dto/reviews.dto';
 import { ModelType, DocumentType } from '@typegoose/typegoose/lib/types';
 import { ReviewsModel } from './reviews.model';
+import { Types } from 'mongoose';
 export declare class ReviewsService {
     private readonly ReviewsModel;
     private readonly UserModel;
     constructor(ReviewsModel: ModelType<ReviewsModel>, UserModel: ModelType<UserModel>);
-    create(id: string, dto: ReviewsDto): Promise<{
-        message: string;
+    create(id: string, dto: ReviewsDto): Promise<import("mongoose").Document<Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & ReviewsModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+        _id: Types.ObjectId;
     }>;
     getUserReviews(id: string): Promise<DocumentType<ReviewsModel>[]>;
     getProductReviews(productId: string): Promise<DocumentType<ReviewsModel>[]>;
     updateReview(idReview: string, dto: UpdateReviewDto): Promise<{
         message: string;
     }>;
-    deleteReview(userId: string, id: string): Promise<{
+    deleteReview(id: string): Promise<{
         message: string;
     }>;
 }

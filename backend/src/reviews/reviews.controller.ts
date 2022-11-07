@@ -16,7 +16,6 @@ import {
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { User } from 'src/user/decorators/user.decorator';
 
-
 @Controller('reviews')
 export class ReviewsController {
   constructor(private readonly ReviewsService: ReviewsService) {}
@@ -24,18 +23,23 @@ export class ReviewsController {
   @UsePipes(new ValidationPipe())
   @Post()
   @Auth()
-  async create(@User('_id',IdValidationPipe) _id: string, @Body() dto: ReviewsDto) {
+  async create(
+    @User('_id', IdValidationPipe) _id: string,
+    @Body() dto: ReviewsDto,
+  ) {
     return this.ReviewsService.create(_id, dto);
   }
   // получение отзыва пользователя
   @Get('user-reviews')
   @Auth()
-  async getReviews(@User('_id',IdValidationPipe) _id: string) {
+  async getReviews(@User('_id', IdValidationPipe) _id: string) {
     return this.ReviewsService.getUserReviews(_id);
   }
   //получение отзывов продукта
   @Get(':productId')
-  async getProductReviews(@Param('productId',IdValidationPipe) productId: string) {
+  async getProductReviews(
+    @Param('productId', IdValidationPipe) productId: string,
+  ) {
     return this.ReviewsService.getProductReviews(productId);
   }
   //редактирование отзыва
@@ -46,13 +50,13 @@ export class ReviewsController {
     @Param('id', IdValidationPipe) id: string,
     @Body() dto: UpdateReviewDto,
   ) {
-   // console.log('id:', id);
+    // console.log('id:', id);
     return this.ReviewsService.updateReview(id, dto);
   }
-  //удаление отзыва
+  //удаление отзыва для админа
   @Delete(':id')
-  @Auth()
-  async deleteRrview(@User('_id',IdValidationPipe) _id:string ,@Param('id', IdValidationPipe) id: string) {
-    return this.ReviewsService.deleteReview(_id,id);
+  @Auth('admin')
+  async deleteRrview(@Param('id', IdValidationPipe) id: string) {
+    return this.ReviewsService.deleteReview(id);
   }
 }

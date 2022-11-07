@@ -19,4 +19,5 @@ export const API = {
   product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product',
   poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
   reviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews',
+  rating: process.env.NEXT_PUBLIC_DOMAIN + '/api/rating',
 };

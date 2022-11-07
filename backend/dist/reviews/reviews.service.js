@@ -17,7 +17,6 @@ const user_model_1 = require("./../user/user.model");
 const reviews_model_1 = require("./reviews.model");
 const common_1 = require("@nestjs/common");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
-const mongoose_1 = require("mongoose");
 let ReviewsService = class ReviewsService {
     constructor(ReviewsModel, UserModel) {
         this.ReviewsModel = ReviewsModel;
@@ -32,9 +31,9 @@ let ReviewsService = class ReviewsService {
         });
         if (reveiw) {
             await this.UserModel.updateOne({ _id: id }, {
-                $push: { reviews: reveiw._id }
+                $push: { reviews: reveiw._id },
             });
-            return { message: 'Ваш отзыв принят' };
+            return reveiw;
         }
         throw new common_1.NotFoundException('Ваш отзыв не принят,попробуйте ещё раз');
     }
@@ -62,15 +61,11 @@ let ReviewsService = class ReviewsService {
             return { message: 'отзыв обновлён' };
         throw new common_1.NotFoundException('отзыв не обновлён');
     }
-    async deleteReview(userId, id) {
+    async deleteReview(id) {
         const deletedReview = await this.ReviewsModel.findByIdAndDelete(id);
-        if (deletedReview) {
-            await this.UserModel.updateOne({ _id: userId }, {
-                $pull: { reviews: new mongoose_1.Types.ObjectId(id) }
-            });
-            return { message: 'отзыв удалён' };
-        }
-        throw new common_1.NotFoundException('отзыв не удален');
+        if (!deletedReview)
+            throw new common_1.NotFoundException('отзыв не удален');
+        return { message: 'отзыв удалён' };
     }
 };
 ReviewsService = __decorate([

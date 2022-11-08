@@ -19,7 +19,6 @@ const user_decorator_1 = require("./../user/decorators/user.decorator");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const viewed_service_1 = require("./viewed.service");
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("mongoose");
 let ViewedController = class ViewedController {
     constructor(ViewedService) {
         this.ViewedService = ViewedService;
@@ -40,12 +39,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ViewedController.prototype, "getViewed", null);
 __decorate([
-    (0, common_1.Put)(),
+    (0, common_1.Put)(':productId'),
     (0, auth_decorators_1.Auth)(),
     __param(0, (0, user_decorator_1.User)()),
-    __param(1, (0, common_1.Body)('productId', id_validation_pipe_1.IdValidationPipe)),
+    __param(1, (0, common_1.Param)('productId', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_model_1.UserModel, mongoose_1.Types.ObjectId]),
+    __metadata("design:paramtypes", [user_model_1.UserModel, String]),
     __metadata("design:returntype", Promise)
 ], ViewedController.prototype, "setViewed", null);
 ViewedController = __decorate([

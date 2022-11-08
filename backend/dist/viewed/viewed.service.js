@@ -16,6 +16,7 @@ exports.ViewedService = void 0;
 const nestjs_typegoose_1 = require("nestjs-typegoose");
 const user_model_1 = require("../user/user.model");
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("mongoose");
 let ViewedService = class ViewedService {
     constructor(UserModel) {
         this.UserModel = UserModel;
@@ -33,8 +34,8 @@ let ViewedService = class ViewedService {
     async setViewed(user, productId) {
         const { _id, viewed } = user;
         const newViewed = this.UserModel.findByIdAndUpdate(_id, {
-            viewed: viewed.includes(productId)
-                ? viewed.filter((id) => String(id) !== String(productId))
+            viewed: viewed.includes(new mongoose_1.Types.ObjectId(productId))
+                ? viewed
                 : [...viewed, productId],
         }, { new: true });
         if (newViewed)

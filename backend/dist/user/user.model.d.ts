@@ -25,8 +25,8 @@ export declare class UserModel extends TimeStamps {
     cart: Ref<CartModel>[];
     reviews: Ref<ReviewsModel>[];
     isAdmin?: boolean;
-    favorites?: Ref<ProductModel>[];
-    viewed?: Ref<ProductModel>[];
+    favorites: Ref<ProductModel>[];
+    viewed: Ref<ProductModel>[];
     phone: Phone;
     personalData: PersonalData;
     address: Address;

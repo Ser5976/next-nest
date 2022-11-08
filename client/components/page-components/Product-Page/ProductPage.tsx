@@ -1,8 +1,7 @@
 import styles from './ProductPage.module.css';
 import cn from 'classnames';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { ProductPageProps } from './ProductPage.props';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import RatingStar from '../../ui/Rating/RatingStar';
@@ -11,15 +10,34 @@ import { Button } from '../../ui/Button/Button';
 import Tabs from './Tabs/Tabs';
 import { useData } from '../../../store/useData';
 import Favourites from './Favourites/Favourites';
+import { useMutation, useQueryClient } from 'react-query';
+import { ProductService } from './product.service'; //сервис для запросов
 
 const ProductPage: FC<ProductPageProps> = ({
   product,
   productType,
 }): JSX.Element => {
+  const { authReducer } = useData();
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
+  const queryClient = useQueryClient();
+  //добавляем товар в просмотренные(viewed) хук useMutation(), из react-query,он посылает post,put,delete запросы
+  const { mutate } = useMutation(ProductService.setViewed, {
+    onSuccess: () => {
+      // при успешном изменении делает повторный запрос
+      // queryClient.invalidateQueries('reviews');
+    },
+  });
+  //запускаем mutate если авторизован
+  useEffect(() => {
+    if (authReducer.user) {
+      mutate(product._id);
+    }
+  }, []);
   //активный класс для картинок
   const [index, setIndex] = useState(0);
   //определяем имя типа товара для навигации
   const typeName = productType?.find((el) => el._id === product.typeId);
+  // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
 
   return (
     <div className={styles.container}>

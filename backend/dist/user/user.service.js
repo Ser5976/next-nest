@@ -22,7 +22,10 @@ let UserService = class UserService {
         this.UserModel = UserModel;
     }
     async byId(id) {
-        const user = await this.UserModel.findById(id).exec();
+        console.log('сервис byId работает');
+        const user = await this.UserModel.findById(id)
+            .populate('reviews favorites viewed')
+            .exec();
         if (user)
             return user;
         throw new common_1.NotFoundException('Такого пользователя не существует!');

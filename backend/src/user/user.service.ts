@@ -12,7 +12,10 @@ export class UserService {
   ) {}
   //получение пользователя
   async byId(id: string): Promise<DocumentType<UserModel>> {
-    const user = await this.UserModel.findById(id).exec();
+    console.log('сервис byId работает');
+    const user = await this.UserModel.findById(id)
+      .populate('reviews favorites viewed')
+      .exec();
     if (user) return user;
     throw new NotFoundException('Такого пользователя не существует!');
   }

@@ -69,4 +69,9 @@ export const ProductService = {
     console.log('изменить массив избранных');
     await customAxios.put(`${API.favourites}/${productId}`);
   },
+  // добавление или если есть удаление товара из массива viewed(просмотреных) у юзера
+  async setViewed(productId: string) {
+    console.log('изменить массив просмотренных');
+    await customAxios.put(`${API.viewed}/${productId}`);
+  },
 };

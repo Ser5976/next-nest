@@ -45,10 +45,10 @@ export class UserModel extends TimeStamps {
   isAdmin?: boolean;
 
   @prop({ default: [], ref: () => ProductModel }) //ссылка на другую сущность(ProductModel)
-  favorites?: Ref<ProductModel>[];
+  favorites: Ref<ProductModel>[];
 
   @prop({ default: [], ref: () => ProductModel })
-  viewed?: Ref<ProductModel>[];
+  viewed: Ref<ProductModel>[];
 
   @prop({ type: () => Phone, _id: false, default: {} })
   phone: Phone;

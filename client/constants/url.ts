@@ -21,4 +21,5 @@ export const API = {
   reviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews',
   rating: process.env.NEXT_PUBLIC_DOMAIN + '/api/rating',
   favourites: process.env.NEXT_PUBLIC_DOMAIN + '/api/favourites',
+  viewed: process.env.NEXT_PUBLIC_DOMAIN + '/api/viewed',
 };

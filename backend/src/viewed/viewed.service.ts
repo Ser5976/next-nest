@@ -15,18 +15,18 @@ export class ViewedService {
       .populate('viewed')
       .sort({ createdAt: 'desc' })
       .exec()
-      .then((data) => data.viewed); // так можно получить только поле favorites
+      .then((data) => data.viewed); // так можно получить только поле viewed
     if (viewed) return viewed;
     throw new NotFoundException('Список просмотренных  продуктов не получен');
   }
-  // записываем или удаляем id товара из массива просмотренных(если есть, удаляем и добавляем, если нет)
-  async setViewed(user: UserModel, productId: Types.ObjectId) {
+  // записываем  только если  товара нет в массиве просмотренных
+  async setViewed(user: UserModel, productId: string) {
     const { _id, viewed } = user;
     const newViewed = this.UserModel.findByIdAndUpdate(
       _id,
       {
-        viewed: viewed.includes(productId)
-          ? viewed.filter((id) => String(id) !== String(productId))
+        viewed: viewed.includes(new Types.ObjectId(productId))
+          ? viewed
           : [...viewed, productId],
       },
       { new: true },

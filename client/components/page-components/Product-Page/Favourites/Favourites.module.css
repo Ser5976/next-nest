@@ -1,0 +1,9 @@
+.link {
+  @apply relative mr-80 cursor-pointer;
+}
+.link span {
+  @apply absolute top-2 left-0 pl-9 block py-1 text-xs text-blue-400 hover:text-red-400 underline;
+}
+.icons1 {
+  @apply absolute top-2 left-2  fill-red-400 h-5 w-5;
+}

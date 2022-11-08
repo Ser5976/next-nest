@@ -16,6 +16,7 @@ exports.FavoritesService = void 0;
 const user_model_1 = require("../user/user.model");
 const common_1 = require("@nestjs/common");
 const nestjs_typegoose_1 = require("nestjs-typegoose");
+const mongoose_1 = require("mongoose");
 let FavoritesService = class FavoritesService {
     constructor(UserModel) {
         this.UserModel = UserModel;
@@ -32,7 +33,7 @@ let FavoritesService = class FavoritesService {
     async setFavorites(user, productId) {
         const { _id, favorites } = user;
         const newFavorites = this.UserModel.findByIdAndUpdate(_id, {
-            favorites: favorites.includes(productId)
+            favorites: favorites.includes(new mongoose_1.Types.ObjectId(productId))
                 ? favorites.filter((id) => String(id) !== String(productId))
                 : [...favorites, productId],
         }, { new: true });

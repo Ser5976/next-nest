@@ -19,7 +19,6 @@ const favorites_service_1 = require("./favorites.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const user_decorator_1 = require("../user/decorators/user.decorator");
-const mongoose_1 = require("mongoose");
 let FavoritesController = class FavoritesController {
     constructor(FavoritesService) {
         this.FavoritesService = FavoritesService;
@@ -40,16 +39,16 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], FavoritesController.prototype, "getFavorites", null);
 __decorate([
-    (0, common_1.Put)(),
+    (0, common_1.Put)(':productId'),
     (0, auth_decorators_1.Auth)(),
     __param(0, (0, user_decorator_1.User)()),
-    __param(1, (0, common_1.Body)('productId', id_validation_pipe_1.IdValidationPipe)),
+    __param(1, (0, common_1.Param)('productId', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_model_1.UserModel, mongoose_1.Types.ObjectId]),
+    __metadata("design:paramtypes", [user_model_1.UserModel, String]),
     __metadata("design:returntype", Promise)
 ], FavoritesController.prototype, "setFavorites", null);
 FavoritesController = __decorate([
-    (0, common_1.Controller)('favorites'),
+    (0, common_1.Controller)('favourites'),
     __metadata("design:paramtypes", [favorites_service_1.FavoritesService])
 ], FavoritesController);
 exports.FavoritesController = FavoritesController;

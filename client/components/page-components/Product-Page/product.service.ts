@@ -1,3 +1,4 @@
+import { IProduct } from './../Home/home.service';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API } from '../../../constants/url';
@@ -30,9 +31,9 @@ export const ProductService = {
     return reviews;
   },
 
-  // поставить рейтинг товару
+  // поставить рейтинг товару,используем кастомный axios(в него уже введён токен)
   async putRating(ratingProduct: IRatinProduct) {
-    console.log(' отправка отзыва');
+    console.log('оценка');
     const { data: result } = await customAxios.post<{ message: string }>(
       API.rating,
       ratingProduct
@@ -40,9 +41,9 @@ export const ProductService = {
     return result;
   },
 
-  // добавление отзыва о товаре,используем кастомные axios(в него уже введён токен)
+  // добавление отзыва о товаре,используем кастомный axios(в него уже введён токен)
   async addReview(data: IAddReview) {
-    console.log(' отправка отзыва');
+    console.log(' добавление отзыва');
     const { data: result } = await customAxios.post<{ message: string }>(
       API.reviews,
       data
@@ -52,7 +53,20 @@ export const ProductService = {
   },
   // удаление отзыва(только админ)
   async removeReview(id: string) {
-    console.log(' отправка отзыва');
+    console.log(' удаление отзыва');
     await customAxios.delete(`${API.reviews}/${id}`);
+  },
+  // получение массива favourites у юзера
+  async getFavourites() {
+    console.log(' получить массив избранных');
+    const { data: favourites } = await customAxios.get<IProduct[]>(
+      API.favourites
+    );
+    return favourites;
+  },
+  // добавление или если есть удаление товара из массива favourites у юзера
+  async setFavourites(productId: string) {
+    console.log('изменить массив избранных');
+    await customAxios.put(`${API.favourites}/${productId}`);
   },
 };

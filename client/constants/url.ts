@@ -20,4 +20,5 @@ export const API = {
   poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
   reviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews',
   rating: process.env.NEXT_PUBLIC_DOMAIN + '/api/rating',
+  favourites: process.env.NEXT_PUBLIC_DOMAIN + '/api/favourites',
 };

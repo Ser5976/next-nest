@@ -8,8 +8,9 @@ import { HiOutlineChevronRight } from 'react-icons/hi';
 import RatingStar from '../../ui/Rating/RatingStar';
 import Image from 'next/image';
 import { Button } from '../../ui/Button/Button';
-import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import Tabs from './Tabs/Tabs';
+import { useData } from '../../../store/useData';
+import Favourites from './Favourites/Favourites';
 
 const ProductPage: FC<ProductPageProps> = ({
   product,
@@ -19,8 +20,6 @@ const ProductPage: FC<ProductPageProps> = ({
   const [index, setIndex] = useState(0);
   //определяем имя типа товара для навигации
   const typeName = productType?.find((el) => el._id === product.typeId);
-  const router = useRouter();
-  const { query } = router;
 
   return (
     <div className={styles.container}>
@@ -36,13 +35,7 @@ const ProductPage: FC<ProductPageProps> = ({
       <h1 className={styles.name}>{product.name}</h1>
       <div className={styles.ratingStar}>
         <RatingStar rating={product.rating} size="large" />
-
-        <Link href="#">
-          <a className={styles.link}>
-            <MdFavorite className={styles.icons3} />
-            <span>Удалить&nbsp;из&nbsp;избранного</span>
-          </a>
-        </Link>
+        <Favourites product={product} />
       </div>
 
       <div className={styles.main}>

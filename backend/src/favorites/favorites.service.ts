@@ -19,12 +19,12 @@ export class FavoritesService {
     throw new NotFoundException('Список избранных продуктов не получен');
   }
   // записываем или удаляем id продукта из массива избранного(если есть, удаляем и добавляем, если нет)
-  async setFavorites(user: UserModel, productId: Types.ObjectId) {
+  async setFavorites(user: UserModel, productId: string) {
     const { _id, favorites } = user;
     const newFavorites = this.UserModel.findByIdAndUpdate(
       _id,
       {
-        favorites: favorites.includes(productId)
+        favorites: favorites.includes(new Types.ObjectId(productId))
           ? favorites.filter((id) => String(id) !== String(productId))
           : [...favorites, productId],
       },

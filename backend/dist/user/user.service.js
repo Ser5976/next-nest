@@ -22,7 +22,6 @@ let UserService = class UserService {
         this.UserModel = UserModel;
     }
     async byId(id) {
-        console.log('сервис byId работает');
         const user = await this.UserModel.findById(id)
             .populate('reviews favorites viewed')
             .exec();

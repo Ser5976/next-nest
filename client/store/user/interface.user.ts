@@ -1,3 +1,4 @@
+import { IReviews } from './../../components/page-components/Product-Page/product.service';
 import { IProduct } from './../../components/page-components/Home/home.service';
 
 export interface IPersonalData {
@@ -15,12 +16,14 @@ export interface IAddress {
   flat: string;
 }
 
-export interface IUser {
+export interface IUserProfile {
   _id: string;
   email: string;
+  password: string;
   isAdmin: boolean;
   favorites: IProduct[];
   viewed: IProduct[];
+  reviews: IReviews[];
   cart: string[];
   createdAt: string;
   updatedAt: string;
@@ -31,5 +34,6 @@ export interface IUser {
 }
 
 export interface IUserInitialState {
-  user: IUser;
+  userProfile: IUserProfile | undefined;
+  isError: boolean;
 }

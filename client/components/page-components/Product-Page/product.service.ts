@@ -1,5 +1,3 @@
-import { IProduct } from './../Home/home.service';
-import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
@@ -56,14 +54,7 @@ export const ProductService = {
     console.log(' удаление отзыва');
     await customAxios.delete(`${API.reviews}/${id}`);
   },
-  // получение массива favourites у юзера
-  async getFavourites() {
-    console.log(' получить массив избранных');
-    const { data: favourites } = await customAxios.get<IProduct[]>(
-      API.favourites
-    );
-    return favourites;
-  },
+
   // добавление или если есть удаление товара из массива favourites у юзера
   async setFavourites(productId: string) {
     console.log('изменить массив избранных');

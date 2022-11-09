@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser, IUserInitialState } from './interface.user';
+import { IUserProfile, IUserInitialState } from './interface.user';
 
 const initialState: IUserInitialState = {
-  user: {} as IUser,
+  userProfile: {} as IUserProfile,
+  isError: false,
 };
 
 export const userSlice = createSlice({
@@ -10,10 +11,14 @@ export const userSlice = createSlice({
   initialState,
 
   reducers: {
-    getUser: (state, action: PayloadAction<IUser>) => {
-      state.user = action.payload;
+    getError: (state, action: PayloadAction<boolean>) => {
+      state.isError = action.payload;
+    },
+    getUser: (state, action: PayloadAction<IUserProfile | undefined>) => {
+      console.log('работает редюсер:', action);
+      state.userProfile = action.payload;
     },
   },
 });
-export const { getUser } = userSlice.actions;
+export const { getUser, getError } = userSlice.actions;
 export default userSlice.reducer;

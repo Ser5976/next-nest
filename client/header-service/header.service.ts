@@ -3,8 +3,11 @@ import { ICategoryProduct } from './../store/category-product/interface.category
 import { IArticle } from './../store/customers/interface.customers';
 import axios from 'axios';
 import { API } from '../constants/url';
+import { IUserProfile } from '../store/user/interface.user';
+import customAxios from '../custom-axios/axiox-interceptors';
 
 export const HeaderService = {
+  // запрос получение forCustomers (для клиентов) через GetStaticProps
   async getForCustomers() {
     try {
       const { data: forCustomers } = await axios.get<IArticle[]>(API.customers);
@@ -14,6 +17,7 @@ export const HeaderService = {
       return forCustomers;
     }
   },
+  // запрос получение категории товаров через GetStaticProps
   async getСategoryProduct() {
     try {
       const { data: categoryProduct } = await axios.get<ICategoryProduct[]>(
@@ -25,6 +29,7 @@ export const HeaderService = {
       return categoryProduct;
     }
   },
+  // запрос получение типов товаров  через GetStaticProps
   async getProductType() {
     try {
       const { data: productType } = await axios.get<IType[]>(API.productType);
@@ -33,5 +38,14 @@ export const HeaderService = {
       const productType: IType[] = [];
       return productType;
     }
+  },
+
+  //  запрос получение  полных данных юзера через useQuery(  react-query)
+  async getUserProfile() {
+    console.log(' получен профиль юзера');
+    const { data: userProfile } = await customAxios.get<
+      IUserProfile | undefined
+    >(API.userProfile);
+    return userProfile;
   },
 };

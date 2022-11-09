@@ -12,7 +12,6 @@ export class UserService {
   ) {}
   //получение пользователя
   async byId(id: string): Promise<DocumentType<UserModel>> {
-    console.log('сервис byId работает');
     const user = await this.UserModel.findById(id)
       .populate('reviews favorites viewed')
       .exec();

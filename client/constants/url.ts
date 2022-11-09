@@ -4,6 +4,7 @@ export const API = {
     register: process.env.NEXT_PUBLIC_DOMAIN + '/api/auth/register',
     checkAuth: process.env.NEXT_PUBLIC_DOMAIN + '/api/auth/access-token',
   },
+  userProfile: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/profileUser',
   customers: process.env.NEXT_PUBLIC_DOMAIN + '/api/for-customers',
   categoryProduct: process.env.NEXT_PUBLIC_DOMAIN + '/api/category-product',
   productType: process.env.NEXT_PUBLIC_DOMAIN + '/api/product-type',

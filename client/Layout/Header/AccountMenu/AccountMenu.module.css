@@ -13,7 +13,7 @@
   display: none;
 }
 .show {
-  @apply fixed  top-[130px] right-[300px] z-10  bg-white shadow-md rounded-md;
+  @apply fixed  top-[130px] right-[300px] z-30  bg-white shadow-md rounded-md;
 }
 .link {
   @apply relative pl-9 block py-1 hover:bg-red-50 hover:text-red-400;
@@ -22,8 +22,8 @@
   @apply absolute top-2.5 left-2 fill-gray-600 stroke-0;
 }
 .bage {
-  @apply inline-flex  justify-center w-5 h-5 absolute top-2 right-3 
-                    rounded-full bg-blue-500 text-white text-xs font-bold;
+  @apply inline-flex  justify-center w-6 h-6 absolute top-2 right-3 
+                    rounded-full bg-blue-500 text-white text-xs p-1;
 }
 .link:hover .icons3 {
   @apply fill-red-400;

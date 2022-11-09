@@ -9,25 +9,16 @@ import { useRouter } from 'next/router';
 
 const Favourites: FC<FavouritesProps> = ({ product }): JSX.Element => {
   const router = useRouter();
-  //данные о авторизации
-  const { authReducer } = useData();
-
+  //данные о авторизации и все данные по юзеру
+  const { authReducer, userReducer } = useData();
+  const { userProfile } = userReducer;
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
   const queryClient = useQueryClient();
-  //  console.log('продукт в избранном:', product);
-  // при помощи useQuery получем массив избранных товаров юзера
-  const { data: favourites } = useQuery(
-    'favourites',
-    () => ProductService.getFavourites(),
-    {
-      enabled: !!authReducer.user, // будет запрос только если авторизован
-    }
-  );
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate } = useMutation(ProductService.setFavourites, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('favourites');
+      queryClient.invalidateQueries('user-profile');
     },
   });
   // функция запуска mutate или редерект на auth (условие авторизованность)
@@ -35,13 +26,13 @@ const Favourites: FC<FavouritesProps> = ({ product }): JSX.Element => {
     if (authReducer.user) {
       mutate(product._id);
     } else {
-      router.replace(`/auth?redirect=${router.asPath}`); // вписываем в путь квэри парметрт,чтобы редеректнуть обратно
+      router.replace(`/auth?redirect=${router.asPath}`); // вписываем в путь квэри парметр,чтобы редеректнуть обратно
       //(в auth специально сделали хук для этого)
     }
   };
-  // флаг проверки есть ли продук в избранном или не, или авторизованный
+  // флаг проверки есть ли продук в избранном или нет, или авторизованный
   const favouritesProduct =
-    favourites?.filter((f) => f._id === product._id) || [];
+    userProfile?.favorites?.filter((f) => f._id === product._id) || [];
   //console.log('флаг:', favouritesProduct);
 
   return (

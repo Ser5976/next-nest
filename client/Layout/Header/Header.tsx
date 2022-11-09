@@ -2,16 +2,39 @@ import cn from 'classnames';
 import Link from 'next/link';
 import styles from './Header.module.css';
 import { HeaderProps } from './Header.props';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { CatalogMenu } from './CatalogMenu/CatalogMenu';
 import { AccountMenu } from './AccountMenu/AccountMenu';
 import { BsCart } from 'react-icons/bs';
 import { useData } from '../../store/useData';
 import { SearchInput } from './SearchInput/SearchInput';
+import { useQuery } from 'react-query';
+import { HeaderService } from '../../header-service/header.service';
+import { useActions } from '../../store/useActions';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const count = 5;
-  const { forCustomersReducer, productTypeReducer } = useData();
+  //получаем экшены из редюсера при помощи кастомного хука useActions();
+  const { getUser, getError } = useActions();
+  //получаем данные  из редюссоров при помощи кастомного хука useData();
+  const { forCustomersReducer, productTypeReducer, authReducer } = useData();
+  // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
+  //useQuery работает с GET запросами
+  const { data: userProfile } = useQuery(
+    'user-profile',
+    () => HeaderService.getUserProfile(),
+    {
+      onSuccess: (userProfile) => {
+        console.log('success работает:', userProfile);
+        // передаём данне в стор
+        getError(false);
+        getUser(userProfile);
+      },
+      onError: () => {
+        getError(true);
+      },
+      enabled: !!authReducer.user,
+    }
+  );
 
   return (
     <>
@@ -32,11 +55,9 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
           <Link href="/">
             <a className={styles.logo}>TrainingProject</a>
           </Link>
-
           <CatalogMenu />
           <SearchInput />
-
-          <AccountMenu />
+          <AccountMenu userProfile={userProfile} />
 
           <button className={styles.cart}>
             Корзина

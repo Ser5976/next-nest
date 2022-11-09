@@ -19,21 +19,34 @@ import { useRouter } from 'next/router';
 
 export const AccountMenu = ({
   className,
+  userProfile, // все данные по юзеру
   ...props
 }: AccountMenuProps): JSX.Element => {
   //кастомный хук (используем для закрытия dropdown по клику снаружи)
   const { ref, isShow, setIsShow } = useClickOutside(true);
-  const router = useRouter();
+  //получаем данные  из редюссоров при помощи кастомного хука useData();
   const { authReducer } = useData();
+  //получаем экшены из редюсера при помощи кастомного хука useActions();
   const { logout } = useActions();
-  //костыль,чтобы обойти ошибку гидрации,не знаю как это решить правильно.
+  const router = useRouter();
+
+  //костыль,чтобы обойти ошибку гидрации,другой способ -это динамический импорт
   //суть в том ,что данные на прямую из стора,через useData,рендерется и на серваке, а данных сервак не получает,
   // а клиент получает и происходит конфликт,useEffect этот вопрос решает.
   const [user, setUser] = useState<IUser | null>(null);
   useEffect(() => {
     setUser(authReducer.user);
   }, [authReducer.user]);
-  const count = 5;
+  // переменные количества
+  const countReviews = userProfile?.reviews.length
+    ? userProfile.reviews.length
+    : 0;
+  const countFavourites = userProfile?.favorites.length
+    ? userProfile.favorites.length
+    : 0;
+  const countViewed = userProfile?.viewed.length
+    ? userProfile.viewed.length
+    : 0;
   // удаления данных авторизации
   const handleLogout = () => {
     //  router.push('/');
@@ -75,8 +88,10 @@ export const AccountMenu = ({
               <Link href="#">
                 <a className={styles.link}>
                   <MdOutlineFavoriteBorder className={styles.icons3} />
-                  {count >= 1 ? (
-                    <span className={styles.bage}>{count}</span>
+                  {countFavourites >= 1 ? (
+                    <span className={styles.bage}>
+                      {userProfile?.favorites.length}
+                    </span>
                   ) : null}
                   Избранные товары
                 </a>
@@ -84,8 +99,10 @@ export const AccountMenu = ({
               <Link href="#">
                 <a className={styles.link}>
                   <VscEye className={styles.icons3} />
-                  {count >= 1 ? (
-                    <span className={styles.bage}>{count}</span>
+                  {countViewed >= 1 ? (
+                    <span className={styles.bage}>
+                      {userProfile?.viewed.length}
+                    </span>
                   ) : null}
                   Просмотренные
                 </a>
@@ -93,8 +110,10 @@ export const AccountMenu = ({
               <Link href="#">
                 <a className={styles.link}>
                   <VscFeedback className={styles.icons3} />
-                  {count >= 1 ? (
-                    <span className={styles.bage}>{count}</span>
+                  {countReviews >= 1 ? (
+                    <span className={styles.bage}>
+                      {userProfile?.reviews.length}
+                    </span>
                   ) : null}
                   Отзывы
                 </a>

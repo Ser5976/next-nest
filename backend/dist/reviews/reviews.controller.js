@@ -77,7 +77,7 @@ __decorate([
 ], ReviewsController.prototype, "updateReview", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, auth_decorators_1.Auth)('admin'),
+    (0, auth_decorators_1.Auth)(),
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

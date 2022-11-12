@@ -53,9 +53,9 @@ export class ReviewsController {
     // console.log('id:', id);
     return this.ReviewsService.updateReview(id, dto);
   }
-  //удаление отзыва для админа
+  //удаление отзыва
   @Delete(':id')
-  @Auth('admin')
+  @Auth()
   async deleteRrview(@Param('id', IdValidationPipe) id: string) {
     return this.ReviewsService.deleteReview(id);
   }

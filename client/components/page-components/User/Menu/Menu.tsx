@@ -25,7 +25,7 @@ const Menu: FC<MenuProps> = ({
   const { logout } = useActions();
   const router = useRouter();
   const count = 5;
-  // переменные количества
+  // переменные количества для бэйджа
   const countReviews = userProfile?.reviews?.length
     ? userProfile.reviews.length
     : 0;
@@ -38,7 +38,7 @@ const Menu: FC<MenuProps> = ({
 
   // удаления данных авторизации
   const handleLogout = () => {
-    //  router.push('/');
+    router.push('/');
     logout();
   };
   return (
@@ -78,20 +78,48 @@ const Menu: FC<MenuProps> = ({
             Избранные товары
           </a>
         </Link>
-        <Link href="#">
-          <a className={styles.link}>
-            <VscEye className={styles.icons} />
+        <Link href="/user/viewed">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'viewed',
+            })}
+          >
+            <VscEye
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'viewed',
+              })}
+            />
             {countViewed >= 1 ? (
-              <span className={styles.bage}>{userProfile?.viewed.length}</span>
+              <span
+                className={cn(styles.bage, {
+                  [styles.activeBage]: activeMenu === 'viewed',
+                })}
+              >
+                {userProfile?.viewed.length}
+              </span>
             ) : null}
             Просмотренные
           </a>
         </Link>
-        <Link href="#">
-          <a className={styles.link}>
-            <VscFeedback className={styles.icons} />
+        <Link href="/user/reviews">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'reviews',
+            })}
+          >
+            <VscFeedback
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'reviews',
+              })}
+            />
             {countReviews >= 1 ? (
-              <span className={styles.bage}>{userProfile?.reviews.length}</span>
+              <span
+                className={cn(styles.bage, {
+                  [styles.activeBage]: activeMenu === 'reviews',
+                })}
+              >
+                {userProfile?.reviews.length}
+              </span>
             ) : null}
             Отзывы
           </a>

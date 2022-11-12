@@ -1,4 +1,3 @@
-import { IUserProfile } from './../../../store/user/interface.user';
 import { ReactNode } from 'react';
 
 export interface LayoutUserProps {

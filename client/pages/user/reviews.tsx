@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import React from 'react';
-import FavouritesPage from '../../components/page-components/User/Favourites/FavouritesPage';
+import ReviewsPage from '../../components/page-components/User/Reviews/ReviewsPage';
+import ViewedPage from '../../components/page-components/User/Viewed/ViewedPage';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
@@ -11,10 +12,10 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
-const Favourites = () => {
+const Reviews = () => {
   return (
     <Layout title="User-page">
-      <FavouritesPage />
+      <ReviewsPage />
     </Layout>
   );
 };
@@ -47,4 +48,4 @@ interface ErrorProps {
   productType: IType[];
 }
 
-export default Favourites;
+export default Reviews;

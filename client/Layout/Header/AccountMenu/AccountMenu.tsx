@@ -49,7 +49,7 @@ export const AccountMenu = ({
     : 0;
   // удаления данных авторизации
   const handleLogout = () => {
-    //  router.push('/');
+    router.push('/');
     logout();
   };
   return (
@@ -96,7 +96,7 @@ export const AccountMenu = ({
                   Избранные товары
                 </a>
               </Link>
-              <Link href="#">
+              <Link href="/user/viewed">
                 <a className={styles.link}>
                   <VscEye className={styles.icons3} />
                   {countViewed >= 1 ? (
@@ -107,7 +107,7 @@ export const AccountMenu = ({
                   Просмотренные
                 </a>
               </Link>
-              <Link href="#">
+              <Link href="/user/reviews">
                 <a className={styles.link}>
                   <VscFeedback className={styles.icons3} />
                   {countReviews >= 1 ? (

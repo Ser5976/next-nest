@@ -1,0 +1,15 @@
+.wrapper {
+  @apply relative flex-col  bg-gray-100 p-4 rounded-sm my-2;
+}
+.form {
+  @apply flex-col py-2;
+}
+.textarea {
+  @apply mt-1 mb-6 text-sm text-gray-500;
+}
+.button {
+  @apply bg-blue-500   text-white  font-bold text-sm px-6 py-2 hover:bg-blue-600 rounded-sm items-end cursor-pointer;
+}
+.icon {
+  @apply absolute top-2 right-2 fill-gray-400 hover:fill-red-400 w-5 h-5 cursor-pointer;
+}

@@ -85,7 +85,7 @@ export const AccountMenu = ({
             </div>
             <div className="px-5 m-3 bg-transparent border-b"></div>
             <ul>
-              <Link href="#">
+              <Link href="/user/favourites">
                 <a className={styles.link}>
                   <MdOutlineFavoriteBorder className={styles.icons3} />
                   {countFavourites >= 1 ? (

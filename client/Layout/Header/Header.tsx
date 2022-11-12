@@ -8,7 +8,7 @@ import { BsCart } from 'react-icons/bs';
 import { useData } from '../../store/useData';
 import { SearchInput } from './SearchInput/SearchInput';
 import { useQuery } from 'react-query';
-import { HeaderService } from '../../header-service/header.service';
+import { HeaderService } from '../../header-service/header.service'; //сервис для запросов
 import { useActions } from '../../store/useActions';
 
 export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
@@ -25,14 +25,14 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
     {
       onSuccess: (userProfile) => {
         console.log('success работает:', userProfile);
-        // передаём данне в стор
+        // передаём данные в стор
         getError(false);
         getUser(userProfile);
       },
       onError: () => {
         getError(true);
       },
-      enabled: !!authReducer.user,
+      enabled: !!authReducer.user, //делает запрос только при авторизованности
     }
   );
 

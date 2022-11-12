@@ -1,5 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { errorCatch, removeTokensStorage } from '../store/auth/auth.helper';
+import { AuthService } from '../store/auth/auth.service';
 
 const customAxios = axios.create({});
 // можно было сразу записать Cookies.get('accessToken') в axios.create({}) в headers, ну ладно воспользуемся interceptors
@@ -19,7 +21,7 @@ customAxios.interceptors.request.use((config) => {
 //для проверки refreshToken я обошёлся authProviders и просроченный токен выявим ещё до запроса
 // и поэтому, к сожалению ,я не воспользуюсь interceptors
 
-/* customAxios.interceptors.response.use(
+customAxios.interceptors.response.use(
   (config) => config,
   async (error) => {
     const originalRequest = error.config;
@@ -44,5 +46,5 @@ customAxios.interceptors.request.use((config) => {
     throw error;
   }
 );
- */
+
 export default customAxios;

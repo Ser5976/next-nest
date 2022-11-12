@@ -1,0 +1,9 @@
+.container {
+  @apply flex max-w-screen-lg mx-auto   min-h-screen  pt-10 px-2;
+}
+.menu {
+  @apply w-1/4 pr-2;
+}
+.main {
+  @apply w-3/4 pl-2;
+}

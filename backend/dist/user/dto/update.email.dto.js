@@ -9,13 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateDto = void 0;
+exports.UpdateEmailDto = void 0;
 const class_validator_1 = require("class-validator");
-class UpdateDto {
+class UpdateEmailDto {
 }
 __decorate([
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], UpdateDto.prototype, "email", void 0);
-exports.UpdateDto = UpdateDto;
-//# sourceMappingURL=update.dto.js.map
+], UpdateEmailDto.prototype, "email", void 0);
+exports.UpdateEmailDto = UpdateEmailDto;
+//# sourceMappingURL=update.email.dto.js.map

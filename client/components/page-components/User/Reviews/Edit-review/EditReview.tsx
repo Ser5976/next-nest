@@ -25,7 +25,7 @@ const EditReview: FC<EditReviewProps> = ({
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: editReview } = useMutation(UserService.editReview, {
     onSuccess: () => {
-      // при успешном удалении, делаем повторный запрос на юзера ,чтобы обновить данные
+      // при успешном редактировании, делаем повторный запрос на юзера ,чтобы обновить данные
       queryClient.invalidateQueries('user-profile');
       toast.success('Отзыв изменён');
     },

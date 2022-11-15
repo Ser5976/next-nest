@@ -1,6 +1,6 @@
-import { UpdatePepsonalDataDto } from '../personal-data/dto/update-personaldata.dto';
+import { UpdatePasswordDto } from './dto/update.password.dto';
 import { IdValidationPipe } from './../pipes/id.validation.pipe';
-import { UpdateDto } from './dto/update.dto';
+import { UpdateEmailDto } from './dto/update.email.dto';
 import {
   Body,
   Controller,
@@ -27,13 +27,27 @@ export class UserController {
   async getProfile(@User('_id') _id: string) {
     return this.UserServies.byId(_id);
   }
-  // редактирование email, password
+  // редактирование email
   @UsePipes(new ValidationPipe()) //валидация dto
-  @Put('profileUser')
+  @Put('email')
   @HttpCode(200)
   @Auth()
-  async updateProfileUser(@User('_id') _id, @Body() updateDto: UpdateDto) {
-    return this.UserServies.updateProfileUser(_id, updateDto);
+  async updateProfileUser(
+    @User('_id') _id,
+    @Body() updateEmailDto: UpdateEmailDto,
+  ) {
+    return this.UserServies.updateEmail(_id, updateEmailDto);
+  }
+  // изменения пароля password
+  @UsePipes(new ValidationPipe()) //валидация dto
+  @Put('password')
+  @HttpCode(200)
+  @Auth()
+  async updatePassoword(
+    @User('_id') _id,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ) {
+    return this.UserServies.updatePassoword(_id, updatePasswordDto);
   }
 
   //----------------для админки-------------------------

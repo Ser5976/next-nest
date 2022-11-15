@@ -13,8 +13,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
+const update_password_dto_1 = require("./dto/update.password.dto");
 const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
-const update_dto_1 = require("./dto/update.dto");
+const update_email_dto_1 = require("./dto/update.email.dto");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const user_decorator_1 = require("./decorators/user.decorator");
@@ -26,8 +27,11 @@ let UserController = class UserController {
     async getProfile(_id) {
         return this.UserServies.byId(_id);
     }
-    async updateProfileUser(_id, updateDto) {
-        return this.UserServies.updateProfileUser(_id, updateDto);
+    async updateProfileUser(_id, updateEmailDto) {
+        return this.UserServies.updateEmail(_id, updateEmailDto);
+    }
+    async updatePassoword(_id, updatePasswordDto) {
+        return this.UserServies.updatePassoword(_id, updatePasswordDto);
     }
     async getAllusers(searchUser) {
         return this.UserServies.getAllUsers(searchUser);
@@ -52,15 +56,26 @@ __decorate([
 ], UserController.prototype, "getProfile", null);
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
-    (0, common_1.Put)('profileUser'),
+    (0, common_1.Put)('email'),
     (0, common_1.HttpCode)(200),
     (0, auth_decorators_1.Auth)(),
     __param(0, (0, user_decorator_1.User)('_id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, update_dto_1.UpdateDto]),
+    __metadata("design:paramtypes", [Object, update_email_dto_1.UpdateEmailDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateProfileUser", null);
+__decorate([
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.Put)('password'),
+    (0, common_1.HttpCode)(200),
+    (0, auth_decorators_1.Auth)(),
+    __param(0, (0, user_decorator_1.User)('_id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, update_password_dto_1.UpdatePasswordDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updatePassoword", null);
 __decorate([
     (0, common_1.Get)(),
     (0, auth_decorators_1.Auth)('admin'),

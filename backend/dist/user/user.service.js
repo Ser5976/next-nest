@@ -29,21 +29,25 @@ let UserService = class UserService {
             return user;
         throw new common_1.NotFoundException('Такого пользователя не существует!');
     }
-    async updateProfileUser(_id, updateDto) {
+    async updateEmail(_id, updateEmailDto) {
         const user = await this.UserModel.findById(_id).exec();
-        const isSameUser = await this.UserModel.findOne({ email: updateDto.email });
+        const isSameUser = await this.UserModel.findOne({
+            email: updateEmailDto.email,
+        });
         if (isSameUser && String(_id) !== String(isSameUser._id)) {
             throw new common_1.NotFoundException('Такой email существует ');
         }
-        if (user) {
-            if (updateDto.password) {
-                const salt = await (0, bcryptjs_1.genSalt)(7);
-                user.password = await (0, bcryptjs_1.hash)(updateDto.password, salt);
-            }
-            user.email = updateDto.email;
-            await user.save();
-            return { message: 'Изменение прошло успешно' };
-        }
+        user.email = updateEmailDto.email;
+        await user.save();
+        return { message: 'Изменение прошло успешно' };
+        throw new common_1.NotFoundException('Такого пользователя нет');
+    }
+    async updatePassoword(_id, updatePasswordDto) {
+        const user = await this.UserModel.findById(_id).exec();
+        const salt = await (0, bcryptjs_1.genSalt)(7);
+        user.password = await (0, bcryptjs_1.hash)(updatePasswordDto.password, salt);
+        await user.save();
+        return { message: 'Изменение прошло успешно' };
         throw new common_1.NotFoundException('Такого пользователя нет');
     }
     async getAllUsers(searchUser) {

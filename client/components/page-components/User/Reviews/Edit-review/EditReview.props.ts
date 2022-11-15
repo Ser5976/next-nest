@@ -1,5 +1,4 @@
 import { IReviews } from './../../../Product-Page/product.service';
-import { IUserProfile } from './../../../../../store/user/interface.user';
 import {
   DetailedHTMLProps,
   Dispatch,

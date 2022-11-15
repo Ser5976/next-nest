@@ -1,9 +1,10 @@
 import { genSalt, hash } from 'bcryptjs';
-import { UpdateDto } from './dto/update.dto';
+import { UpdateEmailDto } from './dto/update.email.dto';
 import { DocumentType, ModelType } from '@typegoose/typegoose/lib/types';
 import { UserModel } from 'src/user/user.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
+import { UpdatePasswordDto } from './dto/update.password.dto';
 
 @Injectable()
 export class UserService {
@@ -18,25 +19,37 @@ export class UserService {
     if (user) return user;
     throw new NotFoundException('Такого пользователя не существует!');
   }
-  //редактирование пользователя(email ,password)
-  async updateProfileUser(_id: string, updateDto: UpdateDto) {
+  //редактирование пользователя email
+  async updateEmail(_id: string, updateEmailDto: UpdateEmailDto) {
     const user = await this.UserModel.findById(_id).exec(); //находим пользователя
     // делаем проверку на существования похожего email
-    const isSameUser = await this.UserModel.findOne({ email: updateDto.email });
+    const isSameUser = await this.UserModel.findOne({
+      email: updateEmailDto.email,
+    });
 
     if (isSameUser && String(_id) !== String(isSameUser._id)) {
       throw new NotFoundException('Такой email существует ');
     }
-    //меняем у пользователя email  и если есть пароль
-    if (user) {
-      if (updateDto.password) {
-        const salt = await genSalt(7);
-        user.password = await hash(updateDto.password, salt);
-      }
-      user.email = updateDto.email;
-      await user.save(); // сохраняем
-      return { message: 'Изменение прошло успешно' };
-    }
+    //меняем у пользователя email
+
+    user.email = updateEmailDto.email;
+    await user.save(); // сохраняем
+    return { message: 'Изменение прошло успешно' };
+
+    throw new NotFoundException('Такого пользователя нет');
+  }
+  //меняем у пользователя  пароль
+  async updatePassoword(_id: string, updatePasswordDto: UpdatePasswordDto) {
+    const user = await this.UserModel.findById(_id).exec(); //находим пользователя
+
+    //меняем у пользователя пароль
+
+    const salt = await genSalt(7);
+    user.password = await hash(updatePasswordDto.password, salt);
+
+    await user.save(); // сохраняем
+    return { message: 'Изменение прошло успешно' };
+
     throw new NotFoundException('Такого пользователя нет');
   }
 

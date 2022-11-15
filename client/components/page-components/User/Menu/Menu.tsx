@@ -124,9 +124,17 @@ const Menu: FC<MenuProps> = ({
             Отзывы
           </a>
         </Link>
-        <Link href="#">
-          <a className={styles.link}>
-            <BsPerson className={styles.icons} />
+        <Link href="/user/personal-data">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'personal-data',
+            })}
+          >
+            <BsPerson
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'personal-data',
+              })}
+            />
             Личные данные
           </a>
         </Link>

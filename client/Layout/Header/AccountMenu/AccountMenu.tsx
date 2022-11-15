@@ -118,7 +118,7 @@ export const AccountMenu = ({
                   Отзывы
                 </a>
               </Link>
-              <Link href="#">
+              <Link href="/user/personal-data">
                 <a className={styles.link}>
                   <BsPerson className={styles.icons3} />
                   Личные данные

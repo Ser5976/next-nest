@@ -12,7 +12,7 @@ const Personal: FC<PersonalProps> = ({ personalData }): JSX.Element => {
     <>
       <div className={styles.container}>
         <BsPerson className={styles.icon1} />
-        <div className={styles.name}>
+        <div className={styles.label}>
           <div>Имя</div>
           {personalData?.name ? (
             <span>{personalData.name}</span>
@@ -20,7 +20,7 @@ const Personal: FC<PersonalProps> = ({ personalData }): JSX.Element => {
             <span>-</span>
           )}
         </div>
-        <div className={styles.name}>
+        <div className={styles.label}>
           <div>Пол</div>
           {personalData?.gender ? (
             <span>{personalData.gender}</span>
@@ -28,7 +28,7 @@ const Personal: FC<PersonalProps> = ({ personalData }): JSX.Element => {
             <span>-</span>
           )}
         </div>
-        <div className={styles.name}>
+        <div className={styles.label}>
           <div>Дата рождения</div>
           {personalData?.birthday ? (
             <span>{personalData.birthday}</span>

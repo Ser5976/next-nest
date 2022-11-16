@@ -35,20 +35,24 @@ let UserService = class UserService {
             email: updateEmailDto.email,
         });
         if (isSameUser && String(_id) !== String(isSameUser._id)) {
-            throw new common_1.NotFoundException('Такой email существует ');
+            throw new common_1.BadRequestException('Такой email существует ');
         }
+        const validPassword = await (0, bcryptjs_1.compare)(updateEmailDto.password, user.password);
+        if (!validPassword)
+            throw new common_1.BadRequestException('Пароль неверный');
         user.email = updateEmailDto.email;
         await user.save();
         return { message: 'Изменение прошло успешно' };
-        throw new common_1.NotFoundException('Такого пользователя нет');
     }
     async updatePassoword(_id, updatePasswordDto) {
         const user = await this.UserModel.findById(_id).exec();
+        const validPassword = await (0, bcryptjs_1.compare)(updatePasswordDto.currentPassword, user.password);
+        if (!validPassword)
+            throw new common_1.BadRequestException('Пароль неверный');
         const salt = await (0, bcryptjs_1.genSalt)(7);
         user.password = await (0, bcryptjs_1.hash)(updatePasswordDto.password, salt);
         await user.save();
         return { message: 'Изменение прошло успешно' };
-        throw new common_1.NotFoundException('Такого пользователя нет');
     }
     async getAllUsers(searchUser) {
         let options = {};

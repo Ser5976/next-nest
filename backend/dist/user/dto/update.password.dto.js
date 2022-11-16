@@ -16,6 +16,13 @@ class UpdatePasswordDto {
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
+], UpdatePasswordDto.prototype, "currentPassword", void 0);
+__decorate([
+    (0, class_validator_1.MinLength)(6, {
+        message: 'Пароль должен содержать не менее 6 символов!',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], UpdatePasswordDto.prototype, "password", void 0);
 exports.UpdatePasswordDto = UpdatePasswordDto;
 //# sourceMappingURL=update.password.dto.js.map

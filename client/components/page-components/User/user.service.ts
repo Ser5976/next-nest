@@ -22,4 +22,14 @@ export const UserService = {
     console.log(' редактирование личных данных');
     await customAxios.put(API.personalData, data);
   },
+  // редактирование email юзера
+  async editEmail(data: { email: string; password: string }) {
+    console.log(' редактирование email');
+    await customAxios.put(API.email, data);
+  },
+  // редактирование password юзера
+  async editPassword(data: { currentPassword: string; password: string }) {
+    console.log(' редактирование password');
+    await customAxios.put(API.password, data);
+  },
 };

@@ -14,18 +14,16 @@ const ModalPersonal: FC<ModalPersonalProps> = ({
   if (!show) return null;
 
   return (
-    <>
-      <div className={styles.container} id="container" onClick={handleOnClose}>
-        <div className={styles.form}>
-          <h1 className=" text-lg">Изменение профиля</h1>
-          <TiDeleteOutline
-            className={styles.icon}
-            onClick={() => setShow(false)}
-          />
-          <FormPersonal setShow={setShow} />
-        </div>
+    <div className={styles.container} id="container" onClick={handleOnClose}>
+      <div className={styles.form}>
+        <h1 className=" text-lg">Изменение профиля</h1>
+        <TiDeleteOutline
+          className={styles.icon}
+          onClick={() => setShow(false)}
+        />
+        <FormPersonal setShow={setShow} />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,8 +1,12 @@
-import { genSalt, hash } from 'bcryptjs';
+import { compare, genSalt, hash } from 'bcryptjs';
 import { UpdateEmailDto } from './dto/update.email.dto';
 import { DocumentType, ModelType } from '@typegoose/typegoose/lib/types';
 import { UserModel } from 'src/user/user.model';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { UpdatePasswordDto } from './dto/update.password.dto';
 
@@ -28,29 +32,31 @@ export class UserService {
     });
 
     if (isSameUser && String(_id) !== String(isSameUser._id)) {
-      throw new NotFoundException('Такой email существует ');
+      throw new BadRequestException('Такой email существует ');
     }
+    //проверка пароля
+    const validPassword = await compare(updateEmailDto.password, user.password);
+    if (!validPassword) throw new BadRequestException('Пароль неверный');
     //меняем у пользователя email
-
     user.email = updateEmailDto.email;
     await user.save(); // сохраняем
     return { message: 'Изменение прошло успешно' };
-
-    throw new NotFoundException('Такого пользователя нет');
   }
   //меняем у пользователя  пароль
   async updatePassoword(_id: string, updatePasswordDto: UpdatePasswordDto) {
     const user = await this.UserModel.findById(_id).exec(); //находим пользователя
-
+    //проверка пароля
+    const validPassword = await compare(
+      updatePasswordDto.currentPassword,
+      user.password,
+    );
+    if (!validPassword) throw new BadRequestException('Пароль неверный');
     //меняем у пользователя пароль
-
     const salt = await genSalt(7);
     user.password = await hash(updatePasswordDto.password, salt);
 
     await user.save(); // сохраняем
     return { message: 'Изменение прошло успешно' };
-
-    throw new NotFoundException('Такого пользователя нет');
   }
 
   //----------для админки----------------------------

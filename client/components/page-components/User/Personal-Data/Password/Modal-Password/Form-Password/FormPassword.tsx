@@ -1,6 +1,6 @@
-import styles from './FormEmail.module.css';
+import styles from './FormPassword.module.css';
 import { FC } from 'react';
-import { FormEmailProps } from './FormEmail.props';
+import { FormPasswordProps } from './FormPassword.props';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { UserService } from '../../../../user.service';
@@ -8,23 +8,24 @@ import { toast } from 'react-toastify';
 import { Input } from '../../../../../../ui/Input/Input';
 import { errorCatch } from '../../../../../../../store/auth/auth.helper';
 
-const FormEmail: FC<FormEmailProps> = ({ setShow }): JSX.Element => {
+const FormPassword: FC<FormPasswordProps> = ({ setShow }): JSX.Element => {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<{ email: string; password: string }>({
+  } = useForm<{ currentPassword: string; password: string }>({
     mode: 'onChange',
   });
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
   const queryClient = useQueryClient();
   // редактирование личных данных
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
-  const { mutate: editEmail } = useMutation(UserService.editEmail, {
+  const { mutate: editPassword } = useMutation(UserService.editPassword, {
     onSuccess: () => {
       // при успешном редактировании, делаем повторный запрос на юзера ,чтобы обновить данные
       queryClient.invalidateQueries('user-profile');
       setShow(false);
+      toast.success('Пароль изменён');
     },
     onError: (error: any) => {
       error.response.status === 401 || error.response.status === 400 //условие, чтобы мы показали наше сосбщение написанное в бэке
@@ -34,28 +35,25 @@ const FormEmail: FC<FormEmailProps> = ({ setShow }): JSX.Element => {
   });
 
   // получение данных из формы и отправка на сервак
-  const onSubmit = (data: { email: string; password: string }): void => {
+  const onSubmit = (data: {
+    currentPassword: string;
+    password: string;
+  }): void => {
     // console.log(data);
-    editEmail(data);
+    editPassword(data);
   };
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <label>
-        <div className={styles.label}>Новая почта</div>
+        <div className={styles.label}>Текущий пароль</div>
         <Input
-          type="email"
+          type="password"
           className={styles.input}
           scale="small"
-          {...register('email', {
+          {...register('currentPassword', {
             required: 'Обязательное поле для заполнения',
-            pattern: {
-              value:
-                //регулярное выражения - валидация email
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              message: 'Неправильный формат электронной почты',
-            },
           })}
-          error={errors.email}
+          error={errors.currentPassword}
         />
       </label>
 
@@ -81,4 +79,4 @@ const FormEmail: FC<FormEmailProps> = ({ setShow }): JSX.Element => {
   );
 };
 
-export default FormEmail;
+export default FormPassword;

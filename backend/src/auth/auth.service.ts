@@ -1,3 +1,5 @@
+import { LoginDto } from './dto/login.dto ';
+import { RegistrationDto } from './dto/registration.dto';
 import {
   BadRequestException,
   Injectable,
@@ -7,7 +9,6 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { hash, genSalt, compare } from 'bcryptjs';
 import { UserModel } from 'src/user/user.model';
-import { AuthDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { RefreshTokenDto } from './dto/refreshToken.dto';
 
@@ -18,7 +19,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(dto: AuthDto) {
+  async register(dto: RegistrationDto) {
     //проверка на существование в базе  email
     const candidate = await this.UserModel.findOne({ email: dto.email });
     if (candidate)
@@ -37,7 +38,7 @@ export class AuthService {
     //посылаем на клиент
     return { user: this.returnUserFields(user), ...tokens };
   }
-  async login(dto: AuthDto) {
+  async login(dto: LoginDto) {
     //проверка на существование в базе  пользователя
     const user = await this.UserModel.findOne({ email: dto.email });
     if (!user)

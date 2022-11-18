@@ -5,6 +5,7 @@ import { useData } from '../../../../store/useData';
 import { LayoutUser } from '../LayoutUser';
 import Personal from './Personal/Personal';
 import Email from './Email/Email';
+import Password from './Password/Password';
 
 const PersonalDataPage: FC<PersonalDataPageProps> = ({}): JSX.Element => {
   const { userReducer } = useData(); //получаем из стора  все данные по юзеру при помощи кастомного хука useData()
@@ -24,6 +25,7 @@ const PersonalDataPage: FC<PersonalDataPageProps> = ({}): JSX.Element => {
           <>
             <Personal personalData={userProfile?.personalData} />
             <Email email={userProfile?.email} />
+            <Password />
           </>
         )}
       </ul>

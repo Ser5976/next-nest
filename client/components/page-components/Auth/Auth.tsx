@@ -76,18 +76,29 @@ export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
             })}
             error={errors.email}
           />
-          <Input
-            type="password"
-            placeholder="password"
-            {...register('password', {
-              required: 'Обязательное поле для заполнения',
-              minLength: {
-                value: 5,
-                message: 'Пароль должен содержать не менее 5 символов',
-              },
-            })}
-            error={errors.password}
-          />
+          {type === 'registration' ? (
+            <Input
+              type="password"
+              placeholder="password"
+              {...register('password', {
+                required: 'Обязательное поле для заполнения',
+                minLength: {
+                  value: 5,
+                  message: 'Пароль должен содержать не менее 5 символов',
+                },
+              })}
+              error={errors.password}
+            />
+          ) : (
+            <Input
+              type="password"
+              placeholder="password"
+              {...register('password', {
+                required: 'Обязательное поле для заполнения',
+              })}
+              error={errors.password}
+            />
+          )}
 
           <Button type="submit" className="self-center">
             {type === 'login' ? 'Войти' : 'Зарегистрироваться'}

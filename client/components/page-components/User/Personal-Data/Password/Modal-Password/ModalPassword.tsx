@@ -1,10 +1,10 @@
-import styles from './ModalEmail.module.css';
+import styles from './ModalPassword.module.css';
 import { FC } from 'react';
-import { ModalEmailProps } from './ModalEmail.props';
+import { ModalPasswordProps } from './ModalPassword.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import FormEmail from './Form-Email/FormEmail';
+import FormPassword from './Form-Password/FormPassword';
 
-const ModalEmail: FC<ModalEmailProps> = ({
+const ModalPassword: FC<ModalPasswordProps> = ({
   show,
   setShow,
 }): JSX.Element | null => {
@@ -21,10 +21,10 @@ const ModalEmail: FC<ModalEmailProps> = ({
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <FormEmail setShow={setShow} />
+        <FormPassword setShow={setShow} />
       </div>
     </div>
   );
 };
 
-export default ModalEmail;
+export default ModalPassword;

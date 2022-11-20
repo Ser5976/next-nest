@@ -47,6 +47,7 @@ const FormPersonal: FC<FormPersonalProps> = ({ setShow }): JSX.Element => {
         <Input
           type="text"
           className={styles.input}
+          autoFocus
           scale="small"
           {...register('name', {
             required: 'Обязательное поле для заполнения',

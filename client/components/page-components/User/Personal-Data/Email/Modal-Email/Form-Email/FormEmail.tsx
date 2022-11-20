@@ -46,6 +46,7 @@ const FormEmail: FC<FormEmailProps> = ({ setShow }): JSX.Element => {
         <Input
           type="email"
           className={styles.input}
+          autoFocus
           scale="small"
           {...register('email', {
             required: 'Обязательное поле для заполнения',

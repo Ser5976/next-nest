@@ -1,5 +1,4 @@
-import { IPersonalData } from './../../../store/user/interface.user';
-import axios from 'axios';
+import { IPersonalData, IPhone } from './../../../store/user/interface.user';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 
@@ -21,6 +20,11 @@ export const UserService = {
   async editPersonalData(data: IPersonalData) {
     console.log(' редактирование личных данных');
     await customAxios.put(API.personalData, data);
+  },
+  // редактирование телефона юзера
+  async editPhone(data: IPhone) {
+    console.log(' редактирование телефона');
+    await customAxios.put(API.phone, data);
   },
   // редактирование email юзера
   async editEmail(data: { email: string; password: string }) {

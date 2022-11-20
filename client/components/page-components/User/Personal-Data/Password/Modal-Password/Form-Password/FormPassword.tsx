@@ -49,6 +49,7 @@ const FormPassword: FC<FormPasswordProps> = ({ setShow }): JSX.Element => {
         <Input
           type="password"
           className={styles.input}
+          autoFocus
           scale="small"
           {...register('currentPassword', {
             required: 'Обязательное поле для заполнения',

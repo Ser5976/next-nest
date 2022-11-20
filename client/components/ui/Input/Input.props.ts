@@ -6,7 +6,7 @@ export interface InputProps
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  type: 'text' | 'email' | 'password' | 'date';
+  type: 'text' | 'email' | 'password' | 'date' | 'tel' | 'number';
   placeholder?: string;
   error?: FieldError;
   scale?: 'small' | 'larg';

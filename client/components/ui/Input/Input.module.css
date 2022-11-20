@@ -6,7 +6,9 @@
   @apply py-2 px-2  rounded-sm  border
 	outline-none focus:border-b-2 focus:border-b-blue-500 placeholder-gray-400  transition duration-200 w-full bg-white;
 }
-
+.inputSmall::placeholder {
+  @apply text-sm;
+}
 .error {
   @apply border-b-red-400 border-b-2 focus:border-b-red-400;
 }

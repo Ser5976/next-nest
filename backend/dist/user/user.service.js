@@ -24,6 +24,7 @@ let UserService = class UserService {
     async byId(id) {
         const user = await this.UserModel.findById(id)
             .populate('reviews favorites viewed')
+            .select('-password -__v')
             .exec();
         if (user)
             return user;

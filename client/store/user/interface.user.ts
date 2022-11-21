@@ -19,7 +19,6 @@ export interface IAddress {
 export interface IUserProfile {
   _id: string;
   email: string;
-  password: string;
   isAdmin: boolean;
   favorites: IProduct[];
   viewed: IProduct[];
@@ -27,7 +26,6 @@ export interface IUserProfile {
   cart: string[];
   createdAt: string;
   updatedAt: string;
-  __v: number;
   personalData: IPersonalData;
   phone: IPhone;
   address: IAddress;

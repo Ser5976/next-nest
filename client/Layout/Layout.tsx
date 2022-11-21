@@ -1,7 +1,6 @@
 import { Header } from './Header/Header';
 import { Footer } from './Footer/Footer';
 import { LayoutProps } from './Layout.props';
-import styles from './Layout.module.css';
 import Head from 'next/head';
 
 export const Layout = ({

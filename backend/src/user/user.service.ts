@@ -19,6 +19,7 @@ export class UserService {
   async byId(id: string): Promise<DocumentType<UserModel>> {
     const user = await this.UserModel.findById(id)
       .populate('reviews favorites viewed')
+      .select('-password -__v') //так мы исключаем ненужные поля
       .exec();
     if (user) return user;
     throw new NotFoundException('Такого пользователя не существует!');

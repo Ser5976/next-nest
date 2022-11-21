@@ -53,6 +53,7 @@ const EditReview: FC<EditReviewProps> = ({
           <div className="text-sm font-semibold">Редактировать отзыв:</div>
           <Textarea
             className={styles.textarea}
+            autoFocus
             rows={5}
             {...register('text', {
               required: 'Обязательное поле для заполнения',

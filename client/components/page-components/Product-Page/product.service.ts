@@ -49,7 +49,7 @@ export const ProductService = {
     // console.log(result);
     return result;
   },
-  // удаление отзыва(только админ)
+  // удаление отзыва( админ у всех, каждый у себя)
   async removeReview(id: string) {
     console.log(' удаление отзыва');
     await customAxios.delete(`${API.reviews}/${id}`);

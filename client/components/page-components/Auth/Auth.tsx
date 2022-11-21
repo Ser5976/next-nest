@@ -64,6 +64,7 @@ export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <Input
             type="email"
+            autoFocus
             placeholder="email"
             {...register('email', {
               required: 'Обязательное поле для заполнения',

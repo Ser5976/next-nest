@@ -24,7 +24,7 @@ export class ReviewsService {
     });
 
     if (reveiw) {
-      //сохраняем id отзыва юзеру,такой вариант лучше в корзине
+      //сохраняем id отзыва юзеру
       await this.UserModel.updateOne(
         { _id: id },
         {
@@ -67,16 +67,16 @@ export class ReviewsService {
     throw new NotFoundException('отзыв не обновлён');
   }
   //удаление отзыва
-  async deleteReview(id: string): Promise<{ message: string }> {
+  async deleteReview(id: string,_id:string): Promise<{ message: string }> {
     const deletedReview = await this.ReviewsModel.findByIdAndDelete(id);
-    /*  if (deletedReview) {
+      if (deletedReview) {
       //удаление id отзыва у юзера
       await this.UserModel.updateOne(
-        { _id: userId },
+        { _id },
         {
           $pull: { reviews: new Types.ObjectId(id) },
         },
-      )}; */
+      )}; 
     if (!deletedReview) throw new NotFoundException('отзыв не удален');
     return { message: 'отзыв удалён' };
   }

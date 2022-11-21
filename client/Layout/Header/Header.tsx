@@ -35,6 +35,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
       enabled: !!authReducer.user, //делает запрос только при авторизованности
     }
   );
+ // console.log('User',userProfile)
 
   return (
     <>

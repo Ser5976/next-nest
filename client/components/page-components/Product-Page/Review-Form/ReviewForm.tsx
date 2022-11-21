@@ -1,9 +1,7 @@
 import styles from './ReviewForm.module.css';
-import cn from 'classnames';
-import { FC, useState } from 'react';
+import { FC,  } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ReviewFormProps } from './ReviewForm.props';
-import { Rating } from 'react-simple-star-rating';
 import { Input } from '../../../ui/Input/Input';
 import { Textarea } from '../../../ui/Textarea/Textarea';
 import { useMutation, useQueryClient } from 'react-query';
@@ -11,6 +9,8 @@ import { ProductService } from '../product.service'; //сервис для от�
 import { toast } from 'react-toastify';
 import { TiDeleteOutline } from 'react-icons/ti';
 import Estimation from './Estimation/Estimation';
+import { useData } from '../../../../store/useData';
+
 
 export interface IReview {
   name: string;
@@ -24,6 +24,8 @@ const ReviewForm: FC<ReviewFormProps> = ({
   product,
   setOpenForm, // для закрытия формы
 }): JSX.Element => {
+  const{userReducer:{userProfile}}=useData()// получаем данные по юзеру и немножку деструтуризируем
+ // console.log('Name',userProfile?.personalData.name)
   const {
     handleSubmit,
     register,
@@ -64,6 +66,7 @@ const ReviewForm: FC<ReviewFormProps> = ({
           <div>Имя:</div>
           <Input
             type="text"
+            defaultValue={userProfile?.personalData.name}
             className={styles.input}
             scale="small"
             {...register('name', {
@@ -77,6 +80,7 @@ const ReviewForm: FC<ReviewFormProps> = ({
           <div>Отзыв:</div>
           <Textarea
             className={styles.textarea}
+            autoFocus
             rows={5}
             {...register('text', {
               required: 'Обязательное поле для заполнения',

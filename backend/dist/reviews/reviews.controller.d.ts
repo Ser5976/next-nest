@@ -1,6 +1,7 @@
 import { UpdateReviewDto } from './dto/update.review.dto';
 import { ReviewsDto } from './dto/reviews.dto';
 import { ReviewsService } from './reviews.service';
+import { ResponseDto } from './dto/response.dto';
 export declare class ReviewsController {
     private readonly ReviewsService;
     constructor(ReviewsService: ReviewsService);
@@ -8,8 +9,12 @@ export declare class ReviewsController {
         _id: import("mongoose").Types.ObjectId;
     }>;
     getReviews(_id: string): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
+    getStoreReviews(): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
     getProductReviews(productId: string): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
     updateReview(id: string, dto: UpdateReviewDto): Promise<{
+        message: string;
+    }>;
+    responseReviews(id: string, dto: ResponseDto): Promise<{
         message: string;
     }>;
     deleteRrview(id: string, _id: string): Promise<{

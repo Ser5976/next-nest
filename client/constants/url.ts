@@ -9,7 +9,6 @@ export const API = {
   categoryProduct: process.env.NEXT_PUBLIC_DOMAIN + '/api/category-product',
   productType: process.env.NEXT_PUBLIC_DOMAIN + '/api/product-type',
   news: process.env.NEXT_PUBLIC_DOMAIN + '/api/news',
-  storeReviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/store-reviews',
   slider: process.env.NEXT_PUBLIC_DOMAIN + '/api/slider',
   products: {
     popular: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/popular',
@@ -20,6 +19,9 @@ export const API = {
   product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product',
   poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
   reviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews',
+  storeReviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/store-reviews',
+  responseReview:
+    process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/response-review',
   rating: process.env.NEXT_PUBLIC_DOMAIN + '/api/rating',
   favourites: process.env.NEXT_PUBLIC_DOMAIN + '/api/favourites',
   viewed: process.env.NEXT_PUBLIC_DOMAIN + '/api/viewed',

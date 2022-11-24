@@ -2,8 +2,8 @@ import { toast } from 'react-toastify';
 import { API } from './../../../constants/url';
 import { INews } from '../News-List/NewsList.props';
 import axios from 'axios';
-import { IStoreReviews } from '../StoreReviews-List/StoreReviewsList.props';
 import { ISlider } from '../../ui/Slider/Slider.props';
+import { IStoreReviews } from '../StoreReviews-List/store-review.service';
 
 export interface ICharacteristic {
   title: string;
@@ -46,8 +46,8 @@ export const HomeServise = {
       return news;
     }
   },
-  // получение отзывов
-  async getReviews() {
+  // получение отзывов о магазине
+  async getStoreReviews() {
     try {
       const { data: reviews } = await axios.get<IStoreReviews[]>(
         API.storeReviews

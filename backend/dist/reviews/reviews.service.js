@@ -24,12 +24,7 @@ let ReviewsService = class ReviewsService {
         this.UserModel = UserModel;
     }
     async create(id, dto) {
-        const reveiw = await this.ReviewsModel.create({
-            userId: id,
-            name: dto.name,
-            productId: dto.productId,
-            text: dto.text,
-        });
+        const reveiw = await this.ReviewsModel.create(Object.assign({ userId: id }, dto));
         if (reveiw) {
             await this.UserModel.updateOne({ _id: id }, {
                 $push: { reviews: reveiw._id },
@@ -40,6 +35,14 @@ let ReviewsService = class ReviewsService {
     }
     async getUserReviews(id) {
         const reviews = await this.ReviewsModel.find({ userId: id }).sort({
+            createdAt: 'desc',
+        });
+        if (reviews)
+            return reviews;
+        throw new common_1.NotFoundException('Отзывы не получены');
+    }
+    async getStoreReviews() {
+        const reviews = await this.ReviewsModel.find({ store: 'store' }).sort({
             createdAt: 'desc',
         });
         if (reviews)
@@ -62,6 +65,14 @@ let ReviewsService = class ReviewsService {
             return { message: 'отзыв обновлён' };
         throw new common_1.NotFoundException('отзыв не обновлён');
     }
+    async responseReview(id, dto) {
+        const responseReview = await this.ReviewsModel.findByIdAndUpdate(id, {
+            response: dto.response,
+        });
+        if (!responseReview)
+            throw new common_1.NotFoundException('Что то пошло не так,ответ не записан');
+        return { message: 'Ответ записан' };
+    }
     async deleteReview(id, _id) {
         const deletedReview = await this.ReviewsModel.findByIdAndDelete(id);
         if (deletedReview) {
@@ -69,7 +80,6 @@ let ReviewsService = class ReviewsService {
                 $pull: { reviews: new mongoose_1.Types.ObjectId(id) },
             });
         }
-        ;
         if (!deletedReview)
             throw new common_1.NotFoundException('отзыв не удален');
         return { message: 'отзыв удалён' };

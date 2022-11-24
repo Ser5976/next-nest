@@ -17,8 +17,10 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
   const { getUser, getError } = useActions();
   //получаем данные  из редюссоров при помощи кастомного хука useData();
   const { forCustomersReducer, productTypeReducer, authReducer } = useData();
+
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
+  //получаем  все данные (из базы) по юзеру и записываем их в стор(редакс)
   const { data: userProfile } = useQuery(
     'user-profile',
     () => HeaderService.getUserProfile(),
@@ -35,7 +37,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
       enabled: !!authReducer.user, //делает запрос только при авторизованности
     }
   );
- // console.log('User',userProfile)
+  // console.log('User',userProfile)
 
   return (
     <>

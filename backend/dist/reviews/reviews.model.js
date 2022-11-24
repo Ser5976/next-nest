@@ -27,10 +27,18 @@ __decorate([
 __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
+], ReviewsModel.prototype, "store", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", String)
 ], ReviewsModel.prototype, "name", void 0);
 __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
 ], ReviewsModel.prototype, "text", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", String)
+], ReviewsModel.prototype, "response", void 0);
 exports.ReviewsModel = ReviewsModel;
 //# sourceMappingURL=reviews.model.js.map

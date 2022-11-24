@@ -20,6 +20,7 @@ const reviews_service_1 = require("./reviews.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const user_decorator_1 = require("../user/decorators/user.decorator");
+const response_dto_1 = require("./dto/response.dto");
 let ReviewsController = class ReviewsController {
     constructor(ReviewsService) {
         this.ReviewsService = ReviewsService;
@@ -30,11 +31,17 @@ let ReviewsController = class ReviewsController {
     async getReviews(_id) {
         return this.ReviewsService.getUserReviews(_id);
     }
+    async getStoreReviews() {
+        return this.ReviewsService.getStoreReviews();
+    }
     async getProductReviews(productId) {
         return this.ReviewsService.getProductReviews(productId);
     }
     async updateReview(id, dto) {
         return this.ReviewsService.updateReview(id, dto);
+    }
+    async responseReviews(id, dto) {
+        return this.ReviewsService.responseReview(id, dto);
     }
     async deleteRrview(id, _id) {
         return this.ReviewsService.deleteReview(id, _id);
@@ -59,6 +66,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "getReviews", null);
 __decorate([
+    (0, common_1.Get)('store-reviews'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "getStoreReviews", null);
+__decorate([
     (0, common_1.Get)(':productId'),
     __param(0, (0, common_1.Param)('productId', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
@@ -75,6 +88,16 @@ __decorate([
     __metadata("design:paramtypes", [String, update_review_dto_1.UpdateReviewDto]),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "updateReview", null);
+__decorate([
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.Put)('response-review/:id'),
+    (0, auth_decorators_1.Auth)('admin'),
+    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, response_dto_1.ResponseDto]),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "responseReviews", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)(),

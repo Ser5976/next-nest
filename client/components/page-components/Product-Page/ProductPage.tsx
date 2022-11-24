@@ -21,7 +21,7 @@ const ProductPage: FC<ProductPageProps> = ({
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
   const queryClient = useQueryClient();
   //добавляем товар в просмотренные(viewed) хук useMutation(), из react-query,он посылает post,put,delete запросы
-  const { mutate } = useMutation(ProductService.setViewed, {
+  const { mutate: viewed } = useMutation(ProductService.setViewed, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
       // queryClient.invalidateQueries('reviews');
@@ -30,7 +30,7 @@ const ProductPage: FC<ProductPageProps> = ({
   //запускаем mutate если авторизован
   useEffect(() => {
     if (authReducer.user) {
-      mutate(product._id);
+      viewed(product._id);
     }
   }, []);
   //активный класс для картинок

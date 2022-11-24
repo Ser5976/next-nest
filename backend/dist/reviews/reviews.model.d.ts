@@ -7,6 +7,8 @@ export interface ReviewsModel extends Base {
 export declare class ReviewsModel extends TimeStamps {
     userId: Ref<UserModel>;
     productId: Ref<ProductModel>;
+    store: string;
     name: string;
     text: string;
+    response: string;
 }

@@ -1,8 +1,9 @@
 import { IsString } from 'class-validator';
 
 export class ReviewsDto {
-  @IsString()
-  productId: string;
+  productId?: string;
+
+  store?: string;
 
   @IsString()
   name: string;

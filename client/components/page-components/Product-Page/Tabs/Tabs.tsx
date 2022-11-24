@@ -26,14 +26,14 @@ const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
       //(в auth специально сделали хук для этого)
     }
   };
-  // при помощи useQuery получаю отзывы
+  // при помощи useQuery получаю отзывы о товаре
   const {
     isLoading,
     data: reviews,
     error,
   } = useQuery(
     ['reviews', product._id],
-    () => ProductService.getReviews(product._id),
+    () => ProductService.getProductReviews(product._id),
     {
       enabled: !!product._id,
     }

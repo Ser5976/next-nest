@@ -6,6 +6,7 @@ import { ReviewsModel } from './reviews.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
+import { ResponseDto } from './dto/response.dto';
 
 @Injectable()
 export class ReviewsService {
@@ -18,9 +19,7 @@ export class ReviewsService {
   async create(id: string, dto: ReviewsDto) {
     const reveiw = await this.ReviewsModel.create({
       userId: id,
-      name: dto.name,
-      productId: dto.productId,
-      text: dto.text,
+      ...dto,
     });
 
     if (reveiw) {
@@ -45,6 +44,14 @@ export class ReviewsService {
     if (reviews) return reviews;
     throw new NotFoundException('Отзывы не получены');
   }
+  // получение отзывов  о магазине
+  async getStoreReviews(): Promise<DocumentType<ReviewsModel>[]> {
+    const reviews = await this.ReviewsModel.find({ store: 'store' }).sort({
+      createdAt: 'desc',
+    });
+    if (reviews) return reviews;
+    throw new NotFoundException('Отзывы не получены');
+  }
   // получение отзывов  продукта
   async getProductReviews(
     productId: string,
@@ -55,6 +62,7 @@ export class ReviewsService {
     if (reviews) return reviews;
     throw new NotFoundException('Отзывы не получены');
   }
+
   // редактирование отзыва
   async updateReview(
     idReview: string,
@@ -66,17 +74,28 @@ export class ReviewsService {
     if (newReview) return { message: 'отзыв обновлён' };
     throw new NotFoundException('отзыв не обновлён');
   }
+  // admin
+  //ответ на отзыв
+  async responseReview(id: string, dto: ResponseDto) {
+    const responseReview = await this.ReviewsModel.findByIdAndUpdate(id, {
+      response: dto.response,
+    });
+    if (!responseReview)
+      throw new NotFoundException('Что то пошло не так,ответ не записан');
+    return { message: 'Ответ записан' };
+  }
   //удаление отзыва
-  async deleteReview(id: string,_id:string): Promise<{ message: string }> {
+  async deleteReview(id: string, _id: string): Promise<{ message: string }> {
     const deletedReview = await this.ReviewsModel.findByIdAndDelete(id);
-      if (deletedReview) {
+    if (deletedReview) {
       //удаление id отзыва у юзера
       await this.UserModel.updateOne(
         { _id },
         {
           $pull: { reviews: new Types.ObjectId(id) },
         },
-      )}; 
+      );
+    }
     if (!deletedReview) throw new NotFoundException('отзыв не удален');
     return { message: 'отзыв удалён' };
   }

@@ -1,6 +1,5 @@
-import { INews } from '../../News-List/NewsList.props';
+import { IStoreReviews } from './../../StoreReviews-List/store-review.service';
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { IStoreReviews } from '../../StoreReviews-List/StoreReviewsList.props';
 
 export interface ReviewsProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

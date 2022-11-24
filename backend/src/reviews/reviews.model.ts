@@ -11,10 +11,12 @@ export class ReviewsModel extends TimeStamps {
 
   @prop({ ref: () => ProductModel })
   productId: Ref<ProductModel>;
-
+  @prop()
+  store: string;
   @prop()
   name: string;
-
   @prop()
   text: string;
+  @prop()
+  response: string;
 }

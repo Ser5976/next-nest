@@ -1,7 +1,5 @@
 import { GetStaticProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { HomeServise } from '../../components/page-components/Home/home.service';
-import { IStoreReviews } from '../../components/page-components/StoreReviews-List/StoreReviewsList.props';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
@@ -21,14 +19,10 @@ const StoreReviewsList = dynamic(
   { ssr: false }
 );
 
-const StoreReviewsPage: NextPage<StoreReviewsProps> = ({ reviews }) => {
+const StoreReviewsPage: NextPage<StoreReviewsProps> = ({}) => {
   return (
-    <Layout title="News">
-      {reviews.length === 0 ? (
-        <h1 className=" text-center text-base mt-5">Данных нет!!!</h1>
-      ) : (
-        <StoreReviewsList reviews={reviews} />
-      )}
+    <Layout title="Reviews">
+      <StoreReviewsList />
     </Layout>
   );
 };
@@ -51,12 +45,8 @@ export const getStaticProps: GetStaticProps<StoreReviewsProps> =
     store.dispatch(getProductType(productType));
     //----------------------------------------------------------//
 
-    //--------- получем индивидуальные данные для страницы------//
-
-    const reviews = await HomeServise.getReviews(); //кастомный сервис для запроса отзывов
-
     return {
-      props: { forCustomers, categoryProduct, productType, reviews },
+      props: { forCustomers, categoryProduct, productType },
       revalidate: 10,
     };
   });
@@ -65,7 +55,6 @@ interface StoreReviewsProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
-  reviews: IStoreReviews[];
 }
 
 export default StoreReviewsPage;

@@ -21,7 +21,7 @@ export interface IRatinProduct {
 
 export const ProductService = {
   // получение отзывов о товаре
-  async getReviews(productId: string) {
+  async getProductReviews(productId: string) {
     console.log(' получен отзыв');
     const { data: reviews } = await axios.get<IReviews[]>(
       `${API.reviews}/${productId}`

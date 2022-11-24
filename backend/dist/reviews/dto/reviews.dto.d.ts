@@ -1,5 +1,6 @@
 export declare class ReviewsDto {
-    productId: string;
+    productId?: string;
+    store?: string;
     name: string;
     text: string;
 }

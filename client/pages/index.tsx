@@ -5,7 +5,7 @@ import {
   IProduct,
 } from '../components/page-components/Home/home.service';
 import { INews } from '../components/page-components/News-List/NewsList.props';
-import { IStoreReviews } from '../components/page-components/StoreReviews-List/StoreReviewsList.props';
+import { IStoreReviews } from '../components/page-components/StoreReviews-List/store-review.service';
 import { ISlider } from '../components/ui/Slider/Slider.props';
 import { HeaderService } from '../header-service/header.service';
 import { Layout } from '../Layout/Layout';
@@ -48,8 +48,8 @@ export const getStaticProps: GetStaticProps<HomeProps> = wrapper.getStaticProps(
     //------------- данные для Home ---------------------------------//
     //новости
     const news = await HomeServise.getNews(); // кастомный сервис для запроса новостей
-    //отзывы
-    const reviews = await HomeServise.getReviews(); //кастомный сервис для запроса отзывов
+    //отзывы о магазине
+    const reviews = await HomeServise.getStoreReviews(); //кастомный сервис для запроса отзывов о магазине
     // слайдер
     const sliders = await HomeServise.getSlider(); //кастомный сервис для запроса слайдер
     // популярные товары

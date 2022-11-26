@@ -8,6 +8,7 @@ const ModalResponse: FC<ModalResponseProps> = ({
   show,
   setShow,
   reviewId,
+  update,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false); // чтобы закрыть по клику на любую точку контейнера
@@ -22,7 +23,7 @@ const ModalResponse: FC<ModalResponseProps> = ({
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <FormResponse setShow={setShow} reviewId={reviewId} />
+        <FormResponse setShow={setShow} reviewId={reviewId} update={update} />
       </div>
     </div>
   );

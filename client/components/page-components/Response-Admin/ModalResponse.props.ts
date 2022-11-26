@@ -10,4 +10,5 @@ export interface ModalResponseProps
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   reviewId: string;
+  update: 'reviews' | 'store-reviews';
 }

@@ -1,3 +1,6 @@
 .icon {
   @apply absolute top-4 right-0 fill-gray-400 hover:fill-red-400 w-4 h-4 cursor-pointer;
 }
+.icon1 {
+  @apply absolute top-4 right-5 fill-gray-400 hover:fill-red-400 w-4 h-4 cursor-pointer;
+}

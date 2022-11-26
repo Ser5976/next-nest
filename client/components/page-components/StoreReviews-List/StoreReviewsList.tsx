@@ -12,7 +12,7 @@ import { TiDeleteOutline, TiEdit } from 'react-icons/ti';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ProductService } from '../Product-Page/product.service';
 import { toast } from 'react-toastify';
-import ModalResponse from './Response-Admin/ModalResponse';
+import ModalResponse from '../Response-Admin/ModalResponse';
 import { StoreReviewService } from './store-review.service';
 
 const StoreReviewsList: FC<StoreReviewsListProps> = ({}): JSX.Element => {
@@ -118,7 +118,15 @@ const StoreReviewsList: FC<StoreReviewsListProps> = ({}): JSX.Element => {
                     <>
                       <TiDeleteOutline
                         className={styles.icon}
-                        onClick={() => removeReview(r._id)}
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              `Вы действительно хотите удалить отзыв`
+                            )
+                          ) {
+                            removeReview(r._id);
+                          }
+                        }}
                       />
                       <TiEdit
                         className={styles.icon1}
@@ -145,7 +153,12 @@ const StoreReviewsList: FC<StoreReviewsListProps> = ({}): JSX.Element => {
           </ul>
         )}
       </div>
-      <ModalResponse setShow={setShow} show={show} reviewId={reviewId} />
+      <ModalResponse
+        setShow={setShow}
+        show={show}
+        reviewId={reviewId}
+        update={'store-reviews'}
+      />
     </>
   );
 };

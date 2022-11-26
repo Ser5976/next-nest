@@ -57,7 +57,15 @@ const ReviewsPage: FC<ReviewsPageProps> = ({}): JSX.Element => {
                   <li className="relative py-2 border-b" key={review._id}>
                     <TiDeleteOutline
                       className={styles.icon}
-                      onClick={() => removeReview(review._id)}
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            `Вы действительно хотите удалить отзыв`
+                          )
+                        ) {
+                          removeReview(review._id);
+                        }
+                      }}
                     />
                     <TiEdit
                       className={styles.icon1}

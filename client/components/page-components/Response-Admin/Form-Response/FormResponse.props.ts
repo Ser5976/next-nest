@@ -9,4 +9,5 @@ export interface FormResponseProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   setShow: Dispatch<SetStateAction<boolean>>;
   reviewId: string;
+  update: 'reviews' | 'store-reviews';
 }

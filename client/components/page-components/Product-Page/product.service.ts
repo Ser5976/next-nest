@@ -9,6 +9,7 @@ export interface IReviews {
   userId: string;
   productId: string;
   name: string;
+  response: string;
   text: string;
   createdAt: string;
   updatedAt: string;

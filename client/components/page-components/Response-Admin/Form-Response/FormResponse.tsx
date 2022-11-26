@@ -4,13 +4,14 @@ import { FormResponseProps } from './FormResponse.props';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
-import { StoreReviewService } from '../../store-review.service';
-import { errorCatch } from '../../../../../store/auth/auth.helper';
-import { Textarea } from '../../../../ui/Textarea/Textarea';
+import { StoreReviewService } from '../../StoreReviews-List/store-review.service';
+import { errorCatch } from '../../../../store/auth/auth.helper';
+import { Textarea } from '../../../ui/Textarea/Textarea';
 
 const FormResponse: FC<FormResponseProps> = ({
   setShow,
   reviewId,
+  update,
 }): JSX.Element => {
   const {
     handleSubmit,
@@ -28,7 +29,7 @@ const FormResponse: FC<FormResponseProps> = ({
     {
       onSuccess: () => {
         // при успешном редактировании, делаем повторный запрос на юзера ,чтобы обновить данные
-        queryClient.invalidateQueries('store-reviews');
+        queryClient.invalidateQueries(update);
         setShow(false);
         toast.success('Ответ принят');
       },

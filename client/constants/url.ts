@@ -26,6 +26,7 @@ export const API = {
   favourites: process.env.NEXT_PUBLIC_DOMAIN + '/api/favourites',
   viewed: process.env.NEXT_PUBLIC_DOMAIN + '/api/viewed',
   personalData: process.env.NEXT_PUBLIC_DOMAIN + '/api/personal-data',
+  address: process.env.NEXT_PUBLIC_DOMAIN + '/api/personal-data/address',
   phone: process.env.NEXT_PUBLIC_DOMAIN + '/api/personal-data/phone',
   email: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/email',
   password: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/password',

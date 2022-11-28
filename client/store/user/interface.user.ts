@@ -13,7 +13,7 @@ export interface IAddress {
   city: string;
   street: string;
   house: string;
-  flat: string;
+  flat?: string;
 }
 
 export interface IUserProfile {

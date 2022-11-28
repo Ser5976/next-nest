@@ -9,7 +9,10 @@ import { toast } from 'react-toastify';
 import { Input } from '../../../../../../ui/Input/Input';
 import { RiErrorWarningLine } from 'react-icons/ri';
 
-const FormPersonal: FC<FormPersonalProps> = ({ setShow }): JSX.Element => {
+const FormPersonal: FC<FormPersonalProps> = ({
+  setShow,
+  personalData,
+}): JSX.Element => {
   const {
     handleSubmit,
     register,
@@ -47,6 +50,7 @@ const FormPersonal: FC<FormPersonalProps> = ({ setShow }): JSX.Element => {
         <Input
           type="text"
           className={styles.input}
+          defaultValue={personalData?.name}
           autoFocus
           scale="small"
           {...register('name', {
@@ -63,6 +67,7 @@ const FormPersonal: FC<FormPersonalProps> = ({ setShow }): JSX.Element => {
               className=" text-gray-400"
               type="radio"
               value="Мужской"
+              checked={personalData?.gender === 'Мужской'}
               {...register('gender', {
                 required: 'Выберите пол',
               })}
@@ -73,6 +78,7 @@ const FormPersonal: FC<FormPersonalProps> = ({ setShow }): JSX.Element => {
             <input
               type="radio"
               value="Женский"
+              checked={personalData?.gender === 'Женский'}
               {...register('gender', {
                 required: 'Выберите пол',
               })}
@@ -94,6 +100,7 @@ const FormPersonal: FC<FormPersonalProps> = ({ setShow }): JSX.Element => {
         <Input
           type="date"
           className={styles.input}
+          defaultValue={personalData?.birthday}
           scale="small"
           {...register('birthday', {
             required: 'Обязательное поле для заполнения',

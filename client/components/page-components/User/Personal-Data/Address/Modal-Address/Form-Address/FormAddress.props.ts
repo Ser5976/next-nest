@@ -1,13 +1,13 @@
+import { IAddress } from './../../../../../../../store/user/interface.user';
 import {
   DetailedHTMLProps,
   HTMLAttributes,
   Dispatch,
   SetStateAction,
 } from 'react';
-import { IPersonalData } from '../../../../../../../store/user/interface.user';
 
-export interface FormPersonalProps
+export interface FormAddressProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   setShow: Dispatch<SetStateAction<boolean>>;
-  personalData: IPersonalData | undefined;
+  address: IAddress | undefined;
 }

@@ -38,7 +38,11 @@ const Personal: FC<PersonalProps> = ({ personalData }): JSX.Element => {
         </div>
         <VscEdit className={styles.icon2} onClick={() => setShow(true)} />
       </div>
-      <ModalPersonal show={show} setShow={setShow} />
+      <ModalPersonal
+        show={show}
+        setShow={setShow}
+        personalData={personalData}
+      />
     </>
   );
 };

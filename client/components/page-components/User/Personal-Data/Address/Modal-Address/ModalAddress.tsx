@@ -1,13 +1,13 @@
-import styles from './ModalPersonal.module.css';
+import styles from './ModalAddress.module.css';
 import { FC } from 'react';
-import { ModalPersonalProps } from './ModalPersonal.props';
+import { ModalAddressProps } from './ModalAddress.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import FormPersonal from './Form-Personal/FormPersonal';
+import FormPersonal from './Form-Address/FormAddress';
 
-const ModalPersonal: FC<ModalPersonalProps> = ({
+const ModalAddress: FC<ModalAddressProps> = ({
   show,
   setShow,
-  personalData,
+  address,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);
@@ -17,15 +17,15 @@ const ModalPersonal: FC<ModalPersonalProps> = ({
   return (
     <div className={styles.container} id="container" onClick={handleOnClose}>
       <div className={styles.form}>
-        <h1 className=" text-lg">Изменение профиля</h1>
+        <h1 className=" text-lg">Изменение адреса</h1>
         <TiDeleteOutline
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <FormPersonal setShow={setShow} personalData={personalData} />
+        <FormPersonal setShow={setShow} address={address} />
       </div>
     </div>
   );
 };
 
-export default ModalPersonal;
+export default ModalAddress;

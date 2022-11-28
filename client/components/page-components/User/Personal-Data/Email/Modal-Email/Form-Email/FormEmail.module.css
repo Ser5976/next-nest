@@ -9,6 +9,5 @@
 }
 
 .button {
-  @apply block w-32 py-3  bg-blue-500  text-center  text-white  font-bold text-sm  hover:bg-blue-600 rounded-sm  cursor-pointer mx-auto  my-7;
+  @apply block w-32 py-3  bg-blue-500  text-center  text-white  font-bold text-sm  hover:bg-blue-600 rounded-sm  cursor-pointer mx-auto;
 }
-

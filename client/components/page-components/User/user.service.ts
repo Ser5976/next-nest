@@ -1,4 +1,8 @@
-import { IPersonalData, IPhone } from './../../../store/user/interface.user';
+import {
+  IPersonalData,
+  IPhone,
+  IAddress,
+} from './../../../store/user/interface.user';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 
@@ -9,7 +13,7 @@ export interface IEditReview {
 }
 
 export const UserService = {
-  // редактирование отзыва юзером,используем кастомный axios(в него уже введён токен), 
+  // редактирование отзыва юзером,используем кастомный axios(в него уже введён токен),
   //а удаление отзыва сервис в ProductService removeReview
   async editReview(data: IEditReview) {
     console.log(' редактирование отзыва');
@@ -36,5 +40,10 @@ export const UserService = {
   async editPassword(data: { currentPassword: string; password: string }) {
     console.log(' редактирование password');
     await customAxios.put(API.password, data);
+  },
+  // редактирование адреса юзера
+  async editAddress(data: IAddress) {
+    console.log(' редактирование адреса');
+    await customAxios.put(API.address, data);
   },
 };

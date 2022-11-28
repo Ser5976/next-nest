@@ -3,5 +3,5 @@ export class UpdateAddressDto {
   city: string;
   street: string;
   house: string;
-  flat: string;
+  flat?: string;
 }

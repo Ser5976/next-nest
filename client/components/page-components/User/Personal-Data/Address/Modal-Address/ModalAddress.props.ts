@@ -4,11 +4,11 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react';
-import { IPersonalData } from '../../../../../../store/user/interface.user';
+import { IAddress } from '../../../../../../store/user/interface.user';
 
-export interface ModalPersonalProps
+export interface ModalAddressProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  personalData: IPersonalData | undefined;
+  address: IAddress | undefined;
 }

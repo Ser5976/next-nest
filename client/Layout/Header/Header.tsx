@@ -4,32 +4,38 @@ import styles from './Header.module.css';
 import { HeaderProps } from './Header.props';
 import { CatalogMenu } from './CatalogMenu/CatalogMenu';
 import { AccountMenu } from './AccountMenu/AccountMenu';
-import { BsCart } from 'react-icons/bs';
 import { useData } from '../../store/useData';
 import { SearchInput } from './SearchInput/SearchInput';
 import { useQuery } from 'react-query';
 import { HeaderService } from '../../header-service/header.service'; //сервис для запросов
 import { useActions } from '../../store/useActions';
+import { CartLink } from './Cart-Link/CartLink';
+import dynamic from 'next/dynamic';
+import { FC } from 'react';
 
-export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
-  const count = 5;
+/* const DynamicCartLink = dynamic(() => import('./Cart-Link/CartLink'), {
+  ssr: false,
+});
+ */
+export const Header: FC<HeaderProps> = ({ className, ...props }) => {
   //получаем экшены из редюсера при помощи кастомного хука useActions();
   const { getUser, getError } = useActions();
   //получаем данные  из редюссоров при помощи кастомного хука useData();
-  const { forCustomersReducer, productTypeReducer, authReducer } = useData();
+  const { forCustomersReducer, productTypeReducer, authReducer, userReducer } =
+    useData();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
   //получаем  все данные (из базы) по юзеру и записываем их в стор(редакс)
-  const { data: userProfile } = useQuery(
+  const { data: dataUser } = useQuery(
     'user-profile',
     () => HeaderService.getUserProfile(),
     {
-      onSuccess: (userProfile) => {
-        console.log('success работает:', userProfile);
+      onSuccess: (dataUser) => {
+        // console.log('success работает:', dataUser);
         // передаём данные в стор
         getError(false);
-        getUser(userProfile);
+        getUser(dataUser);
       },
       onError: () => {
         getError(true);
@@ -37,7 +43,7 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
       enabled: !!authReducer.user, //делает запрос только при авторизованности
     }
   );
-  // console.log('User',userProfile)
+  // console.log('User', userProfile);
 
   return (
     <>
@@ -60,13 +66,8 @@ export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
           </Link>
           <CatalogMenu />
           <SearchInput />
-          <AccountMenu userProfile={userProfile} />
-
-          <button className={styles.cart}>
-            Корзина
-            <BsCart className={styles.cartIcon} />
-            {count >= 1 ? <span className={styles.bage}>{count}</span> : null}
-          </button>
+          <AccountMenu userProfile={userReducer.userProfile} />
+          <CartLink />
         </div>
         <div className="   bg-gradient-to-l from-lime-400 via-amber-400 to-red-400">
           <ul className=" flex   justify-center text-white text-base items-center ">

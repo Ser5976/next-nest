@@ -37,7 +37,8 @@ let CartService = class CartService {
                 throw new common_1.NotFoundException('товар не добавлен');
         }
         else {
-            const newProduct = await this.CartModel.create(Object.assign(Object.assign({}, dto), { userId }));
+            const newProduct = await this.CartModel.create(dto.oldPrice
+                ? Object.assign(Object.assign({}, dto), { userId, totalPrice: dto.price, totalOldPrice: dto.oldPrice }) : Object.assign(Object.assign({}, dto), { userId, totalPrice: dto.price }));
             if (!newProduct)
                 throw new common_1.NotFoundException('товар не добавлен');
             const user = await this.UserModel.findById(userId).exec();

@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import React from 'react';
 import ReviewsPage from '../../components/page-components/User/Reviews/ReviewsPage';
-import ViewedPage from '../../components/page-components/User/Viewed/ViewedPage';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
@@ -19,6 +18,7 @@ const Reviews = () => {
     </Layout>
   );
 };
+Reviews.isOnlyUser = true; //только для авторизованных
 
 // подключаем редакс к getStaticProps при помощи wrapper
 export const getStaticProps: GetStaticProps<ErrorProps> =

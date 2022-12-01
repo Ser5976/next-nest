@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import React from 'react';
+import Admin from '../../components/page-components/Admin/Admin';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { NextPageAuth } from '../../providers/auth/auth.types';
@@ -14,7 +15,7 @@ import { IType } from '../../store/type-product/interface.typeProduct';
 const AdminPage: NextPageAuth = () => {
   return (
     <Layout title="Адин панель">
-      <div>AdminPage</div>
+      <Admin />
     </Layout>
   );
 };

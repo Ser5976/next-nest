@@ -30,4 +30,6 @@ export const API = {
   phone: process.env.NEXT_PUBLIC_DOMAIN + '/api/personal-data/phone',
   email: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/email',
   password: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/password',
+  cart: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart',
+  reduceQuantities: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart/reduce',
 };

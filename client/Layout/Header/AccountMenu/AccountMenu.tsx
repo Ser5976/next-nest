@@ -27,7 +27,7 @@ export const AccountMenu = ({
   //получаем данные  из редюссоров при помощи кастомного хука useData();
   const { authReducer } = useData();
   //получаем экшены из редюсера при помощи кастомного хука useActions();
-  const { logout } = useActions();
+  const { logout, clearUser } = useActions();
   const router = useRouter();
 
   //костыль,чтобы обойти ошибку гидрации,другой способ -это динамический импорт
@@ -38,18 +38,19 @@ export const AccountMenu = ({
     setUser(authReducer.user);
   }, [authReducer.user]);
   // переменные количества
-  const countReviews = userProfile?.reviews.length
+  const countReviews = userProfile?.reviews?.length
     ? userProfile.reviews.length
     : 0;
-  const countFavourites = userProfile?.favorites.length
+  const countFavourites = userProfile?.favorites?.length
     ? userProfile.favorites.length
     : 0;
-  const countViewed = userProfile?.viewed.length
+  const countViewed = userProfile?.viewed?.length
     ? userProfile.viewed.length
     : 0;
   // удаления данных авторизации
   const handleLogout = () => {
     router.push('/');
+    clearUser();
     logout();
   };
   return (
@@ -125,7 +126,7 @@ export const AccountMenu = ({
                 </a>
               </Link>
               {user.isAdmin ? (
-                <Link href="#">
+                <Link href="/admin">
                   <a className={styles.link}>
                     <MdOutlineAdminPanelSettings className={styles.icons3} />
                     Админ панель

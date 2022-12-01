@@ -18,7 +18,11 @@ export const userSlice = createSlice({
       console.log('работает редюсер:', action);
       state.userProfile = action.payload;
     },
+    // нужен для очистки стейта userProfile, когда выходим из аккаунта
+    clearUser: (state) => {
+      state.userProfile = {} as IUserProfile;
+    },
   },
 });
-export const { getUser, getError } = userSlice.actions;
+export const { getUser, getError, clearUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -21,18 +21,14 @@ const CheckRole: FC<TypeComponentAuthFields> = ({
   //второе условие,если первое условие не сработало,значит не админ
   //если страница мечена isOnlyAdmin ,значит её показывать нельзя,редеректим на страницу ошибки
   if (isOnlyAdmin) {
-    router.pathname !== '/404' && router.replace('/404');
+    router.pathname !== '/404' && router.replace('/');
     return null;
   }
   // если пользователь авторизован  то сможет смотреть страницы isOnlyUser,
   //если не аторизован, страницы с isOnlyUser редиректим на страницу auth
   if (isOnlyUser && user && !user.isAdmin) return <>{children}</>;
   else {
-    router.pathname !== '/auth' &&
-      router.replace(`/auth?redirect=${router.asPath}`); //так мы записываем путь той страницы с которой нас
-    //редиректнули на авторизацию, он запишится в объект query(в router ),
-    //а потом на странице авторизации возмём и за пушим туда
-    //откуда редиректнули(при помощи кастомного хука useAuthRedirect  )
+    router.pathname !== '/auth' && router.replace('/');
     return null;
   }
 };

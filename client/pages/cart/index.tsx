@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { GetStaticProps } from 'next';
 import React from 'react';
-import { API } from '../../constants/url';
+import Cart from '../../components/page-components/Cart/Cart';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { NextPageAuth } from '../../providers/auth/auth.types';
@@ -13,14 +12,14 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
-const ProfilePage: NextPageAuth = () => {
+const CartPage: NextPageAuth = () => {
   return (
-    <Layout title="Профиль">
-      <div>ProfilePage</div>
+    <Layout title="Корзина">
+      <Cart />
     </Layout>
   );
 };
-ProfilePage.isOnlyUser = true; //только для авторизованных
+CartPage.isOnlyUser = true; //только для авторизованных
 
 // подключаем редакс к getStaticProps при помощи wrapper
 export const getStaticProps: GetStaticProps<ProfileProps> =
@@ -50,4 +49,4 @@ interface ProfileProps {
   productType: IType[];
 }
 
-export default ProfilePage;
+export default CartPage;

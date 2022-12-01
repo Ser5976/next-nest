@@ -21,10 +21,9 @@ const Menu: FC<MenuProps> = ({
   const { authReducer, userReducer } = useData();
   const { userProfile } = userReducer;
   const { user } = authReducer;
-  //получаем экшены из редюсера при помощи кастомного хука useActions();
-  const { logout } = useActions();
+  //получаем экшены(логаут и очистка стейта юзера) из редюсера при помощи кастомного хука useActions();
+  const { logout, clearUser } = useActions();
   const router = useRouter();
-  const count = 5;
   // переменные количества для бэйджа
   const countReviews = userProfile?.reviews?.length
     ? userProfile.reviews.length
@@ -39,15 +38,30 @@ const Menu: FC<MenuProps> = ({
   // удаления данных авторизации
   const handleLogout = () => {
     router.push('/');
+    clearUser();
     logout();
   };
   return (
     <div className={styles.container}>
-      <Link href="#">
-        <a className={styles.link}>
-          <BsCart className={styles.icons} />
-          {countFavourites >= 1 ? (
-            <span className={styles.bage}>{count}</span>
+      <Link href="/cart">
+        <a
+          className={cn(styles.link, {
+            [styles.activeLink]: activeMenu === 'cart',
+          })}
+        >
+          <BsCart
+            className={cn(styles.icons, {
+              [styles.activeIcons]: activeMenu === 'cart',
+            })}
+          />
+          {userProfile?.cart?.length ? (
+            <span
+              className={cn(styles.bage, {
+                [styles.activeBage]: activeMenu === 'cart',
+              })}
+            >
+              {userProfile?.cart.length}
+            </span>
           ) : null}
           Корзина
         </a>
@@ -139,9 +153,17 @@ const Menu: FC<MenuProps> = ({
           </a>
         </Link>
         {user?.isAdmin ? (
-          <Link href="#">
-            <a className={styles.link}>
-              <MdOutlineAdminPanelSettings className={styles.icons} />
+          <Link href="/admin">
+            <a
+              className={cn(styles.link, {
+                [styles.activeLink]: activeMenu === 'admin-panel',
+              })}
+            >
+              <MdOutlineAdminPanelSettings
+                className={cn(styles.icons, {
+                  [styles.activeIcons]: activeMenu === 'admin-panel',
+                })}
+              />
               Админ панель
             </a>
           </Link>

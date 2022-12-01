@@ -12,11 +12,15 @@ import { useData } from '../../../store/useData';
 import Favourites from './Favourites/Favourites';
 import { useMutation, useQueryClient } from 'react-query';
 import { ProductService } from './product.service'; //сервис для запросов
+import { useRouter } from 'next/router';
+import { CartService, IAddCart } from '../Cart/cart.service';
+import { toast } from 'react-toastify';
 
 const ProductPage: FC<ProductPageProps> = ({
   product,
   productType,
 }): JSX.Element => {
+  const router = useRouter();
   const { authReducer } = useData();
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
   const queryClient = useQueryClient();
@@ -37,8 +41,36 @@ const ProductPage: FC<ProductPageProps> = ({
   const [index, setIndex] = useState(0);
   //определяем имя типа товара для навигации
   const typeName = productType?.find((el) => el._id === product.typeId);
-  // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
 
+  // ---- для добавление товара в корзину
+
+  //создаём объект товара для добавления в корзину
+  const productData: IAddCart = {
+    name: product.name,
+    price: product.price,
+    picture: product.files[0],
+    oldPrice: product.oldPrice,
+    productId: product._id,
+  };
+
+  // добавляем товар в корзину
+  const { mutate: addProduct } = useMutation(CartService.addCart, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user-profile');
+      toast.success('Товар добавлен в корзину');
+    },
+    onError: (error: any) => {
+      toast.error('Товар не добавлен,что-то пошло не так');
+    },
+  });
+  const addProductCart = () => {
+    if (authReducer.user) {
+      addProduct(productData);
+    } else {
+      router.replace(`/auth?redirect=${router.asPath}`);
+    }
+  };
+  //----------------------------------------------------------------
   return (
     <div className={styles.container}>
       <div className={styles.breadcrumbs}>
@@ -101,7 +133,9 @@ const ProductPage: FC<ProductPageProps> = ({
               <div className={styles.oldPrice}>{product.oldPrice} p.</div>
             )}
             <div className={styles.price}>{product.price} p.</div>
-            <Button className={styles.cart}>В корзину</Button>
+            <Button className={styles.cart} onClick={addProductCart}>
+              В корзину
+            </Button>
           </div>
         </div>
       </div>

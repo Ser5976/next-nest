@@ -22,8 +22,10 @@ const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
     if (authReducer.user) {
       setOpenForm(true);
     } else {
-      router.replace(`/auth?redirect=${router.asPath}`); // вписываем в путь квэри парметрт,чтобы редеректнуть обратно
-      //(в auth специально сделали хук для этого)
+      router.replace(`/auth?redirect=${router.asPath}`); //так мы записываем путь той страницы с которой нас
+      //редиректнули на авторизацию, он запишится в объект query(в router ),
+      //а потом на странице авторизации возмём и за пушим туда
+      //откуда редиректнули(при помощи кастомного хука useAuthRedirect  )
     }
   };
   // при помощи useQuery получаю отзывы о товаре

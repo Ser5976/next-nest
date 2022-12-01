@@ -27,7 +27,21 @@ export class CartService {
       }).exec();
       if (!updateProduct) throw new NotFoundException('товар не добавлен');
     } else {
-      const newProduct = await this.CartModel.create({ ...dto, userId });
+      const newProduct = await this.CartModel.create(
+        // маленькая проверочка если есть oldPrice то добавлеем в объект totalOldPrice(старуя цена)
+        dto.oldPrice
+          ? {
+              ...dto,
+              userId,
+              totalPrice: dto.price,
+              totalOldPrice: dto.oldPrice,
+            }
+          : {
+              ...dto,
+              userId,
+              totalPrice: dto.price,
+            },
+      );
       // console.log('product:', newProduct);
       if (!newProduct) throw new NotFoundException('товар не добавлен');
       // добавляем id документа  юзеру

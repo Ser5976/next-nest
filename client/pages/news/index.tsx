@@ -2,7 +2,6 @@ import { GetStaticProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { HomeServise } from '../../components/page-components/Home/home.service';
 import { INews } from '../../components/page-components/News-List/NewsList.props';
-import { API } from '../../constants/url';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';

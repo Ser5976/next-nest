@@ -18,6 +18,7 @@ const Favourites = () => {
     </Layout>
   );
 };
+Favourites.isOnlyUser = true; //только для авторизованных
 
 // подключаем редакс к getStaticProps при помощи wrapper
 export const getStaticProps: GetStaticProps<ErrorProps> =

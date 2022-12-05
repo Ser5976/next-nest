@@ -89,7 +89,6 @@ const StoreReviewsList: FC<StoreReviewsListProps> = ({}): JSX.Element => {
           <div>
             {!openForm && (
               <Button
-                apperance="small"
                 className=" text-xs my-5 rounded-sm block mx-auto"
                 onClick={openingForm}
               >

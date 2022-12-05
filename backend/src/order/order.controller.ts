@@ -9,6 +9,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
+import { User } from 'src/user/decorators/user.decorator';
 
 @Controller('order')
 export class OrderController {
@@ -16,8 +17,9 @@ export class OrderController {
   //создание заказа
   @UsePipes(new ValidationPipe())
   @Post()
-  async createOrder(@Body() dto: OrderDto) {
-    return this.OrderService.createOrder(dto);
+  @Auth()
+  async createOrder(@User('_id') _id: string, @Body() dto: OrderDto) {
+    return this.OrderService.createOrder(dto, _id);
   }
   //получение заказов
   @Get()

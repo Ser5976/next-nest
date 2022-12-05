@@ -1,0 +1,58 @@
+.form {
+  @apply flex-col;
+}
+.wrapper {
+  @apply flex my-5;
+}
+.part {
+  @apply px-5 w-1/2;
+}
+.label {
+  @apply mb-2 text-gray-400;
+}
+.input {
+  @apply mb-5;
+}
+
+.button {
+  @apply block  bg-blue-500   text-white  font-semibold 
+  px-5 py-2 hover:bg-blue-600 text-xs cursor-pointer rounded-sm;
+}
+.errorMessage {
+  @apply absolute bottom-[-20px] left-0 text-gray-600 text-xs;
+}
+.errorIcon {
+  @apply absolute bottom-[-20px] left-[-20px] fill-red-400 w-4 h-4;
+}
+
+.phone {
+  @apply py-2 px-2  rounded-sm  border  text-gray-600
+	outline-none focus:border-b-2 focus:border-b-blue-500 placeholder-gray-400  transition duration-200 w-full bg-white mt-2;
+}
+.phoneError {
+  @apply border-b-2 border-b-red-400;
+}
+.containerPone {
+  @apply text-gray-400;
+}
+.errorMessagePhone {
+  @apply absolute top-[61px] left-[20px] text-gray-600 text-xs;
+}
+.errorIconPhone {
+  @apply absolute top-[61px] left-0 fill-red-400 w-4 h-4;
+}
+.errorMessageRadio {
+  @apply absolute bottom-[-20px] left-0 text-gray-600 text-xs;
+}
+.errorIconRadio {
+  @apply absolute bottom-[-20px] left-[-20px] fill-red-400 w-4 h-4;
+}
+.errorMessageAddress {
+  @apply absolute bottom-0 left-[20px] text-gray-600 text-xs;
+}
+.errorIconAddress {
+  @apply absolute bottom-0 left-0 fill-red-400 w-4 h-4;
+}
+.errorHouse input {
+  @apply border-b-red-400 border-b-2 focus:border-b-red-400;
+}

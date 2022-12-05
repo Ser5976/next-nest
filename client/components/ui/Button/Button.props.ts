@@ -6,5 +6,4 @@ export interface ButtonProps
     HTMLButtonElement
   > {
   children: ReactNode;
-  apperance?: 'small';
 }

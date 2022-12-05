@@ -2,7 +2,7 @@
   @apply w-1/3 p-3;
 }
 .button {
-  @apply ml-[125px] py-2 w-[150px] text-center text-white  text-sm mt-10;
+  @apply ml-[125px] py-2 w-[150px] text-center text-white  text-sm mt-10 rounded-sm;
 }
 .buttonActive {
   @apply bg-blue-500 hover:bg-blue-600 cursor-pointer;

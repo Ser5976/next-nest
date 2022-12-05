@@ -3,5 +3,7 @@ import { ICart } from '../cart.service';
 
 export interface ProductCartProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  product: ICart;
+  productCart: ICart;
+  addOrder: (cartId: string) => void;
+  deleteOrder: (cartId: string) => void;
 }

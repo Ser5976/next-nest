@@ -1,7 +1,4 @@
 .button {
   @apply bg-blue-500   text-white  font-semibold 
-    text-base px-5 py-2 hover:bg-blue-600;
-}
-.small {
-  @apply bg-blue-500   text-white text-sm font-semibold;
+     px-5 py-2 hover:bg-blue-600 text-sm;
 }

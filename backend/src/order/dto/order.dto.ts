@@ -1,4 +1,4 @@
-import { IsObject, IsString } from 'class-validator';
+import { IsArray, IsObject, IsString } from 'class-validator';
 
 class Address {
   @IsString()
@@ -7,14 +7,12 @@ class Address {
   street: string;
   @IsString()
   house: string;
-  @IsString()
-  flat: string;
+  flat?: string;
 }
 
 export class OrderDto {
-  @IsString()
-  product: string;
-  user?: string;
+  @IsArray()
+  productCart: string[];
   @IsString()
   name: string;
   @IsString()
@@ -27,4 +25,5 @@ export class OrderDto {
   payment: string;
   @IsString()
   telephone: string;
+  orderAmount: number;
 }

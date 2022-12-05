@@ -20,14 +20,14 @@ let OrderService = class OrderService {
     constructor(OrderModel) {
         this.OrderModel = OrderModel;
     }
-    async createOrder(dto) {
-        const order = await this.OrderModel.create(dto);
+    async createOrder(dto, _id) {
+        const order = await this.OrderModel.create(Object.assign(Object.assign({}, dto), { user: _id }));
         if (!order)
             throw new common_1.NotFoundException('Заказ не создан');
         return order;
     }
     async getOrder() {
-        const order = await this.OrderModel.find().populate('product user');
+        const order = await this.OrderModel.find().populate('productCart user');
         if (!order)
             throw new common_1.NotFoundException('Заказы не получены');
         return order;

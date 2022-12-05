@@ -1,10 +1,8 @@
-import { IUser } from './../../../../store/auth/interface.auth';
-import { IUserProfile } from './../../../../store/user/interface.user';
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 export interface MenuProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  activeMenu:
+  activeMenu?:
     | 'favourites'
     | 'reviews'
     | 'viewed'

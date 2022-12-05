@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 export interface LayoutUserProps {
   children: ReactNode;
-  activeMenu:
+  activeMenu?:
     | 'favourites'
     | 'reviews'
     | 'viewed'

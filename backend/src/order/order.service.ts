@@ -10,14 +10,14 @@ export class OrderService {
     @InjectModel(OrderModel) private readonly OrderModel: ModelType<OrderModel>,
   ) {}
   //создание заказа
-  async createOrder(dto: OrderDto) {
-    const order = await this.OrderModel.create(dto);
+  async createOrder(dto: OrderDto, _id: string) {
+    const order = await this.OrderModel.create({ ...dto, user: _id });
     if (!order) throw new NotFoundException('Заказ не создан');
     return order;
   }
   // получение заказов
   async getOrder() {
-    const order = await this.OrderModel.find().populate('product user');
+    const order = await this.OrderModel.find().populate('productCart user');
     if (!order) throw new NotFoundException('Заказы не получены');
     return order;
   }

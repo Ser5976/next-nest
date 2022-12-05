@@ -1,5 +1,5 @@
-import { ProductModel } from 'src/product/product.model';
-import { UserModel } from './../user/user.model';
+import { CartModel } from '../cart/cart.model';
+import { UserModel } from '../user/user.model';
 import { prop, Ref } from '@typegoose/typegoose';
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
@@ -10,15 +10,15 @@ class Address {
   street: string;
   @prop({ required: true })
   house: string;
-  @prop({ required: true })
+  @prop()
   flat: string;
 }
 
 export interface OrderModel extends Base {}
 
 export class OrderModel extends TimeStamps {
-  @prop({ ref: () => ProductModel })
-  product: Ref<ProductModel>;
+  @prop({ ref: () => CartModel, required: true })
+  productCart: Ref<CartModel>[];
   @prop({ ref: () => UserModel })
   user: Ref<UserModel>;
   @prop({ required: true })
@@ -31,6 +31,8 @@ export class OrderModel extends TimeStamps {
   delivery: string;
   @prop({ required: true })
   payment: string;
-  @prop()
+  @prop({ required: true })
   telephone: string;
+  @prop({ required: true })
+  orderAmount: number;
 }

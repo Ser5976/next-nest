@@ -1,16 +1,22 @@
 import styles from './Cart.module.css';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { CartProps } from './Cart.props';
 import { LayoutUser } from '../User/LayoutUser';
 import { useQuery } from 'react-query';
 import { CartService } from './cart.service';
 import { Button } from '../../ui/Button/Button';
 import ProductCart from './Product-Cart/ProductCart';
+import cn from 'classnames';
+import ModalOrder from '../Order/ModalOrder';
 
 const Cart: FC<CartProps> = ({}): JSX.Element => {
+  //открытие модального окна для оформление заказа
+  const [show, setShow] = useState(false);
+  //стейт для выбранного заказа
+  const [order, setOrder] = useState<string[]>([]);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
-  //получаем  все данные (из базы) по юзеру и записываем их в стор(редакс)
+  //получаем  все данные (из базы) по корзине
   const {
     data: basketData,
     isLoading,
@@ -18,6 +24,16 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
   } = useQuery('cart', () => CartService.getCart());
   console.log(basketData);
 
+  //добавляем выбранный товар из корзины в заказ
+  const addOrder = (productCartId: string) => {
+    setOrder([...order, productCartId]); //добавляем товар из корзины(только _id корзины) в  стейт заказа
+  };
+  //удаляем выбранный товар  из заказа
+  const deleteOrder = (productCartId: string) => {
+    const newOrder = order.filter((item) => item !== productCartId);
+    setOrder(newOrder);
+  };
+  console.log(order);
   return (
     <LayoutUser activeMenu="cart">
       <h1 className={styles.h1}>Корзина</h1>
@@ -26,6 +42,7 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
           <div className={styles.product}>Товар</div>
           <div className={styles.quantiti}>Количество</div>
           <div className={styles.price}>Стоимость</div>
+          <div className={styles.order}>Заказать</div>
         </div>
         <ul>
           {isError ? (
@@ -36,8 +53,15 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
             <h3 className={styles.h3}>Товаров в корзине нет!</h3>
           ) : (
             <div>
-              {basketData?.cart.map((product) => {
-                return <ProductCart key={product._id} product={product} />;
+              {basketData?.cart.map((productCart) => {
+                return (
+                  <ProductCart
+                    key={productCart._id}
+                    productCart={productCart}
+                    addOrder={addOrder}
+                    deleteOrder={deleteOrder}
+                  />
+                );
               })}
             </div>
           )}
@@ -46,11 +70,23 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
           Общая стоимость: <span>{basketData?.totalPriceProduct} р.</span>
         </div>
         <div className={styles.wrapperButton}>
-          <Button apperance="small" className={styles.button}>
+          <button
+            className={cn(styles.button, {
+              [styles.disabledButton]: order.length === 0,
+            })}
+            disabled={order.length === 0}
+            onClick={() => setShow(true)}
+          >
             Оформить заказ
-          </Button>
+          </button>
         </div>
       </div>
+      <ModalOrder
+        order={order}
+        totalPriceProduct={basketData?.totalPriceProduct}
+        setShow={setShow}
+        show={show}
+      />
     </LayoutUser>
   );
 };

@@ -25,16 +25,12 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], Address.prototype, "house", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], Address.prototype, "flat", void 0);
 class OrderDto {
 }
 __decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], OrderDto.prototype, "product", void 0);
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], OrderDto.prototype, "productCart", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

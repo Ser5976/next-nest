@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderModel = void 0;
-const product_model_1 = require("../product/product.model");
-const user_model_1 = require("./../user/user.model");
+const cart_model_1 = require("../cart/cart.model");
+const user_model_1 = require("../user/user.model");
 const typegoose_1 = require("@typegoose/typegoose");
 const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
 class Address {
@@ -29,15 +29,15 @@ __decorate([
     __metadata("design:type", String)
 ], Address.prototype, "house", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ required: true }),
+    (0, typegoose_1.prop)(),
     __metadata("design:type", String)
 ], Address.prototype, "flat", void 0);
 class OrderModel extends defaultClasses_1.TimeStamps {
 }
 __decorate([
-    (0, typegoose_1.prop)({ ref: () => product_model_1.ProductModel }),
-    __metadata("design:type", Object)
-], OrderModel.prototype, "product", void 0);
+    (0, typegoose_1.prop)({ ref: () => cart_model_1.CartModel, required: true }),
+    __metadata("design:type", Array)
+], OrderModel.prototype, "productCart", void 0);
 __decorate([
     (0, typegoose_1.prop)({ ref: () => user_model_1.UserModel }),
     __metadata("design:type", Object)
@@ -63,8 +63,12 @@ __decorate([
     __metadata("design:type", String)
 ], OrderModel.prototype, "payment", void 0);
 __decorate([
-    (0, typegoose_1.prop)(),
+    (0, typegoose_1.prop)({ required: true }),
     __metadata("design:type", String)
 ], OrderModel.prototype, "telephone", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ required: true }),
+    __metadata("design:type", Number)
+], OrderModel.prototype, "orderAmount", void 0);
 exports.OrderModel = OrderModel;
 //# sourceMappingURL=order.model.js.map

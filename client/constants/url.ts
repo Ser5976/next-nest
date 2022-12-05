@@ -32,4 +32,5 @@ export const API = {
   password: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/password',
   cart: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart',
   reduceQuantities: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart/reduce',
+  order: process.env.NEXT_PUBLIC_DOMAIN + '/api/order',
 };

@@ -45,7 +45,7 @@
   @apply text-3xl text-gray-600;
 }
 .cart {
-  @apply h-10 my-5 rounded-sm;
+  @apply my-5 rounded-sm;
 }
 .summary {
   @apply border-b flex mt-10;

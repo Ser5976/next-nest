@@ -17,12 +17,13 @@ const order_dto_1 = require("./dto/order.dto");
 const order_service_1 = require("./order.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
+const user_decorator_1 = require("../user/decorators/user.decorator");
 let OrderController = class OrderController {
     constructor(OrderService) {
         this.OrderService = OrderService;
     }
-    async createOrder(dto) {
-        return this.OrderService.createOrder(dto);
+    async createOrder(_id, dto) {
+        return this.OrderService.createOrder(dto, _id);
     }
     async getOrder() {
         return this.OrderService.getOrder();
@@ -31,9 +32,11 @@ let OrderController = class OrderController {
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    (0, auth_decorators_1.Auth)(),
+    __param(0, (0, user_decorator_1.User)('_id')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [order_dto_1.OrderDto]),
+    __metadata("design:paramtypes", [String, order_dto_1.OrderDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "createOrder", null);
 __decorate([

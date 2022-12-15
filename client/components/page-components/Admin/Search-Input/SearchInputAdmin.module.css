@@ -1,0 +1,11 @@
+.search {
+  @apply relative w-[200px];
+}
+.input {
+  @apply bg-white border border-gray-400  text-gray-900 text-xs  
+  w-full px-[10px] py-[4px] outline-none
+  placeholder-gray-400 placeholder:text-xs shadow-sm hover:bg-white rounded-sm;
+}
+.icons {
+  @apply absolute top-[7px] right-[5px]  fill-gray-600;
+}

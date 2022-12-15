@@ -55,23 +55,22 @@ let UserService = class UserService {
         await user.save();
         return { message: 'Изменение прошло успешно' };
     }
-    async getAllUsers(searchUser) {
-        let options = {};
-        if (searchUser) {
-            options = {
-                $or: [{ email: new RegExp(searchUser, 'i') }],
-            };
-        }
-        const users = await this.UserModel.find(options)
-            .select('-password -__v')
+    async findUser(dto) {
+        console.log(dto);
+        const user = await this.UserModel.find({
+            $or: [{ email: new RegExp(dto.email, 'i') }],
+        }).select('-password -favorites -viewed -cart -purchaseHistory -reviews');
+        return user;
+    }
+    async getAllUsers() {
+        const users = await this.UserModel.find()
+            .select('-password -__v -favorites -viewed -cart -purchaseHistory -reviews')
             .sort({ createdAt: 'desc' })
             .exec();
-        if (users)
-            return users;
-        throw new common_1.NotFoundException('Пользователи не получены');
-    }
-    async quantityUsers() {
-        return this.UserModel.find().count().exec();
+        if (!users)
+            throw new common_1.NotFoundException('Пользователи не получены');
+        const quantity = await this.UserModel.find().count().exec();
+        return { users, quantity };
     }
     async deleteUsers(id) {
         const deleteUser = await this.UserModel.findByIdAndDelete(id).exec();

@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { UpdatePasswordDto } from './dto/update.password.dto';
+import { SearchDto } from './dto/search.dto';
 
 @Injectable()
 export class UserService {
@@ -61,29 +62,31 @@ export class UserService {
   }
 
   //----------для админки----------------------------
-  // получение всех пользователей
-  async getAllUsers(searchUser?: string): Promise<DocumentType<UserModel>[]> {
-    let options = {};
-    if (searchUser) {
-      options = {
-        $or: [{ email: new RegExp(searchUser, 'i') }],
-      };
-    }
-    // получаем, если нету конкретного поиска по email, всех пользователей,выбираем чтобы обозначенные поля не попали в объект
-    //и делаем сортировку по дате создания(последние созданные будут сверху)
-    //если есть searchUser,то выберем конкретногопользователя
-    const users = await this.UserModel.find(options)
-      .select('-password -__v') //так мы исключаем ненужные поля
-      .sort({ createdAt: 'desc' })
-      .exec();
-    if (users) return users;
-    throw new NotFoundException('Пользователи не получены');
+  // поиск  пользователя по по email
+  async findUser(dto: SearchDto): Promise<DocumentType<UserModel>[]> {
+    console.log(dto);
+    const user = await this.UserModel.find({
+      $or: [{ email: new RegExp(dto.email, 'i') }],
+    }).select('-password -favorites -viewed -cart -purchaseHistory -reviews');
+    return user;
   }
 
-  // получение количества пользователей
-  async quantityUsers() {
-    return this.UserModel.find().count().exec();
+  // получаем  всех пользователей,выбираем чтобы обозначенные поля не попали в объект
+  //и делаем сортировку по дате создания(последние созданные будут сверху)
+  //если есть searchUser,то выберем конкретногопользователя
+  async getAllUsers() {
+    const users = await this.UserModel.find()
+      .select(
+        '-password -__v -favorites -viewed -cart -purchaseHistory -reviews',
+      ) //так мы исключаем ненужные поля
+      .sort({ createdAt: 'desc' })
+      .exec();
+    if (!users) throw new NotFoundException('Пользователи не получены');
+    // получаем количество пользователей
+    const quantity = await this.UserModel.find().count().exec();
+    return { users, quantity };
   }
+
   // удаление пользователя
   async deleteUsers(id: string) {
     const deleteUser = await this.UserModel.findByIdAndDelete(id).exec();

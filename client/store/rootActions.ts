@@ -1,10 +1,13 @@
 // импортируем все экшены
 import * as authActions from './auth/authActoins';
 import { getUser, getError, clearUser } from './user/userSlice';
+import { getUsersForAdmin, searchUser } from './admin/adminSlice';
 
 export const allActions = {
   ...authActions,
-  getUser: getUser,
-  getError: getError,
-  clearUser: clearUser,
+  getUser,
+  getError,
+  clearUser,
+  getUsersForAdmin,
+  searchUser,
 };

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
-export interface LayoutUserProps {
+export interface LayoutAdminProps {
   children: ReactNode;
-  activeMenu?: 'favourites' | 'reviews' | 'viewed' | 'cart' | 'personal-data';
+  activeMenu?: 'orders' | 'reviews' | 'product' | 'users';
   //это флаги для отображения активной ссылки в меню
 }

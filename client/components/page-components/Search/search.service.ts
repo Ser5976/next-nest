@@ -6,9 +6,9 @@ import { ParsedUrlQuery } from 'querystring';
 //сервис для запроса на сервак
 
 export const SearchService = {
-  // получение списка отфильтрованных  товаров
+  // поиск  товара
   async getSearch(query: ParsedUrlQuery) {
-    console.log('отправка запроса', query);
+    console.log('поиск товара', query);
     const { data: foundProduct } = await axios.get<IProduct[] | undefined>(
       API.products.search,
       {

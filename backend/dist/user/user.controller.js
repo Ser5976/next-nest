@@ -20,6 +20,7 @@ const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const user_decorator_1 = require("./decorators/user.decorator");
 const user_service_1 = require("./user.service");
+const search_dto_1 = require("./dto/search.dto");
 let UserController = class UserController {
     constructor(UserServies) {
         this.UserServies = UserServies;
@@ -33,14 +34,11 @@ let UserController = class UserController {
     async updatePassoword(_id, updatePasswordDto) {
         return this.UserServies.updatePassoword(_id, updatePasswordDto);
     }
-    async getAllusers(searchUser) {
-        return this.UserServies.getAllUsers(searchUser);
+    async getAllusers() {
+        return this.UserServies.getAllUsers();
     }
-    async getUser(id) {
-        return this.UserServies.byId(id);
-    }
-    async quantityUsers() {
-        return this.UserServies.quantityUsers();
+    async findUser(dto) {
+        return this.UserServies.findUser(dto);
     }
     async deleteUser(id) {
         return this.UserServies.deleteUsers(id);
@@ -79,26 +77,18 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, auth_decorators_1.Auth)('admin'),
-    __param(0, (0, common_1.Query)('searchUser')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "getAllusers", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    (0, auth_decorators_1.Auth)('admin'),
-    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "getUser", null);
-__decorate([
-    (0, common_1.Get)('count'),
-    (0, auth_decorators_1.Auth)('admin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "quantityUsers", null);
+], UserController.prototype, "getAllusers", null);
+__decorate([
+    (0, common_1.Get)('search'),
+    (0, auth_decorators_1.Auth)('admin'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "findUser", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)('admin'),

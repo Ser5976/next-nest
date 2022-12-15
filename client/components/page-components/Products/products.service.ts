@@ -18,7 +18,7 @@ export const ProductsService = {
       return products;
     }
   },
-  // получение списка отфильтрованных  товаров(здесь с try catch, потому что запрос будет через getStaticProps)
+  // получение товара (здесь с try catch, потому что запрос будет через getStaticProps)
   async getProduct(productId: string | string[] | undefined) {
     try {
       const { data: product } = await axios.get<IProduct>(

@@ -8,6 +8,7 @@ import { UserService } from '../../../../user.service';
 import { toast } from 'react-toastify';
 import { Input } from '../../../../../../ui/Input/Input';
 import { RiErrorWarningLine } from 'react-icons/ri';
+import { dateFormattingBirthday } from '../../../../../../../utils/date-formatting';
 
 const FormPersonal: FC<FormPersonalProps> = ({
   setShow,
@@ -39,8 +40,11 @@ const FormPersonal: FC<FormPersonalProps> = ({
 
   // получение данных из формы и отправка на сервак
   const onSubmit = (data: IPersonalData): void => {
-    // console.log(data);
-    editPersonalData(data);
+    //  console.log('дата', data);
+    // форматирование даты рождения
+    const birthdayFormatted = dateFormattingBirthday(data.birthday); //см.utils
+    //  console.log('дата отформатированная', birthdayFormatted);
+    editPersonalData({ ...data, birthday: birthdayFormatted });
     setShow(false);
   };
   return (
@@ -67,7 +71,8 @@ const FormPersonal: FC<FormPersonalProps> = ({
               className=" text-gray-400"
               type="radio"
               value="Мужской"
-              checked={personalData?.gender === 'Мужской'}
+              defaultChecked={personalData?.gender === 'Мужской'}
+              // checked={personalData?.gender === 'Мужской'}
               {...register('gender', {
                 required: 'Выберите пол',
               })}
@@ -78,7 +83,8 @@ const FormPersonal: FC<FormPersonalProps> = ({
             <input
               type="radio"
               value="Женский"
-              checked={personalData?.gender === 'Женский'}
+              defaultChecked={personalData?.gender === 'Женский'}
+              // checked={personalData?.gender === 'Женский'}
               {...register('gender', {
                 required: 'Выберите пол',
               })}

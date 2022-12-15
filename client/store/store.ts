@@ -6,6 +6,7 @@ import forCustomersReducer from './customers/customersSlice';
 import categoryProducReducer from './category-product/catecoryProductSlice';
 import productTypeReducer from './type-product/catecoryProductSlice';
 import userReducer from './user/userSlice';
+import adminReducer from './admin/adminSlice';
 
 const rootReducer = combineReducers({
   authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   categoryProducReducer,
   productTypeReducer,
   userReducer,
+  adminReducer,
 });
 
 export const makeStore = () =>

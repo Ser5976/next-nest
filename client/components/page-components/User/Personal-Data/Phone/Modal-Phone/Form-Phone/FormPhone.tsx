@@ -1,4 +1,5 @@
 import styles from './FormPhone.module.css';
+import cn from 'classnames';
 import { FC } from 'react';
 import { FormPhoneProps } from './FormPhone.props';
 import { Controller, useForm } from 'react-hook-form';
@@ -7,12 +8,9 @@ import { UserService } from '../../../../user.service';
 import { toast } from 'react-toastify';
 import { errorCatch } from '../../../../../../../store/auth/auth.helper';
 import { IPhone } from '../../../../../../../store/user/interface.user';
-import PhoneInput from 'react-phone-input-2';//библиотека для форматирования телефонного номера
+import PhoneInput from 'react-phone-input-2'; //библиотека для форматирования телефонного номера
 import { RiErrorWarningLine } from 'react-icons/ri';
 import { UserHelper } from '../../../../user.helper';
-
-
-
 
 const FormPhone: FC<FormPhoneProps> = ({ setShow }): JSX.Element => {
   const {
@@ -42,10 +40,10 @@ const FormPhone: FC<FormPhoneProps> = ({ setShow }): JSX.Element => {
 
   // получение данных из формы и отправка на сервак
   const onSubmit = (data: IPhone): void => {
-  // форматируем номер телефона,чтобы он записался в базу так как мы вносим
-  //(в оригинали просто строка цифр без + ,скобок и пробелов) см. UserHelper
-   const  formattedPhone= UserHelper.formattedPhone(data.phone)
-   data.phone=formattedPhone
+    // форматируем номер телефона,чтобы он записался в базу так как мы вносим
+    //(в оригинали просто строка цифр без + ,скобок и пробелов) см. UserHelper
+    const formattedPhone = UserHelper.formattedPhone(data.phone);
+    data.phone = formattedPhone;
     editPhone(data);
   };
   return (
@@ -56,28 +54,29 @@ const FormPhone: FC<FormPhoneProps> = ({ setShow }): JSX.Element => {
         rules={{ required: 'Обязательное поле для заполнения' }}
         render={({ field: { ref, ...field } }) => (
           <PhoneInput
-          inputClass={styles.input}
-          containerClass={styles.container}
+            inputClass={cn(styles.input, {
+              [styles.phoneError]: errors.phone,
+            })}
+            containerClass={styles.container}
             {...field}
             inputProps={{
               ref,
               required: true,
-              autoFocus: true
+              autoFocus: true,
             }}
-            country={"by"}
-            onlyCountries={["by"]}
+            country={'by'}
+            onlyCountries={['by']}
             countryCodeEditable={false}
-            specialLabel={"Телефон"}
+            specialLabel={'Телефон'}
           />
-          
         )}
       />
- {errors.phone && (
-          <>
-            <RiErrorWarningLine className={styles.errorIcon} />
-            <span className={styles.errorMessage}>{errors.phone.message}</span>
-          </>
-        )}
+      {errors.phone && (
+        <>
+          <RiErrorWarningLine className={styles.errorIcon} />
+          <span className={styles.errorMessage}>{errors.phone.message}</span>
+        </>
+      )}
       <input className={styles.button} type="submit" value="Сохранить" />
     </form>
   );

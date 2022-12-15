@@ -3,13 +3,16 @@
 }
 
 .button {
-  @apply block w-32 py-3  bg-blue-500  text-center  text-white  font-bold text-sm  hover:bg-blue-600 rounded-sm  cursor-pointer mx-auto mt-5;
+  @apply block w-32 py-3  bg-blue-500  text-center  text-white  font-bold text-sm  hover:bg-blue-600 rounded-sm   cursor-pointer mx-auto mt-5;
 }
 .errorMessage {
-  @apply absolute bottom-[50px] left-[20px] text-gray-600 text-xs;
+  @apply absolute bottom-[45px] left-[20px] text-gray-600 text-xs;
 }
 .errorIcon {
-  @apply absolute bottom-[50px] left-0 fill-red-400 w-4 h-4;
+  @apply absolute bottom-[45px] left-0 fill-red-400 w-4 h-4;
+}
+.phoneError {
+  @apply border-b-2 border-b-red-400;
 }
 .input {
   @apply py-2 px-2  rounded-sm  border text-gray-600

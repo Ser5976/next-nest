@@ -13,8 +13,9 @@ export interface IEditReview {
 }
 
 export const UserService = {
-  // редактирование отзыва юзером,используем кастомный axios(в него уже введён токен),
   //а удаление отзыва сервис в ProductService removeReview
+
+  // редактирование отзыва юзером,используем кастомный axios(в него уже введён токен),
   async editReview(data: IEditReview) {
     console.log(' редактирование отзыва');
     await customAxios.put(`${API.reviews}/${data.reviewId}`, {

@@ -126,7 +126,7 @@ export const AccountMenu = ({
                 </a>
               </Link>
               {user.isAdmin ? (
-                <Link href="/admin">
+                <Link href="/admin/users">
                   <a className={styles.link}>
                     <MdOutlineAdminPanelSettings className={styles.icons3} />
                     Админ панель

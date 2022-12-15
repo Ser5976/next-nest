@@ -16,10 +16,12 @@ import {
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { User } from './decorators/user.decorator';
 import { UserService } from './user.service';
+import { SearchDto } from './dto/search.dto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly UserServies: UserService) {}
+  // получение пользователя
   @Get('profileUser')
   @Auth() //кастомный декоратор,навешиваем на эндпойнты на которые могут зайти только авторизованные пользователи,
   //а если передаем админ то только админы
@@ -51,25 +53,31 @@ export class UserController {
   }
 
   //----------------для админки-------------------------
-  // получение всех пользователей или одного выбранного
+  // получение  всех пользователя
   @Get()
   @Auth('admin')
-  async getAllusers(@Query('searchUser') searchUser?: string) {
-    return this.UserServies.getAllUsers(searchUser);
+  async getAllusers() {
+    return this.UserServies.getAllUsers();
   }
-  //получение пользователя
+  // получение  выбранного пользователя
+  @Get('search')
+  @Auth('admin')
+  async findUser(@Query() dto: SearchDto) {
+    return this.UserServies.findUser(dto);
+  }
+  /* //получение пользователя
   @Get(':id')
   @Auth('admin')
   async getUser(@Param('id', IdValidationPipe) id: string) {
     return this.UserServies.byId(id);
-  }
+  } */
 
-  // получение количество пользователей
+  /* // получение количество пользователей
   @Get('count')
   @Auth('admin')
   async quantityUsers() {
     return this.UserServies.quantityUsers();
-  }
+  } */
   // удаление пользователя
   @Delete(':id')
   @Auth('admin')

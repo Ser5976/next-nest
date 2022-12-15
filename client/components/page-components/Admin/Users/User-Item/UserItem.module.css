@@ -1,0 +1,28 @@
+.hiddenBlock {
+  @apply hidden;
+}
+.openBlock {
+  @apply block w-3/4 mx-auto;
+}
+.containerEmail {
+  @apply relative flex py-3 px-10 border-t border-gray-400;
+}
+.container {
+  @apply relative flex py-3 px-10 border-t;
+}
+.label {
+  @apply w-1/3 text-gray-400 text-sm;
+}
+.label span {
+  @apply text-gray-600 font-semibold;
+}
+
+.icon1 {
+  @apply absolute top-4 left-0 w-5 h-5  fill-gray-600;
+}
+.icon2 {
+  @apply absolute top-4 right-10 w-5 h-5  fill-gray-600 hover:fill-red-400 cursor-pointer;
+}
+.icon3 {
+  @apply absolute top-4 right-0 fill-gray-600 hover:fill-red-400 w-5 h-5 cursor-pointer;
+}

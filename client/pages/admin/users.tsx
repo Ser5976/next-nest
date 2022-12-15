@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
 import React from 'react';
-import Admin from '../../components/page-components/Admin/Admin';
+//import Users from '../../components/page-components/Admin/Users/Users';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { NextPageAuth } from '../../providers/auth/auth.types';
@@ -12,10 +13,15 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
+const Users = dynamic(
+  () => import('../../components/page-components/Admin/Users/Users'),
+  { ssr: false }
+);
+
 const AdminPage: NextPageAuth = () => {
   return (
     <Layout title="Адин панель">
-      <Admin />
+      <Users />
     </Layout>
   );
 };

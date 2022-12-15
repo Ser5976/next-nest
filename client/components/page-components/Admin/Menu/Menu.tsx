@@ -3,26 +3,27 @@ import cn from 'classnames';
 import { FC } from 'react';
 import Link from 'next/link';
 import { MenuProps } from './Menu.props';
-import {
-  MdOutlineAdminPanelSettings,
-  MdOutlineFavoriteBorder,
-} from 'react-icons/md';
-import { VscEye, VscFeedback } from 'react-icons/vsc';
-import { BsCart, BsPerson } from 'react-icons/bs';
+import { FiUsers } from 'react-icons/fi';
+import { MdOutlineProductionQuantityLimits } from 'react-icons/md/index';
+import { VscListOrdered } from 'react-icons/vsc';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { VscFeedback } from 'react-icons/vsc';
 import { ImExit } from 'react-icons/im';
 import { useData } from '../../../../store/useData';
-import { useActions } from '../../../../store/useActions';
 import { useRouter } from 'next/router';
 
 const Menu: FC<MenuProps> = ({
   activeMenu, //флаг для активной ссылки
 }): JSX.Element => {
   //получаем данные  из редюссоров при помощи кастомного хука useData();
-  const { authReducer, userReducer } = useData();
+  const {
+    authReducer,
+    userReducer,
+    adminReducer: { usersForAdmin },
+  } = useData();
   const { userProfile } = userReducer;
   const { user } = authReducer;
-  //получаем экшены(логаут и очистка стейта юзера) из редюсера при помощи кастомного хука useActions();
-  const { logout, clearUser } = useActions();
+
   const router = useRouter();
   // переменные количества для бэйджа
   const countReviews = userProfile?.reviews?.length
@@ -35,87 +36,57 @@ const Menu: FC<MenuProps> = ({
     ? userProfile.viewed.length
     : 0;
 
-  // удаления данных авторизации
-  const handleLogout = () => {
-    router.push('/');
-    clearUser();
-    logout();
-  };
   return (
     <div className={styles.container}>
-      <Link href="/cart">
-        <a
-          className={cn(styles.link, {
-            [styles.activeLink]: activeMenu === 'cart',
-          })}
-        >
-          <BsCart
-            className={cn(styles.icons, {
-              [styles.activeIcons]: activeMenu === 'cart',
-            })}
-          />
-          {userProfile?.cart?.length ? (
-            <span
-              className={cn(styles.bage, {
-                [styles.activeBage]: activeMenu === 'cart',
-              })}
-            >
-              {userProfile?.cart.length}
-            </span>
-          ) : null}
-          Корзина
-        </a>
-      </Link>
-
+      <div className={styles.link}>
+        <MdOutlineAdminPanelSettings className={styles.icons} />
+        Панель администратора
+      </div>
       <div className="px-5 m-3 bg-transparent border-b"></div>
       <ul>
-        <Link href="/user/favourites">
+        <Link href="/admin/users">
           <a
             className={cn(styles.link, {
-              [styles.activeLink]: activeMenu === 'favourites',
+              [styles.activeLink]: activeMenu === 'users',
             })}
           >
-            <MdOutlineFavoriteBorder
+            <FiUsers
               className={cn(styles.icons, {
-                [styles.activeIcons]: activeMenu === 'favourites',
+                [styles.activeIcons]: activeMenu === 'users',
               })}
             />
-            {countFavourites >= 1 ? (
-              <span
-                className={cn(styles.bage, {
-                  [styles.activeBage]: activeMenu === 'favourites',
-                })}
-              >
-                {userProfile?.favorites.length}
-              </span>
-            ) : null}
-            Избранные товары
+            <span
+              className={cn(styles.bage, {
+                [styles.activeBage]: activeMenu === 'users',
+              })}
+            >
+              {usersForAdmin.users.quantity}
+            </span>
+            Пользователи
           </a>
         </Link>
-        <Link href="/user/viewed">
+        <Link href="/admin/product">
           <a
             className={cn(styles.link, {
-              [styles.activeLink]: activeMenu === 'viewed',
+              [styles.activeLink]: activeMenu === 'product',
             })}
           >
-            <VscEye
+            <MdOutlineProductionQuantityLimits
               className={cn(styles.icons, {
-                [styles.activeIcons]: activeMenu === 'viewed',
+                [styles.activeIcons]: activeMenu === 'product',
               })}
             />
-            {countViewed >= 1 ? (
-              <span
-                className={cn(styles.bage, {
-                  [styles.activeBage]: activeMenu === 'viewed',
-                })}
-              >
-                {userProfile?.viewed.length}
-              </span>
-            ) : null}
-            Просмотренные
+            <span
+              className={cn(styles.bage, {
+                [styles.activeBage]: activeMenu === 'product',
+              })}
+            >
+              576
+            </span>
+            Товар
           </a>
         </Link>
-        <Link href="/user/reviews">
+        <Link href="/admin/reviews">
           <a
             className={cn(styles.link, {
               [styles.activeLink]: activeMenu === 'reviews',
@@ -138,25 +109,25 @@ const Menu: FC<MenuProps> = ({
             Отзывы
           </a>
         </Link>
-        <Link href="/user/personal-data">
+        <Link href="/admin/orders">
           <a
             className={cn(styles.link, {
-              [styles.activeLink]: activeMenu === 'personal-data',
+              [styles.activeLink]: activeMenu === 'orders',
             })}
           >
-            <BsPerson
+            <VscListOrdered
               className={cn(styles.icons, {
-                [styles.activeIcons]: activeMenu === 'personal-data',
+                [styles.activeIcons]: activeMenu === 'orders',
               })}
             />
-            Личные данные
+            Заказы
           </a>
         </Link>
       </ul>
       <div className="px-5 m-3 bg-transparent border-b"></div>
       <button
         className=" relative pl-8 hover:bg-red-50 w-full flex justify-start text-red-400 py-1"
-        onClick={handleLogout}
+        onClick={() => router.push('/')}
       >
         <ImExit className=" absolute top-2.5 left-3 fill-red-400 " />
         Выход

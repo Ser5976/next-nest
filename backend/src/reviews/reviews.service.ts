@@ -7,6 +7,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
 import { ResponseDto } from './dto/response.dto';
+import { SearchDto } from './dto/search.dto';
 
 @Injectable()
 export class ReviewsService {
@@ -75,6 +76,24 @@ export class ReviewsService {
     throw new NotFoundException('отзыв не обновлён');
   }
   // admin
+  // получение всех отзывов
+  async getAllReviews(): Promise<DocumentType<ReviewsModel>[]> {
+    const allReviews = await this.ReviewsModel.find()
+      .populate('userId')
+      .sort({ createdAt: 'desc' })
+      .exec();
+    if (allReviews) return allReviews;
+    throw new NotFoundException('Отзывы не получены');
+  }
+  // поиск  отзыва  по name
+  async findReviews(dto: SearchDto): Promise<DocumentType<ReviewsModel>[]> {
+    console.log('Поиск:', dto);
+    const reviews = await this.ReviewsModel.find({
+      $or: [{ name: new RegExp(dto.name, 'i') }],
+    }).populate('userId');
+    return reviews;
+  }
+
   //ответ на отзыв
   async responseReview(id: string, dto: ResponseDto) {
     const responseReview = await this.ReviewsModel.findByIdAndUpdate(id, {

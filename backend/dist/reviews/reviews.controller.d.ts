@@ -1,3 +1,4 @@
+import { SearchDto } from './dto/search.dto';
 import { UpdateReviewDto } from './dto/update.review.dto';
 import { ReviewsDto } from './dto/reviews.dto';
 import { ReviewsService } from './reviews.service';
@@ -10,6 +11,8 @@ export declare class ReviewsController {
     }>;
     getReviews(_id: string): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
     getStoreReviews(): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
+    getAllReviews(): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
+    findReviews(dto: SearchDto): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
     getProductReviews(productId: string): Promise<import("@typegoose/typegoose").DocumentType<import("./reviews.model").ReviewsModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
     updateReview(id: string, dto: UpdateReviewDto): Promise<{
         message: string;

@@ -1,3 +1,4 @@
+import { SearchDto } from './dto/search.dto';
 import { IdValidationPipe } from './../pipes/id.validation.pipe';
 import { UpdateReviewDto } from './dto/update.review.dto';
 import { ReviewsDto } from './dto/reviews.dto';
@@ -10,6 +11,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -41,6 +43,20 @@ export class ReviewsController {
   async getStoreReviews() {
     return this.ReviewsService.getStoreReviews();
   }
+  // admin
+  // получение всех отзывов
+  @Auth('admin')
+  @Get()
+  async getAllReviews() {
+    return this.ReviewsService.getAllReviews();
+  }
+  //поиск отзыва по name
+  @Auth('admin')
+  @Get('search')
+  async findReviews(@Query() dto: SearchDto) {
+    return this.ReviewsService.findReviews(dto);
+  }
+  //-------------------------------------------
   //получение отзывов продукта
   @Get(':productId')
   async getProductReviews(
@@ -60,6 +76,7 @@ export class ReviewsController {
     // console.log('id:', id);
     return this.ReviewsService.updateReview(id, dto);
   }
+
   // admin
   //ответ на отзыв
   @UsePipes(new ValidationPipe())

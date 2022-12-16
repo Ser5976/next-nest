@@ -5,6 +5,7 @@ import { ModelType, DocumentType } from '@typegoose/typegoose/lib/types';
 import { ReviewsModel } from './reviews.model';
 import { Types } from 'mongoose';
 import { ResponseDto } from './dto/response.dto';
+import { SearchDto } from './dto/search.dto';
 export declare class ReviewsService {
     private readonly ReviewsModel;
     private readonly UserModel;
@@ -18,6 +19,8 @@ export declare class ReviewsService {
     updateReview(idReview: string, dto: UpdateReviewDto): Promise<{
         message: string;
     }>;
+    getAllReviews(): Promise<DocumentType<ReviewsModel>[]>;
+    findReviews(dto: SearchDto): Promise<DocumentType<ReviewsModel>[]>;
     responseReview(id: string, dto: ResponseDto): Promise<{
         message: string;
     }>;

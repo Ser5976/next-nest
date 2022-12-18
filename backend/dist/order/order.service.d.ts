@@ -1,3 +1,4 @@
+import { ExecuteDto } from './dto/execute.dto';
 import { OrderDto } from './dto/order.dto';
 import { OrderModel } from './order.model';
 import { ModelType } from '@typegoose/typegoose/lib/types';
@@ -10,4 +11,7 @@ export declare class OrderService {
     getOrder(): Promise<Omit<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & OrderModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
     }, never>[]>;
+    executeAnOrder(dto: ExecuteDto): Promise<{
+        message: string;
+    }>;
 }

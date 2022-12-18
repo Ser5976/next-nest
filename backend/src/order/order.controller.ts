@@ -1,3 +1,4 @@
+import { ExecuteDto } from './dto/execute.dto';
 import { OrderDto } from './dto/order.dto';
 import { OrderService } from './order.service';
 import {
@@ -5,6 +6,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -26,5 +28,12 @@ export class OrderController {
   @Auth('admin')
   async getOrder() {
     return this.OrderService.getOrder();
+  }
+  //отметиь выполнения заказа
+  @UsePipes(new ValidationPipe())
+  @Put()
+  @Auth('admin')
+  async executeAnOrder(@Body() dto: ExecuteDto) {
+    return this.OrderService.executeAnOrder(dto);
   }
 }

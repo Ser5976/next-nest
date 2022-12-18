@@ -27,10 +27,22 @@ let OrderService = class OrderService {
         return order;
     }
     async getOrder() {
-        const order = await this.OrderModel.find().populate('productCart user');
+        const order = await this.OrderModel.find()
+            .populate('productCart user')
+            .sort({ createdAt: 'desc' })
+            .exec();
         if (!order)
             throw new common_1.NotFoundException('Заказы не получены');
         return order;
+    }
+    async executeAnOrder(dto) {
+        const order = await this.OrderModel.updateOne({ _id: dto.reviewsId }, {
+            execution: dto.bool,
+            new: true,
+        });
+        if (!order)
+            throw new common_1.NotFoundException('Изменение не произошло');
+        return { message: 'заказ выполнен' };
     }
 };
 OrderService = __decorate([

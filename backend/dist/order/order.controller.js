@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderController = void 0;
+const execute_dto_1 = require("./dto/execute.dto");
 const order_dto_1 = require("./dto/order.dto");
 const order_service_1 = require("./order.service");
 const common_1 = require("@nestjs/common");
@@ -27,6 +28,9 @@ let OrderController = class OrderController {
     }
     async getOrder() {
         return this.OrderService.getOrder();
+    }
+    async executeAnOrder(dto) {
+        return this.OrderService.executeAnOrder(dto);
     }
 };
 __decorate([
@@ -46,6 +50,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getOrder", null);
+__decorate([
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.Put)(),
+    (0, auth_decorators_1.Auth)('admin'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [execute_dto_1.ExecuteDto]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "executeAnOrder", null);
 OrderController = __decorate([
     (0, common_1.Controller)('order'),
     __metadata("design:paramtypes", [order_service_1.OrderService])

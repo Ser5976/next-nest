@@ -1,3 +1,4 @@
+import { ExecuteDto } from './dto/execute.dto';
 import { OrderDto } from './dto/order.dto';
 import { OrderModel } from './order.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -17,8 +18,23 @@ export class OrderService {
   }
   // получение заказов
   async getOrder() {
-    const order = await this.OrderModel.find().populate('productCart user');
+    const order = await this.OrderModel.find()
+      .populate('productCart user')
+      .sort({ createdAt: 'desc' })
+      .exec();
     if (!order) throw new NotFoundException('Заказы не получены');
     return order;
+  }
+  // отметка о выполнении заказа
+  async executeAnOrder(dto: ExecuteDto) {
+    const order = await this.OrderModel.updateOne(
+      { _id: dto.reviewsId },
+      {
+        execution: dto.bool,
+        new: true,
+      },
+    );
+    if (!order) throw new NotFoundException('Изменение не произошло');
+    return { message: 'заказ выполнен' };
   }
 }

@@ -12,8 +12,7 @@ const ReviewsItem: FC<ReviewsItemProps> = ({
   reviews, //данные отзыва
   openingAdminsResponse, // ответ админа на отзыв(открытие модального окна и передача id отзыва в стейт)
 }): JSX.Element => {
-  const {} = reviews;
-  console.log('отзывы:', reviews);
+  // console.log('отзывы:', reviews);
   // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
   const queryClient = useQueryClient();
 

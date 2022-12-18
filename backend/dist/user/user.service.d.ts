@@ -1,6 +1,6 @@
+import { UserModel } from './user.model';
 import { UpdateEmailDto } from './dto/update.email.dto';
 import { DocumentType, ModelType } from '@typegoose/typegoose/lib/types';
-import { UserModel } from 'src/user/user.model';
 import { UpdatePasswordDto } from './dto/update.password.dto';
 import { SearchDto } from './dto/search.dto';
 export declare class UserService {
@@ -15,9 +15,7 @@ export declare class UserService {
     }>;
     findUser(dto: SearchDto): Promise<DocumentType<UserModel>[]>;
     getAllUsers(): Promise<{
-        users: (import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & UserModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
-            _id: import("mongoose").Types.ObjectId;
-        })[];
+        users: DocumentType<UserModel>[];
         quantity: number;
     }>;
     deleteUsers(id: string): Promise<{

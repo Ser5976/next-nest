@@ -5,13 +5,14 @@ import { SearhInputAdminProps } from './SearchInputAdmin.props';
 export const SearchInputAdmin = ({
   searchTerm,
   handleInput,
+  placeholderText,
 }: SearhInputAdminProps): JSX.Element => {
   return (
     <div className={styles.search}>
       <input
         type="text"
         className={styles.input}
-        placeholder="введите email . . ."
+        placeholder={placeholderText}
         value={searchTerm}
         onChange={handleInput}
       />

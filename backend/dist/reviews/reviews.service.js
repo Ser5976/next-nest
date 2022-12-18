@@ -70,9 +70,10 @@ let ReviewsService = class ReviewsService {
             .populate('userId')
             .sort({ createdAt: 'desc' })
             .exec();
-        if (allReviews)
-            return allReviews;
-        throw new common_1.NotFoundException('Отзывы не получены');
+        if (!allReviews)
+            throw new common_1.NotFoundException('Отзывы не получены');
+        const quantity = await this.ReviewsModel.find().count().exec();
+        return { allReviews, quantity };
     }
     async findReviews(dto) {
         console.log('Поиск:', dto);
@@ -89,10 +90,10 @@ let ReviewsService = class ReviewsService {
             throw new common_1.NotFoundException('Что то пошло не так,ответ не записан');
         return { message: 'Ответ записан' };
     }
-    async deleteReview(id, _id) {
+    async deleteReview(id) {
         const deletedReview = await this.ReviewsModel.findByIdAndDelete(id);
-        if (deletedReview) {
-            await this.UserModel.updateOne({ _id }, {
+        if (deletedReview.userId) {
+            await this.UserModel.updateOne({ _id: deletedReview.userId }, {
                 $pull: { reviews: new mongoose_1.Types.ObjectId(id) },
             });
         }

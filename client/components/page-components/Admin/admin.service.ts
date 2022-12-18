@@ -1,4 +1,8 @@
-import { IUsers } from './../../../store/admin/interface.admin';
+import {
+  IGeneralReviewsForAdmin,
+  IReviewsForAdmin,
+  IUsers,
+} from './../../../store/admin/interface.admin';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 
@@ -6,6 +10,7 @@ import customAxios from '../../../custom-axios/axiox-interceptors';
 
 export const AdminService = {
   // используем кастомный axios(в него уже введён токен),
+  //---------Users-----------
   //получение всех пользователей
   async getUsersAdmin() {
     console.log(' получение пользователей для админа');
@@ -20,7 +25,7 @@ export const AdminService = {
     console.log(' удаление пользователя ');
     await customAxios.delete(`${API.admin.users}/${userId}`);
   },
-  // поиск  пользователя
+  // поиск  пользователя по email
   async getFoundUser(email: string) {
     console.log('поиск пользователя');
     const { data: usersForAdmin } = await customAxios.get<IUsers[]>(
@@ -30,5 +35,32 @@ export const AdminService = {
       }
     );
     return usersForAdmin;
+  },
+
+  //----Reviews-----------
+  //получение всех отзывов
+  async getReviewsAdmin() {
+    console.log(' получение отзывов для админа');
+    const { data: reviewsForAdmin } = await customAxios.get<{
+      allReviews: IReviewsForAdmin[];
+      quantity: number;
+    }>(API.reviews);
+    return reviewsForAdmin;
+  },
+  // поиск  отзывов по name
+  async getFoundReviews(name: string) {
+    console.log('поиск отзыва');
+    const { data: reviews } = await customAxios.get<IReviewsForAdmin[]>(
+      API.reviewsSearch,
+      {
+        params: { name },
+      }
+    );
+    return reviews;
+  },
+  //удаление пользователя
+  async deleteReviews(reviewsId: string) {
+    console.log(' удаление отзыва ');
+    await customAxios.delete(`${API.reviews}/${reviewsId}`);
   },
 };

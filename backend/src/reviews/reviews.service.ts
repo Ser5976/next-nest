@@ -77,13 +77,17 @@ export class ReviewsService {
   }
   // admin
   // получение всех отзывов
-  async getAllReviews(): Promise<DocumentType<ReviewsModel>[]> {
+  async getAllReviews(): Promise<{
+    allReviews: DocumentType<ReviewsModel>[];
+    quantity: number;
+  }> {
     const allReviews = await this.ReviewsModel.find()
       .populate('userId')
       .sort({ createdAt: 'desc' })
       .exec();
-    if (allReviews) return allReviews;
-    throw new NotFoundException('Отзывы не получены');
+    if (!allReviews) throw new NotFoundException('Отзывы не получены');
+    const quantity = await this.ReviewsModel.find().count().exec();
+    return { allReviews, quantity };
   }
   // поиск  отзыва  по name
   async findReviews(dto: SearchDto): Promise<DocumentType<ReviewsModel>[]> {
@@ -104,12 +108,13 @@ export class ReviewsService {
     return { message: 'Ответ записан' };
   }
   //удаление отзыва
-  async deleteReview(id: string, _id: string): Promise<{ message: string }> {
+  async deleteReview(id: string): Promise<{ message: string }> {
     const deletedReview = await this.ReviewsModel.findByIdAndDelete(id);
-    if (deletedReview) {
+    // console.log('Айди юзера:', deletedReview.userId);
+    if (deletedReview.userId) {
       //удаление id отзыва у юзера
       await this.UserModel.updateOne(
-        { _id },
+        { _id: deletedReview.userId },
         {
           $pull: { reviews: new Types.ObjectId(id) },
         },

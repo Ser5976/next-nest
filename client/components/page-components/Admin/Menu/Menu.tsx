@@ -19,16 +19,14 @@ const Menu: FC<MenuProps> = ({
   const {
     authReducer,
     userReducer,
-    adminReducer: { usersForAdmin },
+    adminReducer: { usersForAdmin, generalReviewsForAdmin },
   } = useData();
   const { userProfile } = userReducer;
   const { user } = authReducer;
 
   const router = useRouter();
   // переменные количества для бэйджа
-  const countReviews = userProfile?.reviews?.length
-    ? userProfile.reviews.length
-    : 0;
+
   const countFavourites = userProfile?.favorites?.length
     ? userProfile.favorites.length
     : 0;
@@ -97,13 +95,13 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'reviews',
               })}
             />
-            {countReviews >= 1 ? (
+            {generalReviewsForAdmin.reviewsForAdmin?.quantity >= 1 ? (
               <span
                 className={cn(styles.bage, {
                   [styles.activeBage]: activeMenu === 'reviews',
                 })}
               >
-                {userProfile?.reviews.length}
+                {generalReviewsForAdmin.reviewsForAdmin?.quantity}
               </span>
             ) : null}
             Отзывы

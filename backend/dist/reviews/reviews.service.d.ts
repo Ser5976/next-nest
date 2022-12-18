@@ -19,12 +19,15 @@ export declare class ReviewsService {
     updateReview(idReview: string, dto: UpdateReviewDto): Promise<{
         message: string;
     }>;
-    getAllReviews(): Promise<DocumentType<ReviewsModel>[]>;
+    getAllReviews(): Promise<{
+        allReviews: DocumentType<ReviewsModel>[];
+        quantity: number;
+    }>;
     findReviews(dto: SearchDto): Promise<DocumentType<ReviewsModel>[]>;
     responseReview(id: string, dto: ResponseDto): Promise<{
         message: string;
     }>;
-    deleteReview(id: string, _id: string): Promise<{
+    deleteReview(id: string): Promise<{
         message: string;
     }>;
 }

@@ -18,7 +18,9 @@ export const API = {
   },
   product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product',
   poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
+
   reviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews',
+  reviewsSearch: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/search',
   storeReviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/store-reviews',
   responseReview:
     process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/response-review',

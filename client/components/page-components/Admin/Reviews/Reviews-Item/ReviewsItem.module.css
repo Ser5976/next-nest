@@ -1,0 +1,27 @@
+.container {
+  @apply py-2 relative border-b;
+}
+.icon {
+  @apply absolute top-4 right-0 fill-gray-400 hover:fill-red-400 w-4 h-4 cursor-pointer;
+}
+.icon1 {
+  @apply absolute top-4 right-5 fill-gray-400 hover:fill-red-400 w-4 h-4 cursor-pointer;
+}
+.name {
+  @apply text-gray-600 font-semibold;
+}
+.span {
+  @apply text-xs text-gray-400;
+}
+.text {
+  @apply text-gray-600 text-[15px];
+}
+.containerResponse {
+  @apply relative mt-2;
+}
+.icon3 {
+  @apply absolute top-1 fill-gray-400;
+}
+.response {
+  @apply text-gray-400 ml-10 text-[13px];
+}

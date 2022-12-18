@@ -1,9 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAdminInitialState, IUsers } from './interface.admin';
+import {
+  IAdminInitialState,
+  IUsers,
+  IReviewsForAdmin,
+} from './interface.admin';
 
 const initialState: IAdminInitialState = {
   usersForAdmin: {
     users: {} as { users: IUsers[]; quantity: number },
+  },
+  generalReviewsForAdmin: {
+    reviewsForAdmin: {} as { allReviews: IReviewsForAdmin[]; quantity: number },
   },
 };
 
@@ -12,6 +19,7 @@ export const adminSlice = createSlice({
   initialState,
 
   reducers: {
+    //...Users.....
     getUsersForAdmin: (
       state,
       action: PayloadAction<{ users: IUsers[]; quantity: number }>
@@ -22,7 +30,25 @@ export const adminSlice = createSlice({
     searchUser: (state, action: PayloadAction<IUsers[]>) => {
       state.usersForAdmin.users.users = action.payload;
     },
+    //...Reviews.....
+    getReviewsForAdmin: (
+      state,
+      action: PayloadAction<{
+        allReviews: IReviewsForAdmin[];
+        quantity: number;
+      }>
+    ) => {
+      state.generalReviewsForAdmin.reviewsForAdmin = action.payload;
+    },
+    searchReviews: (state, action: PayloadAction<IReviewsForAdmin[]>) => {
+      state.generalReviewsForAdmin.reviewsForAdmin.allReviews = action.payload;
+    },
   },
 });
-export const { getUsersForAdmin, searchUser } = adminSlice.actions;
+export const {
+  getUsersForAdmin,
+  searchUser,
+  getReviewsForAdmin,
+  searchReviews,
+} = adminSlice.actions;
 export default adminSlice.reducer;

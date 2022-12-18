@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 import React from 'react';
-//import Users from '../../components/page-components/Admin/Users/Users';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { NextPageAuth } from '../../providers/auth/auth.types';
@@ -13,23 +12,23 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
-const Users = dynamic(
-  () => import('../../components/page-components/Admin/Users/Users'),
+const Reviews = dynamic(
+  () => import('../../components/page-components/Admin/Reviews/Reviews'),
   { ssr: false }
 );
 
-const AdminUsersPage: NextPageAuth = () => {
+const AdminReviewsPage: NextPageAuth = () => {
   return (
     <Layout title="Адин панель">
-      <Users />
+      <Reviews />
     </Layout>
   );
 };
 
-AdminUsersPage.isOnlyAdmin = true; //только для админа
+AdminReviewsPage.isOnlyAdmin = true; //только для админа
 
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<AdminUsersProps> =
+export const getStaticProps: GetStaticProps<AdminReviewsProps> =
   wrapper.getStaticProps((store) => async () => {
     //---------- для Header-----------------------------------//
     //получение forCustomers (для клиентов)
@@ -50,10 +49,10 @@ export const getStaticProps: GetStaticProps<AdminUsersProps> =
     };
   });
 
-interface AdminUsersProps {
+interface AdminReviewsProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
 }
 
-export default AdminUsersPage;
+export default AdminReviewsPage;

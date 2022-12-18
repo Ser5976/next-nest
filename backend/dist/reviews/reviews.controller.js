@@ -50,8 +50,8 @@ let ReviewsController = class ReviewsController {
     async responseReviews(id, dto) {
         return this.ReviewsService.responseReview(id, dto);
     }
-    async deleteRrview(id, _id) {
-        return this.ReviewsService.deleteReview(id, _id);
+    async deleteRrview(id) {
+        return this.ReviewsService.deleteReview(id);
     }
 };
 __decorate([
@@ -124,9 +124,8 @@ __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)(),
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
-    __param(1, (0, user_decorator_1.User)('_id', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "deleteRrview", null);
 ReviewsController = __decorate([

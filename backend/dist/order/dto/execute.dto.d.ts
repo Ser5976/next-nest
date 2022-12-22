@@ -1,4 +1,4 @@
 export declare class ExecuteDto {
-    reviewsId: string;
+    orderId: string;
     bool: boolean;
 }

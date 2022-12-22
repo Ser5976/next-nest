@@ -1,11 +1,11 @@
-import styles from './ModalOrder.module.css';
+import styles from './OrderModal.module.css';
 import { FC } from 'react';
-import { ModalOrderProps } from './ModalOrder.props';
+import { OrderModalProps } from './OrderModal.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import FormOrder from './Form-Order/FormOrder';
-import ProductsOrder from './Products/ProductsOrder';
+import FormOrder from './Order-Form/OrderForm';
+import ProductsOrder from './Products-order/ProductsOrder';
 
-const ModalOrder: FC<ModalOrderProps> = ({
+const OrderModal: FC<OrderModalProps> = ({
   show,
   setShow,
   order,
@@ -15,19 +15,20 @@ const ModalOrder: FC<ModalOrderProps> = ({
   };
   if (!show) return null;
 
+  console.log('order:', order);
   return (
     <div className={styles.container} id="container" onClick={handleOnClose}>
       <div className={styles.form}>
-        <h1 className=" text-lg">Оформить заказ</h1>
+        <h1 className=" text-lg">Заказ № {order._id}</h1>
         <TiDeleteOutline
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <ProductsOrder products={order} />
-        <FormOrder setShow={setShow} order={order} />
+        <ProductsOrder products={order.productCart} />
+        <FormOrder order={order} />
       </div>
     </div>
   );
 };
 
-export default ModalOrder;
+export default OrderModal;

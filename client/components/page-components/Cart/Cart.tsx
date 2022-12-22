@@ -3,8 +3,7 @@ import { FC, useState } from 'react';
 import { CartProps } from './Cart.props';
 import { LayoutUser } from '../User/LayoutUser';
 import { useQuery } from 'react-query';
-import { CartService } from './cart.service';
-import { Button } from '../../ui/Button/Button';
+import { CartService, ICart } from './cart.service';
 import ProductCart from './Product-Cart/ProductCart';
 import cn from 'classnames';
 import ModalOrder from '../Order/ModalOrder';
@@ -13,7 +12,7 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
   //открытие модального окна для оформление заказа
   const [show, setShow] = useState(false);
   //стейт для выбранного заказа
-  const [order, setOrder] = useState<string[]>([]);
+  const [order, setOrder] = useState<ICart[]>([]);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
   //получаем  все данные (из базы) по корзине
@@ -22,18 +21,18 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
     isLoading,
     isError,
   } = useQuery('cart', () => CartService.getCart());
-  console.log(basketData);
+  // console.log(basketData);
 
   //добавляем выбранный товар из корзины в заказ
-  const addOrder = (productCartId: string) => {
-    setOrder([...order, productCartId]); //добавляем товар из корзины(только _id корзины) в  стейт заказа
+  const addOrder = (productCart: ICart) => {
+    setOrder([...order, productCart]); //добавляем товар из корзины в  стейт заказа
   };
   //удаляем выбранный товар  из заказа
   const deleteOrder = (productCartId: string) => {
-    const newOrder = order.filter((item) => item !== productCartId);
+    const newOrder = order.filter((item) => item.productId !== productCartId);
     setOrder(newOrder);
   };
-  console.log(order);
+  // console.log(order);
   return (
     <LayoutUser activeMenu="cart">
       <h1 className={styles.h1}>Корзина</h1>
@@ -81,12 +80,7 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
           </button>
         </div>
       </div>
-      <ModalOrder
-        order={order}
-        totalPriceProduct={basketData?.totalPriceProduct}
-        setShow={setShow}
-        show={show}
-      />
+      <ModalOrder order={order} setShow={setShow} show={show} />
     </LayoutUser>
   );
 };

@@ -9,17 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ExecuteDto = void 0;
+exports.SearchDto = void 0;
 const class_validator_1 = require("class-validator");
-class ExecuteDto {
+class SearchDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], ExecuteDto.prototype, "orderId", void 0);
-__decorate([
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
-], ExecuteDto.prototype, "bool", void 0);
-exports.ExecuteDto = ExecuteDto;
-//# sourceMappingURL=execute.dto.js.map
+], SearchDto.prototype, "email", void 0);
+exports.SearchDto = SearchDto;
+//# sourceMappingURL=search.dto.js.map

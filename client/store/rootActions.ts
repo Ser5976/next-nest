@@ -6,6 +6,8 @@ import {
   searchUser,
   getReviewsForAdmin,
   searchReviews,
+  getOrders,
+  searchOrder,
 } from './admin/adminSlice';
 
 export const allActions = {
@@ -17,4 +19,6 @@ export const allActions = {
   searchUser,
   getReviewsForAdmin,
   searchReviews,
+  getOrders,
+  searchOrder,
 };

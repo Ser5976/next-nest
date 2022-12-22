@@ -3,6 +3,7 @@ import {
   IAdminInitialState,
   IUsers,
   IReviewsForAdmin,
+  IOrders,
 } from './interface.admin';
 
 const initialState: IAdminInitialState = {
@@ -12,6 +13,7 @@ const initialState: IAdminInitialState = {
   generalReviewsForAdmin: {
     reviewsForAdmin: {} as { allReviews: IReviewsForAdmin[]; quantity: number },
   },
+  orders: { ordersData: {} as { orders: IOrders[]; quantity: number } },
 };
 
 export const adminSlice = createSlice({
@@ -43,6 +45,19 @@ export const adminSlice = createSlice({
     searchReviews: (state, action: PayloadAction<IReviewsForAdmin[]>) => {
       state.generalReviewsForAdmin.reviewsForAdmin.allReviews = action.payload;
     },
+    //...Orders.....
+    getOrders: (
+      state,
+      action: PayloadAction<{
+        orders: IOrders[];
+        quantity: number;
+      }>
+    ) => {
+      state.orders.ordersData = action.payload;
+    },
+    searchOrder: (state, action: PayloadAction<IOrders[]>) => {
+      state.orders.ordersData.orders = action.payload;
+    },
   },
 });
 export const {
@@ -50,5 +65,7 @@ export const {
   searchUser,
   getReviewsForAdmin,
   searchReviews,
+  getOrders,
+  searchOrder,
 } = adminSlice.actions;
 export default adminSlice.reducer;

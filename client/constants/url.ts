@@ -35,6 +35,7 @@ export const API = {
   cart: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart',
   reduceQuantities: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart/reduce',
   order: process.env.NEXT_PUBLIC_DOMAIN + '/api/order',
+  searchOrder: process.env.NEXT_PUBLIC_DOMAIN + '/api/order/search',
   admin: {
     users: process.env.NEXT_PUBLIC_DOMAIN + '/api/users',
     search: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/search',

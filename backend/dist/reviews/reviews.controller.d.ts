@@ -23,7 +23,7 @@ export declare class ReviewsController {
     responseReviews(id: string, dto: ResponseDto): Promise<{
         message: string;
     }>;
-    deleteRrview(id: string): Promise<{
+    deleteRerview(id: string): Promise<{
         message: string;
     }>;
 }

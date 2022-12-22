@@ -1,3 +1,5 @@
+import { IUser } from './../auth/interface.auth';
+import { ICart } from './../../components/page-components/Cart/cart.service';
 import { IPhone, IPersonalData, IAddress } from './../user/interface.user';
 
 //---Users-----
@@ -32,7 +34,29 @@ export interface IGeneralReviewsForAdmin {
   reviewsForAdmin: { allReviews: IReviewsForAdmin[]; quantity: number };
 }
 
+//---Orders-----
+export interface IOrders {
+  _id: string;
+  productCart: ICart[];
+  user: IUsers;
+  name: string;
+  email: string;
+  address: IAddress;
+  delivery: string;
+  payment: string;
+  telephone: string;
+  orderAmount: number;
+  execution: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+export interface IOrdersForAdmin {
+  ordersData: { orders: IOrders[]; quantity: number };
+}
+
 export interface IAdminInitialState {
   usersForAdmin: IUsersForAdmin;
   generalReviewsForAdmin: IGeneralReviewsForAdmin;
+  orders: IOrdersForAdmin;
 }

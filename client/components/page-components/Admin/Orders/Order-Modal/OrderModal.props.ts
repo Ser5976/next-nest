@@ -1,4 +1,4 @@
-import { ICart } from './../Cart/cart.service';
+import { IOrders } from './../../../../../store/admin/interface.admin';
 import {
   DetailedHTMLProps,
   HTMLAttributes,
@@ -6,9 +6,9 @@ import {
   SetStateAction,
 } from 'react';
 
-export interface ModalOrderProps
+export interface OrderModalProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  order: ICart[];
+  order: IOrders;
 }

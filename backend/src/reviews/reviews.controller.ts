@@ -91,7 +91,7 @@ export class ReviewsController {
   //удаление отзыва
   @Delete(':id')
   @Auth()
-  async deleteRrview(@Param('id', IdValidationPipe) id: string) {
+  async deleteRerview(@Param('id', IdValidationPipe) id: string) {
     return this.ReviewsService.deleteReview(id);
   }
 }

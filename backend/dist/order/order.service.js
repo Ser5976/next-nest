@@ -27,22 +27,35 @@ let OrderService = class OrderService {
         return order;
     }
     async getOrder() {
-        const order = await this.OrderModel.find()
+        const orders = await this.OrderModel.find()
             .populate('productCart user')
             .sort({ createdAt: 'desc' })
             .exec();
-        if (!order)
+        if (!orders)
             throw new common_1.NotFoundException('Заказы не получены');
-        return order;
+        const quantity = await this.OrderModel.find().count().exec();
+        return { orders, quantity };
     }
     async executeAnOrder(dto) {
-        const order = await this.OrderModel.updateOne({ _id: dto.reviewsId }, {
+        const order = await this.OrderModel.updateOne({ _id: dto.orderId }, {
             execution: dto.bool,
             new: true,
         });
         if (!order)
             throw new common_1.NotFoundException('Изменение не произошло');
         return { message: 'заказ выполнен' };
+    }
+    async findOrders(dto) {
+        const orders = await this.OrderModel.find({
+            $or: [{ email: new RegExp(dto.email, 'i') }],
+        }).populate('productCart user');
+        return orders;
+    }
+    async deleteOrder(id) {
+        const deletedOrder = await this.OrderModel.findByIdAndDelete(id);
+        if (!deletedOrder)
+            throw new common_1.NotFoundException('заказ не удален');
+        return { message: 'заказ удалён' };
     }
 };
 OrderService = __decorate([

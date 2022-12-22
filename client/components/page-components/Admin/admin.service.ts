@@ -1,11 +1,15 @@
 import {
-  IGeneralReviewsForAdmin,
+  IOrders,
   IReviewsForAdmin,
   IUsers,
 } from './../../../store/admin/interface.admin';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 
+export interface IcompletedOrder {
+  orderId: string;
+  bool: boolean;
+}
 //сервис для запроса на сервак
 
 export const AdminService = {
@@ -62,5 +66,34 @@ export const AdminService = {
   async deleteReviews(reviewsId: string) {
     console.log(' удаление отзыва ');
     await customAxios.delete(`${API.reviews}/${reviewsId}`);
+  },
+  //----Orders-----------
+  //получение всех заказов
+  async getOrders() {
+    console.log(' получение заказов для админа');
+    const { data: ordersData } = await customAxios.get<{
+      orders: IOrders[];
+      quantity: number;
+    }>(API.order);
+    return ordersData;
+  },
+  // поиск  заказа по email
+  async getFoundOrder(email: string) {
+    console.log('поиск отзыва');
+    const { data: orders } = await customAxios.get<IOrders[]>(API.searchOrder, {
+      params: { email },
+    });
+    return orders;
+  },
+  // выполнить заказ
+  async executeAnOrder(data: IcompletedOrder) {
+    console.log('исполненный заказ');
+    await customAxios.put(API.order, data);
+  },
+
+  //удаление заказа
+  async deleteOrder(orderId: string) {
+    console.log(' удаление отзыва ');
+    await customAxios.delete(`${API.order}/${orderId}`);
   },
 };

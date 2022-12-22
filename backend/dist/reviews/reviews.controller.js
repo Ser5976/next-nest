@@ -50,7 +50,7 @@ let ReviewsController = class ReviewsController {
     async responseReviews(id, dto) {
         return this.ReviewsService.responseReview(id, dto);
     }
-    async deleteRrview(id) {
+    async deleteRerview(id) {
         return this.ReviewsService.deleteReview(id);
     }
 };
@@ -127,7 +127,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], ReviewsController.prototype, "deleteRrview", null);
+], ReviewsController.prototype, "deleteRerview", null);
 ReviewsController = __decorate([
     (0, common_1.Controller)('reviews'),
     __metadata("design:paramtypes", [reviews_service_1.ReviewsService])

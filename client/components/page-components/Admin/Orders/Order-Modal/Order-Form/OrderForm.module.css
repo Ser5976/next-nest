@@ -1,0 +1,35 @@
+.h2 {
+  @apply text-base font-semibold text-gray-600 mx-2;
+}
+.form {
+  @apply flex-col;
+}
+.wrapper {
+  @apply flex my-5;
+}
+.part {
+  @apply px-5 w-1/2;
+}
+.label {
+  @apply mb-2 text-gray-400;
+}
+.div {
+  @apply mb-5 border px-[7px] py-[9px];
+}
+.flat {
+  @apply mb-5 border h-[36px];
+}
+.disable {
+  @apply block  bg-blue-400   text-white  font-semibold 
+  px-5 py-2  text-xs;
+}
+.button {
+  @apply block  bg-blue-500   text-white  font-semibold 
+  px-5 py-2 hover:bg-blue-600 text-xs  rounded-sm;
+}
+.icon1 {
+  @apply h-5 w-5 fill-blue-500;
+}
+.icon2 {
+  @apply h-5 w-5 fill-gray-400;
+}

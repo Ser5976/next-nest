@@ -19,7 +19,7 @@ const Menu: FC<MenuProps> = ({
   const {
     authReducer,
     userReducer,
-    adminReducer: { usersForAdmin, generalReviewsForAdmin },
+    adminReducer: { usersForAdmin, generalReviewsForAdmin, orders },
   } = useData();
   const { userProfile } = userReducer;
   const { user } = authReducer;
@@ -118,6 +118,15 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'orders',
               })}
             />
+            {orders.ordersData?.quantity >= 1 ? (
+              <span
+                className={cn(styles.bage, {
+                  [styles.activeBage]: activeMenu === 'orders',
+                })}
+              >
+                {orders?.ordersData?.quantity}
+              </span>
+            ) : null}
             Заказы
           </a>
         </Link>

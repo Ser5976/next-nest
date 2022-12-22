@@ -17,7 +17,7 @@
 .minus {
   @apply border bg-slate-200  font-bold py-1 px-3 hover:bg-slate-300 cursor-pointer;
 }
-.quantiti {
+.quantity {
   @apply border py-1 px-3;
 }
 .plus {
@@ -27,7 +27,7 @@
   @apply w-1/4;
 }
 .oldPrice {
-  @apply line-through text-gray-400;
+  @apply line-through text-gray-400 ml-5;
 }
 .price {
   @apply text-gray-600 my-5;

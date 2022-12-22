@@ -2,7 +2,7 @@
   @apply fixed inset-0 flex bg-black bg-opacity-30 justify-center items-center z-10;
 }
 .form {
-  @apply relative text-xs  bg-white   py-[10px] px-5 rounded-sm w-[45%];
+  @apply relative text-xs  bg-white   p-5 rounded-sm w-[45%];
 }
 .form h1 {
   @apply text-gray-600 font-semibold text-center;

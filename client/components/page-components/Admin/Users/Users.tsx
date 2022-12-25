@@ -77,7 +77,11 @@ const Users: FC<UsersProps> = ({}): JSX.Element => {
         Пользователи
       </h1>
       <div className={styles.container}>
-        <SearchInputAdmin searchTerm={searchTerm} handleInput={handlerInput} />
+        <SearchInputAdmin
+          searchTerm={searchTerm}
+          handleInput={handlerInput}
+          placeholderText="введите email . . ."
+        />
         <div
           className={cn(styles.button, {
             [styles.disableButton]: users.users?.length === users.quantity,

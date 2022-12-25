@@ -17,11 +17,6 @@ const SliderItem: FC<SliderItemProps> = ({ slider }): JSX.Element => {
         unoptimized
         priority
       />
-      {slider.text && (
-        <div className={styles.content}>
-          <div className={styles.heading}>{slider.text}</div>
-        </div>
-      )}
     </div>
   );
 };

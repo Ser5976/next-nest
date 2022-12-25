@@ -1,8 +1,11 @@
+.h2 {
+  @apply text-base font-semibold text-gray-600 mx-2;
+}
 .form {
   @apply flex-col;
 }
 .wrapper {
-  @apply flex my-5;
+  @apply flex my-[10px];
 }
 .part {
   @apply px-5 w-1/2;

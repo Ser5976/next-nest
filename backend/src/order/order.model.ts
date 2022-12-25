@@ -35,4 +35,6 @@ export class OrderModel extends TimeStamps {
   telephone: string;
   @prop({ required: true })
   orderAmount: number;
+  @prop({ type: () => Boolean, default: false })
+  execution: boolean;
 }

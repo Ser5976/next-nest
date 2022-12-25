@@ -2,13 +2,13 @@ import styles from './ModalOrder.module.css';
 import { FC } from 'react';
 import { ModalOrderProps } from './ModalOrder.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import FormOrder from './Forn-Order/FormOrder';
+import FormOrder from './Form-Order/FormOrder';
+import ProductsOrder from './Products/ProductsOrder';
 
 const ModalOrder: FC<ModalOrderProps> = ({
   show,
   setShow,
   order,
-  totalPriceProduct,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);
@@ -23,11 +23,8 @@ const ModalOrder: FC<ModalOrderProps> = ({
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <FormOrder
-          setShow={setShow}
-          order={order}
-          totalPriceProduct={totalPriceProduct}
-        />
+        <ProductsOrder products={order} />
+        <FormOrder setShow={setShow} order={order} />
       </div>
     </div>
   );

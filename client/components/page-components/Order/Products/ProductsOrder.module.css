@@ -1,0 +1,51 @@
+.lableWrapper {
+  @apply flex py-1;
+}
+.lableProduct {
+  @apply w-2/4 text-gray-400;
+}
+.lableQuantity {
+  @apply w-1/4 text-gray-400;
+}
+.lablePrice {
+  @apply w-1/4 text-gray-400;
+}
+.containerOrder {
+  @apply overflow-y-scroll h-[150px];
+}
+.container {
+  @apply flex relative border-b py-[5px] gap-1;
+}
+.wrapperProduct {
+  @apply w-2/4;
+}
+
+.h2 {
+  @apply text-base font-semibold text-gray-600 mx-2;
+}
+
+.product {
+  @apply flex  py-1;
+}
+.picture {
+  @apply w-1/3;
+}
+
+.link {
+  @apply w-2/3 text-xs text-start text-blue-400 hover:text-red-400 underline block;
+}
+.wrapperQuantiti {
+  @apply w-1/4;
+}
+
+.quantity {
+  @apply py-1 px-3;
+}
+
+.wrapperPrice {
+  @apply w-1/4;
+}
+
+.price {
+  @apply text-gray-600 py-1;
+}

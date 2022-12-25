@@ -1,0 +1,10 @@
+.container {
+  @apply flex p-3  border-y border-gray-400 gap-2 flex-wrap;
+}
+
+.icon {
+  @apply absolute top-0 right-0 fill-gray-600 hover:fill-red-400  cursor-pointer;
+}
+.wrapperImage {
+  @apply relative w-[125px] h-[75px];
+}

@@ -13,9 +13,7 @@ export declare class UserController {
         message: string;
     }>;
     getAllusers(): Promise<{
-        users: (import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & import("./user.model").UserModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
-            _id: import("mongoose").Types.ObjectId;
-        })[];
+        users: import("@typegoose/typegoose").DocumentType<import("./user.model").UserModel, import("@typegoose/typegoose/lib/types").BeAnObject>[];
         quantity: number;
     }>;
     findUser(dto: SearchDto): Promise<import("@typegoose/typegoose").DocumentType<import("./user.model").UserModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;

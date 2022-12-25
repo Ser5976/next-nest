@@ -15,7 +15,7 @@ export const userSlice = createSlice({
       state.isError = action.payload;
     },
     getUser: (state, action: PayloadAction<IUserProfile | undefined>) => {
-      console.log('работает редюсер:', action);
+      // console.log('работает редюсер:', action);
       state.userProfile = action.payload;
     },
     // нужен для очистки стейта userProfile, когда выходим из аккаунта

@@ -12,20 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SliderModel = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
-const product_type_model_1 = require("../product-type/product-type.model");
 class SliderModel extends defaultClasses_1.TimeStamps {
 }
 __decorate([
     (0, typegoose_1.prop)(String),
     __metadata("design:type", String)
 ], SliderModel.prototype, "picture", void 0);
-__decorate([
-    (0, typegoose_1.prop)({ ref: () => product_type_model_1.ProductTypeModel }),
-    __metadata("design:type", Object)
-], SliderModel.prototype, "typeId", void 0);
-__decorate([
-    (0, typegoose_1.prop)(String),
-    __metadata("design:type", String)
-], SliderModel.prototype, "text", void 0);
 exports.SliderModel = SliderModel;
 //# sourceMappingURL=slider.model.js.map

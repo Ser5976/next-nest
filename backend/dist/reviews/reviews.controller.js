@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewsController = void 0;
+const search_dto_1 = require("./dto/search.dto");
 const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
 const update_review_dto_1 = require("./dto/update.review.dto");
 const reviews_dto_1 = require("./dto/reviews.dto");
@@ -34,6 +35,12 @@ let ReviewsController = class ReviewsController {
     async getStoreReviews() {
         return this.ReviewsService.getStoreReviews();
     }
+    async getAllReviews() {
+        return this.ReviewsService.getAllReviews();
+    }
+    async findReviews(dto) {
+        return this.ReviewsService.findReviews(dto);
+    }
     async getProductReviews(productId) {
         return this.ReviewsService.getProductReviews(productId);
     }
@@ -43,8 +50,8 @@ let ReviewsController = class ReviewsController {
     async responseReviews(id, dto) {
         return this.ReviewsService.responseReview(id, dto);
     }
-    async deleteRrview(id, _id) {
-        return this.ReviewsService.deleteReview(id, _id);
+    async deleteRerview(id) {
+        return this.ReviewsService.deleteReview(id);
     }
 };
 __decorate([
@@ -71,6 +78,21 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ReviewsController.prototype, "getStoreReviews", null);
+__decorate([
+    (0, auth_decorators_1.Auth)('admin'),
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "getAllReviews", null);
+__decorate([
+    (0, auth_decorators_1.Auth)('admin'),
+    (0, common_1.Get)('search'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
+    __metadata("design:returntype", Promise)
+], ReviewsController.prototype, "findReviews", null);
 __decorate([
     (0, common_1.Get)(':productId'),
     __param(0, (0, common_1.Param)('productId', id_validation_pipe_1.IdValidationPipe)),
@@ -102,11 +124,10 @@ __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)(),
     __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
-    __param(1, (0, user_decorator_1.User)('_id', id_validation_pipe_1.IdValidationPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], ReviewsController.prototype, "deleteRrview", null);
+], ReviewsController.prototype, "deleteRerview", null);
 ReviewsController = __decorate([
     (0, common_1.Controller)('reviews'),
     __metadata("design:paramtypes", [reviews_service_1.ReviewsService])

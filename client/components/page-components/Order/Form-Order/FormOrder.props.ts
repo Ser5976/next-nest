@@ -1,3 +1,4 @@
+import { ICart } from './../../Cart/cart.service';
 import {
   DetailedHTMLProps,
   HTMLAttributes,
@@ -8,6 +9,5 @@ import {
 export interface FormOrderProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   setShow: Dispatch<SetStateAction<boolean>>;
-  order: string[];
-  totalPriceProduct: number | undefined;
+  order: ICart[];
 }

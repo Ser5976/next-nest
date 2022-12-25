@@ -18,7 +18,9 @@ export const API = {
   },
   product: process.env.NEXT_PUBLIC_DOMAIN + '/api/product',
   poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
+
   reviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews',
+  reviewsSearch: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/search',
   storeReviews: process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/store-reviews',
   responseReview:
     process.env.NEXT_PUBLIC_DOMAIN + '/api/reviews/response-review',
@@ -33,8 +35,12 @@ export const API = {
   cart: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart',
   reduceQuantities: process.env.NEXT_PUBLIC_DOMAIN + '/api/cart/reduce',
   order: process.env.NEXT_PUBLIC_DOMAIN + '/api/order',
+  searchOrder: process.env.NEXT_PUBLIC_DOMAIN + '/api/order/search',
   admin: {
     users: process.env.NEXT_PUBLIC_DOMAIN + '/api/users',
     search: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/search',
+    slider: process.env.NEXT_PUBLIC_DOMAIN + '/api/slider',
+    files: process.env.NEXT_PUBLIC_DOMAIN + '/api/file',
+    removeUrl: process.env.NEXT_PUBLIC_DOMAIN + '/api/file/remove',
   },
 };

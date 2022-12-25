@@ -1,10 +1,17 @@
+import { IdValidationPipe } from './../pipes/id.validation.pipe';
+import { SearchDto } from './../user/dto/search.dto';
+import { ExecuteDto } from './dto/execute.dto';
 import { OrderDto } from './dto/order.dto';
 import { OrderService } from './order.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
+  Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -26,5 +33,24 @@ export class OrderController {
   @Auth('admin')
   async getOrder() {
     return this.OrderService.getOrder();
+  }
+  //отметь выполнения заказа
+  @UsePipes(new ValidationPipe())
+  @Put()
+  @Auth('admin')
+  async executeAnOrder(@Body() dto: ExecuteDto) {
+    return this.OrderService.executeAnOrder(dto);
+  }
+  //поиск заказа по email
+  @Auth('admin')
+  @Get('search')
+  async findReviews(@Query() dto: SearchDto) {
+    return this.OrderService.findOrders(dto);
+  }
+  //удаление заказа
+  @Delete(':id')
+  @Auth()
+  async deleteOrder(@Param('id', IdValidationPipe) id: string) {
+    return this.OrderService.deleteOrder(id);
   }
 }

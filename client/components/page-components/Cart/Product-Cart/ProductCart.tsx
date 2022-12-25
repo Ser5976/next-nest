@@ -18,13 +18,13 @@ const ProductCart: FC<ProductCartProps> = ({
   const [orderActive, setOrderActive] = useState('');
   //заказать товар
   const orderProduct = () => {
-    setOrderActive(productCart._id); //изменяем иконку в заказа
-    addOrder(productCart._id); //добавляем товар из корзины в заказ
+    setOrderActive(productCart._id); //изменяем иконку заказа
+    addOrder(productCart); //добавляем товар из корзины в заказ
   };
   //отменить заказ
   const cancelOrder = () => {
     setOrderActive(''); //изменяем иконку заказа
-    deleteOrder(productCart._id); //удаляем товар из заказа
+    deleteOrder(productCart.productId); //удаляем товар из заказа
   };
   //создаём объект товара для добавления в корзину
   const productData: IAddCart = {
@@ -60,6 +60,7 @@ const ProductCart: FC<ProductCartProps> = ({
       toast.error('Товар не добавлен,что-то пошло не так');
     },
   });
+  //удаляем товар из корзины
   const { mutate: deleteProduct } = useMutation(
     CartService.removingProductCart,
     {
@@ -98,7 +99,7 @@ const ProductCart: FC<ProductCartProps> = ({
         >
           -
         </div>
-        <div className={styles.quantiti}>{productCart.quantity}</div>
+        <div className={styles.quantity}>{productCart.quantity}</div>
         <div className={styles.plus} onClick={() => addProduct(productData)}>
           +
         </div>

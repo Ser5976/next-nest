@@ -1,7 +1,7 @@
+import { UserModel } from './user.model';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { UpdateEmailDto } from './dto/update.email.dto';
 import { DocumentType, ModelType } from '@typegoose/typegoose/lib/types';
-import { UserModel } from 'src/user/user.model';
 import {
   BadRequestException,
   Injectable,
@@ -74,7 +74,10 @@ export class UserService {
   // получаем  всех пользователей,выбираем чтобы обозначенные поля не попали в объект
   //и делаем сортировку по дате создания(последние созданные будут сверху)
   //если есть searchUser,то выберем конкретногопользователя
-  async getAllUsers() {
+  async getAllUsers(): Promise<{
+    users: DocumentType<UserModel>[];
+    quantity: number;
+  }> {
     const users = await this.UserModel.find()
       .select(
         '-password -__v -favorites -viewed -cart -purchaseHistory -reviews',

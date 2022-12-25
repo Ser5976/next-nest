@@ -1,3 +1,4 @@
+import { ICart } from './../Cart/cart.service';
 import {
   DetailedHTMLProps,
   HTMLAttributes,
@@ -9,6 +10,5 @@ export interface ModalOrderProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  order: string[];
-  totalPriceProduct: number | undefined;
+  order: ICart[];
 }

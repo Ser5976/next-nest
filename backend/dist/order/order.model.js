@@ -70,5 +70,9 @@ __decorate([
     (0, typegoose_1.prop)({ required: true }),
     __metadata("design:type", Number)
 ], OrderModel.prototype, "orderAmount", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ type: () => Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], OrderModel.prototype, "execution", void 0);
 exports.OrderModel = OrderModel;
 //# sourceMappingURL=order.model.js.map

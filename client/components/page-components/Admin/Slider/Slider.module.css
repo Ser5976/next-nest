@@ -1,0 +1,9 @@
+.h1 {
+  @apply text-2xl text-gray-600 font-semibold;
+}
+.h3 {
+  @apply text-xs text-gray-600 my-3;
+}
+.loading {
+  @apply text-center font-semibold  text-gray-600 mt-2;
+}

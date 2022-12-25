@@ -20,5 +20,6 @@ export declare class OrderModel extends TimeStamps {
     payment: string;
     telephone: string;
     orderAmount: number;
+    execution: boolean;
 }
 export {};

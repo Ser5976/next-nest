@@ -6,7 +6,8 @@ import { MenuProps } from './Menu.props';
 import { FiUsers } from 'react-icons/fi';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md/index';
 import { VscListOrdered } from 'react-icons/vsc';
-import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { MdOutlineAdminPanelSettings,MdOutlineViewCarousel} from 'react-icons/md';
+
 import { VscFeedback } from 'react-icons/vsc';
 import { ImExit } from 'react-icons/im';
 import { useData } from '../../../../store/useData';
@@ -15,20 +16,18 @@ import { useRouter } from 'next/router';
 const Menu: FC<MenuProps> = ({
   activeMenu, //флаг для активной ссылки
 }): JSX.Element => {
-  //получаем данные  из редюссоров при помощи кастомного хука useData();
+  //получаем данные  из редюссоров при помощи кастомного хука useData()
   const {
     authReducer,
     userReducer,
-    adminReducer: { usersForAdmin },
+    adminReducer: { usersForAdmin, generalReviewsForAdmin, orders },
   } = useData();
   const { userProfile } = userReducer;
   const { user } = authReducer;
 
   const router = useRouter();
   // переменные количества для бэйджа
-  const countReviews = userProfile?.reviews?.length
-    ? userProfile.reviews.length
-    : 0;
+
   const countFavourites = userProfile?.favorites?.length
     ? userProfile.favorites.length
     : 0;
@@ -97,13 +96,13 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'reviews',
               })}
             />
-            {countReviews >= 1 ? (
+            {generalReviewsForAdmin.reviewsForAdmin?.quantity >= 1 ? (
               <span
                 className={cn(styles.bage, {
                   [styles.activeBage]: activeMenu === 'reviews',
                 })}
               >
-                {userProfile?.reviews.length}
+                {generalReviewsForAdmin.reviewsForAdmin?.quantity}
               </span>
             ) : null}
             Отзывы
@@ -120,7 +119,30 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'orders',
               })}
             />
+            {orders.ordersData?.quantity >= 1 ? (
+              <span
+                className={cn(styles.bage, {
+                  [styles.activeBage]: activeMenu === 'orders',
+                })}
+              >
+                {orders?.ordersData?.quantity}
+              </span>
+            ) : null}
             Заказы
+          </a>
+        </Link>
+        <Link href="/admin/slider">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'slider',
+            })}
+          >
+            <MdOutlineViewCarousel
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'slider',
+              })}
+            />
+            Слайдер
           </a>
         </Link>
       </ul>

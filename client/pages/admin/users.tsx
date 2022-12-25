@@ -18,7 +18,7 @@ const Users = dynamic(
   { ssr: false }
 );
 
-const AdminPage: NextPageAuth = () => {
+const AdminUsersPage: NextPageAuth = () => {
   return (
     <Layout title="Адин панель">
       <Users />
@@ -26,10 +26,10 @@ const AdminPage: NextPageAuth = () => {
   );
 };
 
-AdminPage.isOnlyAdmin = true; //только для админа
+AdminUsersPage.isOnlyAdmin = true; //только для админа
 
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<AdminProps> =
+export const getStaticProps: GetStaticProps<AdminUsersProps> =
   wrapper.getStaticProps((store) => async () => {
     //---------- для Header-----------------------------------//
     //получение forCustomers (для клиентов)
@@ -50,10 +50,10 @@ export const getStaticProps: GetStaticProps<AdminProps> =
     };
   });
 
-interface AdminProps {
+interface AdminUsersProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
 }
 
-export default AdminPage;
+export default AdminUsersPage;

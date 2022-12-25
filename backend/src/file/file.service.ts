@@ -14,7 +14,7 @@ export class FileService {
       files.map(async (file) => {
         const fileExtension = file.originalname.split('.').pop(); //чтобы вырезать расширение
         const fileName = uuid.v4() + '.' + fileExtension; //создали уникальное имя файла
-        await writeFile(`${uploadFolder}/${fileName}`, file.buffer); //записываем в папку  aploads фай и его буфер
+        await writeFile(`${uploadFolder}/${fileName}`, file.buffer); //записываем в папку  uploads фай и его буфер
         return fileName; //создаём массив из путей к файлу
       }),
     ); //чтобы map был асинхронным помещаем его в промис

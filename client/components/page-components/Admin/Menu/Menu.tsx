@@ -6,7 +6,8 @@ import { MenuProps } from './Menu.props';
 import { FiUsers } from 'react-icons/fi';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md/index';
 import { VscListOrdered } from 'react-icons/vsc';
-import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { MdOutlineAdminPanelSettings,MdOutlineViewCarousel} from 'react-icons/md';
+
 import { VscFeedback } from 'react-icons/vsc';
 import { ImExit } from 'react-icons/im';
 import { useData } from '../../../../store/useData';
@@ -15,7 +16,7 @@ import { useRouter } from 'next/router';
 const Menu: FC<MenuProps> = ({
   activeMenu, //флаг для активной ссылки
 }): JSX.Element => {
-  //получаем данные  из редюссоров при помощи кастомного хука useData();
+  //получаем данные  из редюссоров при помощи кастомного хука useData()
   const {
     authReducer,
     userReducer,
@@ -128,6 +129,20 @@ const Menu: FC<MenuProps> = ({
               </span>
             ) : null}
             Заказы
+          </a>
+        </Link>
+        <Link href="/admin/slider">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'slider',
+            })}
+          >
+            <MdOutlineViewCarousel
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'slider',
+              })}
+            />
+            Слайдер
           </a>
         </Link>
       </ul>

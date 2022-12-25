@@ -5,13 +5,22 @@ import {
 } from './../../../store/admin/interface.admin';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
+// некоторые интерфейсы
 
+//интерфейс для заказов
 export interface IcompletedOrder {
   orderId: string;
   bool: boolean;
 }
-//сервис для запроса на сервак
+// интерфейс слайдер
+export interface ISlider {
+  _id: string;
+  picture: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
+//сервис для запроса на сервак
 export const AdminService = {
   // используем кастомный axios(в него уже введён токен),
   //---------Users-----------
@@ -79,7 +88,7 @@ export const AdminService = {
   },
   // поиск  заказа по email
   async getFoundOrder(email: string) {
-    console.log('поиск отзыва');
+    console.log('поиск заказа');
     const { data: orders } = await customAxios.get<IOrders[]>(API.searchOrder, {
       params: { email },
     });
@@ -93,7 +102,41 @@ export const AdminService = {
 
   //удаление заказа
   async deleteOrder(orderId: string) {
-    console.log(' удаление отзыва ');
+    console.log(' удаление заказа ');
     await customAxios.delete(`${API.order}/${orderId}`);
+  },
+  //----Sider-----------
+  //получение слайдера
+  async getSlider() {
+    console.log(' получение слайдера');
+    const { data: sliderImages } = await customAxios.get<ISlider[]>(
+      API.admin.slider
+    );
+    return sliderImages;
+  },
+  //добавление в  слайдер
+  async addToSlider(url: string) {
+    console.log(' добавление в слайдер слайдера');
+    await customAxios.post(API.admin.slider, { picture: url });
+  },
+  // удаление изображения(url из базы)
+  async deleteImage(imageId: string) {
+    console.log(' удаление изображения ');
+    await customAxios.delete(`${API.admin.slider}/${imageId}`);
+  },
+
+  // работа с файлами(загрузка изображения в сервак,где из него сделают url)
+  async uploadImage(files: FormData) {
+    console.log('загрузка изображения');
+    const { data: urlImages } = await customAxios.post<string[]>(
+      API.admin.files,
+      files
+    );
+    return urlImages;
+  },
+  //удаление url изображения из папки uploads
+  async removeUrl(url: string) {
+    console.log(' удаление url изображения ');
+    await customAxios.post(API.admin.removeUrl, { files: url });
   },
 };

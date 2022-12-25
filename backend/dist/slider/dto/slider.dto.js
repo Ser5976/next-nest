@@ -17,13 +17,5 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SliderDto.prototype, "picture", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], SliderDto.prototype, "typeId", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], SliderDto.prototype, "text", void 0);
 exports.SliderDto = SliderDto;
 //# sourceMappingURL=slider.dto.js.map

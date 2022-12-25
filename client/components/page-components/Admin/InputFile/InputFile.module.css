@@ -1,0 +1,27 @@
+.wrapper {
+  @apply flex;
+}
+.wrapperInput {
+  @apply w-1/4 self-center;
+}
+.wrapperInput input {
+  @apply hidden;
+}
+.button {
+  @apply inline-block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500 opacity-70 text-white transition-opacity cursor-pointer hover:opacity-100;
+}
+.wrapperImg {
+  @apply w-3/4 flex gap-1 flex-wrap h-[75px];
+}
+.img {
+  @apply relative w-[125px] h-[75px];
+}
+.icon {
+  @apply absolute top-0 right-0 fill-gray-600 hover:fill-red-400  cursor-pointer;
+}
+.text {
+  @apply w-3/4 flex items-center text-sm  text-gray-400 h-[75px];
+}
+.error {
+  @apply relative -bottom-3 text-xs text-red-400;
+}

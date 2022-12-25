@@ -11,17 +11,7 @@ import { BsCircle, BsCheck2Circle } from 'react-icons/bs';
 import OrderModal from '../Order-Modal/OrderModal';
 
 const OrderItem: FC<OrderItemProps> = ({ order }): JSX.Element => {
-  const {
-    email,
-    telephone,
-    address,
-    delivery,
-    payment,
-    productCart,
-    execution,
-    orderAmount,
-    name,
-  } = order;
+  const { name } = order;
   //открытие модального окна для оформление заказа
   const [show, setShow] = useState(false);
 

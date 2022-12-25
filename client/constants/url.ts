@@ -39,5 +39,8 @@ export const API = {
   admin: {
     users: process.env.NEXT_PUBLIC_DOMAIN + '/api/users',
     search: process.env.NEXT_PUBLIC_DOMAIN + '/api/users/search',
+    slider: process.env.NEXT_PUBLIC_DOMAIN + '/api/slider',
+    files: process.env.NEXT_PUBLIC_DOMAIN + '/api/file',
+    removeUrl: process.env.NEXT_PUBLIC_DOMAIN + '/api/file/remove',
   },
 };

@@ -122,7 +122,10 @@ export const AdminService = {
   // удаление изображения(url из базы)
   async deleteImage(imageId: string) {
     console.log(' удаление изображения ');
-    await customAxios.delete(`${API.admin.slider}/${imageId}`);
+    const deleteFile = await customAxios.delete<ISlider>(
+      `${API.admin.slider}/${imageId}`
+    );
+    return deleteFile;
   },
 
   // работа с файлами(загрузка изображения в сервак,где из него сделают url)

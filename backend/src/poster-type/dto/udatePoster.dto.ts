@@ -1,8 +1,8 @@
 import { IsString } from 'class-validator';
 
-export class PosterTypeDto {
+export class UpdatePosterDto {
   @IsString()
   picture: string;
   @IsString()
-  typeId: string;
+  posterId: string;
 }

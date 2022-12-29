@@ -22,4 +22,4 @@ __decorate([
     __metadata("design:type", String)
 ], PosterTypeDto.prototype, "typeId", void 0);
 exports.PosterTypeDto = PosterTypeDto;
-//# sourceMappingURL=poster-type.dto.js.map
+//# sourceMappingURL=poster-type.dto%20copy.js.map

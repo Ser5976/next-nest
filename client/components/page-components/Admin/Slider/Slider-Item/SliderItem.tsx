@@ -2,19 +2,25 @@ import styles from './SliderItem.module.css';
 import { FC } from 'react';
 import { SliderItemProps } from './SliderItem.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 
-const SliderItem: FC<SliderItemProps> = ({ slider, refetch }): JSX.Element => {
+const SliderItem: FC<SliderItemProps> = ({
+  slider,
+  setImages,
+}): JSX.Element => {
+  console.log('sliderItem:', slider);
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
+  const queryClient = useQueryClient();
   // удаление изображения(url из базы)
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteImage } = useMutation(AdminService.deleteImage, {
-    onSuccess: () => {
-      refetch(); //повторно запускаем запрос слайдера
-
-      toast.success('Изображение удалено ');
+    onSuccess: (data) => {
+      // чтобы не делать повторный запрос, удаляем удалённую  картинку из массива сами
+      const newdSlider = slider?.filter((item) => item._id !== data.data._id);
+      setImages(newdSlider);
     },
     onError: (error: any) => {
       toast.error('Изображение  не удалёно,что-то пошло не так');

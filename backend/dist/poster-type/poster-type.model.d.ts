@@ -6,5 +6,4 @@ export interface PosterTypeModel extends Base {
 export declare class PosterTypeModel extends TimeStamps {
     picture: string;
     typeId: Ref<ProductTypeModel>;
-    text: string;
 }

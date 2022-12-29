@@ -1,3 +1,4 @@
+import { UpdatePosterDto } from './dto/udatePoster.dto';
 import { PosterTypeModel } from './poster-type.model';
 import {
   BadRequestException,
@@ -26,11 +27,27 @@ export class PosterTypeService {
       throw new NotFoundException('Что то пошло не так,коллекция не создана');
     return poster;
   }
+  //получение всех постеров
+  async getPosters() {
+    const posters = await this.PosterTypeModel.find().populate('typeId');
+    if (!posters) throw new NotFoundException('Что то пошло не так');
+    return posters;
+  }
+
   //получение постера типа товара
   async getPoster(typeId: string) {
     const posterType = await this.PosterTypeModel.findOne({ typeId: typeId });
     if (!posterType) throw new NotFoundException('Что то пошло не так');
     return posterType;
+  }
+  // редактировать пост
+  async updatePoster(dto: UpdatePosterDto) {
+    const posterUpdate = await this.PosterTypeModel.updateOne(
+      { _id: dto.posterId },
+      { picture: dto.picture },
+    );
+    if (!posterUpdate) throw new NotFoundException('Что то пошло не так');
+    return posterUpdate;
   }
   //удаление постера
   async deletePoster(typeId: string) {

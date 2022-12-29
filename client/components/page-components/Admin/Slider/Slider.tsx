@@ -10,24 +10,22 @@ import SliderForm from './Slider-Form/SliderForm';
 
 const Slider: FC<SliderProps> = ({}): JSX.Element => {
   //стэйт для слайдера
-  const [images, setImages] = useState<ISlider[]>([]);
+  const [images, setImages] = useState<ISlider[] | undefined>([]);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
 
   //получаем слайдер
-  const { isLoading, refetch } = useQuery(
-    'slider',
-    () => AdminService.getSlider(),
-    {
-      onSuccess: (data) => {
-        setImages(data);
-      },
-      onError: () => {
-        toast.error('Данные не получены, попробуйте ещё раз');
-      },
-    }
-  );
-  // console.log('Стэйт:', images);
+  const { isLoading } = useQuery('slider', () => AdminService.getSlider(), {
+    onSuccess: (data) => {
+      console.log('Cлайдера:', data);
+      setImages(data);
+      console.log('загрузка слайдера');
+    },
+    onError: () => {
+      toast.error('Данные не получены, попробуйте ещё раз');
+    },
+  });
+  console.log('Стэйт:', images);
   return (
     <LayoutAdmin activeMenu="slider">
       <h1 className={styles.h1}>Слайдер</h1>
@@ -35,7 +33,7 @@ const Slider: FC<SliderProps> = ({}): JSX.Element => {
       {isLoading ? (
         <h2 className={styles.loading}>Загрузка...</h2>
       ) : (
-        <SliderItem slider={images} refetch={refetch} />
+        <SliderItem slider={images} setImages={setImages} />
       )}
       <SliderForm />
     </LayoutAdmin>

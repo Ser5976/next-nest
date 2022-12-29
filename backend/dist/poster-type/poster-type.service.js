@@ -30,11 +30,23 @@ let PosterTypeService = class PosterTypeService {
             throw new common_1.NotFoundException('Что то пошло не так,коллекция не создана');
         return poster;
     }
+    async getPosters() {
+        const posters = await this.PosterTypeModel.find().populate('typeId');
+        if (!posters)
+            throw new common_1.NotFoundException('Что то пошло не так');
+        return posters;
+    }
     async getPoster(typeId) {
         const posterType = await this.PosterTypeModel.findOne({ typeId: typeId });
         if (!posterType)
             throw new common_1.NotFoundException('Что то пошло не так');
         return posterType;
+    }
+    async updatePoster(dto) {
+        const posterUpdate = await this.PosterTypeModel.updateOne({ _id: dto.posterId }, { picture: dto.picture });
+        if (!posterUpdate)
+            throw new common_1.NotFoundException('Что то пошло не так');
+        return posterUpdate;
     }
     async deletePoster(typeId) {
         await this.PosterTypeModel.findOneAndDelete({ typeId });

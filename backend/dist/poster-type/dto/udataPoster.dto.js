@@ -9,17 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PosterTypeDto = void 0;
+exports.UpdatePosterDto = void 0;
 const class_validator_1 = require("class-validator");
-class PosterTypeDto {
+class UpdatePosterDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], PosterTypeDto.prototype, "picture", void 0);
+], UpdatePosterDto.prototype, "picture", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], PosterTypeDto.prototype, "typeId", void 0);
-exports.PosterTypeDto = PosterTypeDto;
-//# sourceMappingURL=poster-type.dto.js.map
+], UpdatePosterDto.prototype, "posterId", void 0);
+exports.UpdatePosterDto = UpdatePosterDto;
+//# sourceMappingURL=udataPoster.dto.js.map

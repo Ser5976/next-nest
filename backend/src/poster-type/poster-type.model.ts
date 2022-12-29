@@ -9,6 +9,4 @@ export class PosterTypeModel extends TimeStamps {
   picture: string;
   @prop({ ref: () => ProductTypeModel })
   typeId: Ref<ProductTypeModel>;
-  @prop(String)
-  text: string;
 }

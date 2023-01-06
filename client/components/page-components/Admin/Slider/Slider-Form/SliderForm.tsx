@@ -31,7 +31,6 @@ const SliderForm: FC<SliderFormProps> = ({}): JSX.Element => {
     handleSubmit,
     setValue,
     control,
-    formState: { errors },
   } = useForm<ISliderForm>({
     mode: 'onChange',
   });

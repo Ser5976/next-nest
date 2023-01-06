@@ -5,6 +5,7 @@ import {
 } from './../../../store/admin/interface.admin';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
+import { IType } from '../../../store/type-product/interface.typeProduct';
 // некоторые интерфейсы
 
 //интерфейс для заказов
@@ -18,6 +19,21 @@ export interface ISlider {
   picture: string;
   createdAt: string;
   updatedAt: string;
+}
+// интерфейс постер
+export interface IPoster {
+  _id: string;
+  picture: string;
+  typeId: IType;
+}
+export interface IAddPoster {
+  picture: string;
+  typeId: string;
+}
+//интерфейс редактирование постера
+export interface IUpdatePoster {
+  picture: string;
+  posterId: string | undefined;
 }
 
 //сервис для запроса на сервак
@@ -128,7 +144,7 @@ export const AdminService = {
     return deleteFile;
   },
 
-  // работа с файлами(загрузка изображения в сервак,где из него сделают url)
+  // работа с файлами(загрузка изображения на сервак,где из него сделают url)
   async uploadImage(files: FormData) {
     console.log('загрузка изображения');
     const { data: urlImages } = await customAxios.post<string[]>(
@@ -141,5 +157,48 @@ export const AdminService = {
   async removeUrl(url: string) {
     console.log(' удаление url изображения ');
     await customAxios.post(API.admin.removeUrl, { files: url });
+  },
+  //----Poster-----------
+  //создание постера
+  async createPoster(data: IAddPoster) {
+    console.log(' создание  постера');
+    const { data: poster } = await customAxios.post<IPoster>(
+      API.admin.poster,
+      data
+    );
+    return poster;
+  },
+  //получение постеров
+  async getPoster() {
+    console.log(' получение постеров');
+    const { data: getPosters } = await customAxios.get<IPoster[]>(
+      API.admin.poster
+    );
+    return getPosters;
+  },
+  // поиск  постера по name
+  async getFoundPoster(name: string) {
+    console.log('поиск типа');
+    const { data: searchPosters } = await customAxios.get<IPoster[]>(
+      API.admin.searchPoster,
+      {
+        params: { name },
+      }
+    );
+    return searchPosters;
+  },
+  // редактирование  постера
+  async updatePoster(data: IUpdatePoster) {
+    console.log('обновление постера');
+    const { data: updatePoster } = await customAxios.put<{ message: string }>(
+      API.admin.poster,
+      data
+    );
+    return updatePoster;
+  },
+  //удаление постера
+  async deletePoster(posterId: string) {
+    console.log(' удаление постера ');
+    await customAxios.delete(`${API.admin.poster}/${posterId}`);
   },
 };

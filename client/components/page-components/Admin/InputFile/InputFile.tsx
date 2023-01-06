@@ -32,6 +32,7 @@ export const InputFile: FC<InputFileProps> = ({
             ref={inputRef}
             accept="image/*"
           />
+          {error && <div className={styles.error}>{error.message}</div>}
         </div>
 
         {value ? (
@@ -59,7 +60,7 @@ export const InputFile: FC<InputFileProps> = ({
           <div className={styles.text}> Файл не добавлен</div>
         )}
       </div>
-      {error && <div className={styles.error}>{error.message}</div>}
+      
     </>
   );
 };

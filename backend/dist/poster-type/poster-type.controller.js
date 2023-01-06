@@ -34,8 +34,8 @@ let PosterTypeController = class PosterTypeController {
     async updatePoster(dto) {
         return this.PosterTypeService.updatePoster(dto);
     }
-    async deletePicture(typeId) {
-        return this.PosterTypeService.deletePoster(typeId);
+    async deletePicture(posterId) {
+        return this.PosterTypeService.deletePoster(posterId);
     }
 };
 __decorate([
@@ -71,9 +71,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PosterTypeController.prototype, "updatePoster", null);
 __decorate([
-    (0, common_1.Delete)(':typeId'),
+    (0, common_1.Delete)(':posterId'),
     (0, auth_decorators_1.Auth)('admin'),
-    __param(0, (0, common_1.Param)('typeId')),
+    __param(0, (0, common_1.Param)('posterId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

@@ -1,3 +1,4 @@
+import { PosterSearchDto } from './dto/poster-search.dto';
 import { PosterTypeService } from './poster-type.service';
 import {
   Body,
@@ -44,9 +45,9 @@ export class PosterTypeController {
   }
 
   //удаление постера
-  @Delete(':typeId')
+  @Delete(':posterId')
   @Auth('admin')
-  async deletePicture(@Param('typeId') typeId: string) {
-    return this.PosterTypeService.deletePoster(typeId);
+  async deletePicture(@Param('posterId') posterId: string) {
+    return this.PosterTypeService.deletePoster(posterId);
   }
 }

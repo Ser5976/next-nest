@@ -46,10 +46,10 @@ let PosterTypeService = class PosterTypeService {
         const posterUpdate = await this.PosterTypeModel.updateOne({ _id: dto.posterId }, { picture: dto.picture });
         if (!posterUpdate)
             throw new common_1.NotFoundException('Что то пошло не так');
-        return posterUpdate;
+        return { message: 'Постер изменён' };
     }
-    async deletePoster(typeId) {
-        await this.PosterTypeModel.findOneAndDelete({ typeId });
+    async deletePoster(posterId) {
+        await this.PosterTypeModel.findOneAndDelete({ _id: posterId });
         return { message: 'Постер удален' };
     }
 };

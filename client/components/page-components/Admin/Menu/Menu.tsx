@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { MenuProps } from './Menu.props';
 import { FiUsers } from 'react-icons/fi';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md/index';
-import { VscListOrdered } from 'react-icons/vsc';
-import { MdOutlineAdminPanelSettings,MdOutlineViewCarousel} from 'react-icons/md';
-
-import { VscFeedback } from 'react-icons/vsc';
+import { VscListOrdered, VscFeedback } from 'react-icons/vsc';
+import {
+  MdOutlineAdminPanelSettings,
+  MdOutlineViewCarousel,
+} from 'react-icons/md';
+import { BsImage } from 'react-icons/bs';
 import { ImExit } from 'react-icons/im';
 import { useData } from '../../../../store/useData';
 import { useRouter } from 'next/router';
@@ -143,6 +145,20 @@ const Menu: FC<MenuProps> = ({
               })}
             />
             Слайдер
+          </a>
+        </Link>
+        <Link href="/admin/poster">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'poster',
+            })}
+          >
+            <BsImage
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'poster',
+              })}
+            />
+            Постер
           </a>
         </Link>
       </ul>

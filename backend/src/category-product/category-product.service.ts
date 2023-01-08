@@ -1,7 +1,11 @@
 import { ProductModel } from 'src/product/product.model';
 import { CategoryProductDto } from './dto/category-product.dto';
 import { CategoryProductModel } from './category-product.model';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 
@@ -15,6 +19,11 @@ export class CategoryProductService {
   ) {}
   //создание категории товара
   async createCategoryProduct(dto: CategoryProductDto) {
+    const candidat = await this.CategoryProductModel.findOne({
+      name: dto.name,
+    });
+    if (candidat)
+      throw new BadRequestException('Такая категория уже существует');
     const categoryProduct = await this.CategoryProductModel.create(dto);
     if (!categoryProduct)
       throw new NotFoundException('Категория продукта не создан');

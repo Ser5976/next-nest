@@ -23,6 +23,11 @@ let CategoryProductService = class CategoryProductService {
         this.ProductModel = ProductModel;
     }
     async createCategoryProduct(dto) {
+        const candidat = await this.CategoryProductModel.findOne({
+            name: dto.name,
+        });
+        if (candidat)
+            throw new common_1.BadRequestException('Такая категория уже существует');
         const categoryProduct = await this.CategoryProductModel.create(dto);
         if (!categoryProduct)
             throw new common_1.NotFoundException('Категория продукта не создан');

@@ -45,5 +45,7 @@ export const API = {
     poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
     searchPoster:
       process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type/searchPoster',
+    searchCategory:
+      process.env.NEXT_PUBLIC_DOMAIN + '/api/category-product/search',
   },
 };

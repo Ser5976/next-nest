@@ -39,12 +39,19 @@ let CategoryProductService = class CategoryProductService {
             .exec();
         if (!categoryProduct)
             throw new common_1.NotFoundException('Категории не получены');
-        return categoryProduct;
+        const count = await this.CategoryProductModel.find().count();
+        return { categoryProduct, count };
+    }
+    async findCategory(dto) {
+        const category = await this.CategoryProductModel.find({
+            $or: [{ name: new RegExp(dto.name, 'i') }],
+        }).populate('productType brand');
+        return category;
     }
     async removeCategoryProduct(id) {
         const product = await this.ProductModel.findOne({ categoryId: id });
         if (product)
-            return { message: 'Категория не удалёна,использутся в товарах' };
+            throw new common_1.BadRequestException('Категория не удалёна,использутся в товарах');
         const removeCategoryProduct = await this.CategoryProductModel.findByIdAndDelete(id).exec();
         if (!removeCategoryProduct)
             throw new common_1.NotFoundException('Категория продукта не удалёна');

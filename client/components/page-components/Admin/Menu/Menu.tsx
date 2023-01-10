@@ -12,6 +12,7 @@ import {
 } from 'react-icons/md';
 import { BsImage } from 'react-icons/bs';
 import { ImExit } from 'react-icons/im';
+import { BiCategoryAlt } from 'react-icons/bi';
 import { useData } from '../../../../store/useData';
 import { useRouter } from 'next/router';
 
@@ -159,6 +160,20 @@ const Menu: FC<MenuProps> = ({
               })}
             />
             Постер
+          </a>
+        </Link>
+        <Link href="/admin/category-product">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'category',
+            })}
+          >
+            <BiCategoryAlt
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'category',
+              })}
+            />
+            Категория товара
           </a>
         </Link>
       </ul>

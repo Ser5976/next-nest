@@ -1,3 +1,4 @@
+import { ICategoryProduct } from './../../../store/category-product/interface.categoryProduct';
 import {
   IOrders,
   IReviewsForAdmin,
@@ -6,6 +7,8 @@ import {
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 import { IType } from '../../../store/type-product/interface.typeProduct';
+import { ICategory } from '../../../header-service/header.service';
+
 // некоторые интерфейсы
 
 //интерфейс для заказов
@@ -200,5 +203,36 @@ export const AdminService = {
   async deletePoster(posterId: string) {
     console.log(' удаление постера ');
     await customAxios.delete(`${API.admin.poster}/${posterId}`);
+  },
+  //----CategoryProduct-----------
+  //добавление категории
+  async addCategoryProduct(data: { name: string }) {
+    console.log(' добавление категории ');
+    await customAxios.post(API.categoryProduct, data);
+  },
+  //получение категорий товара
+  async getCategoryProduct() {
+    console.log(' получение категорий для админа');
+    const { data: categoryP } = await customAxios.get<ICategory>(
+      API.categoryProduct
+    );
+    return categoryP;
+  },
+  // поиск  категории по name
+  async getFoundCategory(name: string) {
+    console.log('поиск категории');
+    const { data: categorySearch } = await customAxios.get<ICategoryProduct[]>(
+      API.admin.searchCategory,
+      {
+        params: { name },
+      }
+    );
+    return categorySearch;
+  },
+
+  //удаление категории
+  async deleteCategory(categoryProdutId: string) {
+    console.log(' удаление категории ');
+    await customAxios.delete(`${API.categoryProduct}/${categoryProdutId}`);
   },
 };

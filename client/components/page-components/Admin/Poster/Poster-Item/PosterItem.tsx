@@ -16,11 +16,11 @@ const PosterItem: FC<PosterItemProps> = ({ poster }): JSX.Element => {
 
   // удаление типа
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
-  const { mutate: deletePoster } = useMutation(AdminService.deletePoster, {
-    onSuccess: () => {
+  const { mutateAsync: deletePoster } = useMutation(AdminService.deletePoster, {
+    onSuccess: (data) => {
       // при успешном изменении делает повторный запрос
       queryClient.invalidateQueries('poster');
-      toast.success('Постер  удалён');
+      toast.success(data?.data.message);
     },
     onError: (error: any) => {
       toast.error('Постер не удалён,что-то пошло не так');
@@ -38,11 +38,11 @@ const PosterItem: FC<PosterItemProps> = ({ poster }): JSX.Element => {
   // запуск удаление изабражения из базы и папки uploads
   const startDeleteImage = async (posterId: string, url: string) => {
     // удаление изображения(url из базы)
-    deletePoster(posterId);
+    await deletePoster(posterId);
     // удаление изображения (url из папки uploads)
     removeUrl(url);
   };
-  
+
   return (
     <>
       <div className={styles.container}>
@@ -54,7 +54,7 @@ const PosterItem: FC<PosterItemProps> = ({ poster }): JSX.Element => {
           className={styles.icon2}
           onClick={() => {
             if (window.confirm(`Вы действительно хотите удалить постер`)) {
-              startDeleteImage(poster._id,poster.picture)
+              startDeleteImage(poster._id, poster.picture);
             }
           }}
         />

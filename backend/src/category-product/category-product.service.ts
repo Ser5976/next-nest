@@ -36,8 +36,8 @@ export class CategoryProductService {
       .populate('productType brand')
       .exec();
     if (!categoryProduct) throw new NotFoundException('Категории не получены');
-    const count = await this.CategoryProductModel.find().count();
-    return { categoryProduct, count };
+  
+    return { categoryProduct, count:categoryProduct.length };
   }
   // поиск  категории  по name
   async findCategory(dto: SearchDto) {

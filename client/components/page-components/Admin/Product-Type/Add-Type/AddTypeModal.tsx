@@ -1,32 +1,31 @@
-import styles from './AddPosterModal.module.css';
+import styles from './AddTypeModal.module.css';
 import { FC } from 'react';
-import { AddPosterModalProps } from './AddPosterModal.props';
+import { AddTypeModalProps } from './AddTypeModal.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import AddPosterForm from './Add-Poster-Form/AddPosterForm';
+import AddTypeForm from './Add-Type-Form/AddTypeForm';
+//import AddCategoryForm from './Add-Poster-Form/AddCategoryForm';
 
-const AddPosterModal: FC<AddPosterModalProps> = ({
+const AddTypeModal: FC<AddTypeModalProps> = ({
   show,
   setShow,
-  productType,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);
   };
   if (!show) return null;
 
-  // console.log('poster:', poster);
   return (
     <div className={styles.container} id="container" onClick={handleOnClose}>
       <div className={styles.form}>
-        <h1 className=" text-lg">Добавить постер</h1>
+        <h1 className=" text-lg">Добавить тип</h1>
         <TiDeleteOutline
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <AddPosterForm productType={productType} setShow={setShow} />
+        <AddTypeForm setShow={setShow} />
       </div>
     </div>
   );
 };
 
-export default AddPosterModal;
+export default AddTypeModal;

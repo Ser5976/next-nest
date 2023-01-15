@@ -11,6 +11,11 @@ export interface ICategory {
   categoryProduct: ICategoryProduct[];
   count: number;
 }
+// интерфейс получение типа продукта
+export interface ITypes {
+  productsTypes: IType[];
+  count: number;
+}
 
 export const HeaderService = {
   // запрос получение forCustomers (для клиентов) через GetStaticProps
@@ -38,8 +43,8 @@ export const HeaderService = {
   // запрос получение типов товаров  через GetStaticProps
   async getProductType() {
     try {
-      const { data: productType } = await axios.get<IType[]>(API.productType);
-      return productType;
+      const { data: types } = await axios.get<ITypes>(API.productType);
+      return types.productsTypes;
     } catch (error) {
       const productType: IType[] = [];
       return productType;

@@ -1,26 +1,26 @@
-import styles from './AddCategoryForm.module.css';
+import styles from './AddTypeForm.module.css';
 import { FC } from 'react';
-import { AddCategoryFormProps } from './AddCategoryForm.props';
+import { AddTypeFormProps } from './AddTypeForm.props';
 import { useMutation, useQueryClient } from 'react-query';
 import { AdminService } from '../../../admin.service';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../../../../ui/Input/Input';
 
-const AddCategoryForm: FC<AddCategoryFormProps> = ({}): JSX.Element => {
+const AddTypeForm: FC<AddTypeFormProps> = ({ setShow }): JSX.Element => {
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
-  // изменение постера
+  // добавляем тип
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
-  const { mutate: addCategory } = useMutation(AdminService.addCategoryProduct, {
+  const { mutate: addType } = useMutation(AdminService.addProductType, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('category product');
+      queryClient.invalidateQueries('product type');
       toast.success('Категория добавлена');
-      setValue('name', ''); // очистка инпута в react-hook-form
+      setShow(false); // закрытие модального окна
     },
     onError: (error: any) => {
-      toast.error('категория не добавлена,чито то пошло не так');
+      toast.error(error.response.data.message);
     },
   });
 
@@ -28,20 +28,19 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({}): JSX.Element => {
     handleSubmit,
     register,
     formState: { errors },
-    setValue,
   } = useForm<{ name: string }>({
     mode: 'onChange',
   });
 
   const onSubmit = (data: { name: string }) => {
-    addCategory(data);
+    addType(data);
   };
   return (
     <div className=" py-3">
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className="relative mb-5 ">
           <label>
-            <div className={styles.label}>Категория</div>
+            <div className={styles.label}>Тип</div>
             <Input
               type="text"
               autoFocus
@@ -62,4 +61,4 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({}): JSX.Element => {
   );
 };
 
-export default AddCategoryForm;
+export default AddTypeForm;

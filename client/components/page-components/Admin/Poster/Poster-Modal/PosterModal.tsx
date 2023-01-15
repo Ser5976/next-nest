@@ -24,17 +24,17 @@ const PosterModal: FC<PosterModalProps> = ({
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-   <h3 className={styles.h3}> Установленный постер</h3>
-       <Image
-                objectFit="contain"
-                src={`${process.env.NEXT_PUBLIC_DOMAIN}/${poster.picture}`}
-                alt="картинка"
-                objectPosition="center"
-                unoptimized
-                priority
-                width={150}
-                height={125}
-              />
+        <h3 className={styles.h3}> Установленный постер</h3>
+        <Image
+          objectFit="contain"
+          src={`${process.env.NEXT_PUBLIC_DOMAIN}/${poster.picture}`}
+          alt="картинка"
+          objectPosition="center"
+          unoptimized
+          priority
+          width={150}
+          height={125}
+        />
         <PosterForm poster={poster} />
       </div>
     </div>

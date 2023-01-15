@@ -17,15 +17,15 @@ const Slider: FC<SliderProps> = ({}): JSX.Element => {
   //получаем слайдер
   const { isLoading } = useQuery('slider', () => AdminService.getSlider(), {
     onSuccess: (data) => {
-      console.log('Cлайдера:', data);
+      // console.log('Cлайдера:', data);
       setImages(data);
-      console.log('загрузка слайдера');
+      //  console.log('загрузка слайдера');
     },
     onError: () => {
       toast.error('Данные не получены, попробуйте ещё раз');
     },
   });
-  console.log('Стэйт:', images);
+  //console.log('Стэйт:', images);
   return (
     <LayoutAdmin activeMenu="slider">
       <h1 className={styles.h1}>Слайдер</h1>

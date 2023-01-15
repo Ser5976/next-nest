@@ -4,10 +4,8 @@ import {
   HTMLAttributes,
   SetStateAction,
 } from 'react';
-import { IType } from '../../../../../../store/type-product/interface.typeProduct';
 
-export interface AddPosterFormProps
+export interface AddTypeFormProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement> {
-  productType: IType[];
   setShow: Dispatch<SetStateAction<boolean>>;
 }

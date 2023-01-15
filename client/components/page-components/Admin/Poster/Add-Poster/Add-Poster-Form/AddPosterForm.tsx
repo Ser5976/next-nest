@@ -15,6 +15,7 @@ export interface IAddPosterForm {
 
 const AddPosterForm: FC<AddPosterFormProps> = ({
   productType,
+  setShow,
 }): JSX.Element => {
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
@@ -24,9 +25,9 @@ const AddPosterForm: FC<AddPosterFormProps> = ({
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
       queryClient.invalidateQueries('poster');
-      setValue('files', undefined); // чтобы передать undefined  в vulue для инпута
-      setValue('productType', ''); // чтобы сбросить тип в селекте
+
       toast.success('Постер добавлен');
+      setShow(false); //закрываем модальное окно
     },
     onError: (error: any) => {
       toast.error(error.response.data.message);
@@ -37,7 +38,7 @@ const AddPosterForm: FC<AddPosterFormProps> = ({
     handleSubmit,
     register,
     formState: { errors },
-    setValue,
+
     control,
   } = useForm<IAddPosterForm>({
     mode: 'onChange',

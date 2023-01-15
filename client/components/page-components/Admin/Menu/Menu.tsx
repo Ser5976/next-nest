@@ -176,6 +176,20 @@ const Menu: FC<MenuProps> = ({
             Категория товара
           </a>
         </Link>
+        <Link href="/admin/product-type">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'type',
+            })}
+          >
+            <BiCategoryAlt
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'type',
+              })}
+            />
+            Тип товара
+          </a>
+        </Link>
       </ul>
       <div className="px-5 m-3 bg-transparent border-b"></div>
       <button

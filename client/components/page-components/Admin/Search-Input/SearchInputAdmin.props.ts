@@ -5,7 +5,8 @@ export interface SearhInputAdminProps
   placeholderText:
     | 'введите email . . .'
     | 'введите имя . . .'
-    | 'введите  тип товара . . .';
+    | 'введите  тип товара . . .'
+    | 'введите категорию товара . . .';
   searchTerm: string;
   handleInput: (event: ChangeEvent<HTMLInputElement>) => void;
 }

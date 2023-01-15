@@ -22,6 +22,8 @@ const PosterForm: FC<PosterFormProps> = ({ poster }): JSX.Element => {
       // при успешном изменении делает повторный запрос
       queryClient.invalidateQueries('poster');
       toast.success(updatePoster.message);
+      removeUrl(poster.picture); //если изменение постера произошло успешно ,удаляем старую фотку из папки uploads
+      setValue('files', undefined); // чтобы передать undefined  в vulue для инпута
     },
     onError: (error: any) => {
       toast.error('постер не изменён,что-то пошло не так');
@@ -46,9 +48,7 @@ const PosterForm: FC<PosterFormProps> = ({ poster }): JSX.Element => {
     // console.log('Фото:', data);
     if (data.files) {
       updatePoster({ picture: data.files[0], posterId: poster._id }); //изменяем постер
-      removeUrl(poster.picture); //если изменение постера произошло успешно ,удаляем старую фотку из папки uploads
     }
-    setValue('files', undefined); // чтобы передать undefined  в vulue для инпута
   };
   return (
     <div className=" border-t py-3">

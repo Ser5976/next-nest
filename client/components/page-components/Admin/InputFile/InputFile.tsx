@@ -15,6 +15,7 @@ export const InputFile: FC<InputFileProps> = ({
   useEffect(() => {
     setValue(image);
   }, [image]);
+  //кастомный хук(см.'../useUploadFile')
   const { uploadImage, removeUrlFolder } = useUploadFile(onChange);
   // console.log('URL:', value);
 
@@ -60,7 +61,6 @@ export const InputFile: FC<InputFileProps> = ({
           <div className={styles.text}> Файл не добавлен</div>
         )}
       </div>
-      
     </>
   );
 };

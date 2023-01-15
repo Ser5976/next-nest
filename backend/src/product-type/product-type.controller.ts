@@ -7,10 +7,12 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
+import { SearchDto } from './dto/search.dto';
 
 @Controller('product-type')
 export class ProductTypeController {
@@ -26,6 +28,12 @@ export class ProductTypeController {
   @Get()
   async getProductType() {
     return this.ProductTypeService.getProductType();
+  }
+  //поиск категории по name
+  @Auth('admin')
+  @Get('search')
+  async findType(@Query() dto: SearchDto) {
+    return this.ProductTypeService.findType(dto);
   }
   // удаление типа товара
   @Delete(':id')

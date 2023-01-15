@@ -7,7 +7,7 @@ import {
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 import { IType } from '../../../store/type-product/interface.typeProduct';
-import { ICategory } from '../../../header-service/header.service';
+import { ICategory, ITypes } from '../../../header-service/header.service';
 
 // некоторые интерфейсы
 
@@ -202,7 +202,10 @@ export const AdminService = {
   //удаление постера
   async deletePoster(posterId: string) {
     console.log(' удаление постера ');
-    await customAxios.delete(`${API.admin.poster}/${posterId}`);
+    const message = await customAxios.delete<{ message: string }>(
+      `${API.admin.poster}/${posterId}`
+    );
+    return message;
   },
   //----CategoryProduct-----------
   //добавление категории
@@ -233,6 +236,43 @@ export const AdminService = {
   //удаление категории
   async deleteCategory(categoryProdutId: string) {
     console.log(' удаление категории ');
-    await customAxios.delete(`${API.categoryProduct}/${categoryProdutId}`);
+    const message = await customAxios.delete<{ message: string }>(
+      `${API.categoryProduct}/${categoryProdutId}`
+    );
+    return message;
+  },
+  //----ProductType-----------
+  //добавление типа
+  async addProductType(data: { name: string }) {
+    console.log(' добавление типа ');
+    await customAxios.post(API.productType, data);
+  },
+  //получение типа товара
+  async getProductType() {
+    console.log(' получение типа для админа');
+    const { data: productsTypes } = await customAxios.get<ITypes>(
+      API.productType
+    );
+    return productsTypes;
+  },
+  // поиск  типа по name
+  async getFoundType(name: string) {
+    console.log('поиск типа');
+    const { data: typeSearch } = await customAxios.get<IType[]>(
+      API.admin.searchType,
+      {
+        params: { name },
+      }
+    );
+    return typeSearch;
+  },
+
+  //удаление типа
+  async deleteType(produtTypeId: string) {
+    console.log(' удаление типа ');
+    const remoteType = await customAxios.delete<IType>(
+      `${API.productType}/${produtTypeId}`
+    );
+    return remoteType;
   },
 };

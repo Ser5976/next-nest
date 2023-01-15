@@ -1,22 +1,22 @@
-import styles from './CategoryProduct.module.css';
+import styles from './ProductType.module.css';
 import cn from 'classnames';
-import { ChangeEvent, FC, useState } from 'react';
-import { CategoryProductProps } from './CategoryProdyct.props';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ProductTypeProps } from './ProdyctType.props';
 import { LayoutAdmin } from '../LayoutAdmin';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { AdminService } from '../admin.service';
 import { toast } from 'react-toastify';
 import { SearchInputAdmin } from '../Search-Input/SearchInputAdmin';
-import { ICategoryProduct } from '../../../../store/category-product/interface.categoryProduct';
 import { useDebounce } from '../useDebounce';
-import CategoryProductItem from './CategoryProduct-Item/CategoryProductItem';
-import AddCategoryModal from './Add-Category/AddCategoryModal';
+import { IType } from '../../../../store/type-product/interface.typeProduct';
+import ProductTypeItem from './ProductType-Item/ProductTypeItem';
+import AddTypeModal from './Add-Type/AddTypeModal';
 
-const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
+const ProductType: FC<ProductTypeProps> = ({}): JSX.Element => {
   //открытие модального окна для редактирование постера
   const [show, setShow] = useState(false);
-  //стэйт для категории
-  const [category, setCategory] = useState<ICategoryProduct[] | undefined>([]);
+  //стэйт для типа
+  const [types, setTypes] = useState<IType[] | undefined>([]);
   //стейт для инпута(поиск пользователя)
   const [searchTerm, setSearchTerm] = useState('');
   //обработчик инпута
@@ -27,35 +27,35 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
   const debouncedSearch = useDebounce(searchTerm, 700);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
-
-  //получаем  все категории
+ 
+  //получаем  все типы
   const {
     isLoading,
     refetch,
-    data: categoryP,
+    data: productsTypes,
   } = useQuery(
-    'category product',
-    () => AdminService.getCategoryProduct(),
+    'product type',
+    () => AdminService.getProductType(),
 
     {
-      onSuccess: (categoryP) => {
-        setCategory(categoryP.categoryProduct);
+      onSuccess: (productsTypes) => {
+        console.log('работает')
+       setTypes(productsTypes.productsTypes);
       },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
-    
     }
   );
 
-  // поиск категории(данные берём из инпута ,
+  // поиск типа(данные берём из инпута ,
   //потом при помощи useDebounce замедляем и только потом передаём в useQuery )
   const { isLoading: loadingSearch } = useQuery(
-    ['search category', debouncedSearch],
-    () => AdminService.getFoundCategory(debouncedSearch),
+    ['search type', debouncedSearch],
+    () => AdminService.getFoundType(debouncedSearch),
     {
-      onSuccess: (category) => {
-        setCategory(category);
+      onSuccess: (type) => {
+       setTypes(type);
       },
       onError: () => {
         toast.error('данные не получены ,что то пошло не так');
@@ -64,22 +64,22 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
     }
   );
 
-  //запуск useQuery (запрос всех категорий) и очистка инпута
+  //запуск useQuery (запрос всех типов) и очистка инпута
   const repeatRaquest = () => {
     setSearchTerm('');
     refetch();
   };
 
   return (
-    <LayoutAdmin activeMenu="category">
+    <LayoutAdmin activeMenu="type">
       <h1 className="text-2xl text-gray-600 font-semibold mb-3">
-        Категории товаров
+        Типы товаров
       </h1>
       <div className={styles.container}>
         <SearchInputAdmin
           searchTerm={searchTerm}
           handleInput={handlerInput}
-          placeholderText="введите категорию товара . . ."
+          placeholderText="введите  тип товара . . ."
         />
         <div className="flex gap-3">
           <div
@@ -88,15 +88,15 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
               setShow(true);
             }}
           >
-            Добавить категорию
+            Добавить тип
           </div>
           <div
             className={cn(styles.button, {
-              [styles.disableButton]: categoryP?.count === category?.length,
+              [styles.disableButton]: productsTypes?.count === types?.length,
             })}
             onClick={repeatRaquest}
           >
-            Все категории
+            Все типы
           </div>
         </div>
       </div>
@@ -105,13 +105,13 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
           Загрузка...
         </h1>
       ) : (
-        category?.map((category) => {
-          return <CategoryProductItem key={category._id} category={category} />;
+        types?.map((type) => {
+          return <ProductTypeItem setTypes={setTypes} key={type._id} type={type} />;
         })
       )}
-      <AddCategoryModal setShow={setShow} show={show} />
+      <AddTypeModal setShow={setShow} show={show} />
     </LayoutAdmin>
   );
 };
 
-export default CategoryProduct;
+export default ProductType;

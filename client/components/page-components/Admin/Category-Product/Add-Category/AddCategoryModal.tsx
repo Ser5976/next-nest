@@ -2,7 +2,7 @@ import styles from './AddCategoryModal.module.css';
 import { FC } from 'react';
 import { AddCategoryModalProps } from './AddCatygoryModal.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import AddCategoryForm from './Add-Poster-Form/AddCategoryForm';
+import AddCategoryForm from './Add-Category-Form/AddCategoryForm';
 
 const AddCategoryModal: FC<AddCategoryModalProps> = ({
   show,
@@ -13,7 +13,6 @@ const AddCategoryModal: FC<AddCategoryModalProps> = ({
   };
   if (!show) return null;
 
-  // console.log('poster:', poster);
   return (
     <div className={styles.container} id="container" onClick={handleOnClose}>
       <div className={styles.form}>
@@ -22,7 +21,7 @@ const AddCategoryModal: FC<AddCategoryModalProps> = ({
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <AddCategoryForm />
+        <AddCategoryForm setShow={setShow} />
       </div>
     </div>
   );

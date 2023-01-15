@@ -2,7 +2,7 @@ import styles from './SliderItem.module.css';
 import { FC } from 'react';
 import { SliderItemProps } from './SliderItem.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
@@ -11,9 +11,8 @@ const SliderItem: FC<SliderItemProps> = ({
   slider,
   setImages,
 }): JSX.Element => {
-  console.log('sliderItem:', slider);
+  // console.log('sliderItem:', slider);
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
-  const queryClient = useQueryClient();
   // удаление изображения(url из базы)
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteImage } = useMutation(AdminService.deleteImage, {
@@ -36,7 +35,7 @@ const SliderItem: FC<SliderItemProps> = ({
     },
   });
   // запуск удаление изабражения из базы и папки uploads
-  const startDeleteImage = async (imgId: string, url: string) => {
+  const startDeleteImage = (imgId: string, url: string) => {
     // удаление изображения(url из базы)
     deleteImage(imgId);
     // удаление изображения (url из папки uploads)

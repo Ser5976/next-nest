@@ -39,8 +39,7 @@ let CategoryProductService = class CategoryProductService {
             .exec();
         if (!categoryProduct)
             throw new common_1.NotFoundException('Категории не получены');
-        const count = await this.CategoryProductModel.find().count();
-        return { categoryProduct, count };
+        return { categoryProduct, count: categoryProduct.length };
     }
     async findCategory(dto) {
         const category = await this.CategoryProductModel.find({

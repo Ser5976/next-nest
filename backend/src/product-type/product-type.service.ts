@@ -1,10 +1,17 @@
+import { PosterTypeModel } from './../poster-type/poster-type.model';
 import { CategoryProductModel } from './../category-product/category-product.model';
 import { ProductModel } from 'src/product/product.model';
 import { ProductTypeDto } from './dto/product-type.dto';
 import { ProductTypeModel } from './product-type.model';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+import { SearchDto } from './dto/search.dto';
+
 
 @Injectable()
 export class ProductTypeService {
@@ -15,9 +22,13 @@ export class ProductTypeService {
     private readonly ProductModel: ModelType<ProductModel>,
     @InjectModel(CategoryProductModel)
     private readonly CategoryProductModel: ModelType<CategoryProductModel>,
+    @InjectModel(PosterTypeModel)
+    private readonly PosterTypeModel: ModelType<PosterTypeModel>,
   ) {}
   //создание типа товара
   async createProductType(dto: ProductTypeDto) {
+    const candidate = await this.ProductTypeModel.findOne({ name: dto.name });
+    if (candidate) throw new BadRequestException('Такой тип уже существует');
     const productType = await this.ProductTypeModel.create(dto);
     if (!productType) throw new NotFoundException('Тип продукта не создан');
     return productType;
@@ -28,16 +39,27 @@ export class ProductTypeService {
       .populate('brand')
       .exec();
     if (!productsTypes) throw new NotFoundException('Типы не получены');
-    return productsTypes;
+    return { productsTypes, count: productsTypes.length };
   }
-
+  // поиск  типа  по name
+  async findType(dto: SearchDto) {
+    const type = await this.ProductTypeModel.find({
+      $or: [{ name: new RegExp(dto.name, 'i') }],
+    }).populate('brand');
+    return type;
+  }
   // удаление типа товара
   async removeProductType(id: string) {
     //делаем запрос на товары, если товар с таким типом существует, то не удаляем
     const product = await this.ProductModel.findOne({ typeId: id });
-    if (product) return { message: 'Тип не удалён,использутся в товарах' };
+    if (product)
+      throw new BadRequestException('Тип не удалён,использутся в товарах');
+      //делаем запрос в постер, если есть постер с таким типом,то не удаляем
+    const poster = await this.PosterTypeModel.findOne({typeId: id })
+    if(poster)
+    throw new BadRequestException('Тип не удалён,удалите постер с этим типом');
     // удаляем тип из категории
-    const category = await this.CategoryProductModel.updateMany(
+    await this.CategoryProductModel.updateMany(
       {},
       { $pull: { productType: id } },
     );
@@ -47,6 +69,6 @@ export class ProductTypeService {
     ).exec();
     if (!removeProductType)
       throw new NotFoundException('Тип продукта не удалён');
-    return { message: 'Тип продукта удален' };
+    return removeProductType;
   }
 }

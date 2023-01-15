@@ -1,3 +1,4 @@
+import { PosterTypeModel } from './../poster-type/poster-type.model';
 import { CategoryProductModel } from './../category-product/category-product.model';
 import { ProductModel } from 'src/product/product.model';
 import { ProductTypeModel } from './product-type.model';
@@ -29,6 +30,14 @@ import { ProductTypeService } from './product-type.service';
         typegooseClass: CategoryProductModel,
         schemaOptions: {
           collection: 'CatecoryProduct',
+        },
+      },
+    ]),
+    TypegooseModule.forFeature([
+      {
+        typegooseClass: PosterTypeModel,
+        schemaOptions: {
+          collection: 'Poster',
         },
       },
     ]),

@@ -12,19 +12,24 @@ const CategoryProductItem: FC<CategoryProductItemProps> = ({
   // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
 
-  // удаление типа
+  // удаление категории
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
-  const { mutate: deleteCategory } = useMutation(AdminService.deleteCategory, {
-    onSuccess: () => {
-      // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('category product');
-      toast.success('Категория удалена');
-    },
-    onError: (error: any) => {
-      toast.error(error.response.data.message);
-    },
-  });
+  const { mutateAsync: deleteCategory } = useMutation(
+    AdminService.deleteCategory,
+    {
+      onSuccess: (data) => {
+        toast.success(data?.data.message);
+        queryClient.invalidateQueries('category product');
+      },
+      onError: (error: any) => {
+        toast.error(error.response.data.message);
+      },
+    }
+  );
 
+  const removeCategory = async () => {
+    await deleteCategory(category._id);
+  };
   return (
     <>
       <div className={styles.container}>
@@ -34,7 +39,7 @@ const CategoryProductItem: FC<CategoryProductItemProps> = ({
           className={styles.icon2}
           onClick={() => {
             if (window.confirm(`Вы действительно хотите удалить категорию`)) {
-              deleteCategory(category._id);
+              removeCategory();
             }
           }}
         />

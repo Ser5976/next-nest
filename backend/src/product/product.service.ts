@@ -69,6 +69,7 @@ export class ProductService {
         },
       );
     }
+    // и наконец создаём товар
     const product = await this.ProductModel.create(dto);
     if (!product) throw new NotFoundException('Товар не создан');
     return product;
@@ -84,7 +85,7 @@ export class ProductService {
   //получение  товаров(фильтрация,сортировка,пагинация)
   async getFilteredProducts(dto: QueryParametrsDto) {
     const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
-    console.log('Dto:', dto);
+    // console.log('Dto:', dto);
     //пагинация
     let offset = Number(page) * Number(limit) - Number(limit);
 

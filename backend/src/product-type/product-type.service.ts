@@ -12,7 +12,6 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { SearchDto } from './dto/search.dto';
 
-
 @Injectable()
 export class ProductTypeService {
   constructor(
@@ -33,31 +32,37 @@ export class ProductTypeService {
     if (!productType) throw new NotFoundException('Тип продукта не создан');
     return productType;
   }
-  // получение типов товаров
-  async getProductType() {
-    const productsTypes = await this.ProductTypeModel.find()
+  // получение(и поиск) типов товаров
+  async getProductType(dto?: SearchDto) {
+    let options = {};
+    if (dto.name) {
+      options = {
+        $or: [
+          {
+            name: new RegExp(dto.name, 'i'),
+          },
+        ],
+      };
+    }
+    const productsTypes = await this.ProductTypeModel.find(options)
       .populate('brand')
       .exec();
     if (!productsTypes) throw new NotFoundException('Типы не получены');
-    return { productsTypes, count: productsTypes.length };
+    return productsTypes;
   }
-  // поиск  типа  по name
-  async findType(dto: SearchDto) {
-    const type = await this.ProductTypeModel.find({
-      $or: [{ name: new RegExp(dto.name, 'i') }],
-    }).populate('brand');
-    return type;
-  }
+
   // удаление типа товара
   async removeProductType(id: string) {
     //делаем запрос на товары, если товар с таким типом существует, то не удаляем
     const product = await this.ProductModel.findOne({ typeId: id });
     if (product)
       throw new BadRequestException('Тип не удалён,использутся в товарах');
-      //делаем запрос в постер, если есть постер с таким типом,то не удаляем
-    const poster = await this.PosterTypeModel.findOne({typeId: id })
-    if(poster)
-    throw new BadRequestException('Тип не удалён,удалите постер с этим типом');
+    //делаем запрос в постер, если есть постер с таким типом,то не удаляем
+    const poster = await this.PosterTypeModel.findOne({ typeId: id });
+    if (poster)
+      throw new BadRequestException(
+        'Тип не удалён,удалите постер с этим типом',
+      );
     // удаляем тип из категории
     await this.CategoryProductModel.updateMany(
       {},

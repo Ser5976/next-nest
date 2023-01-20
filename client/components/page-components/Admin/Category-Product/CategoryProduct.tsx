@@ -1,13 +1,11 @@
 import styles from './CategoryProduct.module.css';
-import cn from 'classnames';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { CategoryProductProps } from './CategoryProdyct.props';
 import { LayoutAdmin } from '../LayoutAdmin';
 import { useQuery } from 'react-query';
 import { AdminService } from '../admin.service';
 import { toast } from 'react-toastify';
 import { SearchInputAdmin } from '../Search-Input/SearchInputAdmin';
-import { ICategoryProduct } from '../../../../store/category-product/interface.categoryProduct';
 import { useDebounce } from '../useDebounce';
 import CategoryProductItem from './CategoryProduct-Item/CategoryProductItem';
 import AddCategoryModal from './Add-Category/AddCategoryModal';
@@ -15,8 +13,6 @@ import AddCategoryModal from './Add-Category/AddCategoryModal';
 const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
   //открытие модального окна для редактирование постера
   const [show, setShow] = useState(false);
-  //стэйт для категории
-  const [category, setCategory] = useState<ICategoryProduct[] | undefined>([]);
   //стейт для инпута(поиск пользователя)
   const [searchTerm, setSearchTerm] = useState('');
   //обработчик инпута
@@ -28,47 +24,26 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
 
-  //получаем  все категории
+  //получаем (или поиск) все категории
+  // при помощи useDebounce замедляем и только потом передаём в useQuery )
   const {
     isLoading,
     refetch,
-    data: categoryP,
+    data: categoryProduct,
   } = useQuery(
-    'category product',
-    () => AdminService.getCategoryProduct(),
+    ['category product', debouncedSearch],
+    () => AdminService.getCategoryProduct(debouncedSearch),
 
     {
-      onSuccess: (categoryP) => {
-        setCategory(categoryP.categoryProduct);
-      },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
-    
     }
   );
-
-  // поиск категории(данные берём из инпута ,
-  //потом при помощи useDebounce замедляем и только потом передаём в useQuery )
-  const { isLoading: loadingSearch } = useQuery(
-    ['search category', debouncedSearch],
-    () => AdminService.getFoundCategory(debouncedSearch),
-    {
-      onSuccess: (category) => {
-        setCategory(category);
-      },
-      onError: () => {
-        toast.error('данные не получены ,что то пошло не так');
-      },
-      enabled: !!searchTerm,
-    }
-  );
-
-  //запуск useQuery (запрос всех категорий) и очистка инпута
-  const repeatRaquest = () => {
-    setSearchTerm('');
+  //для поиска, повторный запрос
+  useEffect(() => {
     refetch();
-  };
+  }, [searchTerm]);
 
   return (
     <LayoutAdmin activeMenu="category">
@@ -90,22 +65,14 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
           >
             Добавить категорию
           </div>
-          <div
-            className={cn(styles.button, {
-              [styles.disableButton]: categoryP?.count === category?.length,
-            })}
-            onClick={repeatRaquest}
-          >
-            Все категории
-          </div>
         </div>
       </div>
-      {isLoading || loadingSearch ? (
+      {isLoading ? (
         <h1 className="text-center font-semibold  text-gray-600 mt-2">
           Загрузка...
         </h1>
       ) : (
-        category?.map((category) => {
+        categoryProduct?.map((category) => {
           return <CategoryProductItem key={category._id} category={category} />;
         })
       )}

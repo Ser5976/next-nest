@@ -10,6 +10,7 @@ export interface LayoutAdminProps {
     | 'slider'
     | 'poster'
     | 'category'
-    | 'type';
+    | 'type'
+    | 'brand'
   //это флаги для отображения активной ссылки в меню
 }

@@ -33,19 +33,23 @@ let CategoryProductService = class CategoryProductService {
             throw new common_1.NotFoundException('Категория продукта не создан');
         return categoryProduct;
     }
-    async getCategoryProduct() {
-        const categoryProduct = await this.CategoryProductModel.find()
+    async getCategoryProduct(dto) {
+        let options = {};
+        if (dto.name) {
+            options = {
+                $or: [
+                    {
+                        name: new RegExp(dto.name, 'i'),
+                    },
+                ],
+            };
+        }
+        const categoryProduct = await this.CategoryProductModel.find(options)
             .populate('productType brand')
             .exec();
         if (!categoryProduct)
-            throw new common_1.NotFoundException('Категории не получены');
-        return { categoryProduct, count: categoryProduct.length };
-    }
-    async findCategory(dto) {
-        const category = await this.CategoryProductModel.find({
-            $or: [{ name: new RegExp(dto.name, 'i') }],
-        }).populate('productType brand');
-        return category;
+            throw new common_1.NotFoundException('Типы не получены');
+        return categoryProduct;
     }
     async removeCategoryProduct(id) {
         const product = await this.ProductModel.findOne({ categoryId: id });

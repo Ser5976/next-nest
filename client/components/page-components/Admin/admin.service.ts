@@ -7,7 +7,7 @@ import {
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 import { IType } from '../../../store/type-product/interface.typeProduct';
-import { ICategory, ITypes } from '../../../header-service/header.service';
+import axios from 'axios';
 
 // некоторые интерфейсы
 
@@ -37,6 +37,13 @@ export interface IAddPoster {
 export interface IUpdatePoster {
   picture: string;
   posterId: string | undefined;
+}
+// интерфейс брэнд
+export interface IBrand {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 //сервис для запроса на сервак
@@ -214,25 +221,16 @@ export const AdminService = {
     await customAxios.post(API.categoryProduct, data);
   },
   //получение категорий товара
-  async getCategoryProduct() {
+  async getCategoryProduct(name: string) {
     console.log(' получение категорий для админа');
-    const { data: categoryP } = await customAxios.get<ICategory>(
-      API.categoryProduct
-    );
-    return categoryP;
-  },
-  // поиск  категории по name
-  async getFoundCategory(name: string) {
-    console.log('поиск категории');
-    const { data: categorySearch } = await customAxios.get<ICategoryProduct[]>(
-      API.admin.searchCategory,
+    const { data: categoryProduct } = await customAxios.get<ICategoryProduct[]>(
+      API.categoryProduct,
       {
         params: { name },
       }
     );
-    return categorySearch;
+    return categoryProduct;
   },
-
   //удаление категории
   async deleteCategory(categoryProdutId: string) {
     console.log(' удаление категории ');
@@ -247,24 +245,13 @@ export const AdminService = {
     console.log(' добавление типа ');
     await customAxios.post(API.productType, data);
   },
-  //получение типа товара
-  async getProductType() {
+  //получение(и поиск) типа товара
+  async getProductType(name?: string) {
     console.log(' получение типа для админа');
-    const { data: productsTypes } = await customAxios.get<ITypes>(
-      API.productType
-    );
+    const { data: productsTypes } = await axios.get<IType[]>(API.productType, {
+      params: { name },
+    });
     return productsTypes;
-  },
-  // поиск  типа по name
-  async getFoundType(name: string) {
-    console.log('поиск типа');
-    const { data: typeSearch } = await customAxios.get<IType[]>(
-      API.admin.searchType,
-      {
-        params: { name },
-      }
-    );
-    return typeSearch;
   },
 
   //удаление типа
@@ -274,5 +261,28 @@ export const AdminService = {
       `${API.productType}/${produtTypeId}`
     );
     return remoteType;
+  },
+  //----Brand-----------
+  //добавление брэнда
+  async addBrand(data: { name: string }) {
+    console.log(' добавление брэнда ');
+    await customAxios.post(API.admin.brand, data);
+  },
+  //получение или поиск брэнда
+  async getBrand(searchBrand?: string) {
+    console.log(' получение брэнда');
+    const { data: brands } = await customAxios.get<IBrand[]>(API.admin.brand, {
+      params: { name: searchBrand },
+    });
+    return brands;
+  },
+
+  //удаление типа
+  async deleteBrand(brandId: string) {
+    console.log(' удаление бранда ');
+    const remoteBrand = await customAxios.delete<IBrand>(
+      `${API.admin.brand}/${brandId}`
+    );
+    return remoteBrand;
   },
 };

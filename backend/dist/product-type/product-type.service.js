@@ -35,19 +35,23 @@ let ProductTypeService = class ProductTypeService {
             throw new common_1.NotFoundException('Тип продукта не создан');
         return productType;
     }
-    async getProductType() {
-        const productsTypes = await this.ProductTypeModel.find()
+    async getProductType(dto) {
+        let options = {};
+        if (dto.name) {
+            options = {
+                $or: [
+                    {
+                        name: new RegExp(dto.name, 'i'),
+                    },
+                ],
+            };
+        }
+        const productsTypes = await this.ProductTypeModel.find(options)
             .populate('brand')
             .exec();
         if (!productsTypes)
             throw new common_1.NotFoundException('Типы не получены');
-        return { productsTypes, count: productsTypes.length };
-    }
-    async findType(dto) {
-        const type = await this.ProductTypeModel.find({
-            $or: [{ name: new RegExp(dto.name, 'i') }],
-        }).populate('brand');
-        return type;
+        return productsTypes;
     }
     async removeProductType(id) {
         const product = await this.ProductModel.findOne({ typeId: id });

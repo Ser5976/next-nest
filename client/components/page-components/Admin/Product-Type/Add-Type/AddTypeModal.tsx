@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { AddTypeModalProps } from './AddTypeModal.props';
 import { TiDeleteOutline } from 'react-icons/ti';
 import AddTypeForm from './Add-Type-Form/AddTypeForm';
-//import AddCategoryForm from './Add-Poster-Form/AddCategoryForm';
 
 const AddTypeModal: FC<AddTypeModalProps> = ({
   show,

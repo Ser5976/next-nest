@@ -18,9 +18,5 @@ __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
 ], BrandModel.prototype, "name", void 0);
-__decorate([
-    (0, typegoose_1.prop)(),
-    __metadata("design:type", Array)
-], BrandModel.prototype, "logo", void 0);
 exports.BrandModel = BrandModel;
 //# sourceMappingURL=brand.model.js.map

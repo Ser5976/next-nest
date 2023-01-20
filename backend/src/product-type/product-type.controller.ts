@@ -24,17 +24,13 @@ export class ProductTypeController {
   async createProductType(@Body() dto: ProductTypeDto) {
     return this.ProductTypeService.createProductType(dto);
   }
-  // получение типов товаров
+
+  // получение(и поиск) типов товаров
   @Get()
-  async getProductType() {
-    return this.ProductTypeService.getProductType();
+  async getProductType(@Query() dto?: SearchDto) {
+    return this.ProductTypeService.getProductType(dto);
   }
-  //поиск категории по name
-  @Auth('admin')
-  @Get('search')
-  async findType(@Query() dto: SearchDto) {
-    return this.ProductTypeService.findType(dto);
-  }
+
   // удаление типа товара
   @Delete(':id')
   @Auth('admin')

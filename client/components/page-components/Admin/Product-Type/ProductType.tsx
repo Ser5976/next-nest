@@ -3,20 +3,18 @@ import cn from 'classnames';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { ProductTypeProps } from './ProdyctType.props';
 import { LayoutAdmin } from '../LayoutAdmin';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { AdminService } from '../admin.service';
 import { toast } from 'react-toastify';
 import { SearchInputAdmin } from '../Search-Input/SearchInputAdmin';
 import { useDebounce } from '../useDebounce';
-import { IType } from '../../../../store/type-product/interface.typeProduct';
 import ProductTypeItem from './ProductType-Item/ProductTypeItem';
 import AddTypeModal from './Add-Type/AddTypeModal';
 
 const ProductType: FC<ProductTypeProps> = ({}): JSX.Element => {
+  console.log('рендер');
   //открытие модального окна для редактирование постера
   const [show, setShow] = useState(false);
-  //стэйт для типа
-  const [types, setTypes] = useState<IType[] | undefined>([]);
   //стейт для инпута(поиск пользователя)
   const [searchTerm, setSearchTerm] = useState('');
   //обработчик инпута
@@ -27,48 +25,25 @@ const ProductType: FC<ProductTypeProps> = ({}): JSX.Element => {
   const debouncedSearch = useDebounce(searchTerm, 700);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
- 
+
   //получаем  все типы
   const {
     isLoading,
     refetch,
     data: productsTypes,
   } = useQuery(
-    'product type',
-    () => AdminService.getProductType(),
+    ['product type', debouncedSearch],
+    () => AdminService.getProductType(debouncedSearch),
 
     {
-      onSuccess: (productsTypes) => {
-        console.log('работает')
-       setTypes(productsTypes.productsTypes);
-      },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
     }
   );
-
-  // поиск типа(данные берём из инпута ,
-  //потом при помощи useDebounce замедляем и только потом передаём в useQuery )
-  const { isLoading: loadingSearch } = useQuery(
-    ['search type', debouncedSearch],
-    () => AdminService.getFoundType(debouncedSearch),
-    {
-      onSuccess: (type) => {
-       setTypes(type);
-      },
-      onError: () => {
-        toast.error('данные не получены ,что то пошло не так');
-      },
-      enabled: !!searchTerm,
-    }
-  );
-
-  //запуск useQuery (запрос всех типов) и очистка инпута
-  const repeatRaquest = () => {
-    setSearchTerm('');
+  useEffect(() => {
     refetch();
-  };
+  }, [searchTerm]);
 
   return (
     <LayoutAdmin activeMenu="type">
@@ -90,23 +65,15 @@ const ProductType: FC<ProductTypeProps> = ({}): JSX.Element => {
           >
             Добавить тип
           </div>
-          <div
-            className={cn(styles.button, {
-              [styles.disableButton]: productsTypes?.count === types?.length,
-            })}
-            onClick={repeatRaquest}
-          >
-            Все типы
-          </div>
         </div>
       </div>
-      {isLoading || loadingSearch ? (
+      {isLoading ? (
         <h1 className="text-center font-semibold  text-gray-600 mt-2">
           Загрузка...
         </h1>
       ) : (
-        types?.map((type) => {
-          return <ProductTypeItem setTypes={setTypes} key={type._id} type={type} />;
+        productsTypes?.map((type) => {
+          return <ProductTypeItem key={type._id} type={type} />;
         })
       )}
       <AddTypeModal setShow={setShow} show={show} />

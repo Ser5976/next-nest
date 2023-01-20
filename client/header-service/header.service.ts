@@ -6,17 +6,6 @@ import { API } from '../constants/url';
 import { IUserProfile } from '../store/user/interface.user';
 import customAxios from '../custom-axios/axiox-interceptors';
 
-// интерфейс получение категорий
-export interface ICategory {
-  categoryProduct: ICategoryProduct[];
-  count: number;
-}
-// интерфейс получение типа продукта
-export interface ITypes {
-  productsTypes: IType[];
-  count: number;
-}
-
 export const HeaderService = {
   // запрос получение forCustomers (для клиентов) через GetStaticProps
   async getForCustomers() {
@@ -31,10 +20,10 @@ export const HeaderService = {
   // запрос получение категории товаров через GetStaticProps
   async getСategoryProduct() {
     try {
-      const { data: category } = await axios.get<ICategory>(
+      const { data: categoryProduct } = await axios.get<ICategoryProduct[]>(
         API.categoryProduct
       );
-      return category.categoryProduct;
+      return categoryProduct;
     } catch (error) {
       const categoryProduct: ICategoryProduct[] = [];
       return categoryProduct;
@@ -43,8 +32,8 @@ export const HeaderService = {
   // запрос получение типов товаров  через GetStaticProps
   async getProductType() {
     try {
-      const { data: types } = await axios.get<ITypes>(API.productType);
-      return types.productsTypes;
+      const { data: productType } = await axios.get<IType[]>(API.productType);
+      return productType;
     } catch (error) {
       const productType: IType[] = [];
       return productType;

@@ -13,12 +13,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BrandController = void 0;
-const updatelogo_dto_1 = require("./dto/updatelogo.dto");
 const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const brand_service_1 = require("./brand.service");
 const common_1 = require("@nestjs/common");
 const brand_dto_1 = require("./dto/brand.dto");
+const search_dto_1 = require("./dto/search.dto");
 let BrandController = class BrandController {
     constructor(BrandService) {
         this.BrandService = BrandService;
@@ -26,11 +26,8 @@ let BrandController = class BrandController {
     async createBrand(dto) {
         return this.BrandService.createBrand(dto);
     }
-    async getBrands(searchBrand) {
-        return this.BrandService.getBrands(searchBrand);
-    }
-    async updateBrand(id, dto) {
-        return this.BrandService.updateBarnd(id, dto);
+    async getBrands(dto) {
+        return this.BrandService.getBrands(dto);
     }
     async removeBrand(id) {
         return this.BrandService.removeBrand(id);
@@ -48,20 +45,11 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, auth_decorators_1.Auth)('admin'),
-    __param(0, (0, common_1.Query)('searchBrand')),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
 ], BrandController.prototype, "getBrands", null);
-__decorate([
-    (0, common_1.Put)(':id'),
-    (0, auth_decorators_1.Auth)('admin'),
-    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, updatelogo_dto_1.UpdateLogoDto]),
-    __metadata("design:returntype", Promise)
-], BrandController.prototype, "updateBrand", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)('admin'),

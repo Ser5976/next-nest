@@ -30,22 +30,23 @@ export class CategoryProductService {
       throw new NotFoundException('Категория продукта не создан');
     return categoryProduct;
   }
-  // получение категорий товаров
-  async getCategoryProduct() {
-    const categoryProduct = await this.CategoryProductModel.find()
+  // получение и поиск категорий товаров
+  async getCategoryProduct(dto: SearchDto) {
+    let options = {};
+    if (dto.name) {
+      options = {
+        $or: [
+          {
+            name: new RegExp(dto.name, 'i'),
+          },
+        ],
+      };
+    }
+    const categoryProduct = await this.CategoryProductModel.find(options)
       .populate('productType brand')
       .exec();
-    if (!categoryProduct) throw new NotFoundException('Категории не получены');
-  
-    return { categoryProduct, count:categoryProduct.length };
-  }
-  // поиск  категории  по name
-  async findCategory(dto: SearchDto) {
-    // console.log('Поиск:', dto);
-    const category = await this.CategoryProductModel.find({
-      $or: [{ name: new RegExp(dto.name, 'i') }],
-    }).populate('productType brand');
-    return category;
+    if (!categoryProduct) throw new NotFoundException('Типы не получены');
+    return categoryProduct;
   }
   // удаление категории товара
   async removeCategoryProduct(id: string) {

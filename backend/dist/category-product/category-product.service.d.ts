@@ -10,13 +10,7 @@ export declare class CategoryProductService {
     createCategoryProduct(dto: CategoryProductDto): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & CategoryProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    getCategoryProduct(): Promise<{
-        categoryProduct: Omit<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & CategoryProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
-            _id: import("mongoose").Types.ObjectId;
-        }, never>[];
-        count: number;
-    }>;
-    findCategory(dto: SearchDto): Promise<Omit<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & CategoryProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+    getCategoryProduct(dto: SearchDto): Promise<Omit<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & CategoryProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
     }, never>[]>;
     removeCategoryProduct(id: string): Promise<{

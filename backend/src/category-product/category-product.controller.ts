@@ -26,17 +26,12 @@ export class CategoryProductController {
   async createProductType(@Body() dto: CategoryProductDto) {
     return this.CategoryProductService.createCategoryProduct(dto);
   }
-  // получение категории товаров
+  // получение и поиск категории товаров
   @Get()
-  async getCategoryProduct() {
-    return this.CategoryProductService.getCategoryProduct();
+  async getCategoryProduct(@Query() dto: SearchDto) {
+    return this.CategoryProductService.getCategoryProduct(dto);
   }
-  //поиск категории по name
-  @Auth('admin')
-  @Get('search')
-  async findCategory(@Query() dto: SearchDto) {
-    return this.CategoryProductService.findCategory(dto);
-  }
+
   // удаление категории товара
   @Delete(':id')
   @Auth('admin')

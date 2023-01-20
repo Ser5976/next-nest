@@ -25,11 +25,8 @@ let ProductTypeController = class ProductTypeController {
     async createProductType(dto) {
         return this.ProductTypeService.createProductType(dto);
     }
-    async getProductType() {
-        return this.ProductTypeService.getProductType();
-    }
-    async findType(dto) {
-        return this.ProductTypeService.findType(dto);
+    async getProductType(dto) {
+        return this.ProductTypeService.getProductType(dto);
     }
     async removeProductType(id) {
         return this.ProductTypeService.removeProductType(id);
@@ -46,18 +43,11 @@ __decorate([
 ], ProductTypeController.prototype, "createProductType", null);
 __decorate([
     (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], ProductTypeController.prototype, "getProductType", null);
-__decorate([
-    (0, auth_decorators_1.Auth)('admin'),
-    (0, common_1.Get)('search'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
-], ProductTypeController.prototype, "findType", null);
+], ProductTypeController.prototype, "getProductType", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)('admin'),

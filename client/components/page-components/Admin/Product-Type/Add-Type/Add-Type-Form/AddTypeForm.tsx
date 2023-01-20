@@ -16,7 +16,7 @@ const AddTypeForm: FC<AddTypeFormProps> = ({ setShow }): JSX.Element => {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
       queryClient.invalidateQueries('product type');
-      toast.success('Категория добавлена');
+      toast.success('Тип добавлен');
       setShow(false); // закрытие модального окна
     },
     onError: (error: any) => {

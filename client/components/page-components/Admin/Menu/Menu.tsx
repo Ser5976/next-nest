@@ -13,6 +13,7 @@ import {
 import { BsImage } from 'react-icons/bs';
 import { ImExit } from 'react-icons/im';
 import { BiCategoryAlt } from 'react-icons/bi';
+import { MdOutlineArticle } from 'react-icons/md';
 import { useData } from '../../../../store/useData';
 import { useRouter } from 'next/router';
 
@@ -202,6 +203,20 @@ const Menu: FC<MenuProps> = ({
               })}
             />
             Брэнд
+          </a>
+        </Link>
+        <Link href="/admin/for-customers">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'for-customers',
+            })}
+          >
+            <MdOutlineArticle
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'for-customers',
+              })}
+            />
+            Для клиентов
           </a>
         </Link>
       </ul>

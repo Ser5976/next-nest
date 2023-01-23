@@ -3,6 +3,7 @@ import styles from './Article.module.css';
 import cn from 'classnames';
 import { FC } from 'react';
 import Link from 'next/link';
+import parse from 'html-react-parser'; //преобразует строку в HTML(т.к  при помощи текстового редактора(TextEditor)) мы загружае в базу HTML
 
 const Article: FC<ArticleProps> = ({ article, forCustomers }): JSX.Element => {
   return (
@@ -38,7 +39,7 @@ const Article: FC<ArticleProps> = ({ article, forCustomers }): JSX.Element => {
           <h1 className=" text-2xl text-gray-600  font-semibold my-5 ">
             {article.title}
           </h1>
-          <div>{article.description}</div>
+          <div>{parse(article.description)}</div>
         </section>
       </main>
     </>

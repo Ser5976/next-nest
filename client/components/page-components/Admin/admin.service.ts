@@ -8,9 +8,18 @@ import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 import { IType } from '../../../store/type-product/interface.typeProduct';
 import axios from 'axios';
+import { IArticle } from '../../../store/customers/interface.customers';
 
 // некоторые интерфейсы
-
+export interface IAddArticle {
+  title: string;
+  description: string;
+  slug: string;
+}
+export interface IUpdateArticle {
+  id: string;
+  data: IAddArticle;
+}
 //интерфейс для заказов
 export interface IcompletedOrder {
   orderId: string;
@@ -284,5 +293,32 @@ export const AdminService = {
       `${API.admin.brand}/${brandId}`
     );
     return remoteBrand;
+  },
+  //----for-customers-----------
+  //добавление статьи
+  async addArticle(data: IAddArticle) {
+    console.log(' добавление статьи ');
+    const article = await customAxios.post(API.customers, data);
+    return article;
+  },
+  //получение статей
+  async getArticles() {
+    console.log(' получение статей');
+    const { data: articles } = await axios.get<IArticle[]>(API.customers);
+    return articles;
+  },
+  //редактирование статьи
+  async updateArticle(data: IUpdateArticle) {
+    console.log(' редактирование статьи ');
+    await customAxios.put(`${API.customers}/${data.id}`, data.data);
+  },
+
+  //удаление типа
+  async deleteArticle(articleId: string) {
+    console.log(' удаление статьи ');
+    const article = await customAxios.delete<IArticle>(
+      `${API.customers}/${articleId}`
+    );
+    return article;
   },
 };

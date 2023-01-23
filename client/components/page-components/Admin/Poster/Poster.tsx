@@ -1,5 +1,4 @@
 import styles from './Poster.module.css';
-import cn from 'classnames';
 import { ChangeEvent, FC, useMemo, useState } from 'react';
 import { PosterProps } from './Poster.props';
 import { LayoutAdmin } from '../LayoutAdmin';
@@ -26,7 +25,7 @@ const Poster: FC<PosterProps> = ({ productType }): JSX.Element => {
   //useQuery работает с GET запросами
 
   //получаем постеры и записываем в стейт
-  const { isLoading, refetch, data } = useQuery(
+  const { isLoading, data } = useQuery(
     'poster',
     () => AdminService.getPoster(),
 
@@ -52,12 +51,6 @@ const Poster: FC<PosterProps> = ({ productType }): JSX.Element => {
     return search;
   }, [searchTerm]);
 
-  //запуск useQuery (запрос всех постеров) и очистка инпута
-  const repeatRaquest = () => {
-    setSearchTerm('');
-    refetch();
-  };
-
   return (
     <LayoutAdmin activeMenu="poster">
       <h1 className="text-2xl text-gray-600 font-semibold mb-3">
@@ -77,14 +70,6 @@ const Poster: FC<PosterProps> = ({ productType }): JSX.Element => {
             }}
           >
             Добавить постер
-          </div>
-          <div
-            className={cn(styles.button, {
-              [styles.disableButton]: !searchTerm,
-            })}
-            onClick={repeatRaquest}
-          >
-            Все типы
           </div>
         </div>
       </div>

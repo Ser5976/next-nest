@@ -24,7 +24,6 @@ const Brand: FC<BrandProps> = ({}): JSX.Element => {
   const debouncedSearch = useDebounce(searchTerm, 700);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
-
   //получаем  все брэнды
   const {
     isLoading,
@@ -38,7 +37,6 @@ const Brand: FC<BrandProps> = ({}): JSX.Element => {
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
-      enabled: true,
     }
   );
   useEffect(() => {

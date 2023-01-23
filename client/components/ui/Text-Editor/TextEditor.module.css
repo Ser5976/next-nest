@@ -1,0 +1,21 @@
+.wrapper {
+  @apply relative;
+}
+.label {
+  @apply mb-2 text-gray-400;
+}
+
+.toolbar {
+  @apply mb-2 bg-gray-400 bg-opacity-40 p-3;
+}
+
+.editor {
+  @apply h-96  px-4 text-gray-500 overflow-y-auto mb-7;
+}
+
+.errorMessage {
+  @apply absolute bottom-0 left-[20px] text-gray-600 text-xs;
+}
+.errorIcon {
+  @apply absolute bottom-0 left-0 fill-red-400 w-4 h-4;
+}

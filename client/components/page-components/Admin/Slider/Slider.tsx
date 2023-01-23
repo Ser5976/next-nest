@@ -25,7 +25,7 @@ const Slider: FC<SliderProps> = ({}): JSX.Element => {
       toast.error('Данные не получены, попробуйте ещё раз');
     },
   });
-  //console.log('Стэйт:', images);
+  console.log('рендеринг');
   return (
     <LayoutAdmin activeMenu="slider">
       <h1 className={styles.h1}>Слайдер</h1>

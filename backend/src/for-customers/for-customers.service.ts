@@ -1,6 +1,10 @@
 import { ForCustomersDto } from './dto/for-customers.dto';
 import { ForCustomersModel } from './for-customers.model';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 
@@ -12,6 +16,16 @@ export class ForCustomersService {
   ) {}
   //создание данных
   async createData(dto: ForCustomersDto) {
+    const title = await this.ForCustomersModel.findOne({
+      title: dto.title,
+    });
+    if (title)
+      throw new BadRequestException('Такое название статьи  уже существует');
+    const slug = await this.ForCustomersModel.findOne({
+      slug: dto.slug,
+    });
+    if (slug) throw new BadRequestException('Такой slug  уже существует');
+
     const data = await this.ForCustomersModel.create(dto);
     if (!data)
       throw new NotFoundException('Что то пошло не так,данные не созданы');

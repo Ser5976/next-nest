@@ -12,5 +12,6 @@ export interface LayoutAdminProps {
     | 'category'
     | 'type'
     | 'brand'
+    | 'for-customers'
   //это флаги для отображения активной ссылки в меню
 }

@@ -8,3 +8,6 @@
 .wrapperImage {
   @apply relative w-[125px] h-[75px];
 }
+.wrapperImage img {
+  @apply transform transition-opacity duration-1000;
+}

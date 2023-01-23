@@ -5,11 +5,15 @@ import Link from 'next/link';
 import { MenuProps } from './Menu.props';
 import { FiUsers } from 'react-icons/fi';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md/index';
-import { VscListOrdered } from 'react-icons/vsc';
-import { MdOutlineAdminPanelSettings,MdOutlineViewCarousel} from 'react-icons/md';
-
-import { VscFeedback } from 'react-icons/vsc';
+import { VscListOrdered, VscFeedback } from 'react-icons/vsc';
+import {
+  MdOutlineAdminPanelSettings,
+  MdOutlineViewCarousel,
+} from 'react-icons/md';
+import { BsImage } from 'react-icons/bs';
 import { ImExit } from 'react-icons/im';
+import { BiCategoryAlt } from 'react-icons/bi';
+import { MdOutlineArticle } from 'react-icons/md';
 import { useData } from '../../../../store/useData';
 import { useRouter } from 'next/router';
 
@@ -143,6 +147,76 @@ const Menu: FC<MenuProps> = ({
               })}
             />
             Слайдер
+          </a>
+        </Link>
+        <Link href="/admin/poster">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'poster',
+            })}
+          >
+            <BsImage
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'poster',
+              })}
+            />
+            Постер
+          </a>
+        </Link>
+        <Link href="/admin/category-product">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'category',
+            })}
+          >
+            <BiCategoryAlt
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'category',
+              })}
+            />
+            Категория товара
+          </a>
+        </Link>
+        <Link href="/admin/product-type">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'type',
+            })}
+          >
+            <BiCategoryAlt
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'type',
+              })}
+            />
+            Тип товара
+          </a>
+        </Link>
+        <Link href="/admin/brand">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'brand',
+            })}
+          >
+            <BiCategoryAlt
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'brand',
+              })}
+            />
+            Брэнд
+          </a>
+        </Link>
+        <Link href="/admin/for-customers">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'for-customers',
+            })}
+          >
+            <MdOutlineArticle
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'for-customers',
+              })}
+            />
+            Для клиентов
           </a>
         </Link>
       </ul>

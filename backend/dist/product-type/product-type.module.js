@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductTypeModule = void 0;
+const poster_type_model_1 = require("./../poster-type/poster-type.model");
 const category_product_model_1 = require("./../category-product/category-product.model");
 const product_model_1 = require("../product/product.model");
 const product_type_model_1 = require("./product-type.model");
@@ -40,6 +41,14 @@ ProductTypeModule = __decorate([
                     typegooseClass: category_product_model_1.CategoryProductModel,
                     schemaOptions: {
                         collection: 'CatecoryProduct',
+                    },
+                },
+            ]),
+            nestjs_typegoose_1.TypegooseModule.forFeature([
+                {
+                    typegooseClass: poster_type_model_1.PosterTypeModel,
+                    schemaOptions: {
+                        collection: 'Poster',
                     },
                 },
             ]),

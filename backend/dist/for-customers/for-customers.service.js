@@ -21,6 +21,16 @@ let ForCustomersService = class ForCustomersService {
         this.ForCustomersModel = ForCustomersModel;
     }
     async createData(dto) {
+        const title = await this.ForCustomersModel.findOne({
+            title: dto.title,
+        });
+        if (title)
+            throw new common_1.BadRequestException('Такое название статьи  уже существует');
+        const slug = await this.ForCustomersModel.findOne({
+            slug: dto.slug,
+        });
+        if (slug)
+            throw new common_1.BadRequestException('Такой slug  уже существует');
         const data = await this.ForCustomersModel.create(dto);
         if (!data)
             throw new common_1.NotFoundException('Что то пошло не так,данные не созданы');

@@ -23,23 +23,38 @@ let CategoryProductService = class CategoryProductService {
         this.ProductModel = ProductModel;
     }
     async createCategoryProduct(dto) {
+        const candidat = await this.CategoryProductModel.findOne({
+            name: dto.name,
+        });
+        if (candidat)
+            throw new common_1.BadRequestException('Такая категория уже существует');
         const categoryProduct = await this.CategoryProductModel.create(dto);
         if (!categoryProduct)
             throw new common_1.NotFoundException('Категория продукта не создан');
         return categoryProduct;
     }
-    async getCategoryProduct() {
-        const categoryProduct = await this.CategoryProductModel.find()
+    async getCategoryProduct(dto) {
+        let options = {};
+        if (dto.name) {
+            options = {
+                $or: [
+                    {
+                        name: new RegExp(dto.name, 'i'),
+                    },
+                ],
+            };
+        }
+        const categoryProduct = await this.CategoryProductModel.find(options)
             .populate('productType brand')
             .exec();
         if (!categoryProduct)
-            throw new common_1.NotFoundException('Категории не получены');
+            throw new common_1.NotFoundException('Типы не получены');
         return categoryProduct;
     }
     async removeCategoryProduct(id) {
         const product = await this.ProductModel.findOne({ categoryId: id });
         if (product)
-            return { message: 'Категория не удалёна,использутся в товарах' };
+            throw new common_1.BadRequestException('Категория не удалёна,использутся в товарах');
         const removeCategoryProduct = await this.CategoryProductModel.findByIdAndDelete(id).exec();
         if (!removeCategoryProduct)
             throw new common_1.NotFoundException('Категория продукта не удалёна');

@@ -98,9 +98,16 @@ const Orders: FC<OrdersProps> = ({}): JSX.Element => {
       ) : ordersData.orders?.length === 0 ? (
         <h3 className={styles.h3}>Заказов нет!</h3>
       ) : (
-        ordersData.orders?.map((order) => {
-          return <OrderItem key={order._id} order={order} />;
-        })
+        <>
+          <div className={styles.containerLabel}>
+            <div className={styles.label}>Имя</div>
+            <div className={styles.label}>Дата заказа</div>
+            <div className={styles.label}>Выполнение</div>
+          </div>
+          {ordersData.orders?.map((order) => {
+            return <OrderItem key={order._id} order={order} />;
+          })}
+        </>
       )}
     </LayoutAdmin>
   );

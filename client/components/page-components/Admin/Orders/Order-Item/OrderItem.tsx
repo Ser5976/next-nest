@@ -23,38 +23,26 @@ const OrderItem: FC<OrderItemProps> = ({ order }): JSX.Element => {
   const { mutate: deleteOrder } = useMutation(AdminService.deleteOrder, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('users-for-admin');
-      toast.success('Пользователь удалён');
+      queryClient.invalidateQueries('orders');
+      toast.success('Заказ удалён');
     },
     onError: (error: any) => {
-      toast.error('Пользователь не удалён,что-то пошло не так');
+      toast.error('Заказ не удалён,что-то пошло не так');
     },
   });
-  const removeUser = () => {
-    deleteOrder(order._id);
-  };
+
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.label}>
-          <div>Имя</div>
-          <span>{name}</span>
+      <div className={styles.containerData}>
+        <div className={styles.data}>{order.name}</div>
+        <div className={styles.data}>{dateFormatting(order.createdAt)}</div>
+        <div className={styles.data}>
+          {order.execution ? (
+            <BsCheck2Circle className={styles.icon1} />
+          ) : (
+            <BsCircle className={styles.icon} />
+          )}
         </div>
-        <div className={styles.label}>
-          <div>Дата заказа</div>
-          <span>{dateFormatting(order.createdAt)}</span>
-        </div>
-        <div className={styles.label}>
-          <div>Выполнение</div>
-          <span>
-            {order.execution ? (
-              <BsCheck2Circle className={styles.icon1} />
-            ) : (
-              <BsCircle className={styles.icon} />
-            )}
-          </span>
-        </div>
-
         <MdOutlineVisibility
           className={styles.icon2}
           onClick={() => setShow(true)}
@@ -64,7 +52,7 @@ const OrderItem: FC<OrderItemProps> = ({ order }): JSX.Element => {
           className={styles.icon3}
           onClick={() => {
             if (window.confirm(`Вы действительно хотите удалить отзыв`)) {
-              removeUser();
+              deleteOrder(order._id);
             }
           }}
         />

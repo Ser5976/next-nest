@@ -7,6 +7,9 @@
 .containerEmail {
   @apply relative flex py-3 px-10 border-t border-gray-400;
 }
+.email {
+  @apply text-gray-600;
+}
 .container {
   @apply relative flex py-3 px-10 border-t;
 }

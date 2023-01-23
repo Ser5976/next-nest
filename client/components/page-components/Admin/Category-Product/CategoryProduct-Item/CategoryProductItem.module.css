@@ -1,0 +1,11 @@
+.container {
+  @apply relative flex py-3 px-10 border-t border-gray-400;
+}
+
+.name {
+  @apply text-gray-600;
+}
+
+.icon2 {
+  @apply absolute top-4 right-0 fill-gray-600 hover:fill-red-400 w-5 h-5 cursor-pointer;
+}

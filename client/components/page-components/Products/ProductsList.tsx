@@ -65,7 +65,6 @@ const ProductsList: FC<ProductsListProps> = ({
           </h1>
           {poster && (
             <div className={styles.poster}>
-              <div className={styles.text}>{poster?.text}</div>
               <div className={styles.image}>
                 <Image
                   layout="fill"

@@ -26,6 +26,7 @@ const OrderForm: FC<OrderFormProps> = ({ order }): JSX.Element => {
   const orderCompleted = () => {
     completed({ orderId: order._id, bool: true });
   };
+  console.log('Заказы с формы:', order);
   return (
     <>
       <h2 className={styles.h2}>Личные данные</h2>

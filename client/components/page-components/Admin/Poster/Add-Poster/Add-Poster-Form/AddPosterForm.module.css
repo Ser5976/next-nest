@@ -1,0 +1,18 @@
+.h2 {
+  @apply text-xs text-gray-600 mt-[10px] ;
+}
+.form {
+  @apply flex-col mt-[3px];
+}
+.button {
+  @apply block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500 opacity-70 text-white transition-opacity cursor-pointer hover:opacity-100;
+}
+.select{
+  @apply outline-none  text-gray-600  text-sm font-semibold px-[15px] py-2 cursor-pointer
+}
+.select option{
+  @apply bg-white text-gray-600 border-0 
+}
+.errorMessage {
+  @apply absolute bottom-[-10px] left-5 text-red-500 text-xs;
+}

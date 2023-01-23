@@ -17,6 +17,7 @@ const category_product_dto_1 = require("./dto/category-product.dto");
 const category_product_service_1 = require("./category-product.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
+const search_dto_1 = require("./dto/search.dto");
 let CategoryProductController = class CategoryProductController {
     constructor(CategoryProductService) {
         this.CategoryProductService = CategoryProductService;
@@ -24,8 +25,8 @@ let CategoryProductController = class CategoryProductController {
     async createProductType(dto) {
         return this.CategoryProductService.createCategoryProduct(dto);
     }
-    async getCategoryProduct() {
-        return this.CategoryProductService.getCategoryProduct();
+    async getCategoryProduct(dto) {
+        return this.CategoryProductService.getCategoryProduct(dto);
     }
     async removeCategoryProduct(id) {
         return this.CategoryProductService.removeCategoryProduct(id);
@@ -42,8 +43,9 @@ __decorate([
 ], CategoryProductController.prototype, "createProductType", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
 ], CategoryProductController.prototype, "getCategoryProduct", null);
 __decorate([

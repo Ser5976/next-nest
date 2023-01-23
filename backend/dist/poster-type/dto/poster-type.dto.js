@@ -21,9 +21,5 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], PosterTypeDto.prototype, "typeId", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], PosterTypeDto.prototype, "text", void 0);
 exports.PosterTypeDto = PosterTypeDto;
 //# sourceMappingURL=poster-type.dto.js.map

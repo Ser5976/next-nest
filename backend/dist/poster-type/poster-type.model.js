@@ -23,9 +23,5 @@ __decorate([
     (0, typegoose_1.prop)({ ref: () => product_type_model_1.ProductTypeModel }),
     __metadata("design:type", Object)
 ], PosterTypeModel.prototype, "typeId", void 0);
-__decorate([
-    (0, typegoose_1.prop)(String),
-    __metadata("design:type", String)
-], PosterTypeModel.prototype, "text", void 0);
 exports.PosterTypeModel = PosterTypeModel;
 //# sourceMappingURL=poster-type.model.js.map

@@ -1,0 +1,22 @@
+.form {
+  @apply flex-col;
+}
+.label {
+  @apply mb-1 text-gray-400;
+}
+.input {
+  @apply mb-5;
+}
+
+.button {
+  @apply block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500 opacity-70 text-white transition-opacity cursor-pointer hover:opacity-100;
+}
+.error input {
+  @apply border-b-red-400 border-b-2 focus:border-b-red-400;
+}
+.errorMessage {
+  @apply absolute bottom-0 left-[20px] text-gray-600 text-xs;
+}
+.errorIcon {
+  @apply absolute bottom-0 left-0 fill-red-400 w-4 h-4;
+}

@@ -10,8 +10,7 @@ const SliderItem: FC<SliderItemProps> = ({ slider }): JSX.Element => {
       <Image
         layout="fill"
         objectFit="cover"
-        objectPosition="bottom"
-        className={styles.image}
+        objectPosition="center"
         src={`${process.env.NEXT_PUBLIC_DOMAIN}/${slider.picture}`}
         alt="изображения нет"
         unoptimized

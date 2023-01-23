@@ -19,7 +19,7 @@ input[type='number'] {
 
 /* для библиотеки слайдера */
 .carousel {
-  @apply flex items-center bg-gradient-to-l from-lime-400 via-amber-400 to-red-400 p-1 opacity-80 z-20;
+  @apply flex items-center  /* bg-gradient-to-l from-lime-400 via-amber-400 to-red-400 p-1 opacity-80 z-20 */;
 }
 
 /*для сладера-ползунка*/

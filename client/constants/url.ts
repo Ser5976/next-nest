@@ -42,5 +42,11 @@ export const API = {
     slider: process.env.NEXT_PUBLIC_DOMAIN + '/api/slider',
     files: process.env.NEXT_PUBLIC_DOMAIN + '/api/file',
     removeUrl: process.env.NEXT_PUBLIC_DOMAIN + '/api/file/remove',
+    poster: process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type',
+    searchPoster:
+      process.env.NEXT_PUBLIC_DOMAIN + '/api/poster-type/searchPoster',
+    searchCategory:
+      process.env.NEXT_PUBLIC_DOMAIN + '/api/category-product/search',
+    brand: process.env.NEXT_PUBLIC_DOMAIN + '/api/brand',
   },
 };

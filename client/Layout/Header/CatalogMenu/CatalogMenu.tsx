@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import styles from './CatalogMenu.module.css';
-import Link from 'next/link';
 import { CatalogMenuProps } from './CatalogMenu.props';
 import { useClickOutside } from '../../../hook/clickOutside';
 import { SiScrollreveal } from 'react-icons/si';

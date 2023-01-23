@@ -1,3 +1,4 @@
+import { PosterSearchDto } from './dto/poster-search.dto';
 import { PosterTypeService } from './poster-type.service';
 import {
   Body,
@@ -6,11 +7,13 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { PosterTypeDto } from './dto/poster-type.dto';
+import { UpdatePosterDto } from './dto/udatePoster.dto';
 
 @Controller('poster-type')
 export class PosterTypeController {
@@ -22,16 +25,29 @@ export class PosterTypeController {
   async createPoster(@Body() dto: PosterTypeDto) {
     return this.PosterTypeService.createPoster(dto);
   }
+  //получение всех постеров
+  @Get()
+  @Auth('admin')
+  async getPosters() {
+    return this.PosterTypeService.getPosters();
+  }
   //получение постера одного типа
   @Get(':typeId')
   async getPoster(@Param('typeId') typeId: string) {
     return this.PosterTypeService.getPoster(typeId);
   }
-  //удаление постера
+  // редактирование постера
+  @UsePipes(new ValidationPipe())
+  @Put()
+  @Auth('admin')
+  async updatePoster(@Body() dto: UpdatePosterDto) {
+    return this.PosterTypeService.updatePoster(dto);
+  }
 
-  @Delete(':typeId')
-  @Auth()
-  async deletePicture(@Param('typeId') typeId: string) {
-    return this.PosterTypeService.deletePoster(typeId);
+  //удаление постера
+  @Delete(':posterId')
+  @Auth('admin')
+  async deletePicture(@Param('posterId') posterId: string) {
+    return this.PosterTypeService.deletePoster(posterId);
   }
 }

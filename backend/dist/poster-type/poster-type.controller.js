@@ -17,6 +17,7 @@ const poster_type_service_1 = require("./poster-type.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const poster_type_dto_1 = require("./dto/poster-type.dto");
+const udatePoster_dto_1 = require("./dto/udatePoster.dto");
 let PosterTypeController = class PosterTypeController {
     constructor(PosterTypeService) {
         this.PosterTypeService = PosterTypeService;
@@ -24,11 +25,17 @@ let PosterTypeController = class PosterTypeController {
     async createPoster(dto) {
         return this.PosterTypeService.createPoster(dto);
     }
+    async getPosters() {
+        return this.PosterTypeService.getPosters();
+    }
     async getPoster(typeId) {
         return this.PosterTypeService.getPoster(typeId);
     }
-    async deletePicture(typeId) {
-        return this.PosterTypeService.deletePoster(typeId);
+    async updatePoster(dto) {
+        return this.PosterTypeService.updatePoster(dto);
+    }
+    async deletePicture(posterId) {
+        return this.PosterTypeService.deletePoster(posterId);
     }
 };
 __decorate([
@@ -41,6 +48,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PosterTypeController.prototype, "createPoster", null);
 __decorate([
+    (0, common_1.Get)(),
+    (0, auth_decorators_1.Auth)('admin'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], PosterTypeController.prototype, "getPosters", null);
+__decorate([
     (0, common_1.Get)(':typeId'),
     __param(0, (0, common_1.Param)('typeId')),
     __metadata("design:type", Function),
@@ -48,9 +62,18 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PosterTypeController.prototype, "getPoster", null);
 __decorate([
-    (0, common_1.Delete)(':typeId'),
-    (0, auth_decorators_1.Auth)(),
-    __param(0, (0, common_1.Param)('typeId')),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.Put)(),
+    (0, auth_decorators_1.Auth)('admin'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [udatePoster_dto_1.UpdatePosterDto]),
+    __metadata("design:returntype", Promise)
+], PosterTypeController.prototype, "updatePoster", null);
+__decorate([
+    (0, common_1.Delete)(':posterId'),
+    (0, auth_decorators_1.Auth)('admin'),
+    __param(0, (0, common_1.Param)('posterId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

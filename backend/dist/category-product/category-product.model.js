@@ -17,7 +17,7 @@ const defaultClasses_1 = require("@typegoose/typegoose/lib/defaultClasses");
 class CategoryProductModel extends defaultClasses_1.TimeStamps {
 }
 __decorate([
-    (0, typegoose_1.prop)(),
+    (0, typegoose_1.prop)({ unique: true }),
     __metadata("design:type", String)
 ], CategoryProductModel.prototype, "name", void 0);
 __decorate([

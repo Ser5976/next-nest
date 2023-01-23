@@ -1,1 +1,1 @@
-{"version":3,"file":"brand.dto.js","sourceRoot":"","sources":["../../../src/brand/dto/brand.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAoD;AAEpD,MAAa,QAAQ;CAMpB;AAJG;IADC,IAAA,0BAAQ,GAAE;;sCACA;AAGX;IAFC,IAAA,yBAAO,GAAE;IACV,IAAA,0BAAQ,EAAC,EAAC,IAAI,EAAC,IAAI,EAAC,CAAC;;sCACR;AALjB,4BAMC"}
+{"version":3,"file":"brand.dto.js","sourceRoot":"","sources":["../../../src/brand/dto/brand.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA0C;AAE1C,MAAa,QAAQ;CAIpB;AAFG;IADC,IAAA,0BAAQ,GAAE;;sCACA;AAFf,4BAIC"}

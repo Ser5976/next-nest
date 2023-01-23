@@ -1,0 +1,6 @@
+.container {
+  @apply flex   justify-between mb-3;
+}
+.button {
+  @apply text-xs text-blue-600 underline cursor-pointer;
+}

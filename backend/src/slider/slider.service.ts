@@ -26,7 +26,7 @@ export class SliderService {
   }
   //удаление картинки
   async deletePicture(id: string) {
-    await this.SliderModel.findByIdAndDelete(id);
-    return { message: 'Картинка удалена' };
+    const deleteFile = await this.SliderModel.findByIdAndDelete(id);
+    return deleteFile;
   }
 }

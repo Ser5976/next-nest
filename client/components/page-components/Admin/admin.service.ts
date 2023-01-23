@@ -1,3 +1,4 @@
+import { ICategoryProduct } from './../../../store/category-product/interface.categoryProduct';
 import {
   IOrders,
   IReviewsForAdmin,
@@ -5,8 +6,20 @@ import {
 } from './../../../store/admin/interface.admin';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
-// некоторые интерфейсы
+import { IType } from '../../../store/type-product/interface.typeProduct';
+import axios from 'axios';
+import { IArticle } from '../../../store/customers/interface.customers';
 
+// некоторые интерфейсы
+export interface IAddArticle {
+  title: string;
+  description: string;
+  slug: string;
+}
+export interface IUpdateArticle {
+  id: string;
+  data: IAddArticle;
+}
 //интерфейс для заказов
 export interface IcompletedOrder {
   orderId: string;
@@ -16,6 +29,28 @@ export interface IcompletedOrder {
 export interface ISlider {
   _id: string;
   picture: string;
+  createdAt: string;
+  updatedAt: string;
+}
+// интерфейс постер
+export interface IPoster {
+  _id: string;
+  picture: string;
+  typeId: IType;
+}
+export interface IAddPoster {
+  picture: string;
+  typeId: string;
+}
+//интерфейс редактирование постера
+export interface IUpdatePoster {
+  picture: string;
+  posterId: string | undefined;
+}
+// интерфейс брэнд
+export interface IBrand {
+  _id: string;
+  name: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -122,10 +157,13 @@ export const AdminService = {
   // удаление изображения(url из базы)
   async deleteImage(imageId: string) {
     console.log(' удаление изображения ');
-    await customAxios.delete(`${API.admin.slider}/${imageId}`);
+    const deleteFile = await customAxios.delete<ISlider>(
+      `${API.admin.slider}/${imageId}`
+    );
+    return deleteFile;
   },
 
-  // работа с файлами(загрузка изображения в сервак,где из него сделают url)
+  // работа с файлами(загрузка изображения на сервак,где из него сделают url)
   async uploadImage(files: FormData) {
     console.log('загрузка изображения');
     const { data: urlImages } = await customAxios.post<string[]>(
@@ -138,5 +176,149 @@ export const AdminService = {
   async removeUrl(url: string) {
     console.log(' удаление url изображения ');
     await customAxios.post(API.admin.removeUrl, { files: url });
+  },
+  //----Poster-----------
+  //создание постера
+  async createPoster(data: IAddPoster) {
+    console.log(' создание  постера');
+    const { data: poster } = await customAxios.post<IPoster>(
+      API.admin.poster,
+      data
+    );
+    return poster;
+  },
+  //получение постеров
+  async getPoster() {
+    console.log(' получение постеров');
+    const { data: getPosters } = await customAxios.get<IPoster[]>(
+      API.admin.poster
+    );
+    return getPosters;
+  },
+  // поиск  постера по name
+  async getFoundPoster(name: string) {
+    console.log('поиск типа');
+    const { data: searchPosters } = await customAxios.get<IPoster[]>(
+      API.admin.searchPoster,
+      {
+        params: { name },
+      }
+    );
+    return searchPosters;
+  },
+  // редактирование  постера
+  async updatePoster(data: IUpdatePoster) {
+    console.log('обновление постера');
+    const { data: updatePoster } = await customAxios.put<{ message: string }>(
+      API.admin.poster,
+      data
+    );
+    return updatePoster;
+  },
+  //удаление постера
+  async deletePoster(posterId: string) {
+    console.log(' удаление постера ');
+    const message = await customAxios.delete<{ message: string }>(
+      `${API.admin.poster}/${posterId}`
+    );
+    return message;
+  },
+  //----CategoryProduct-----------
+  //добавление категории
+  async addCategoryProduct(data: { name: string }) {
+    console.log(' добавление категории ');
+    await customAxios.post(API.categoryProduct, data);
+  },
+  //получение категорий товара
+  async getCategoryProduct(name: string) {
+    console.log(' получение категорий для админа');
+    const { data: categoryProduct } = await customAxios.get<ICategoryProduct[]>(
+      API.categoryProduct,
+      {
+        params: { name },
+      }
+    );
+    return categoryProduct;
+  },
+  //удаление категории
+  async deleteCategory(categoryProdutId: string) {
+    console.log(' удаление категории ');
+    const message = await customAxios.delete<{ message: string }>(
+      `${API.categoryProduct}/${categoryProdutId}`
+    );
+    return message;
+  },
+  //----ProductType-----------
+  //добавление типа
+  async addProductType(data: { name: string }) {
+    console.log(' добавление типа ');
+    await customAxios.post(API.productType, data);
+  },
+  //получение(и поиск) типа товара
+  async getProductType(name?: string) {
+    console.log(' получение типа для админа');
+    const { data: productsTypes } = await axios.get<IType[]>(API.productType, {
+      params: { name },
+    });
+    return productsTypes;
+  },
+
+  //удаление типа
+  async deleteType(produtTypeId: string) {
+    console.log(' удаление типа ');
+    const remoteType = await customAxios.delete<IType>(
+      `${API.productType}/${produtTypeId}`
+    );
+    return remoteType;
+  },
+  //----Brand-----------
+  //добавление брэнда
+  async addBrand(data: { name: string }) {
+    console.log(' добавление брэнда ');
+    await customAxios.post(API.admin.brand, data);
+  },
+  //получение или поиск брэнда
+  async getBrand(searchBrand?: string) {
+    console.log(' получение брэнда');
+    const { data: brands } = await customAxios.get<IBrand[]>(API.admin.brand, {
+      params: { name: searchBrand },
+    });
+    return brands;
+  },
+
+  //удаление типа
+  async deleteBrand(brandId: string) {
+    console.log(' удаление бранда ');
+    const remoteBrand = await customAxios.delete<IBrand>(
+      `${API.admin.brand}/${brandId}`
+    );
+    return remoteBrand;
+  },
+  //----for-customers-----------
+  //добавление статьи
+  async addArticle(data: IAddArticle) {
+    console.log(' добавление статьи ');
+    const article = await customAxios.post(API.customers, data);
+    return article;
+  },
+  //получение статей
+  async getArticles() {
+    console.log(' получение статей');
+    const { data: articles } = await axios.get<IArticle[]>(API.customers);
+    return articles;
+  },
+  //редактирование статьи
+  async updateArticle(data: IUpdateArticle) {
+    console.log(' редактирование статьи ');
+    await customAxios.put(`${API.customers}/${data.id}`, data.data);
+  },
+
+  //удаление типа
+  async deleteArticle(articleId: string) {
+    console.log(' удаление статьи ');
+    const article = await customAxios.delete<IArticle>(
+      `${API.customers}/${articleId}`
+    );
+    return article;
   },
 };

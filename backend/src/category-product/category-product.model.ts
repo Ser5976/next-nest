@@ -6,7 +6,7 @@ import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 export interface CategoryProductModel extends Base {}
 
 export class CategoryProductModel extends TimeStamps {
-  @prop()
+  @prop({ unique: true })
   name: string;
   @prop({ ref: () => ProductTypeModel })
   productType: Ref<ProductTypeModel>[];

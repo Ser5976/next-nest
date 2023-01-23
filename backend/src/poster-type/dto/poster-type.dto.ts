@@ -5,6 +5,4 @@ export class PosterTypeDto {
   picture: string;
   @IsString()
   typeId: string;
-  @IsString()
-  text: string;
 }

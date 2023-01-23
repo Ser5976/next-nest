@@ -7,10 +7,12 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
+import { SearchDto } from './dto/search.dto';
 
 @Controller('category-product')
 export class CategoryProductController {
@@ -24,11 +26,12 @@ export class CategoryProductController {
   async createProductType(@Body() dto: CategoryProductDto) {
     return this.CategoryProductService.createCategoryProduct(dto);
   }
-  // получение категории товаров
+  // получение и поиск категории товаров
   @Get()
-  async getCategoryProduct() {
-    return this.CategoryProductService.getCategoryProduct();
+  async getCategoryProduct(@Query() dto: SearchDto) {
+    return this.CategoryProductService.getCategoryProduct(dto);
   }
+
   // удаление категории товара
   @Delete(':id')
   @Auth('admin')

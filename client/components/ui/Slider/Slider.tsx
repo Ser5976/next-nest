@@ -13,7 +13,7 @@ const Slider: FC<SliderProps> = ({ sliders }): JSX.Element => {
           <h1 className=" text-center pt-10">Слайдов нет!!!</h1>
         </div>
       ) : (
-        <Carousel infiniteLoop autoPlay showThumbs={false}>
+        <Carousel infiniteLoop autoPlay interval={6000} showThumbs={false}>
           {sliders.map((img) => {
             return <SliderItem slider={img} key={img._id} />;
           })}

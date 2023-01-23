@@ -33,8 +33,8 @@ let SliderService = class SliderService {
         return slider;
     }
     async deletePicture(id) {
-        await this.SliderModel.findByIdAndDelete(id);
-        return { message: 'Картинка удалена' };
+        const deleteFile = await this.SliderModel.findByIdAndDelete(id);
+        return deleteFile;
     }
 };
 SliderService = __decorate([

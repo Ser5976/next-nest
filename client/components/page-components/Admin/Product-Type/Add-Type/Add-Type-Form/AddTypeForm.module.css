@@ -1,0 +1,13 @@
+.form {
+  @apply flex-col mt-[3px];
+}
+.button {
+  @apply block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500 opacity-70 text-white transition-opacity cursor-pointer hover:opacity-100;
+}
+
+.label {
+  @apply mb-2 text-gray-400;
+}
+.input {
+  @apply mb-5;
+}

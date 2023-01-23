@@ -42,11 +42,7 @@ const UserItem: FC<UserItemProps> = ({ users }): JSX.Element => {
   return (
     <>
       <div className={styles.containerEmail}>
-        <AiOutlineMail className={styles.icon1} />
-        <div className={styles.label}>
-          <div>Почта</div>
-          <span>{email}</span>
-        </div>
+        <div className={styles.email}>{email}</div>
         {show === users._id ? (
           <MdOutlineVisibility
             className={styles.icon2}

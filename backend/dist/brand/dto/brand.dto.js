@@ -17,10 +17,5 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], BrandDto.prototype, "name", void 0);
-__decorate([
-    (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", Array)
-], BrandDto.prototype, "logo", void 0);
 exports.BrandDto = BrandDto;
 //# sourceMappingURL=brand.dto.js.map

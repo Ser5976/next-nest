@@ -32,36 +32,32 @@ let BrandService = class BrandService {
             throw new common_1.NotFoundException('Брэнд не создан');
         return brand;
     }
-    async getBrands(searchBrand) {
+    async getBrands(dto) {
         let options = {};
-        if (searchBrand) {
+        if (dto.name) {
             options = {
                 $or: [
                     {
-                        name: new RegExp(searchBrand, 'i'),
+                        name: new RegExp(dto.name, 'i'),
                     },
                 ],
             };
         }
         const brands = await this.BrandModel.find(options);
+        if (!brands)
+            throw new common_1.NotFoundException('Брэнды не получены');
         return brands;
-    }
-    async updateBarnd(id, dto) {
-        const updateBrand = await this.BrandModel.findByIdAndUpdate(id, { logo: dto.logo }, { new: true });
-        if (!updateBrand)
-            throw new common_1.NotFoundException('Обнавление не произошло');
-        return updateBrand;
     }
     async removeBrand(id) {
         const product = await this.ProductModel.findOne({ brandId: id });
         if (product)
-            return { message: 'Брэнд не удалён,использутся в товарах' };
+            throw new common_1.BadRequestException('Брэнд не удалён,используется в товарах');
         const type = await this.ProductTypeModel.updateMany({}, { $pull: { brand: id } });
         const category = await this.CategoryProductModel.updateMany({}, { $pull: { brand: id } });
         const deletedBrand = await this.BrandModel.findByIdAndDelete(id);
         if (!deletedBrand)
             throw new common_1.NotFoundException('Брэнд не удалён');
-        return { message: 'брэнд удалён' };
+        return deletedBrand;
     }
 };
 BrandService = __decorate([

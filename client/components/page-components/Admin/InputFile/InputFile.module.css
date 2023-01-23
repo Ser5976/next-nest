@@ -2,7 +2,7 @@
   @apply flex;
 }
 .wrapperInput {
-  @apply w-1/4 self-center;
+  @apply relative w-1/4 self-center;
 }
 .wrapperInput input {
   @apply hidden;
@@ -23,5 +23,5 @@
   @apply w-3/4 flex items-center text-sm  text-gray-400 h-[75px];
 }
 .error {
-  @apply relative -bottom-3 text-xs text-red-400;
+  @apply  absolute  left-[-5px]  bottom-[-20px] text-xs text-red-400 ml-[20px];
 }

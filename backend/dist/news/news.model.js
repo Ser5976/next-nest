@@ -22,9 +22,5 @@ __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
 ], NewsModel.prototype, "text", void 0);
-__decorate([
-    (0, typegoose_1.prop)(),
-    __metadata("design:type", String)
-], NewsModel.prototype, "response", void 0);
 exports.NewsModel = NewsModel;
 //# sourceMappingURL=news.model.js.map

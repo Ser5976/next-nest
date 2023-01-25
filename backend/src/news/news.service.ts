@@ -1,6 +1,10 @@
 import { NewsDto } from './dto/news.dto';
 import { NewsModel } from './news.model';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 
@@ -12,6 +16,9 @@ export class NewsService {
 
   //создание статьи
   async createNews(dto: NewsDto) {
+    const name = await this.NewsModel.findOne({ name: dto.name });
+    if (name)
+      throw new BadRequestException('Новость с таким названием уже существует');
     const news = await this.NewsModel.create(dto);
     if (!news)
       throw new NotFoundException('Что то пошло не так,статья не сохранена');

@@ -219,6 +219,20 @@ const Menu: FC<MenuProps> = ({
             Для клиентов
           </a>
         </Link>
+        <Link href="/admin/news">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'news',
+            })}
+          >
+            <MdOutlineArticle
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'news',
+              })}
+            />
+            Новости
+          </a>
+        </Link>
       </ul>
       <div className="px-5 m-3 bg-transparent border-b"></div>
       <button

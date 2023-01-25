@@ -1,15 +1,15 @@
-import styles from './AddArticleModal.module.css';
+import styles from './AddNewsModal.module.css';
 import { FC } from 'react';
-import { AddArticleModalProps } from './AddArticleModal.props';
+import { AddNewsModalProps } from './AddNewsModal.props';
 import { TiDeleteOutline } from 'react-icons/ti';
-import AddArticleForm from './Add-Article-Form/AddArticleForm';
+import AddNewsForm from './Add-News-Form/AddNewsForm';
 
-const AddArticleModal: FC<AddArticleModalProps> = ({
+const AddNewsModal: FC<AddNewsModalProps> = ({
   show,
   setShow,
-  setArticle,
+  setSelectedNews,
   refech,
-  article,
+  selectedNews,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false); //это что бы по клику на область вне формы закрывалась модальное окно
@@ -17,18 +17,22 @@ const AddArticleModal: FC<AddArticleModalProps> = ({
   if (!show) return null;
   const handlerClose = () => {
     setShow(false);
-    setArticle(''); //очищаем стэйт выбранной статьи
+    setSelectedNews(''); //очищаем стэйт выбранной новости
   };
 
   return (
     <div className={styles.container} id="container" onClick={handleOnClose}>
       <div className={styles.form}>
-        <h1 className=" text-lg">Добавить статью</h1>
+        <h1 className=" text-lg">Добавить новость</h1>
         <TiDeleteOutline className={styles.icon} onClick={handlerClose} />
-        <AddArticleForm setShow={setShow} refech={refech} article={article} />
+        <AddNewsForm
+          setShow={setShow}
+          refech={refech}
+          selectedNews={selectedNews}
+        />
       </div>
     </div>
   );
 };
 
-export default AddArticleModal;
+export default AddNewsModal;

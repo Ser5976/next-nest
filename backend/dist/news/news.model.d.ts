@@ -4,5 +4,4 @@ export interface NewsModel extends Base {
 export declare class NewsModel extends TimeStamps {
     name: string;
     text: string;
-    response: string;
 }

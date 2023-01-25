@@ -1,3 +1,4 @@
+import { INews } from './../News-List/NewsList.props';
 import { ICategoryProduct } from './../../../store/category-product/interface.categoryProduct';
 import {
   IOrders,
@@ -19,6 +20,14 @@ export interface IAddArticle {
 export interface IUpdateArticle {
   id: string;
   data: IAddArticle;
+}
+export interface IAddNews {
+  name: string;
+  text: string;
+}
+export interface IUpdateNews {
+  id: string;
+  data: IAddNews;
 }
 //интерфейс для заказов
 export interface IcompletedOrder {
@@ -313,12 +322,37 @@ export const AdminService = {
     await customAxios.put(`${API.customers}/${data.id}`, data.data);
   },
 
-  //удаление типа
+  //удаление новости
   async deleteArticle(articleId: string) {
     console.log(' удаление статьи ');
     const article = await customAxios.delete<IArticle>(
       `${API.customers}/${articleId}`
     );
     return article;
+  },
+  //----news-----------
+  //добавление новости
+  async addNews(data: IAddNews) {
+    console.log(' добавление новости ');
+    const news = await customAxios.post(API.news, data);
+    return news;
+  },
+  //получение новостей
+  async getNews() {
+    console.log(' получение новостей');
+    const { data: news } = await axios.get<INews[]>(API.news);
+    return news;
+  },
+  //редактирование новости
+  async updateNews(data: IUpdateNews) {
+    console.log(' редактирование новости ');
+    await customAxios.put(`${API.news}/${data.id}`, data.data);
+  },
+
+  //удаление новости
+  async deleteNews(newsId: string) {
+    console.log(' удаление новости ');
+    const news = await customAxios.delete<INews>(`${API.news}/${newsId}`);
+    return news;
   },
 };

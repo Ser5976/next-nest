@@ -13,5 +13,6 @@ export interface LayoutAdminProps {
     | 'type'
     | 'brand'
     | 'for-customers'
+    | 'news';
   //это флаги для отображения активной ссылки в меню
 }

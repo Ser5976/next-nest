@@ -1,5 +1,4 @@
 import styles from './Users.module.css';
-import cn from 'classnames';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { UsersProps } from './Users.props';
 import { LayoutAdmin } from '../LayoutAdmin';
@@ -20,28 +19,36 @@ const Users: FC<UsersProps> = ({}): JSX.Element => {
     setSearchTerm(e.target.value);
   };
   //кастомный хук для задержки времени передачи данных из инпута поиска пользователя в запрос useQuery
-  const debouncedSearch = useDebounce(searchTerm, 700);
+  const debouncedSearch = useDebounce(searchTerm, 500);
 
-  //получаем данные по пользователям из стэйта
+  //получаем данные по количеству пользователей из стэйта
   const {
-    adminReducer: { usersForAdmin },
+    adminReducer: { userQuantity },
   } = useData();
-  const { users } = usersForAdmin;
 
-  // получаем экшены
-  const { getUsersForAdmin, searchUser } = useActions();
+  // получаем экшены(для изменения количества пользователей в стейте)
+  const { getUserQantity } = useActions();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
 
   //получаем  все данные (из базы) по пользователям и записываем их в стор(редакс)
-  const { isLoading, refetch } = useQuery(
-    'users-for-admin',
-    () => AdminService.getUsersAdmin(),
+  // поиск пользователя(данные берём из инпута ,
+  //потом при помощи useDebounce замедляем и только потом передаём в useQuery )
+  const {
+    isLoading,
+    refetch,
+    data: usersFormAdmin,
+  } = useQuery(
+    ['users-for-admin', debouncedSearch],
+    () => AdminService.getUsersAdmin(debouncedSearch),
 
     {
       onSuccess: (usersForAdmin) => {
-        getUsersForAdmin(usersForAdmin);
+        // смотрим если количество пользователе в базе поменялось, только тогда меняем
+        if (userQuantity !== usersForAdmin.quantity) {
+          getUserQantity(usersForAdmin.quantity);
+        }
       },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
@@ -49,27 +56,12 @@ const Users: FC<UsersProps> = ({}): JSX.Element => {
     }
   );
 
-  // поиск пользователя(данные берём из инпута ,
-  //потом при помощи useDebounce замедляем и только потом передаём в useQuery )
-  const { isLoading: loadingSearch } = useQuery(
-    ['search user', debouncedSearch],
-    () => AdminService.getFoundUser(debouncedSearch),
-    {
-      onSuccess: (usersForAdmin) => {
-        searchUser(usersForAdmin);
-      },
-      onError: () => {
-        toast.error('данные не получены ,что то пошло не так');
-      },
-      enabled: !!searchTerm,
-    }
-  );
-
-  //запуск useQuery (запрос всех пользователей) и очистка инпута
-  const repeatRaquest = () => {
-    setSearchTerm('');
+  //для поиска, повторный запрос
+  useEffect(() => {
     refetch();
-  };
+  }, [searchTerm, refetch]);
+
+  console.log('рендеринг');
 
   return (
     <LayoutAdmin activeMenu="users">
@@ -82,22 +74,14 @@ const Users: FC<UsersProps> = ({}): JSX.Element => {
           handleInput={handlerInput}
           placeholderText="введите email . . ."
         />
-        <div
-          className={cn(styles.button, {
-            [styles.disableButton]: users.users?.length === users.quantity,
-          })}
-          onClick={repeatRaquest}
-        >
-          Все пользователи
-        </div>
       </div>
-      {isLoading || loadingSearch ? (
+      {isLoading ? (
         <h1 className="text-center font-semibold  text-gray-600 mt-2">
           Загрузка...
         </h1>
       ) : (
-        users.users?.map((users) => {
-          return <UserItem key={users._id} users={users} />;
+        usersFormAdmin?.users?.map((users) => {
+          return <UserItem key={users._id} users={users} refech={refetch} />;
         })
       )}
     </LayoutAdmin>

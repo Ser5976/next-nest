@@ -24,7 +24,7 @@ const Menu: FC<MenuProps> = ({
   const {
     authReducer,
     userReducer,
-    adminReducer: { usersForAdmin, generalReviewsForAdmin, orders },
+    adminReducer: { generalReviewsForAdmin, orders, userQuantity },
   } = useData();
   const { userProfile } = userReducer;
   const { user } = authReducer;
@@ -63,7 +63,7 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeBage]: activeMenu === 'users',
               })}
             >
-              {usersForAdmin.users.quantity}
+              {userQuantity}
             </span>
             Пользователи
           </a>

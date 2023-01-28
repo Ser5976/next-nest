@@ -34,11 +34,8 @@ let UserController = class UserController {
     async updatePassoword(_id, updatePasswordDto) {
         return this.UserServies.updatePassoword(_id, updatePasswordDto);
     }
-    async getAllusers() {
-        return this.UserServies.getAllUsers();
-    }
-    async findUser(dto) {
-        return this.UserServies.findUser(dto);
+    async getAllesUsers(dto) {
+        return this.UserServies.getAllUsers(dto);
     }
     async deleteUser(id) {
         return this.UserServies.deleteUsers(id);
@@ -76,19 +73,11 @@ __decorate([
 ], UserController.prototype, "updatePassoword", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, auth_decorators_1.Auth)('admin'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "getAllusers", null);
-__decorate([
-    (0, common_1.Get)('search'),
-    (0, auth_decorators_1.Auth)('admin'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "findUser", null);
+], UserController.prototype, "getAllesUsers", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)('admin'),

@@ -55,15 +55,18 @@ let UserService = class UserService {
         await user.save();
         return { message: 'Изменение прошло успешно' };
     }
-    async findUser(dto) {
-        console.log(dto);
-        const user = await this.UserModel.find({
-            $or: [{ email: new RegExp(dto.email, 'i') }],
-        }).select('-password -favorites -viewed -cart -purchaseHistory -reviews');
-        return user;
-    }
-    async getAllUsers() {
-        const users = await this.UserModel.find()
+    async getAllUsers(dto) {
+        let options = {};
+        if (dto.email) {
+            options = {
+                $or: [
+                    {
+                        email: new RegExp(dto.email, 'i'),
+                    },
+                ],
+            };
+        }
+        const users = await this.UserModel.find(options)
             .select('-password -__v -favorites -viewed -cart -purchaseHistory -reviews')
             .sort({ createdAt: 'desc' })
             .exec();

@@ -68,30 +68,21 @@ export interface IBrand {
 export const AdminService = {
   // используем кастомный axios(в него уже введён токен),
   //---------Users-----------
-  //получение всех пользователей
-  async getUsersAdmin() {
+  //получение всех пользователей или выбранного
+  async getUsersAdmin(email: string) {
     console.log(' получение пользователей для админа');
     const { data: usersForAdmin } = await customAxios.get<{
       users: IUsers[];
       quantity: number;
-    }>(API.admin.users);
+    }>(API.admin.users, {
+      params: { email },
+    });
     return usersForAdmin;
   },
   //удаление пользователя
   async deleteUser(userId: string) {
     console.log(' удаление пользователя ');
     await customAxios.delete(`${API.admin.users}/${userId}`);
-  },
-  // поиск  пользователя по email
-  async getFoundUser(email: string) {
-    console.log('поиск пользователя');
-    const { data: usersForAdmin } = await customAxios.get<IUsers[]>(
-      API.admin.search,
-      {
-        params: { email },
-      }
-    );
-    return usersForAdmin;
   },
 
   //----Reviews-----------

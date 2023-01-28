@@ -4,6 +4,3 @@
 .button {
   @apply text-xs text-blue-600 underline cursor-pointer;
 }
-.disableButton {
-  @apply text-gray-400 cursor-default;
-}

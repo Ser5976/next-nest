@@ -2,12 +2,11 @@
 import * as authActions from './auth/authActoins';
 import { getUser, getError, clearUser } from './user/userSlice';
 import {
-  getUsersForAdmin,
-  searchUser,
   getReviewsForAdmin,
   searchReviews,
   getOrders,
   searchOrder,
+  getUserQantity,
 } from './admin/adminSlice';
 
 export const allActions = {
@@ -15,10 +14,9 @@ export const allActions = {
   getUser,
   getError,
   clearUser,
-  getUsersForAdmin,
-  searchUser,
   getReviewsForAdmin,
   searchReviews,
   getOrders,
   searchOrder,
+  getUserQantity,
 };

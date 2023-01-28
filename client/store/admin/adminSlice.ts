@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getStoreLocalStorage } from '../../utils/local-storage';
 import {
   IAdminInitialState,
-  IUsers,
   IReviewsForAdmin,
   IOrders,
 } from './interface.admin';
 
 const initialState: IAdminInitialState = {
-  usersForAdmin: {
-    users: {} as { users: IUsers[]; quantity: number },
-  },
+  userQuantity: getStoreLocalStorage('userQuntity'), //данные по количеству пользователей, из LocalStorage
   generalReviewsForAdmin: {
     reviewsForAdmin: {} as { allReviews: IReviewsForAdmin[]; quantity: number },
   },
@@ -22,15 +20,9 @@ export const adminSlice = createSlice({
 
   reducers: {
     //...Users.....
-    getUsersForAdmin: (
-      state,
-      action: PayloadAction<{ users: IUsers[]; quantity: number }>
-    ) => {
-      // console.log('работает редюсер Admin Users:', action);
-      state.usersForAdmin.users = action.payload;
-    },
-    searchUser: (state, action: PayloadAction<IUsers[]>) => {
-      state.usersForAdmin.users.users = action.payload;
+    getUserQantity: (state, action: PayloadAction<number>) => {
+      state.userQuantity = action.payload;
+      localStorage.setItem('userQuntity', JSON.stringify(action.payload));
     },
     //...Reviews.....
     getReviewsForAdmin: (
@@ -61,11 +53,10 @@ export const adminSlice = createSlice({
   },
 });
 export const {
-  getUsersForAdmin,
-  searchUser,
   getReviewsForAdmin,
   searchReviews,
   getOrders,
   searchOrder,
+  getUserQantity,
 } = adminSlice.actions;
 export default adminSlice.reducer;

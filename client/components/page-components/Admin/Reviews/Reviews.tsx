@@ -56,7 +56,7 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
       },
     }
   );
-
+  console.log('рендеринг');
   // поиск отзыва по имени(данные берём из инпута ,
   //потом при помощи useDebounce замедляем и только потом передаём в useQuery )
   const { isLoading: loadingSearch } = useQuery(

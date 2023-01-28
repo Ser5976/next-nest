@@ -1,4 +1,3 @@
-import { IUser } from './../auth/interface.auth';
 import { ICart } from './../../components/page-components/Cart/cart.service';
 import { IPhone, IPersonalData, IAddress } from './../user/interface.user';
 
@@ -12,9 +11,6 @@ export interface IUsers {
   address: IAddress;
   createdAt: string;
   updatedAt: string;
-}
-export interface IUsersForAdmin {
-  users: { users: IUsers[]; quantity: number };
 }
 
 //---Reviews-----
@@ -56,7 +52,7 @@ export interface IOrdersForAdmin {
 }
 
 export interface IAdminInitialState {
-  usersForAdmin: IUsersForAdmin;
   generalReviewsForAdmin: IGeneralReviewsForAdmin;
   orders: IOrdersForAdmin;
+  userQuantity: number;
 }

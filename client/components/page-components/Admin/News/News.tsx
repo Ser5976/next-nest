@@ -37,7 +37,7 @@ const News: FC<NewsProps> = ({}): JSX.Element => {
   // поэтому- этот костыль(и+1 к рендеренгу)
   useEffect(() => {
     refetch();
-  }, [refetch]);
+  }, []);
   // console.log('рендеринг');
   return (
     <LayoutAdmin activeMenu="news">

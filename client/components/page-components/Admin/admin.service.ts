@@ -1,17 +1,30 @@
 import { INews } from './../News-List/NewsList.props';
 import { ICategoryProduct } from './../../../store/category-product/interface.categoryProduct';
-import {
-  IOrders,
-  IReviewsForAdmin,
-  IUsers,
-} from './../../../store/admin/interface.admin';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 import { IType } from '../../../store/type-product/interface.typeProduct';
 import axios from 'axios';
 import { IArticle } from '../../../store/customers/interface.customers';
+import { ICart } from '../Cart/cart.service';
+import {
+  IAddress,
+  IPersonalData,
+  IPhone,
+} from '../../../store/user/interface.user';
 
 // некоторые интерфейсы
+//для пользователей
+export interface IUsers {
+  _id: string;
+  email: string;
+  isAdmin: boolean;
+  phone: IPhone;
+  personalData: IPersonalData;
+  address: IAddress;
+  createdAt: string;
+  updatedAt: string;
+}
+// для клиентов
 export interface IAddArticle {
   title: string;
   description: string;
@@ -21,6 +34,7 @@ export interface IUpdateArticle {
   id: string;
   data: IAddArticle;
 }
+// для новостей
 export interface IAddNews {
   name: string;
   text: string;
@@ -33,6 +47,35 @@ export interface IUpdateNews {
 export interface IcompletedOrder {
   orderId: string;
   bool: boolean;
+}
+export interface IOrders {
+  _id: string;
+  productCart: ICart[];
+  user: IUsers;
+  name: string;
+  email: string;
+  address: IAddress;
+  delivery: string;
+  payment: string;
+  telephone: string;
+  orderAmount: number;
+  execution: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+// для отзывов
+export interface IReviewsForAdmin {
+  _id: string;
+  userId: IUsers;
+  productId?: string;
+  store?: string;
+  name: string;
+  response: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 // интерфейс слайдер
 export interface ISlider {
@@ -86,49 +129,36 @@ export const AdminService = {
   },
 
   //----Reviews-----------
-  //получение всех отзывов
-  async getReviewsAdmin() {
+  //получение(или поиск по name) всех отзывов
+  async getReviewsAdmin(name: string) {
     console.log(' получение отзывов для админа');
     const { data: reviewsForAdmin } = await customAxios.get<{
       allReviews: IReviewsForAdmin[];
       quantity: number;
-    }>(API.reviews);
+    }>(API.reviews, {
+      params: { name },
+    });
     return reviewsForAdmin;
   },
-  // поиск  отзывов по name
-  async getFoundReviews(name: string) {
-    console.log('поиск отзыва');
-    const { data: reviews } = await customAxios.get<IReviewsForAdmin[]>(
-      API.reviewsSearch,
-      {
-        params: { name },
-      }
-    );
-    return reviews;
-  },
+
   //удаление пользователя
   async deleteReviews(reviewsId: string) {
     console.log(' удаление отзыва ');
     await customAxios.delete(`${API.reviews}/${reviewsId}`);
   },
   //----Orders-----------
-  //получение всех заказов
-  async getOrders() {
+  //получение(или поиск) всех заказов
+  async getOrders(email: string) {
     console.log(' получение заказов для админа');
     const { data: ordersData } = await customAxios.get<{
       orders: IOrders[];
       quantity: number;
-    }>(API.order);
-    return ordersData;
-  },
-  // поиск  заказа по email
-  async getFoundOrder(email: string) {
-    console.log('поиск заказа');
-    const { data: orders } = await customAxios.get<IOrders[]>(API.searchOrder, {
+    }>(API.order, {
       params: { email },
     });
-    return orders;
+    return ordersData;
   },
+
   // выполнить заказ
   async executeAnOrder(data: IcompletedOrder) {
     console.log('исполненный заказ');

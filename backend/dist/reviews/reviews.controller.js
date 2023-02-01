@@ -35,11 +35,8 @@ let ReviewsController = class ReviewsController {
     async getStoreReviews() {
         return this.ReviewsService.getStoreReviews();
     }
-    async getAllReviews() {
-        return this.ReviewsService.getAllReviews();
-    }
-    async findReviews(dto) {
-        return this.ReviewsService.findReviews(dto);
+    async getAllReviews(dto) {
+        return this.ReviewsService.getAllReviews(dto);
     }
     async getProductReviews(productId) {
         return this.ReviewsService.getProductReviews(productId);
@@ -81,18 +78,11 @@ __decorate([
 __decorate([
     (0, auth_decorators_1.Auth)('admin'),
     (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], ReviewsController.prototype, "getAllReviews", null);
-__decorate([
-    (0, auth_decorators_1.Auth)('admin'),
-    (0, common_1.Get)('search'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
-], ReviewsController.prototype, "findReviews", null);
+], ReviewsController.prototype, "getAllReviews", null);
 __decorate([
     (0, common_1.Get)(':productId'),
     __param(0, (0, common_1.Param)('productId', id_validation_pipe_1.IdValidationPipe)),

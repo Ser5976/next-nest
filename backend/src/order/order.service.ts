@@ -20,18 +20,29 @@ export class OrderService {
     if (!order) throw new NotFoundException('Заказ не создан');
     return order;
   }
-  // получение заказов
-  async getOrder(): Promise<{
+  // получение(или поиск) заказов
+  async getOrder(dto: SearchDto): Promise<{
     orders: DocumentType<OrderModel>[];
     quantity: number;
   }> {
-    const orders = await this.OrderModel.find()
+    let options = {};
+    if (dto.email) {
+      options = {
+        $or: [
+          {
+            email: new RegExp(dto.email, 'i'),
+          },
+        ],
+      };
+    }
+    const orders = await this.OrderModel.find(options)
       .populate('productCart user')
       .sort({ createdAt: 'desc' })
       .exec();
     if (!orders) throw new NotFoundException('Заказы не получены');
     //получене количества заказов
     const quantity = await this.OrderModel.find().count().exec();
+
     return { orders, quantity };
   }
   // отметка о выполнении заказа
@@ -45,14 +56,6 @@ export class OrderService {
     );
     if (!order) throw new NotFoundException('Изменение не произошло');
     return { message: 'заказ выполнен' };
-  }
-  // поиск  заказа  по email
-  async findOrders(dto: SearchDto): Promise<DocumentType<OrderModel>[]> {
-    // console.log('Поиск:', dto);
-    const orders = await this.OrderModel.find({
-      $or: [{ email: new RegExp(dto.email, 'i') }],
-    }).populate('productCart user');
-    return orders;
   }
   //удаление заказа
   async deleteOrder(id: string): Promise<{ message: string }> {

@@ -76,26 +76,28 @@ export class ReviewsService {
     throw new NotFoundException('отзыв не обновлён');
   }
   // admin
-  // получение всех отзывов
-  async getAllReviews(): Promise<{
+  // получение(или поиск по name) всех отзывов
+  async getAllReviews(dto: SearchDto): Promise<{
     allReviews: DocumentType<ReviewsModel>[];
     quantity: number;
   }> {
-    const allReviews = await this.ReviewsModel.find()
+    let options = {};
+    if (dto.name) {
+      options = {
+        $or: [
+          {
+            name: new RegExp(dto.name, 'i'),
+          },
+        ],
+      };
+    }
+    const allReviews = await this.ReviewsModel.find(options)
       .populate('userId')
       .sort({ createdAt: 'desc' })
       .exec();
     if (!allReviews) throw new NotFoundException('Отзывы не получены');
     const quantity = await this.ReviewsModel.find().count().exec();
     return { allReviews, quantity };
-  }
-  // поиск  отзыва  по name
-  async findReviews(dto: SearchDto): Promise<DocumentType<ReviewsModel>[]> {
-    console.log('Поиск:', dto);
-    const reviews = await this.ReviewsModel.find({
-      $or: [{ name: new RegExp(dto.name, 'i') }],
-    }).populate('userId');
-    return reviews;
   }
 
   //ответ на отзыв

@@ -1,30 +1,32 @@
 import styles from './Slider.module.css';
-import { FC, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { SliderProps } from './Slider.props';
 import { LayoutAdmin } from '../LayoutAdmin';
 import { useQuery } from 'react-query';
-import { AdminService, ISlider } from '../admin.service';
+import { AdminService } from '../admin.service';
 import { toast } from 'react-toastify';
 import SliderItem from './Slider-Item/SliderItem';
 import SliderForm from './Slider-Form/SliderForm';
 
 const Slider: FC<SliderProps> = ({}): JSX.Element => {
-  //стэйт для слайдера
-  const [images, setImages] = useState<ISlider[] | undefined>([]);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
 
   //получаем слайдер
-  const { isLoading } = useQuery('slider', () => AdminService.getSlider(), {
-    onSuccess: (data) => {
-      // console.log('Cлайдера:', data);
-      setImages(data);
-      //  console.log('загрузка слайдера');
-    },
+  const {
+    isLoading,
+    data: sliderImages,
+    refetch,
+  } = useQuery('slider', () => AdminService.getSlider(), {
     onError: () => {
       toast.error('Данные не получены, попробуйте ещё раз');
     },
   });
+  // повторный запрос
+  // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
+  useEffect(() => {
+    refetch();
+  }, []);
   console.log('рендеринг');
   return (
     <LayoutAdmin activeMenu="slider">
@@ -33,7 +35,7 @@ const Slider: FC<SliderProps> = ({}): JSX.Element => {
       {isLoading ? (
         <h2 className={styles.loading}>Загрузка...</h2>
       ) : (
-        <SliderItem slider={images} setImages={setImages} />
+        <SliderItem slider={sliderImages} refech={refetch} />
       )}
       <SliderForm />
     </LayoutAdmin>

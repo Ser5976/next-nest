@@ -44,18 +44,13 @@ export class ReviewsController {
     return this.ReviewsService.getStoreReviews();
   }
   // admin
-  // получение всех отзывов
+  // получение(или поиск по name) всех отзывов
   @Auth('admin')
   @Get()
-  async getAllReviews() {
-    return this.ReviewsService.getAllReviews();
+  async getAllReviews(@Query() dto: SearchDto) {
+    return this.ReviewsService.getAllReviews(dto);
   }
-  //поиск отзыва по name
-  @Auth('admin')
-  @Get('search')
-  async findReviews(@Query() dto: SearchDto) {
-    return this.ReviewsService.findReviews(dto);
-  }
+
   //-------------------------------------------
   //получение отзывов продукта
   @Get(':productId')

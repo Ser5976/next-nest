@@ -10,20 +10,19 @@ import { dateFormatting } from '../../../../../utils/date-formatting';
 import { BsCircle, BsCheck2Circle } from 'react-icons/bs';
 import OrderModal from '../Order-Modal/OrderModal';
 
-const OrderItem: FC<OrderItemProps> = ({ order }): JSX.Element => {
+const OrderItem: FC<OrderItemProps> = ({ order, refech }): JSX.Element => {
   const { name } = order;
   //открытие модального окна для оформление заказа
   const [show, setShow] = useState(false);
-
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
-  const queryClient = useQueryClient();
 
   // удаление заказа(только админ)
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteOrder } = useMutation(AdminService.deleteOrder, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('orders');
+      // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
+      // поэтому- refech
+      refech();
       toast.success('Заказ удалён');
     },
     onError: (error: any) => {
@@ -34,7 +33,7 @@ const OrderItem: FC<OrderItemProps> = ({ order }): JSX.Element => {
   return (
     <>
       <div className={styles.containerData}>
-        <div className={styles.data}>{order.name}</div>
+        <div className={styles.data}>{order.email}</div>
         <div className={styles.data}>{dateFormatting(order.createdAt)}</div>
         <div className={styles.data}>
           {order.execution ? (

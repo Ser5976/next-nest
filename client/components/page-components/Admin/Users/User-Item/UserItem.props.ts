@@ -1,6 +1,6 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { QueryObserverResult } from 'react-query';
-import { IUsers } from '../../../../../store/admin/interface.admin';
+import { IUsers } from '../../admin.service';
 
 export interface UserItemProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

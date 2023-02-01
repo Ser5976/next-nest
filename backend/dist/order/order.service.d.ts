@@ -7,14 +7,13 @@ export declare class OrderService {
     private readonly OrderModel;
     constructor(OrderModel: ModelType<OrderModel>);
     createOrder(dto: OrderDto, _id: string): Promise<DocumentType<OrderModel>>;
-    getOrder(): Promise<{
+    getOrder(dto: SearchDto): Promise<{
         orders: DocumentType<OrderModel>[];
         quantity: number;
     }>;
     executeAnOrder(dto: ExecuteDto): Promise<{
         message: string;
     }>;
-    findOrders(dto: SearchDto): Promise<DocumentType<OrderModel>[]>;
     deleteOrder(id: string): Promise<{
         message: string;
     }>;

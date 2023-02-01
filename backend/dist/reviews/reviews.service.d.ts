@@ -1,11 +1,3 @@
-/// <reference types="mongoose/types/pipelinestage" />
-/// <reference types="mongoose/types/aggregate" />
-/// <reference types="mongoose/types/connection" />
-/// <reference types="mongoose/types/cursor" />
-/// <reference types="mongoose/types/document" />
-/// <reference types="mongoose/types/error" />
-/// <reference types="mongoose/types/mongooseoptions" />
-/// <reference types="mongoose/types/schemaoptions" />
 import { UserModel } from './../user/user.model';
 import { UpdateReviewDto } from './dto/update.review.dto';
 import { ReviewsDto } from './dto/reviews.dto';
@@ -27,11 +19,10 @@ export declare class ReviewsService {
     updateReview(idReview: string, dto: UpdateReviewDto): Promise<{
         message: string;
     }>;
-    getAllReviews(): Promise<{
+    getAllReviews(dto: SearchDto): Promise<{
         allReviews: DocumentType<ReviewsModel>[];
         quantity: number;
     }>;
-    findReviews(dto: SearchDto): Promise<DocumentType<ReviewsModel>[]>;
     responseReview(id: string, dto: ResponseDto): Promise<{
         message: string;
     }>;

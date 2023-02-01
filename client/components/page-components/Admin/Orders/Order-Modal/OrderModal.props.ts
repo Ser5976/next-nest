@@ -1,10 +1,10 @@
-import { IOrders } from './../../../../../store/admin/interface.admin';
 import {
   DetailedHTMLProps,
   HTMLAttributes,
   Dispatch,
   SetStateAction,
 } from 'react';
+import { IOrders } from '../../admin.service';
 
 export interface OrderModalProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

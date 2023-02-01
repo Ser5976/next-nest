@@ -28,11 +28,11 @@ export class OrderController {
   async createOrder(@User('_id') _id: string, @Body() dto: OrderDto) {
     return this.OrderService.createOrder(dto, _id);
   }
-  //получение заказов
+  //получение(или поиск) заказов
   @Get()
   @Auth('admin')
-  async getOrder() {
-    return this.OrderService.getOrder();
+  async getOrder(@Query() dto: SearchDto) {
+    return this.OrderService.getOrder(dto);
   }
   //отметь выполнения заказа
   @UsePipes(new ValidationPipe())
@@ -40,12 +40,6 @@ export class OrderController {
   @Auth('admin')
   async executeAnOrder(@Body() dto: ExecuteDto) {
     return this.OrderService.executeAnOrder(dto);
-  }
-  //поиск заказа по email
-  @Auth('admin')
-  @Get('search')
-  async findReviews(@Query() dto: SearchDto) {
-    return this.OrderService.findOrders(dto);
   }
   //удаление заказа
   @Delete(':id')

@@ -24,7 +24,7 @@ const Menu: FC<MenuProps> = ({
   const {
     authReducer,
     userReducer,
-    adminReducer: { generalReviewsForAdmin, orders, userQuantity },
+    adminReducer: { ordersQuantity, userQuantity, reviewsQuantity },
   } = useData();
   const { userProfile } = userReducer;
   const { user } = authReducer;
@@ -84,7 +84,7 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeBage]: activeMenu === 'product',
               })}
             >
-              576
+              576789 / 578123
             </span>
             Товар
           </a>
@@ -100,13 +100,13 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'reviews',
               })}
             />
-            {generalReviewsForAdmin.reviewsForAdmin?.quantity >= 1 ? (
+            {reviewsQuantity >= 1 ? (
               <span
                 className={cn(styles.bage, {
                   [styles.activeBage]: activeMenu === 'reviews',
                 })}
               >
-                {generalReviewsForAdmin.reviewsForAdmin?.quantity}
+                {reviewsQuantity}
               </span>
             ) : null}
             Отзывы
@@ -123,13 +123,13 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'orders',
               })}
             />
-            {orders.ordersData?.quantity >= 1 ? (
+            {ordersQuantity >= 1 ? (
               <span
                 className={cn(styles.bage, {
                   [styles.activeBage]: activeMenu === 'orders',
                 })}
               >
-                {orders?.ordersData?.quantity}
+                {ordersQuantity}
               </span>
             ) : null}
             Заказы

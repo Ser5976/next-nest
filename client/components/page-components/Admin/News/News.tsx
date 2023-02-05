@@ -1,5 +1,5 @@
 import styles from './News.module.css';
-import { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { NewsProps } from './News.props';
 import { LayoutAdmin } from '../LayoutAdmin';
 import { useQuery } from 'react-query';
@@ -8,10 +8,20 @@ import { toast } from 'react-toastify';
 import { INews } from '../../News-List/NewsList.props';
 import NewsItem from './News-Item/NewsItem';
 import AddNewsModal from './Add-News/AddNewsModal';
+import { useDebounce } from '../useDebounce';
+import { SearchInputAdmin } from '../Search-Input/SearchInputAdmin';
 
 const News: FC<NewsProps> = ({}): JSX.Element => {
   //открытие модального окна для редактирование постера
   const [show, setShow] = useState(false);
+  //стейт для инпута(поиск пользователя)
+  const [searchTerm, setSearchTerm] = useState('');
+  //обработчик инпута
+  const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+  //кастомный хук для задержки времени передачи данных из инпута поиска пользователя в запрос useQuery
+  const debouncedSearch = useDebounce(searchTerm, 700);
   //стейт для выбранной новости
   const [selectedNews, setSelectedNews] = useState<INews | ''>('');
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
@@ -23,26 +33,32 @@ const News: FC<NewsProps> = ({}): JSX.Element => {
     data: news,
     refetch,
   } = useQuery(
-    'news',
-    () => AdminService.getNews(),
+    ['news', debouncedSearch],
+    () => AdminService.getNews(debouncedSearch),
 
     {
       onError: () => {
-        toast.error('данные не получены, попробуйте ещё раз');
+        toast.error('Данные не получены, попробуйте ещё раз');
       },
-      enabled: false,
+      enabled: !!searchTerm,
     }
   );
   // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
   // поэтому- этот костыль(и+1 к рендеренгу)
+  console.log('рендеринг');
   useEffect(() => {
     refetch();
-  }, []);
+  }, [searchTerm]);
   // console.log('рендеринг');
   return (
     <LayoutAdmin activeMenu="news">
       <h1 className="text-2xl text-gray-600 font-semibold mb-3">Новости</h1>
       <div className={styles.container}>
+        <SearchInputAdmin
+          searchTerm={searchTerm}
+          handleInput={handlerInput}
+          placeholderText="введите название статьи . . ."
+        />
         <div
           className={styles.button}
           onClick={() => {
@@ -62,7 +78,7 @@ const News: FC<NewsProps> = ({}): JSX.Element => {
             <NewsItem
               key={news._id}
               news={news}
-              refech={refetch}
+              refetch={refetch}
               setShow={setShow}
               setSelectedNews={setSelectedNews}
             />
@@ -72,7 +88,7 @@ const News: FC<NewsProps> = ({}): JSX.Element => {
       <AddNewsModal
         setShow={setShow}
         show={show}
-        refech={refetch}
+        refetch={refetch}
         selectedNews={selectedNews}
         setSelectedNews={setSelectedNews}
       />

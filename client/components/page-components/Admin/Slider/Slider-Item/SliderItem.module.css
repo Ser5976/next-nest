@@ -11,3 +11,6 @@
 .wrapperImage img {
   @apply transform transition-opacity duration-1000;
 }
+.h3 {
+  @apply text-center font-semibold text-gray-600 py-5;
+}

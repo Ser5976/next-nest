@@ -11,22 +11,21 @@ import SliderForm from './Slider-Form/SliderForm';
 const Slider: FC<SliderProps> = ({}): JSX.Element => {
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
-
   //получаем слайдер
   const {
     isLoading,
-    data: sliderImages,
     refetch,
+    data: sliderImages,
   } = useQuery('slider', () => AdminService.getSlider(), {
     onError: () => {
       toast.error('Данные не получены, попробуйте ещё раз');
     },
+    enabled: false,
   });
-  // повторный запрос
-  // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
+
   console.log('рендеринг');
   return (
     <LayoutAdmin activeMenu="slider">
@@ -35,9 +34,9 @@ const Slider: FC<SliderProps> = ({}): JSX.Element => {
       {isLoading ? (
         <h2 className={styles.loading}>Загрузка...</h2>
       ) : (
-        <SliderItem slider={sliderImages} refech={refetch} />
+        <SliderItem slider={sliderImages} refetch={refetch} />
       )}
-      <SliderForm />
+      <SliderForm refetch={refetch} />
     </LayoutAdmin>
   );
 };

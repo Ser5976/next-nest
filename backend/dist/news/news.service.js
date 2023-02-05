@@ -29,8 +29,18 @@ let NewsService = class NewsService {
             throw new common_1.NotFoundException('Что то пошло не так,статья не сохранена');
         return news;
     }
-    async getAllNews() {
-        const news = await this.NewsModel.find().sort({ createdAt: 'desc' });
+    async getAllNews(dto) {
+        let options = {};
+        if (dto.name) {
+            options = {
+                $or: [
+                    {
+                        name: new RegExp(dto.name, 'i'),
+                    },
+                ],
+            };
+        }
+        const news = await this.NewsModel.find(options).sort({ createdAt: 'desc' });
         if (!news)
             throw new common_1.NotFoundException('Что то пошло не так,статьи не получены');
         return news;

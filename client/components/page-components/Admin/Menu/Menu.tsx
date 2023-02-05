@@ -22,22 +22,27 @@ const Menu: FC<MenuProps> = ({
 }): JSX.Element => {
   //получаем данные  из редюссоров при помощи кастомного хука useData()
   const {
-    authReducer,
-    userReducer,
-    adminReducer: { ordersQuantity, userQuantity, reviewsQuantity },
+    adminReducer: {
+      ordersQuantity,
+      userQuantity,
+      reviewsQuantity,
+      freshOrdersQuantity,
+      freshReviewsQuantity,
+    },
   } = useData();
-  const { userProfile } = userReducer;
-  const { user } = authReducer;
+  // данные по заказам
+  const countOrders =
+    freshOrdersQuantity === ordersQuantity
+      ? ordersQuantity
+      : `${freshOrdersQuantity} / ${ordersQuantity}`;
+  // данные по заказам
+  const countReviews =
+    freshReviewsQuantity === reviewsQuantity
+      ? reviewsQuantity
+      : `${freshReviewsQuantity} / ${reviewsQuantity}`;
 
   const router = useRouter();
   // переменные количества для бэйджа
-
-  const countFavourites = userProfile?.favorites?.length
-    ? userProfile.favorites.length
-    : 0;
-  const countViewed = userProfile?.viewed?.length
-    ? userProfile.viewed.length
-    : 0;
 
   return (
     <div className={styles.container}>
@@ -84,7 +89,7 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeBage]: activeMenu === 'product',
               })}
             >
-              576789 / 578123
+              576789
             </span>
             Товар
           </a>
@@ -106,7 +111,7 @@ const Menu: FC<MenuProps> = ({
                   [styles.activeBage]: activeMenu === 'reviews',
                 })}
               >
-                {reviewsQuantity}
+                {countReviews}
               </span>
             ) : null}
             Отзывы
@@ -129,7 +134,7 @@ const Menu: FC<MenuProps> = ({
                   [styles.activeBage]: activeMenu === 'orders',
                 })}
               >
-                {ordersQuantity}
+                {countOrders}
               </span>
             ) : null}
             Заказы

@@ -12,5 +12,5 @@ export interface NewsItemProps
   news: INews;
   setSelectedNews: Dispatch<SetStateAction<INews | ''>>;
   setShow: Dispatch<SetStateAction<boolean>>;
-  refech: () => Promise<QueryObserverResult<INews[], unknown>>;
+  refetch: () => Promise<QueryObserverResult<INews[], unknown>>;
 }

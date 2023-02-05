@@ -11,7 +11,7 @@
   @apply fill-gray-400;
 }
 .bage {
-  @apply inline-flex  justify-center  absolute top-1 right-3 rounded-full bg-blue-500 text-white text-[10px] px-[7px];
+  @apply inline-flex  justify-center  absolute top-1 right-3 rounded-full bg-lime-500 text-white text-[10px] px-[7px];
 }
 .activeBage {
   @apply bg-gray-400;

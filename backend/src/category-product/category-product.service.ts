@@ -60,6 +60,6 @@ export class CategoryProductService {
       await this.CategoryProductModel.findByIdAndDelete(id).exec();
     if (!removeCategoryProduct)
       throw new NotFoundException('Категория продукта не удалёна');
-    return { message: 'Категория продукта удалена' };
+    return removeCategoryProduct;
   }
 }

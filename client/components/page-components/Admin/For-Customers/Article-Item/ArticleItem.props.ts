@@ -12,5 +12,5 @@ export interface ArticleItemProps
   article: IArticle;
   setArticle: Dispatch<SetStateAction<IArticle | ''>>;
   setShow: Dispatch<SetStateAction<boolean>>;
-  refech: () => Promise<QueryObserverResult<IArticle[], unknown>>;
+  refetch: () => Promise<QueryObserverResult<IArticle[], unknown>>;
 }

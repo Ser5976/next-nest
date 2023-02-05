@@ -2,9 +2,11 @@
 import * as authActions from './auth/authActoins';
 import { getUser, getError, clearUser } from './user/userSlice';
 import {
-  getUserQantity,
-  getReviewsQantity,
-  getOrdersQantity,
+  getUserQuantity,
+  getReviewsQuantity,
+  getOrdersQuantity,
+  getFreshOrdersQuantity,
+  getFreshReviewsQuantity,
 } from './admin/adminSlice';
 
 export const allActions = {
@@ -12,7 +14,9 @@ export const allActions = {
   getUser,
   getError,
   clearUser,
-  getUserQantity,
-  getOrdersQantity,
-  getReviewsQantity,
+  getUserQuantity,
+  getOrdersQuantity,
+  getReviewsQuantity,
+  getFreshOrdersQuantity,
+  getFreshReviewsQuantity,
 };

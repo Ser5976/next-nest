@@ -5,5 +5,5 @@ import { ISlider } from '../../admin.service';
 export interface SliderItemProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   slider: ISlider[] | undefined;
-  refech: () => Promise<QueryObserverResult<ISlider[], unknown>>;
+  refetch: () => Promise<QueryObserverResult<ISlider[], unknown>>;
 }

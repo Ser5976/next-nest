@@ -9,7 +9,7 @@ import { VscEdit } from 'react-icons/vsc';
 
 const NewsItem: FC<NewsItemProps> = ({
   news,
-  refech,
+  refetch,
   setShow,
   setSelectedNews, //сохраняем выбранную новость в стэйт для, редактирования
 }): JSX.Element => {
@@ -18,11 +18,11 @@ const NewsItem: FC<NewsItemProps> = ({
   const { mutate: deleteNews } = useMutation(AdminService.deleteNews, {
     onSuccess: () => {
       // при успешном изменении делаем повторный запрос
-      refech();
-      toast.success('новость удалена');
+      refetch();
+      toast.success('Новость удалена');
     },
     onError: (error: any) => {
-      toast.error('новость не удалёна,что-то пошло не так');
+      toast.error('Новость не удалёна,что-то пошло не так');
     },
   });
   const editHandler = () => {

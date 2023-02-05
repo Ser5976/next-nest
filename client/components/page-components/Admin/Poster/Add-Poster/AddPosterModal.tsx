@@ -8,6 +8,7 @@ const AddPosterModal: FC<AddPosterModalProps> = ({
   show,
   setShow,
   productType,
+  refetch,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);
@@ -23,7 +24,11 @@ const AddPosterModal: FC<AddPosterModalProps> = ({
           className={styles.icon}
           onClick={() => setShow(false)}
         />
-        <AddPosterForm productType={productType} setShow={setShow} />
+        <AddPosterForm
+          productType={productType}
+          setShow={setShow}
+          refetch={refetch}
+        />
       </div>
     </div>
   );

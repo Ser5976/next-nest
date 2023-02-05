@@ -11,5 +11,5 @@ export interface AddNewsFormProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   selectedNews: INews | '';
   setShow: Dispatch<SetStateAction<boolean>>;
-  refech: () => Promise<QueryObserverResult<INews[], unknown>>;
+  refetch: () => Promise<QueryObserverResult<INews[], unknown>>;
 }

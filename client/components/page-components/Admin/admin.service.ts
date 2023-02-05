@@ -273,10 +273,10 @@ export const AdminService = {
   //удаление категории
   async deleteCategory(categoryProdutId: string) {
     console.log(' удаление категории ');
-    const message = await customAxios.delete<{ message: string }>(
+    const removeCategoryProduct = await customAxios.delete<ICategoryProduct>(
       `${API.categoryProduct}/${categoryProdutId}`
     );
-    return message;
+    return removeCategoryProduct;
   },
   //----ProductType-----------
   //добавление типа
@@ -285,7 +285,7 @@ export const AdminService = {
     await customAxios.post(API.productType, data);
   },
   //получение(и поиск) типа товара
-  async getProductType(name?: string) {
+  async getProductType(name: string) {
     console.log(' получение типа для админа');
     const { data: productsTypes } = await axios.get<IType[]>(API.productType, {
       params: { name },
@@ -308,7 +308,7 @@ export const AdminService = {
     await customAxios.post(API.admin.brand, data);
   },
   //получение или поиск брэнда
-  async getBrand(searchBrand?: string) {
+  async getBrand(searchBrand: string) {
     console.log(' получение брэнда');
     const { data: brands } = await customAxios.get<IBrand[]>(API.admin.brand, {
       params: { name: searchBrand },
@@ -358,10 +358,12 @@ export const AdminService = {
     const news = await customAxios.post(API.news, data);
     return news;
   },
-  //получение новостей
-  async getNews() {
+  //получение(или поиск) новостей
+  async getNews(name: string) {
     console.log(' получение новостей');
-    const { data: news } = await axios.get<INews[]>(API.news);
+    const { data: news } = await axios.get<INews[]>(API.news, {
+      params: { name },
+    });
     return news;
   },
   //редактирование новости

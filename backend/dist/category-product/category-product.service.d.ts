@@ -13,7 +13,7 @@ export declare class CategoryProductService {
     getCategoryProduct(dto: SearchDto): Promise<Omit<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & CategoryProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
         _id: import("mongoose").Types.ObjectId;
     }, never>[]>;
-    removeCategoryProduct(id: string): Promise<{
-        message: string;
+    removeCategoryProduct(id: string): Promise<import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & CategoryProductModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+        _id: import("mongoose").Types.ObjectId;
     }>;
 }

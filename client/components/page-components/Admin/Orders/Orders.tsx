@@ -1,5 +1,4 @@
 import styles from './Orders.module.css';
-import cn from 'classnames';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { OrdersProps } from './Orders.props';
 import { LayoutAdmin } from '../LayoutAdmin';
@@ -28,7 +27,7 @@ const Orders: FC<OrdersProps> = ({}): JSX.Element => {
   } = useData();
 
   // получаем экшены
-  const { getOrdersQantity } = useActions();
+  const { getOrdersQuantity, getFreshOrdersQuantity } = useActions();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
@@ -46,18 +45,20 @@ const Orders: FC<OrdersProps> = ({}): JSX.Element => {
       onSuccess: (ordersData) => {
         // смотрим если количество пользователе в базе поменялось, только тогда меняем
         if (ordersQuantity !== ordersData.quantity) {
-          getOrdersQantity(ordersData.quantity);
+          getOrdersQuantity(ordersData.quantity);
         }
+        getFreshOrdersQuantity(ordersData.quantity);
       },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
+      enabled: !!searchTerm,
     }
   );
   //для поиска, повторный запрос
   useEffect(() => {
     refetch();
-  }, [searchTerm, refetch]);
+  }, [searchTerm]);
 
   console.log('рендеринг');
 

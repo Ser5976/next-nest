@@ -11,7 +11,7 @@ import { dateFormatting } from '../../../../../utils/date-formatting';
 const ReviewsItem: FC<ReviewsItemProps> = ({
   reviews, //данные отзыва
   openingAdminsResponse, // ответ админа на отзыв(открытие модального окна и передача id отзыва в стейт)
-  refech, //для повторного запроса
+  refetch, //для повторного запроса
 }): JSX.Element => {
   // console.log('отзывы:', reviews);
   // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
@@ -23,8 +23,8 @@ const ReviewsItem: FC<ReviewsItemProps> = ({
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
       // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
-      // поэтому- refech
-      refech();
+      // поэтому- refetch
+      refetch();
       toast.success('отзыв удалён');
     },
     onError: (error: any) => {

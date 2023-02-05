@@ -34,7 +34,7 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
   } = useData();
 
   // получаем экшены
-  const { getReviewsQantity } = useActions();
+  const { getReviewsQuantity, getFreshReviewsQuantity } = useActions();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
@@ -51,18 +51,20 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
     {
       onSuccess: (reviewsForAdmin) => {
         if (reviewsQuantity !== reviewsForAdmin.quantity) {
-          getReviewsQantity(reviewsForAdmin.quantity);
+          getReviewsQuantity(reviewsForAdmin.quantity);
+          getFreshReviewsQuantity(reviewsForAdmin.quantity);
         }
       },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
+      enabled: !!searchTerm,
     }
   );
   //для поиска, повторный запрос
   useEffect(() => {
     refetch();
-  }, [searchTerm, refetch]);
+  }, [searchTerm]);
   console.log('рендеринг');
 
   // ответ админа на отзыв(открытие модального окна и передача id отзыва в стейт)
@@ -92,7 +94,7 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
               key={reviews._id}
               reviews={reviews}
               openingAdminsResponse={openingAdminsResponse}
-              refech={refetch}
+              refetch={refetch}
             />
           );
         })

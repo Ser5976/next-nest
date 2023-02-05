@@ -11,7 +11,7 @@ import { stripHtml } from 'string-strip-html';
 
 const AddNewsForm: FC<AddNewsFormProps> = ({
   setShow,
-  refech,
+  refetch,
   selectedNews,
 }): JSX.Element => {
   // добавляем новость
@@ -19,7 +19,7 @@ const AddNewsForm: FC<AddNewsFormProps> = ({
   const { mutate: createNews } = useMutation(AdminService.addNews, {
     onSuccess: () => {
       //  делает повторный запрос
-      refech();
+      refetch();
       toast.success('Новость добавлена');
       setShow(false); //закрываем модальное окно
     },
@@ -31,7 +31,7 @@ const AddNewsForm: FC<AddNewsFormProps> = ({
   const { mutate: editNews } = useMutation(AdminService.updateNews, {
     onSuccess: () => {
       //  делает повторный запрос
-      refech();
+      refetch();
       toast.success('Новость изменена');
       setShow(false); //закрываем модальное окно
     },

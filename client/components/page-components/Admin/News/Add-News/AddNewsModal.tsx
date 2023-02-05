@@ -8,7 +8,7 @@ const AddNewsModal: FC<AddNewsModalProps> = ({
   show,
   setShow,
   setSelectedNews,
-  refech,
+  refetch,
   selectedNews,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
@@ -27,7 +27,7 @@ const AddNewsModal: FC<AddNewsModalProps> = ({
         <TiDeleteOutline className={styles.icon} onClick={handlerClose} />
         <AddNewsForm
           setShow={setShow}
-          refech={refech}
+          refetch={refetch}
           selectedNews={selectedNews}
         />
       </div>

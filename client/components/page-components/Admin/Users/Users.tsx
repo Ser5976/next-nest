@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import UserItem from './User-Item/UserItem';
 import { SearchInputAdmin } from '../Search-Input/SearchInputAdmin';
 import { useDebounce } from '../useDebounce';
+import { useFreshData } from '../useFreshData';
 
 const Users: FC<UsersProps> = ({}): JSX.Element => {
   //стейт для инпута(поиск пользователя)
@@ -27,10 +28,13 @@ const Users: FC<UsersProps> = ({}): JSX.Element => {
   } = useData();
 
   // получаем экшены(для изменения количества пользователей в стейте)
-  const { getUserQantity } = useActions();
+  const { getUserQuantity } = useActions();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
+
+  //т.к. админ открывется на станице user,а закзы и отзывы могут менятся без ведома админа, получаем актульные данные по ним
+  useFreshData();
 
   //получаем  все данные (из базы) по пользователям (записываем в стор(редакс,а там и в локалстор) только количества
   // поиск пользователя(данные берём из инпута ,
@@ -47,19 +51,20 @@ const Users: FC<UsersProps> = ({}): JSX.Element => {
       onSuccess: (usersForAdmin) => {
         // смотрим если количество пользователе в базе поменялось, только тогда меняем
         if (userQuantity !== usersForAdmin.quantity) {
-          getUserQantity(usersForAdmin.quantity);
+          getUserQuantity(usersForAdmin.quantity);
         }
       },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
+      enabled: !!searchTerm,
     }
   );
 
   //для поиска, повторный запрос
   useEffect(() => {
     refetch();
-  }, [searchTerm, refetch]);
+  }, [searchTerm]);
 
   console.log('рендеринг');
 

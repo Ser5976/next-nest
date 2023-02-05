@@ -5,7 +5,9 @@ import { IAdminInitialState } from './interface.admin';
 const initialState: IAdminInitialState = {
   userQuantity: getStoreLocalStorage('userQuntity'), //данные по количеству пользователей, из LocalStorage
   reviewsQuantity: getStoreLocalStorage('reviewsQuantity'), //данные по количеству отзывов, из LocalStorage
-  ordersQuantity: getStoreLocalStorage('reviewsQuantity'), //данные по количеству заказов, из LocalStorage
+  ordersQuantity: getStoreLocalStorage('ordersQuantity'), //данные по количеству заказов, из LocalStorage
+  freshOrdersQuantity: getStoreLocalStorage('freshOrdersQuantity'), //данные по количеству заказов, из LocalStorage
+  freshReviewsQuantity: getStoreLocalStorage('freshReviewsQuantity'), //данные по количеству заказов, из LocalStorage
 };
 
 export const adminSlice = createSlice({
@@ -14,22 +16,41 @@ export const adminSlice = createSlice({
 
   reducers: {
     //...Users.....
-    getUserQantity: (state, action: PayloadAction<number>) => {
+    getUserQuantity: (state, action: PayloadAction<number>) => {
       state.userQuantity = action.payload;
       localStorage.setItem('userQuntity', JSON.stringify(action.payload));
     },
     //...Reviews.....
-    getReviewsQantity: (state, action: PayloadAction<number>) => {
+    getReviewsQuantity: (state, action: PayloadAction<number>) => {
       state.reviewsQuantity = action.payload;
       localStorage.setItem('reviewsQuantity', JSON.stringify(action.payload));
     },
+    getFreshReviewsQuantity: (state, action: PayloadAction<number>) => {
+      state.freshReviewsQuantity = action.payload;
+      localStorage.setItem(
+        'freshReviewsQuantity',
+        JSON.stringify(action.payload)
+      );
+    },
     //...Orders.....
-    getOrdersQantity: (state, action: PayloadAction<number>) => {
+    getOrdersQuantity: (state, action: PayloadAction<number>) => {
       state.ordersQuantity = action.payload;
-      localStorage.setItem('reviewsQuantity', JSON.stringify(action.payload));
+      localStorage.setItem('ordersQuantity', JSON.stringify(action.payload));
+    },
+    getFreshOrdersQuantity: (state, action: PayloadAction<number>) => {
+      state.freshOrdersQuantity = action.payload;
+      localStorage.setItem(
+        'freshOrdersQuantity',
+        JSON.stringify(action.payload)
+      );
     },
   },
 });
-export const { getOrdersQantity, getUserQantity, getReviewsQantity } =
-  adminSlice.actions;
+export const {
+  getOrdersQuantity,
+  getUserQuantity,
+  getReviewsQuantity,
+  getFreshOrdersQuantity,
+  getFreshReviewsQuantity,
+} = adminSlice.actions;
 export default adminSlice.reducer;

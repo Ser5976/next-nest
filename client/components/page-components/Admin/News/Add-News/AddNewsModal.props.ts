@@ -13,5 +13,5 @@ export interface AddNewsModalProps
   setSelectedNews: Dispatch<SetStateAction<INews | ''>>;
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  refech: () => Promise<QueryObserverResult<INews[], unknown>>;
+  refetch: () => Promise<QueryObserverResult<INews[], unknown>>;
 }

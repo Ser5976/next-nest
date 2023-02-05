@@ -6,7 +6,7 @@ export interface ReviewsItemProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   reviews: IReviewsForAdmin;
   openingAdminsResponse: (id: string) => void;
-  refech: () => Promise<
+  refetch: () => Promise<
     QueryObserverResult<
       { allReviews: IReviewsForAdmin[]; quantity: number },
       unknown

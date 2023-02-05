@@ -19,7 +19,6 @@ const OrderItem: FC<OrderItemProps> = ({ order, refech }): JSX.Element => {
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteOrder } = useMutation(AdminService.deleteOrder, {
     onSuccess: () => {
-      // при успешном изменении делает повторный запрос
       // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
       // поэтому- refech
       refech();

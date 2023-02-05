@@ -13,5 +13,5 @@ export interface AddArticleModalProps
   setArticle: Dispatch<SetStateAction<IArticle | ''>>;
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  refech: () => Promise<QueryObserverResult<IArticle[], unknown>>;
+  refetch: () => Promise<QueryObserverResult<IArticle[], unknown>>;
 }

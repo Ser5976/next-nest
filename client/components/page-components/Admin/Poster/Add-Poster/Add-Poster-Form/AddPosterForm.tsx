@@ -16,16 +16,17 @@ export interface IAddPosterForm {
 const AddPosterForm: FC<AddPosterFormProps> = ({
   productType,
   setShow,
+  refetch,
 }): JSX.Element => {
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
+  //хук useQueryClient, из react-query
   const queryClient = useQueryClient();
   // изменение постера
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: createPoster } = useMutation(AdminService.createPoster, {
     onSuccess: () => {
-      // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('poster');
-
+      // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
+      // поэтому- refetch
+      refetch();
       toast.success('Постер добавлен');
       setShow(false); //закрываем модальное окно
     },

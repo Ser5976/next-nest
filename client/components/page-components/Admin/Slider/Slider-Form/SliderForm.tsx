@@ -12,26 +12,23 @@ export interface ISliderForm {
   files: string[] | undefined;
 }
 
-const SliderForm: FC<SliderFormProps> = ({}): JSX.Element => {
+const SliderForm: FC<SliderFormProps> = ({ refetch }): JSX.Element => {
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
   const queryClient = useQueryClient();
   // добавление картинки в слайдер
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: addToSlider } = useMutation(AdminService.addToSlider, {
     onSuccess: () => {
-      // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('slider');
+      // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
+      // поэтому- refetch
+      refetch();
       toast.success('Изображение добавлено ');
     },
     onError: (error: any) => {
       toast.error('Изображение не добавлено,что-то пошло не так');
     },
   });
-  const {
-    handleSubmit,
-    setValue,
-    control,
-  } = useForm<ISliderForm>({
+  const { handleSubmit, setValue, control } = useForm<ISliderForm>({
     mode: 'onChange',
   });
 

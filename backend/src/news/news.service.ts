@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+import { SearchDto } from './dto/search.dto';
 
 @Injectable()
 export class NewsService {
@@ -24,9 +25,19 @@ export class NewsService {
       throw new NotFoundException('Что то пошло не так,статья не сохранена');
     return news;
   }
-  // получение статей,сортировка ставит последнюю созданную статью в начало
-  async getAllNews() {
-    const news = await this.NewsModel.find().sort({ createdAt: 'desc' });
+  // получение статей(или поиск),сортировка ставит последнюю созданную статью в начало
+  async getAllNews(dto: SearchDto) {
+    let options = {};
+    if (dto.name) {
+      options = {
+        $or: [
+          {
+            name: new RegExp(dto.name, 'i'),
+          },
+        ],
+      };
+    }
+    const news = await this.NewsModel.find(options).sort({ createdAt: 'desc' });
     if (!news)
       throw new NotFoundException('Что то пошло не так,статьи не получены');
     return news;

@@ -11,15 +11,16 @@ import { stripHtml } from 'string-strip-html';
 
 const AddArticleForm: FC<AddArticleFormProps> = ({
   setShow,
-  refech,
+  refetch,
   article,
 }): JSX.Element => {
   // добавляем статью
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: createArticle } = useMutation(AdminService.addArticle, {
     onSuccess: () => {
-      //  делает повторный запрос
-      refech();
+      // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
+      // поэтому- refetch
+      refetch();
       toast.success('Статья добавлена');
       setShow(false); //закрываем модальное окно
     },
@@ -31,7 +32,7 @@ const AddArticleForm: FC<AddArticleFormProps> = ({
   const { mutate: editArticle } = useMutation(AdminService.updateArticle, {
     onSuccess: () => {
       //  делает повторный запрос
-      refech();
+      refetch();
       toast.success('Статья изменена');
       setShow(false); //закрываем модальное окно
     },

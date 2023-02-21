@@ -7,7 +7,8 @@ export interface SearhInputAdminProps
     | 'введите имя . . .'
     | 'введите  тип товара . . .'
     | 'введите категорию товара . . .'
-    | 'введите название статьи . . .';
+    | 'введите название статьи . . .'
+    | 'введите название товара . . .';
   searchTerm: string;
   handleInput: (event: ChangeEvent<HTMLInputElement>) => void;
 }

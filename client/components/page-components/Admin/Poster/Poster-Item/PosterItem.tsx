@@ -58,7 +58,7 @@ const PosterItem: FC<PosterItemProps> = ({ poster, refetch }): JSX.Element => {
           }}
         />
       </div>
-      <PosterModal poster={poster} show={show} setShow={setShow} />
+      <PosterModal poster={poster} show={show} setShow={setShow} refetch={refetch} />
     </>
   );
 };

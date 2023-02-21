@@ -4,4 +4,5 @@ export interface IAdminInitialState {
   ordersQuantity: number;
   freshOrdersQuantity: number;
   freshReviewsQuantity: number;
+  productsQuantity: number;
 }

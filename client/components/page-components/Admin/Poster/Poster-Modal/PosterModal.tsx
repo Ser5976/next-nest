@@ -9,6 +9,7 @@ const PosterModal: FC<PosterModalProps> = ({
   show,
   setShow,
   poster,
+  refetch
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);
@@ -35,7 +36,7 @@ const PosterModal: FC<PosterModalProps> = ({
           width={150}
           height={125}
         />
-        <PosterForm poster={poster} />
+        <PosterForm poster={poster} refetch={refetch} />
       </div>
     </div>
   );

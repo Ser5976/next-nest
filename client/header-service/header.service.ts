@@ -1,3 +1,4 @@
+import { IBrand } from './../components/page-components/Admin/admin.service';
 import { IType } from './../store/type-product/interface.typeProduct';
 import { ICategoryProduct } from './../store/category-product/interface.categoryProduct';
 import { IArticle } from './../store/customers/interface.customers';
@@ -37,6 +38,16 @@ export const HeaderService = {
     } catch (error) {
       const productType: IType[] = [];
       return productType;
+    }
+  },
+  // запрос получение брэндов товаров  через GetStaticProps
+  async getStaticBrand() {
+    try {
+      const { data: brands } = await customAxios.get<IBrand[]>(API.admin.brand);
+      return brands;
+    } catch (error) {
+      const brands: IBrand[] = [];
+      return brands;
     }
   },
 

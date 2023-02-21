@@ -11,6 +11,7 @@ export const Input = forwardRef(
       type,
       placeholder,
       scale = 'larg',
+      defaultValue,
       ...props
     }: InputProps,
     ref: ForwardedRef<HTMLInputElement>
@@ -26,6 +27,7 @@ export const Input = forwardRef(
             [styles.error]: error,
           })}
           ref={ref}
+          defaultValue={defaultValue ? defaultValue : ''}
           {...props}
         />
 

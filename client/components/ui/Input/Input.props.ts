@@ -10,4 +10,5 @@ export interface InputProps
   placeholder?: string;
   error?: FieldError;
   scale?: 'small' | 'larg';
+  defaultValue?: any;
 }

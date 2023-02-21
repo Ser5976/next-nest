@@ -38,6 +38,7 @@ export const getStaticPaths = async () => {
   const allProducts = await ProductsService.getAllProducts(); //кастомный сервис для запроса  выбранного товара
   //здесь ограничили количества типов(берём только 1) т.к. fallback: true, остальные будут подгружаться сами
   // это чтобы при сборке небыло дахера страниц(будет долго загружаться)
+
   const paths = allProducts.slice(0, 1).map((type) => {
     return { params: { productId: type._id } };
   });

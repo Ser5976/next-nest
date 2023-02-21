@@ -4,6 +4,7 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react';
+import { QueryObserverResult } from 'react-query';
 import { IPoster } from '../../admin.service';
 
 export interface PosterModalProps
@@ -11,4 +12,5 @@ export interface PosterModalProps
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   poster: IPoster;
+  refetch: () => Promise<QueryObserverResult<IPoster[], unknown>>;
 }

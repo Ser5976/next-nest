@@ -8,6 +8,7 @@ const initialState: IAdminInitialState = {
   ordersQuantity: getStoreLocalStorage('ordersQuantity'), //данные по количеству заказов, из LocalStorage
   freshOrdersQuantity: getStoreLocalStorage('freshOrdersQuantity'), //данные по количеству заказов, из LocalStorage
   freshReviewsQuantity: getStoreLocalStorage('freshReviewsQuantity'), //данные по количеству заказов, из LocalStorage
+  productsQuantity: getStoreLocalStorage('productsQuantity'), //данные по количеству товаров, из LocalStorage
 };
 
 export const adminSlice = createSlice({
@@ -44,6 +45,11 @@ export const adminSlice = createSlice({
         JSON.stringify(action.payload)
       );
     },
+    //...Products.....
+    getProductsQuantity: (state, action: PayloadAction<number>) => {
+      state.productsQuantity = action.payload;
+      localStorage.setItem('productsQuantity', JSON.stringify(action.payload));
+    },
   },
 });
 export const {
@@ -52,5 +58,6 @@ export const {
   getReviewsQuantity,
   getFreshOrdersQuantity,
   getFreshReviewsQuantity,
+  getProductsQuantity,
 } = adminSlice.actions;
 export default adminSlice.reducer;

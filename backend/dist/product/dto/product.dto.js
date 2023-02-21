@@ -36,9 +36,13 @@ __decorate([
     __metadata("design:type", String)
 ], ProductDto.prototype, "categoryId", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], ProductDto.prototype, "price", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ProductDto.prototype, "oldPrice", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.IsString)({ each: true }),

@@ -44,6 +44,7 @@ export class BrandService {
     }
     const brands = await this.BrandModel.find(options);
     if (!brands) throw new NotFoundException('Брэнды не получены');
+    console.log('сервак брэнд', brands);
     return brands;
   }
 

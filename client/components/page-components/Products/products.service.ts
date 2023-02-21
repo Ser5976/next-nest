@@ -9,10 +9,11 @@ export const ProductsService = {
   // получение списка всех  товаров(здесь с try catch, потому что запрос будет через getStaticPaths)
   async getAllProducts() {
     try {
-      const { data: products } = await axios.get<IProduct[]>(
-        API.products.allProducts
-      );
-      return products;
+      const { data: products } = await axios.get<{
+        products: IProduct[];
+        quantity: number;
+      }>(API.products.allProducts);
+      return products.products;
     } catch (error) {
       const products: IProduct[] = [];
       return products;

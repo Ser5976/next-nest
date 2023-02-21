@@ -7,6 +7,7 @@ import {
   getOrdersQuantity,
   getFreshOrdersQuantity,
   getFreshReviewsQuantity,
+  getProductsQuantity,
 } from './admin/adminSlice';
 
 export const allActions = {
@@ -19,4 +20,5 @@ export const allActions = {
   getReviewsQuantity,
   getFreshOrdersQuantity,
   getFreshReviewsQuantity,
+  getProductsQuantity,
 };

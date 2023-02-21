@@ -1,3 +1,4 @@
+import { IProduct } from './../Home/home.service';
 import { INews } from './../News-List/NewsList.props';
 import { ICategoryProduct } from './../../../store/category-product/interface.categoryProduct';
 import { API } from '../../../constants/url';
@@ -203,7 +204,7 @@ export const AdminService = {
     return urlImages;
   },
   //удаление url изображения из папки uploads
-  async removeUrl(url: string) {
+  async removeUrl(url: string | string[]) {
     console.log(' удаление url изображения ');
     await customAxios.post(API.admin.removeUrl, { files: url });
   },
@@ -376,6 +377,44 @@ export const AdminService = {
   async deleteNews(newsId: string) {
     console.log(' удаление новости ');
     const news = await customAxios.delete<INews>(`${API.news}/${newsId}`);
+    return news;
+  },
+  //----products-----------
+  //добавление новости
+  async addProduct(
+    data: Omit<IProduct, '_id' | '_v' | 'createdAt' | 'updatedAt' | 'rating'>
+  ) {
+    console.log(' добавление товара ');
+    const product = await customAxios.post(API.product, data);
+    return product;
+  },
+  //получение(или поиск) новостей
+  async getProducts(name: string) {
+    console.log(' получение товаров');
+    const { data: dataProducts } = await axios.get<{
+      products: IProduct[];
+      quantity: number;
+    }>(API.product, {
+      params: { name },
+    });
+    return dataProducts;
+  },
+  //редактирование товара
+  async updateProduct(data: {
+    product: Omit<
+      IProduct,
+      '_id' | '_v' | 'createdAt' | 'updatedAt' | 'rating'
+    >;
+    productId: string;
+  }) {
+    console.log(' редактирование товара ');
+    await customAxios.put(`${API.product}/${data.productId}`, data.product);
+  },
+
+  //удаление новости
+  async deleteProduct(productId: string) {
+    console.log(' удаление товара ');
+    const news = await customAxios.delete<INews>(`${API.product}/${productId}`);
     return news;
   },
 };

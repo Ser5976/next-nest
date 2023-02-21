@@ -1,9 +1,11 @@
 import styles from './SliderForm.module.css';
 import { FC } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { SliderFormProps } from './SliderForm.props';
 import { Controller, useForm } from 'react-hook-form';
 import { InputFile } from '../../InputFile/InputFile';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 
@@ -11,10 +13,16 @@ import { toast } from 'react-toastify';
 export interface ISliderForm {
   files: string[] | undefined;
 }
+//т.к. нужно валидировать массив,пришлось подключить yup
+//схема валидации---------------------
+const schema = yup.object().shape({
+  files: yup
+    .array()
+    .max(1, 'Пожалуйста,выберите один файл')
+    .required('Пожалуйста,выберите файл!'),
+});
 
 const SliderForm: FC<SliderFormProps> = ({ refetch }): JSX.Element => {
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
-  const queryClient = useQueryClient();
   // добавление картинки в слайдер
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: addToSlider } = useMutation(AdminService.addToSlider, {
@@ -28,9 +36,22 @@ const SliderForm: FC<SliderFormProps> = ({ refetch }): JSX.Element => {
       toast.error('Изображение не добавлено,что-то пошло не так');
     },
   });
-  const { handleSubmit, setValue, control } = useForm<ISliderForm>({
+  const {
+    handleSubmit,
+    setValue,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm<ISliderForm>({
     mode: 'onChange',
+    resolver: yupResolver(schema),
   });
+  // этот костыль из-за проблем с ошибкой(при загрузке более одного файла мы показываем ошибку,
+  // но когда удаляем лишние файлы,message не удаляется, это только с  files: yup.array() )
+  const arreaFiles = watch('files');
+  const isFiles = arreaFiles
+    ? arreaFiles.length > 1 || arreaFiles.length < 1
+    : true;
 
   const onSubmit = (data: ISliderForm) => {
     // console.log('Фото:', data);
@@ -45,13 +66,20 @@ const SliderForm: FC<SliderFormProps> = ({ refetch }): JSX.Element => {
           <Controller
             name="files"
             control={control}
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <InputFile error={error} image={value} onChange={onChange} />
+            render={({ field: { value, onChange } }) => (
+              <InputFile
+                image={value}
+                onChange={onChange}
+                setValue={setValue}
+                name="files"
+              />
             )}
-            rules={{
-              required: 'Выберите  изображение!',
-            }}
           />
+          {errors.files && isFiles ? (
+            <span className={styles.errorMessageFiles}>
+              {errors.files?.message}
+            </span>
+          ) : null}
         </div>
 
         <div className="flex justify-end">

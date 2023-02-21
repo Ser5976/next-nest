@@ -21,8 +21,8 @@ export interface IProduct {
     estimation: number;
     numberRatings: number;
   };
-  price: number;
-  oldPrice: number;
+  price: number | string;
+  oldPrice: number | null | string;
   files: string[];
   brandId: string;
   typeId: string;

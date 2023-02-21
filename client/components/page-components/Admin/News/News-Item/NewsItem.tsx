@@ -39,7 +39,7 @@ const NewsItem: FC<NewsItemProps> = ({
         <TiDeleteOutline
           className={styles.icon2}
           onClick={() => {
-            if (window.confirm(`Вы действительно хотите удалить постер`)) {
+            if (window.confirm(`Вы действительно хотите удалить новсть`)) {
               deleteNews(news._id);
             }
           }}

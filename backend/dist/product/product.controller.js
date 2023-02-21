@@ -19,6 +19,7 @@ const id_validation_pipe_1 = require("./../pipes/id.validation.pipe");
 const product_dto_1 = require("./dto/product.dto");
 const product_service_1 = require("./product.service");
 const common_1 = require("@nestjs/common");
+const admin_search_dto_1 = require("./dto/admin.search.dto");
 let ProductController = class ProductController {
     constructor(ProductServies) {
         this.ProductServies = ProductServies;
@@ -26,8 +27,8 @@ let ProductController = class ProductController {
     async create(dto) {
         return this.ProductServies.create(dto);
     }
-    async getProducts() {
-        return this.ProductServies.getProducts();
+    async getProducts(dto) {
+        return this.ProductServies.getProducts(dto);
     }
     async getFilteredProducts(dto) {
         return this.ProductServies.getFilteredProducts(dto);
@@ -61,8 +62,9 @@ __decorate([
 ], ProductController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [admin_search_dto_1.AdminSearchDto]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getProducts", null);
 __decorate([

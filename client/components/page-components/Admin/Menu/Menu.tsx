@@ -28,6 +28,7 @@ const Menu: FC<MenuProps> = ({
       reviewsQuantity,
       freshOrdersQuantity,
       freshReviewsQuantity,
+      productsQuantity,
     },
   } = useData();
   // данные по заказам
@@ -73,7 +74,7 @@ const Menu: FC<MenuProps> = ({
             Пользователи
           </a>
         </Link>
-        <Link href="/admin/product">
+        <Link href="/admin/products">
           <a
             className={cn(styles.link, {
               [styles.activeLink]: activeMenu === 'product',
@@ -89,9 +90,9 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeBage]: activeMenu === 'product',
               })}
             >
-              576789
+              {productsQuantity}
             </span>
-            Товар
+            Товары
           </a>
         </Link>
         <Link href="/admin/reviews">

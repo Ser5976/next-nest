@@ -9,8 +9,8 @@ export declare class ProductDto {
     brandId: string;
     typeId: string;
     categoryId: string;
-    price: number;
-    oldPrice?: number;
+    price: string;
+    oldPrice: string;
     files: string[];
 }
 export {};

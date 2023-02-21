@@ -8,7 +8,6 @@ import {
 import { InjectModel } from 'nestjs-typegoose';
 import { DocumentType, ModelType } from '@typegoose/typegoose/lib/types';
 import { PosterTypeDto } from './dto/poster-type.dto';
-import { PosterSearchDto } from './dto/poster-search.dto';
 
 @Injectable()
 export class PosterTypeService {

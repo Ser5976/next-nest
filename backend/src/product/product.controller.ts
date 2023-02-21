@@ -15,6 +15,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AdminSearchDto } from './dto/admin.search.dto';
 
 @Controller('product')
 export class ProductController {
@@ -25,10 +26,10 @@ export class ProductController {
   async create(@Body() dto: ProductDto) {
     return this.ProductServies.create(dto);
   }
-  // получение всех товаров
+  // получение(или поиск для админа) всех товаров
   @Get()
-  async getProducts() {
-    return this.ProductServies.getProducts();
+  async getProducts(@Query() dto?: AdminSearchDto) {
+    return this.ProductServies.getProducts(dto);
   }
   //получение товаров(фильтрация,сортировка,пагинация)
   @UsePipes(new ValidationPipe())

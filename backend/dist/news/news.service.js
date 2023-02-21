@@ -21,13 +21,26 @@ let NewsService = class NewsService {
         this.NewsModel = NewsModel;
     }
     async createNews(dto) {
+        const name = await this.NewsModel.findOne({ name: dto.name });
+        if (name)
+            throw new common_1.BadRequestException('Новость с таким названием уже существует');
         const news = await this.NewsModel.create(dto);
         if (!news)
             throw new common_1.NotFoundException('Что то пошло не так,статья не сохранена');
         return news;
     }
-    async getAllNews() {
-        const news = await this.NewsModel.find().sort({ createdAt: 'desc' });
+    async getAllNews(dto) {
+        let options = {};
+        if (dto.name) {
+            options = {
+                $or: [
+                    {
+                        name: new RegExp(dto.name, 'i'),
+                    },
+                ],
+            };
+        }
+        const news = await this.NewsModel.find(options).sort({ createdAt: 'desc' });
         if (!news)
             throw new common_1.NotFoundException('Что то пошло не так,статьи не получены');
         return news;

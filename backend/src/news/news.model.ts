@@ -8,6 +8,4 @@ export class NewsModel extends TimeStamps {
   name: string;
   @prop()
   text: string;
-  @prop()
-  response: string;
 }

@@ -22,22 +22,28 @@ const Menu: FC<MenuProps> = ({
 }): JSX.Element => {
   //получаем данные  из редюссоров при помощи кастомного хука useData()
   const {
-    authReducer,
-    userReducer,
-    adminReducer: { usersForAdmin, generalReviewsForAdmin, orders },
+    adminReducer: {
+      ordersQuantity,
+      userQuantity,
+      reviewsQuantity,
+      freshOrdersQuantity,
+      freshReviewsQuantity,
+      productsQuantity,
+    },
   } = useData();
-  const { userProfile } = userReducer;
-  const { user } = authReducer;
+  // данные по заказам
+  const countOrders =
+    freshOrdersQuantity === ordersQuantity
+      ? ordersQuantity
+      : `${freshOrdersQuantity} / ${ordersQuantity}`;
+  // данные по заказам
+  const countReviews =
+    freshReviewsQuantity === reviewsQuantity
+      ? reviewsQuantity
+      : `${freshReviewsQuantity} / ${reviewsQuantity}`;
 
   const router = useRouter();
   // переменные количества для бэйджа
-
-  const countFavourites = userProfile?.favorites?.length
-    ? userProfile.favorites.length
-    : 0;
-  const countViewed = userProfile?.viewed?.length
-    ? userProfile.viewed.length
-    : 0;
 
   return (
     <div className={styles.container}>
@@ -63,12 +69,12 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeBage]: activeMenu === 'users',
               })}
             >
-              {usersForAdmin.users.quantity}
+              {userQuantity}
             </span>
             Пользователи
           </a>
         </Link>
-        <Link href="/admin/product">
+        <Link href="/admin/products">
           <a
             className={cn(styles.link, {
               [styles.activeLink]: activeMenu === 'product',
@@ -84,9 +90,9 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeBage]: activeMenu === 'product',
               })}
             >
-              576
+              {productsQuantity}
             </span>
-            Товар
+            Товары
           </a>
         </Link>
         <Link href="/admin/reviews">
@@ -100,13 +106,13 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'reviews',
               })}
             />
-            {generalReviewsForAdmin.reviewsForAdmin?.quantity >= 1 ? (
+            {reviewsQuantity >= 1 ? (
               <span
                 className={cn(styles.bage, {
                   [styles.activeBage]: activeMenu === 'reviews',
                 })}
               >
-                {generalReviewsForAdmin.reviewsForAdmin?.quantity}
+                {countReviews}
               </span>
             ) : null}
             Отзывы
@@ -123,13 +129,13 @@ const Menu: FC<MenuProps> = ({
                 [styles.activeIcons]: activeMenu === 'orders',
               })}
             />
-            {orders.ordersData?.quantity >= 1 ? (
+            {ordersQuantity >= 1 ? (
               <span
                 className={cn(styles.bage, {
                   [styles.activeBage]: activeMenu === 'orders',
                 })}
               >
-                {orders?.ordersData?.quantity}
+                {countOrders}
               </span>
             ) : null}
             Заказы
@@ -217,6 +223,20 @@ const Menu: FC<MenuProps> = ({
               })}
             />
             Для клиентов
+          </a>
+        </Link>
+        <Link href="/admin/news">
+          <a
+            className={cn(styles.link, {
+              [styles.activeLink]: activeMenu === 'news',
+            })}
+          >
+            <MdOutlineArticle
+              className={cn(styles.icons, {
+                [styles.activeIcons]: activeMenu === 'news',
+              })}
+            />
+            Новости
           </a>
         </Link>
       </ul>

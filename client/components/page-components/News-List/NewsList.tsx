@@ -25,7 +25,6 @@ const NewsList: FC<NewsListProps> = ({ news }): JSX.Element => {
                   {n.name}
                 </a>
               </Link>
-              <p className=" truncate">{n.text}</p>
             </li>
           );
         })}

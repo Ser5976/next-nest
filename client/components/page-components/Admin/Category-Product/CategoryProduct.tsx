@@ -40,6 +40,7 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
       },
     }
   );
+  console.log('рендеринг');
   //для поиска, повторный запрос
   useEffect(() => {
     refetch();

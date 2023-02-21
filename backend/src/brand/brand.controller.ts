@@ -8,7 +8,6 @@ import {
   Get,
   Param,
   Post,
-  Put,
   Query,
   UsePipes,
   ValidationPipe,
@@ -28,11 +27,13 @@ export class BrandController {
   }
   //получение брэндов(поиск,если нужно)
   @Get()
-  @Auth('admin')
+  //Закоментировал @Auth, потому что один из запросов делаю из getStaticProps,а это серверная часть,
+  // авторизация у меня только на клиенте, а новые запросы писать пока лень
+  // @Auth('admin')
   async getBrands(@Query() dto?: SearchDto) {
     return this.BrandService.getBrands(dto);
   }
-  
+
   //удаление брэнда
   @Delete(':id')
   @Auth('admin')

@@ -1,6 +1,5 @@
 import styles from './Reviews.module.css';
-import cn from 'classnames';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { LayoutAdmin } from '../LayoutAdmin';
 import { useData } from '../../../../store/useData';
 import { useQuery } from 'react-query';
@@ -31,53 +30,42 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
 
   //получаем данные по пользователям из стэйта
   const {
-    adminReducer: { generalReviewsForAdmin },
+    adminReducer: { reviewsQuantity },
   } = useData();
-  const { reviewsForAdmin } = generalReviewsForAdmin;
-  console.log('отзывы в Отзывах', reviewsForAdmin);
 
   // получаем экшены
-  const { getReviewsForAdmin, searchReviews } = useActions();
+  const { getReviewsQuantity, getFreshReviewsQuantity } = useActions();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
 
-  //получаем  все данные (из базы) по отзывам и записываем их в стор(редакс)
-  const { isLoading, refetch } = useQuery(
-    'reviews-admin',
-    () => AdminService.getReviewsAdmin(),
+  //получаем  все данные (из базы) по отзывам (записываем в стор(редакс,а там и в локалстор) только количества
+  const {
+    isLoading,
+    refetch,
+    data: reviewsForAdmin,
+  } = useQuery(
+    ['reviews-admin', debouncedSearch],
+    () => AdminService.getReviewsAdmin(debouncedSearch),
 
     {
-      onSuccess: (reviewsForAdm) => {
-        getReviewsForAdmin(reviewsForAdm);
+      onSuccess: (reviewsForAdmin) => {
+        if (reviewsQuantity !== reviewsForAdmin.quantity) {
+          getReviewsQuantity(reviewsForAdmin.quantity);
+          getFreshReviewsQuantity(reviewsForAdmin.quantity);
+        }
       },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
-    }
-  );
-
-  // поиск отзыва по имени(данные берём из инпута ,
-  //потом при помощи useDebounce замедляем и только потом передаём в useQuery )
-  const { isLoading: loadingSearch } = useQuery(
-    ['search reviews', debouncedSearch],
-    () => AdminService.getFoundReviews(debouncedSearch),
-    {
-      onSuccess: (reviewsForAdmin) => {
-        searchReviews(reviewsForAdmin);
-      },
-      onError: () => {
-        toast.error('данные не получены ,что то пошло не так');
-      },
       enabled: !!searchTerm,
     }
   );
-
-  //запуск useQuery (запрос всех пользователей) и очистка инпута
-  const repeatRaquest = () => {
-    setSearchTerm('');
+  //для поиска, повторный запрос
+  useEffect(() => {
     refetch();
-  };
+  }, [searchTerm]);
+  console.log('рендеринг');
 
   // ответ админа на отзыв(открытие модального окна и передача id отзыва в стейт)
   const openingAdminsResponse = (reviewId: string) => {
@@ -94,27 +82,19 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
           handleInput={handlerInput}
           placeholderText="введите имя . . ."
         />
-        <div
-          className={cn(styles.button, {
-            [styles.disableButton]:
-              reviewsForAdmin.allReviews?.length === reviewsForAdmin.quantity,
-          })}
-          onClick={repeatRaquest}
-        >
-          Все отзывы
-        </div>
       </div>
-      {isLoading || loadingSearch ? (
+      {isLoading ? (
         <h1 className="text-center font-semibold  text-gray-600 mt-2">
           Загрузка...
         </h1>
       ) : (
-        reviewsForAdmin.allReviews?.map((reviews) => {
+        reviewsForAdmin?.allReviews?.map((reviews) => {
           return (
             <ReviewsItem
               key={reviews._id}
               reviews={reviews}
               openingAdminsResponse={openingAdminsResponse}
+              refetch={refetch}
             />
           );
         })

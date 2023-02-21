@@ -23,7 +23,7 @@ const News: FC<NewsProps> = ({ news }): JSX.Element => {
             </a>
           </Link>
           <ul>
-            {news?.slice(0, 4).map((n) => {
+            {news?.slice(0, 7).map((n) => {
               return (
                 <li className="py-2" key={n._id}>
                   <span className=" text-xs text-gray-400">
@@ -34,7 +34,6 @@ const News: FC<NewsProps> = ({ news }): JSX.Element => {
                       {n.name}
                     </a>
                   </Link>
-                  <p className=" text-xs truncate">{n.text}</p>
                 </li>
               );
             })}

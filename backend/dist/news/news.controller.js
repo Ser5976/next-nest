@@ -18,6 +18,7 @@ const news_dto_1 = require("./dto/news.dto");
 const news_service_1 = require("./news.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
+const search_dto_1 = require("./dto/search.dto");
 let NewsController = class NewsController {
     constructor(NewsService) {
         this.NewsService = NewsService;
@@ -25,8 +26,8 @@ let NewsController = class NewsController {
     async createNews(dto) {
         return this.NewsService.createNews(dto);
     }
-    async getAllNews() {
-        return this.NewsService.getAllNews();
+    async getAllNews(dto) {
+        return this.NewsService.getAllNews(dto);
     }
     async getNews(id) {
         return this.NewsService.getNews(id);
@@ -49,8 +50,9 @@ __decorate([
 ], NewsController.prototype, "createNews", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
 ], NewsController.prototype, "getAllNews", null);
 __decorate([

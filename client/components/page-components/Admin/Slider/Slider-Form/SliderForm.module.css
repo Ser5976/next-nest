@@ -3,8 +3,11 @@
 }
 
 .h3 {
-  @apply text-xs text-gray-600 my-3;
+  @apply text-xs text-gray-600 my-3 mb-[25px] mt-[20px];
 }
 .button {
   @apply block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500 opacity-70 text-white transition-opacity cursor-pointer hover:opacity-100;
+}
+.errorMessageFiles {
+  @apply absolute top-[150px] left-5 text-red-500 text-xs;
 }

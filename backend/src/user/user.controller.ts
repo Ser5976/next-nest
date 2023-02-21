@@ -53,31 +53,12 @@ export class UserController {
   }
 
   //----------------для админки-------------------------
-  // получение  всех пользователя
+  // получение или поиск пользователя
   @Get()
-  @Auth('admin')
-  async getAllusers() {
-    return this.UserServies.getAllUsers();
+  async getAllesUsers(@Query() dto: SearchDto) {
+    return this.UserServies.getAllUsers(dto);
   }
-  // получение  выбранного пользователя
-  @Get('search')
-  @Auth('admin')
-  async findUser(@Query() dto: SearchDto) {
-    return this.UserServies.findUser(dto);
-  }
-  /* //получение пользователя
-  @Get(':id')
-  @Auth('admin')
-  async getUser(@Param('id', IdValidationPipe) id: string) {
-    return this.UserServies.byId(id);
-  } */
 
-  /* // получение количество пользователей
-  @Get('count')
-  @Auth('admin')
-  async quantityUsers() {
-    return this.UserServies.quantityUsers();
-  } */
   // удаление пользователя
   @Delete(':id')
   @Auth('admin')

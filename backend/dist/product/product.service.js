@@ -13,6 +13,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
+const user_model_1 = require("./../user/user.model");
+const cart_model_1 = require("./../cart/cart.model");
 const category_product_model_1 = require("./../category-product/category-product.model");
 const product_type_model_1 = require("./../product-type/product-type.model");
 const product_model_1 = require("./product.model");
@@ -20,12 +22,15 @@ const nestjs_typegoose_1 = require("nestjs-typegoose");
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("mongoose");
 let ProductService = class ProductService {
-    constructor(ProductModel, ProductTypeModel, CategoryProductModel) {
+    constructor(ProductModel, ProductTypeModel, CategoryProductModel, CartModel, UserModel) {
         this.ProductModel = ProductModel;
         this.ProductTypeModel = ProductTypeModel;
         this.CategoryProductModel = CategoryProductModel;
+        this.CartModel = CartModel;
+        this.UserModel = UserModel;
     }
     async create(dto) {
+        console.log('доставка товара', dto);
         const typeProduct = await this.ProductTypeModel.findById(dto.typeId);
         const checkBrand = typeProduct.brand.includes(new mongoose_1.Types.ObjectId(dto.brandId));
         if (!checkBrand) {
@@ -51,11 +56,22 @@ let ProductService = class ProductService {
             throw new common_1.NotFoundException('Товар не создан');
         return product;
     }
-    async getProducts() {
-        const products = await this.ProductModel.find().exec();
+    async getProducts(dto) {
+        let options = {};
+        if (dto.name) {
+            options = {
+                $or: [
+                    {
+                        name: new RegExp(dto.name, 'i'),
+                    },
+                ],
+            };
+        }
+        const products = await this.ProductModel.find(options).exec();
         if (!products)
             throw new common_1.NotFoundException('товары не получены');
-        return products;
+        const quantity = await this.ProductModel.find().count().exec();
+        return { products, quantity };
     }
     async getFilteredProducts(dto) {
         const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
@@ -129,8 +145,16 @@ let ProductService = class ProductService {
     }
     async deleteProduct(id) {
         const deleteProduct = await this.ProductModel.findByIdAndDelete(id).exec();
-        if (!deleteProduct)
-            throw new common_1.NotFoundException('Такого пользователя не существует');
+        if (!deleteProduct) {
+            throw new common_1.NotFoundException('Такого товара не существует');
+        }
+        const deleteCart = await this.CartModel.find({ productId: id });
+        deleteCart.forEach(async (item) => {
+            await this.UserModel.updateMany({}, { $pull: { cart: item._id } });
+        });
+        await this.CartModel.deleteMany({
+            productId: id,
+        });
         return { message: 'Пользователь удалён' };
     }
 };
@@ -139,7 +163,9 @@ ProductService = __decorate([
     __param(0, (0, nestjs_typegoose_1.InjectModel)(product_model_1.ProductModel)),
     __param(1, (0, nestjs_typegoose_1.InjectModel)(product_type_model_1.ProductTypeModel)),
     __param(2, (0, nestjs_typegoose_1.InjectModel)(category_product_model_1.CategoryProductModel)),
-    __metadata("design:paramtypes", [Object, Object, Object])
+    __param(3, (0, nestjs_typegoose_1.InjectModel)(cart_model_1.CartModel)),
+    __param(4, (0, nestjs_typegoose_1.InjectModel)(user_model_1.UserModel)),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
 ], ProductService);
 exports.ProductService = ProductService;
 //# sourceMappingURL=product.service.js.map

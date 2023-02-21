@@ -26,8 +26,18 @@ let OrderService = class OrderService {
             throw new common_1.NotFoundException('Заказ не создан');
         return order;
     }
-    async getOrder() {
-        const orders = await this.OrderModel.find()
+    async getOrder(dto) {
+        let options = {};
+        if (dto.email) {
+            options = {
+                $or: [
+                    {
+                        email: new RegExp(dto.email, 'i'),
+                    },
+                ],
+            };
+        }
+        const orders = await this.OrderModel.find(options)
             .populate('productCart user')
             .sort({ createdAt: 'desc' })
             .exec();
@@ -44,12 +54,6 @@ let OrderService = class OrderService {
         if (!order)
             throw new common_1.NotFoundException('Изменение не произошло');
         return { message: 'заказ выполнен' };
-    }
-    async findOrders(dto) {
-        const orders = await this.OrderModel.find({
-            $or: [{ email: new RegExp(dto.email, 'i') }],
-        }).populate('productCart user');
-        return orders;
     }
     async deleteOrder(id) {
         const deletedOrder = await this.OrderModel.findByIdAndDelete(id);

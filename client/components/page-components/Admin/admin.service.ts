@@ -1,16 +1,31 @@
+import { IProduct } from './../Home/home.service';
+import { INews } from './../News-List/NewsList.props';
 import { ICategoryProduct } from './../../../store/category-product/interface.categoryProduct';
-import {
-  IOrders,
-  IReviewsForAdmin,
-  IUsers,
-} from './../../../store/admin/interface.admin';
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 import { IType } from '../../../store/type-product/interface.typeProduct';
 import axios from 'axios';
 import { IArticle } from '../../../store/customers/interface.customers';
+import { ICart } from '../Cart/cart.service';
+import {
+  IAddress,
+  IPersonalData,
+  IPhone,
+} from '../../../store/user/interface.user';
 
 // некоторые интерфейсы
+//для пользователей
+export interface IUsers {
+  _id: string;
+  email: string;
+  isAdmin: boolean;
+  phone: IPhone;
+  personalData: IPersonalData;
+  address: IAddress;
+  createdAt: string;
+  updatedAt: string;
+}
+// для клиентов
 export interface IAddArticle {
   title: string;
   description: string;
@@ -20,10 +35,48 @@ export interface IUpdateArticle {
   id: string;
   data: IAddArticle;
 }
+// для новостей
+export interface IAddNews {
+  name: string;
+  text: string;
+}
+export interface IUpdateNews {
+  id: string;
+  data: IAddNews;
+}
 //интерфейс для заказов
 export interface IcompletedOrder {
   orderId: string;
   bool: boolean;
+}
+export interface IOrders {
+  _id: string;
+  productCart: ICart[];
+  user: IUsers;
+  name: string;
+  email: string;
+  address: IAddress;
+  delivery: string;
+  payment: string;
+  telephone: string;
+  orderAmount: number;
+  execution: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+// для отзывов
+export interface IReviewsForAdmin {
+  _id: string;
+  userId: IUsers;
+  productId?: string;
+  store?: string;
+  name: string;
+  response: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 // интерфейс слайдер
 export interface ISlider {
@@ -59,13 +112,15 @@ export interface IBrand {
 export const AdminService = {
   // используем кастомный axios(в него уже введён токен),
   //---------Users-----------
-  //получение всех пользователей
-  async getUsersAdmin() {
+  //получение всех пользователей или выбранного
+  async getUsersAdmin(email: string) {
     console.log(' получение пользователей для админа');
     const { data: usersForAdmin } = await customAxios.get<{
       users: IUsers[];
       quantity: number;
-    }>(API.admin.users);
+    }>(API.admin.users, {
+      params: { email },
+    });
     return usersForAdmin;
   },
   //удаление пользователя
@@ -73,62 +128,38 @@ export const AdminService = {
     console.log(' удаление пользователя ');
     await customAxios.delete(`${API.admin.users}/${userId}`);
   },
-  // поиск  пользователя по email
-  async getFoundUser(email: string) {
-    console.log('поиск пользователя');
-    const { data: usersForAdmin } = await customAxios.get<IUsers[]>(
-      API.admin.search,
-      {
-        params: { email },
-      }
-    );
-    return usersForAdmin;
-  },
 
   //----Reviews-----------
-  //получение всех отзывов
-  async getReviewsAdmin() {
+  //получение(или поиск по name) всех отзывов
+  async getReviewsAdmin(name: string) {
     console.log(' получение отзывов для админа');
     const { data: reviewsForAdmin } = await customAxios.get<{
       allReviews: IReviewsForAdmin[];
       quantity: number;
-    }>(API.reviews);
+    }>(API.reviews, {
+      params: { name },
+    });
     return reviewsForAdmin;
   },
-  // поиск  отзывов по name
-  async getFoundReviews(name: string) {
-    console.log('поиск отзыва');
-    const { data: reviews } = await customAxios.get<IReviewsForAdmin[]>(
-      API.reviewsSearch,
-      {
-        params: { name },
-      }
-    );
-    return reviews;
-  },
+
   //удаление пользователя
   async deleteReviews(reviewsId: string) {
     console.log(' удаление отзыва ');
     await customAxios.delete(`${API.reviews}/${reviewsId}`);
   },
   //----Orders-----------
-  //получение всех заказов
-  async getOrders() {
+  //получение(или поиск) всех заказов
+  async getOrders(email: string) {
     console.log(' получение заказов для админа');
     const { data: ordersData } = await customAxios.get<{
       orders: IOrders[];
       quantity: number;
-    }>(API.order);
-    return ordersData;
-  },
-  // поиск  заказа по email
-  async getFoundOrder(email: string) {
-    console.log('поиск заказа');
-    const { data: orders } = await customAxios.get<IOrders[]>(API.searchOrder, {
+    }>(API.order, {
       params: { email },
     });
-    return orders;
+    return ordersData;
   },
+
   // выполнить заказ
   async executeAnOrder(data: IcompletedOrder) {
     console.log('исполненный заказ');
@@ -173,7 +204,7 @@ export const AdminService = {
     return urlImages;
   },
   //удаление url изображения из папки uploads
-  async removeUrl(url: string) {
+  async removeUrl(url: string | string[]) {
     console.log(' удаление url изображения ');
     await customAxios.post(API.admin.removeUrl, { files: url });
   },
@@ -243,10 +274,10 @@ export const AdminService = {
   //удаление категории
   async deleteCategory(categoryProdutId: string) {
     console.log(' удаление категории ');
-    const message = await customAxios.delete<{ message: string }>(
+    const removeCategoryProduct = await customAxios.delete<ICategoryProduct>(
       `${API.categoryProduct}/${categoryProdutId}`
     );
-    return message;
+    return removeCategoryProduct;
   },
   //----ProductType-----------
   //добавление типа
@@ -255,7 +286,7 @@ export const AdminService = {
     await customAxios.post(API.productType, data);
   },
   //получение(и поиск) типа товара
-  async getProductType(name?: string) {
+  async getProductType(name: string) {
     console.log(' получение типа для админа');
     const { data: productsTypes } = await axios.get<IType[]>(API.productType, {
       params: { name },
@@ -278,7 +309,7 @@ export const AdminService = {
     await customAxios.post(API.admin.brand, data);
   },
   //получение или поиск брэнда
-  async getBrand(searchBrand?: string) {
+  async getBrand(searchBrand: string) {
     console.log(' получение брэнда');
     const { data: brands } = await customAxios.get<IBrand[]>(API.admin.brand, {
       params: { name: searchBrand },
@@ -313,12 +344,77 @@ export const AdminService = {
     await customAxios.put(`${API.customers}/${data.id}`, data.data);
   },
 
-  //удаление типа
+  //удаление новости
   async deleteArticle(articleId: string) {
     console.log(' удаление статьи ');
     const article = await customAxios.delete<IArticle>(
       `${API.customers}/${articleId}`
     );
     return article;
+  },
+  //----news-----------
+  //добавление новости
+  async addNews(data: IAddNews) {
+    console.log(' добавление новости ');
+    const news = await customAxios.post(API.news, data);
+    return news;
+  },
+  //получение(или поиск) новостей
+  async getNews(name: string) {
+    console.log(' получение новостей');
+    const { data: news } = await axios.get<INews[]>(API.news, {
+      params: { name },
+    });
+    return news;
+  },
+  //редактирование новости
+  async updateNews(data: IUpdateNews) {
+    console.log(' редактирование новости ');
+    await customAxios.put(`${API.news}/${data.id}`, data.data);
+  },
+
+  //удаление новости
+  async deleteNews(newsId: string) {
+    console.log(' удаление новости ');
+    const news = await customAxios.delete<INews>(`${API.news}/${newsId}`);
+    return news;
+  },
+  //----products-----------
+  //добавление новости
+  async addProduct(
+    data: Omit<IProduct, '_id' | '_v' | 'createdAt' | 'updatedAt' | 'rating'>
+  ) {
+    console.log(' добавление товара ');
+    const product = await customAxios.post(API.product, data);
+    return product;
+  },
+  //получение(или поиск) новостей
+  async getProducts(name: string) {
+    console.log(' получение товаров');
+    const { data: dataProducts } = await axios.get<{
+      products: IProduct[];
+      quantity: number;
+    }>(API.product, {
+      params: { name },
+    });
+    return dataProducts;
+  },
+  //редактирование товара
+  async updateProduct(data: {
+    product: Omit<
+      IProduct,
+      '_id' | '_v' | 'createdAt' | 'updatedAt' | 'rating'
+    >;
+    productId: string;
+  }) {
+    console.log(' редактирование товара ');
+    await customAxios.put(`${API.product}/${data.productId}`, data.product);
+  },
+
+  //удаление новости
+  async deleteProduct(productId: string) {
+    console.log(' удаление товара ');
+    const news = await customAxios.delete<INews>(`${API.product}/${productId}`);
+    return news;
   },
 };

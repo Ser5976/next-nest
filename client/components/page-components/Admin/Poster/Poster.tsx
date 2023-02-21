@@ -1,5 +1,5 @@
 import styles from './Poster.module.css';
-import { ChangeEvent, FC, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
 import { PosterProps } from './Poster.props';
 import { LayoutAdmin } from '../LayoutAdmin';
 import { useQuery } from 'react-query';
@@ -25,7 +25,7 @@ const Poster: FC<PosterProps> = ({ productType }): JSX.Element => {
   //useQuery работает с GET запросами
 
   //получаем постеры и записываем в стейт
-  const { isLoading, data } = useQuery(
+  const { isLoading, data, refetch } = useQuery(
     'poster',
     () => AdminService.getPoster(),
 
@@ -36,9 +36,14 @@ const Poster: FC<PosterProps> = ({ productType }): JSX.Element => {
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');
       },
+      enabled: false,
     }
   );
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
+  console.log('рендеринг');
   // поиск постера(данные берём из инпута) и делаем это на клиенте, useMemo для оптимизации
   // тут я немного на костылел, ну, как есть
   useMemo(() => {
@@ -79,10 +84,17 @@ const Poster: FC<PosterProps> = ({ productType }): JSX.Element => {
         </h1>
       ) : (
         posters?.map((poster) => {
-          return <PosterItem key={poster._id} poster={poster} />;
+          return (
+            <PosterItem key={poster._id} poster={poster} refetch={refetch} />
+          );
         })
       )}
-      <AddPosterModal setShow={setShow} show={show} productType={productType} />
+      <AddPosterModal
+        setShow={setShow}
+        show={show}
+        productType={productType}
+        refetch={refetch}
+      />
     </LayoutAdmin>
   );
 };

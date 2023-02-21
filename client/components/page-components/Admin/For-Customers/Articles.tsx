@@ -37,8 +37,8 @@ const Articles: FC<ArticlesProps> = ({}): JSX.Element => {
   // поэтому- этот костыль(и+1 к рендеренгу)
   useEffect(() => {
     refetch();
-  }, [refetch]);
-  // console.log('рендеринг');
+  }, []);
+  console.log('рендеринг');
   return (
     <LayoutAdmin activeMenu="for-customers">
       <h1 className="text-2xl text-gray-600 font-semibold mb-3">
@@ -64,7 +64,7 @@ const Articles: FC<ArticlesProps> = ({}): JSX.Element => {
             <ArticleItem
               key={article._id}
               article={article}
-              refech={refetch}
+              refetch={refetch}
               setShow={setShow}
               setArticle={setArticel}
             />
@@ -74,7 +74,7 @@ const Articles: FC<ArticlesProps> = ({}): JSX.Element => {
       <AddArticleModal
         setShow={setShow}
         show={show}
-        refech={refetch}
+        refetch={refetch}
         article={articel}
         setArticle={setArticel}
       />

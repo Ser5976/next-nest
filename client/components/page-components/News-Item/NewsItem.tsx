@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { NewsItemProps } from './NewsItem.props';
 import { dateFormatting } from '../../../utils/date-formatting'; //для форматирования даты
 import { HiOutlineChevronRight } from 'react-icons/hi';
+import parse from 'html-react-parser';
 
 const NewsItem: FC<NewsItemProps> = ({ news }): JSX.Element => {
   return (
@@ -25,7 +26,7 @@ const NewsItem: FC<NewsItemProps> = ({ news }): JSX.Element => {
       <span className=" text-xs text-gray-400">
         {dateFormatting(news.createdAt)}
       </span>
-      <p>{news.text}</p>
+      <div>{parse(news.text)}</div>
     </div>
   );
 };

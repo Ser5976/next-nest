@@ -1,0 +1,13 @@
+.container {
+  @apply fixed inset-0 flex bg-black bg-opacity-30 justify-center items-center z-10;
+}
+.form {
+  @apply relative text-xs  bg-white   p-5 rounded-sm w-[65%] h-[95%];
+}
+.form h1 {
+  @apply text-gray-600 font-semibold text-center;
+}
+
+.icon {
+  @apply absolute top-3 right-3 h-7 w-7  fill-gray-400 hover:fill-red-400  cursor-pointer;
+}

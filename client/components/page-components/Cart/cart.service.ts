@@ -3,8 +3,8 @@ import customAxios from '../../../custom-axios/axiox-interceptors';
 
 export interface IAddCart {
   name: string;
-  price: number;
-  oldPrice?: number;
+  price: number | string;
+  oldPrice: number | null | string;
   productId: string;
   picture: string;
 }
@@ -15,7 +15,7 @@ export interface ICart {
   name: string;
   price: number;
   picture: string;
-  oldPrice?: number;
+  oldPrice: number | null;
   totalPrice: number;
   totalOldPrice: number;
   quantity: number;

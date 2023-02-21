@@ -18,9 +18,6 @@ customAxios.interceptors.request.use((config) => {
 // потом послать запрос с refreshToken и если он валидный, то  перезаписать токены,потом повторно сделать запрос(крутяк,клиент не заметит)
 // а если refreshToken просроченный,то удалить из куки просроченные токены.
 
-//для проверки refreshToken я обошёлся authProviders и просроченный токен выявим ещё до запроса
-// и поэтому, к сожалению ,я не воспользуюсь interceptors
-
 customAxios.interceptors.response.use(
   (config) => config,
   async (error) => {

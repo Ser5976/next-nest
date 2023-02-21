@@ -11,5 +11,5 @@ export interface AddArticleFormProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   article: IArticle | '';
   setShow: Dispatch<SetStateAction<boolean>>;
-  refech: () => Promise<QueryObserverResult<IArticle[], unknown>>;
+  refetch: () => Promise<QueryObserverResult<IArticle[], unknown>>;
 }

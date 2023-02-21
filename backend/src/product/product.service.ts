@@ -1,3 +1,5 @@
+import { UserModel } from './../user/user.model';
+import { CartModel } from './../cart/cart.model';
 import { SearchDto } from './dto/search.dto';
 import { QueryParametrsDto } from './dto/queryParametrs.dto';
 import { CategoryProductModel } from './../category-product/category-product.model';
@@ -8,6 +10,8 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { Types } from 'mongoose';
+import { AdminSearchDto } from './dto/admin.search.dto';
+import { isNotEmpty } from 'class-validator';
 
 @Injectable()
 export class ProductService {
@@ -18,9 +22,13 @@ export class ProductService {
     private readonly ProductTypeModel: ModelType<ProductTypeModel>,
     @InjectModel(CategoryProductModel)
     private readonly CategoryProductModel: ModelType<CategoryProductModel>,
+    @InjectModel(CartModel)
+    private readonly CartModel: ModelType<CartModel>,
+    @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
   ) {}
   //создание товара
   async create(dto: ProductDto) {
+    console.log('доставка товара', dto);
     //добавление брэнда в тип товара
     // получаем тип товара
     const typeProduct: ProductTypeModel = await this.ProductTypeModel.findById(
@@ -74,12 +82,23 @@ export class ProductService {
     if (!product) throw new NotFoundException('Товар не создан');
     return product;
   }
-  // получение всех товаров
-  async getProducts() {
-    const products = await this.ProductModel.find().exec();
-
+  // получение(или поиск для админа) всех товаров
+  async getProducts(dto?: AdminSearchDto) {
+    let options = {};
+    if (dto.name) {
+      options = {
+        $or: [
+          {
+            name: new RegExp(dto.name, 'i'),
+          },
+        ],
+      };
+    }
+    const products = await this.ProductModel.find(options).exec();
     if (!products) throw new NotFoundException('товары не получены');
-    return products;
+    //получения колическтва товаров
+    const quantity = await this.ProductModel.find().count().exec();
+    return { products, quantity };
   }
 
   //получение  товаров(фильтрация,сортировка,пагинация)
@@ -172,8 +191,23 @@ export class ProductService {
   // удаление товара
   async deleteProduct(id: string) {
     const deleteProduct = await this.ProductModel.findByIdAndDelete(id).exec();
-    if (!deleteProduct)
-      throw new NotFoundException('Такого пользователя не существует');
+    if (!deleteProduct) {
+      throw new NotFoundException('Такого товара не существует');
+    }
+    // удаление id корзины из массива cart у пользователя(т.к. один товар может быть во многих корзинах)
+    // из-за нехватки знаний нахимичил костылей
+    // и так получаем все корзины где есть наш товар
+    const deleteCart = await this.CartModel.find({ productId: id });
+    // потом при помощи forEach поочерёдно берём id корзины и удаляем из базы
+    deleteCart.forEach(async (item) => {
+      await this.UserModel.updateMany({}, { $pull: { cart: item._id } });
+    });
+    // удаляем удалённый товар из корзины ,если он там есть
+    await this.CartModel.deleteMany({
+      productId: id,
+    });
+    // и ещё удаляем id корзины из массива корзины у пользователей
+
     return { message: 'Пользователь удалён' };
   }
 }

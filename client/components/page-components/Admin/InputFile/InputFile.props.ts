@@ -1,4 +1,3 @@
-import { ISliderForm } from './../Slider/Slider-Form/SliderForm';
 import { CSSProperties, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { FieldError, UseFormSetValue } from 'react-hook-form';
 
@@ -10,6 +9,9 @@ export interface InputFileProps
   multiple?: boolean;
   error?: FieldError;
   onChange: (...event: any[]) => void;
+  setValue: UseFormSetValue<any>;
+  isEditing?: boolean;
+  name: string;
   style?: CSSProperties;
   image: string[] | undefined;
 }

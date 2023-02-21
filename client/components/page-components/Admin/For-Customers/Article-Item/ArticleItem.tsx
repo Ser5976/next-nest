@@ -9,7 +9,7 @@ import { VscEdit } from 'react-icons/vsc';
 
 const ArticleItem: FC<ArticleItemProps> = ({
   article,
-  refech,
+  refetch,
   setShow,
   setArticle, //сохраняем выбранную статью в стэйт для, редактирования
 }): JSX.Element => {
@@ -18,7 +18,9 @@ const ArticleItem: FC<ArticleItemProps> = ({
   const { mutate: deleteArticle } = useMutation(AdminService.deleteArticle, {
     onSuccess: () => {
       // при успешном изменении делаем повторный запрос
-      refech();
+      // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
+      // поэтому- refetch
+      refetch();
       toast.success('статья удалена');
     },
     onError: (error: any) => {

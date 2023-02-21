@@ -12,11 +12,12 @@ export declare class UserController {
     updatePassoword(_id: any, updatePasswordDto: UpdatePasswordDto): Promise<{
         message: string;
     }>;
-    getAllusers(): Promise<{
-        users: import("@typegoose/typegoose").DocumentType<import("./user.model").UserModel, import("@typegoose/typegoose/lib/types").BeAnObject>[];
+    getAllesUsers(dto: SearchDto): Promise<{
+        users: (import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & import("./user.model").UserModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
         quantity: number;
     }>;
-    findUser(dto: SearchDto): Promise<import("@typegoose/typegoose").DocumentType<import("./user.model").UserModel, import("@typegoose/typegoose/lib/types").BeAnObject>[]>;
     deleteUser(id: string): Promise<{
         message: string;
     }>;

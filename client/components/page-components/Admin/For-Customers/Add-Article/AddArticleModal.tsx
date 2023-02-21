@@ -8,7 +8,7 @@ const AddArticleModal: FC<AddArticleModalProps> = ({
   show,
   setShow,
   setArticle,
-  refech,
+  refetch,
   article,
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
@@ -20,13 +20,12 @@ const AddArticleModal: FC<AddArticleModalProps> = ({
     setArticle(''); //очищаем стэйт выбранной статьи
   };
 
-  // console.log('poster:', poster);
   return (
     <div className={styles.container} id="container" onClick={handleOnClose}>
       <div className={styles.form}>
         <h1 className=" text-lg">Добавить статью</h1>
         <TiDeleteOutline className={styles.icon} onClick={handlerClose} />
-        <AddArticleForm setShow={setShow} refech={refech} article={article} />
+        <AddArticleForm setShow={setShow} refetch={refetch} article={article} />
       </div>
     </div>
   );

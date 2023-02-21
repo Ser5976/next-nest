@@ -5,31 +5,36 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import { useMutation, useQueryClient } from 'react-query';
 import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
+import { ICategoryProduct } from '../../../../../store/category-product/interface.categoryProduct';
 
 const CategoryProductItem: FC<CategoryProductItemProps> = ({
   category,
 }): JSX.Element => {
-  // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
+  // //хук useQueryClient, из react-query
   const queryClient = useQueryClient();
 
   // удаление категории
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
-  const { mutateAsync: deleteCategory } = useMutation(
-    AdminService.deleteCategory,
-    {
-      onSuccess: (data) => {
-        toast.success(data?.data.message);
-        queryClient.invalidateQueries('category product');
-      },
-      onError: (error: any) => {
-        toast.error(error.response.data.message);
-      },
-    }
-  );
+  const { mutate: deleteCategory } = useMutation(AdminService.deleteCategory, {
+    onSuccess: (data) => {
+      // работа с кэшем, что бы не делать новый запрос(кастылёк)
+      //получаем данные из кэша,удаляем удалённый тип и перезаписываем кэш(фишка изreact-query  )
+      queryClient.setQueriesData<ICategoryProduct[] | undefined>(
+        'category product',
+        (oldQueryData) => {
+          const newCach = oldQueryData?.filter(
+            (category) => category._id !== data.data._id
+          );
+          return newCach;
+        }
+      );
+      toast.success('Категория удалена');
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
+    },
+  });
 
-  const removeCategory = async () => {
-    await deleteCategory(category._id);
-  };
   return (
     <>
       <div className={styles.container}>
@@ -38,9 +43,7 @@ const CategoryProductItem: FC<CategoryProductItemProps> = ({
         <TiDeleteOutline
           className={styles.icon2}
           onClick={() => {
-            if (window.confirm(`Вы действительно хотите удалить категорию`)) {
-              removeCategory();
-            }
+            deleteCategory(category._id);
           }}
         />
       </div>

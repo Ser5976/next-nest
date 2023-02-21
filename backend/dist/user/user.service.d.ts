@@ -13,9 +13,10 @@ export declare class UserService {
     updatePassoword(_id: string, updatePasswordDto: UpdatePasswordDto): Promise<{
         message: string;
     }>;
-    findUser(dto: SearchDto): Promise<DocumentType<UserModel>[]>;
-    getAllUsers(): Promise<{
-        users: DocumentType<UserModel>[];
+    getAllUsers(dto: SearchDto): Promise<{
+        users: (import("mongoose").Document<import("mongoose").Types.ObjectId, import("@typegoose/typegoose/lib/types").BeAnObject, any> & UserModel & import("@typegoose/typegoose/lib/types").IObjectWithTypegooseFunction & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
         quantity: number;
     }>;
     deleteUsers(id: string): Promise<{

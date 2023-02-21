@@ -62,19 +62,38 @@ export class UserService {
   }
 
   //----------для админки----------------------------
-  // поиск  пользователя по по email
-  async findUser(dto: SearchDto): Promise<DocumentType<UserModel>[]> {
-    console.log(dto);
-    const user = await this.UserModel.find({
-      $or: [{ email: new RegExp(dto.email, 'i') }],
-    }).select('-password -favorites -viewed -cart -purchaseHistory -reviews');
-    return user;
+
+  // получение всех или поиск выбранного пользователя
+  // получаем  всех пользователей,выбираем чтобы обозначенные поля не попали в объект
+  //и делаем сортировку по дате создания(последние созданные будут сверху)
+  //если есть запрос,то выберем конкретногопользователя
+  async getAllUsers(dto: SearchDto) {
+    let options = {};
+    if (dto.email) {
+      options = {
+        $or: [
+          {
+            email: new RegExp(dto.email, 'i'),
+          },
+        ],
+      };
+    }
+    const users = await this.UserModel.find(options)
+      .select(
+        '-password -__v -favorites -viewed -cart -purchaseHistory -reviews',
+      ) //так мы исключаем ненужные поля
+      .sort({ createdAt: 'desc' })
+      .exec();
+    if (!users) throw new NotFoundException('Пользователи не получены');
+    // получаем количество пользователей
+    const quantity = await this.UserModel.find().count().exec();
+    return { users, quantity };
   }
 
   // получаем  всех пользователей,выбираем чтобы обозначенные поля не попали в объект
   //и делаем сортировку по дате создания(последние созданные будут сверху)
   //если есть searchUser,то выберем конкретногопользователя
-  async getAllUsers(): Promise<{
+  /*  async getAllUsers(): Promise<{
     users: DocumentType<UserModel>[];
     quantity: number;
   }> {
@@ -88,7 +107,7 @@ export class UserService {
     // получаем количество пользователей
     const quantity = await this.UserModel.find().count().exec();
     return { users, quantity };
-  }
+  } */
 
   // удаление пользователя
   async deleteUsers(id: string) {

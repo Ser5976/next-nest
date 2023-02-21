@@ -46,6 +46,7 @@ let BrandService = class BrandService {
         const brands = await this.BrandModel.find(options);
         if (!brands)
             throw new common_1.NotFoundException('Брэнды не получены');
+        console.log('сервак брэнд', brands);
         return brands;
     }
     async removeBrand(id) {

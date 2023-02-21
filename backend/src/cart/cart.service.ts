@@ -28,7 +28,7 @@ export class CartService {
       if (!updateProduct) throw new NotFoundException('товар не добавлен');
     } else {
       const newProduct = await this.CartModel.create(
-        // маленькая проверочка если есть oldPrice то добавлеем в объект totalOldPrice(старуя цена)
+        // маленькая проверочка если есть oldPrice то добавлеем в объект totalOldPrice(старая цена)
         dto.oldPrice
           ? {
               ...dto,

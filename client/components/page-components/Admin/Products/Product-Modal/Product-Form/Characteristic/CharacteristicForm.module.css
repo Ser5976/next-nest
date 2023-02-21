@@ -1,0 +1,28 @@
+.headerWrapper {
+  @apply flex justify-between p-2;
+}
+.header {
+  @apply text-sm  font-semibold text-gray-600;
+}
+.button {
+  @apply text-blue-500 opacity-70   text-sm font-semibold     cursor-pointer hover:opacity-100;
+}
+.container {
+  @apply overflow-y-auto px-2 h-[460px];
+}
+.wrapper {
+  @apply flex gap-1 relative;
+}
+.wrapperLabel {
+  @apply w-1/2;
+}
+
+.label {
+  @apply mb-2 text-gray-400;
+}
+.textarea {
+  @apply mt-1 mb-6 text-sm text-gray-500;
+}
+.icon2 {
+  @apply absolute top-0 right-[-5px] fill-gray-600 hover:fill-red-400 w-5 h-5 cursor-pointer;
+}

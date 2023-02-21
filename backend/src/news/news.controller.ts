@@ -9,10 +9,12 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
+import { SearchDto } from './dto/search.dto';
 
 @Controller('news')
 export class NewsController {
@@ -24,10 +26,10 @@ export class NewsController {
   async createNews(@Body() dto: NewsDto) {
     return this.NewsService.createNews(dto);
   }
-  // получение всех статей
+  // получение( или поиск ) всех статей
   @Get()
-  async getAllNews() {
-    return this.NewsService.getAllNews();
+  async getAllNews(@Query() dto: SearchDto) {
+    return this.NewsService.getAllNews(dto);
   }
   // получение  статьи
   @Get(':id')

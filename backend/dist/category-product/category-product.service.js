@@ -58,7 +58,7 @@ let CategoryProductService = class CategoryProductService {
         const removeCategoryProduct = await this.CategoryProductModel.findByIdAndDelete(id).exec();
         if (!removeCategoryProduct)
             throw new common_1.NotFoundException('Категория продукта не удалёна');
-        return { message: 'Категория продукта удалена' };
+        return removeCategoryProduct;
     }
 };
 CategoryProductService = __decorate([

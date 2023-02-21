@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { IType } from '../../../../../store/type-product/interface.typeProduct';
 
 const ProductTypeItem: FC<ProductTypeItemProps> = ({ type }): JSX.Element => {
-  // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
 
   // удаление типа
@@ -16,7 +16,7 @@ const ProductTypeItem: FC<ProductTypeItemProps> = ({ type }): JSX.Element => {
   const { mutate: deleteType } = useMutation(AdminService.deleteType, {
     onSuccess: (data) => {
       // работа с кэшем, что бы не делать новый запрос(кастылёк)
-      //получаем данные из кэша,удаляем удалённый тип и перезаписываем кэш
+      //получаем данные из кэша,удаляем удалённый тип и перезаписываем кэш(фишка из react-query  )
       queryClient.setQueriesData<IType[] | undefined>(
         'product type',
         (oldQueryData) => {
@@ -41,9 +41,7 @@ const ProductTypeItem: FC<ProductTypeItemProps> = ({ type }): JSX.Element => {
         <TiDeleteOutline
           className={styles.icon2}
           onClick={() => {
-            if (window.confirm(`Вы действительно хотите удалить категорию`)) {
-              deleteType(type._id);
-            }
+            deleteType(type._id);
           }}
         />
       </div>

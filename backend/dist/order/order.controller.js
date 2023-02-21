@@ -28,14 +28,11 @@ let OrderController = class OrderController {
     async createOrder(_id, dto) {
         return this.OrderService.createOrder(dto, _id);
     }
-    async getOrder() {
-        return this.OrderService.getOrder();
+    async getOrder(dto) {
+        return this.OrderService.getOrder(dto);
     }
     async executeAnOrder(dto) {
         return this.OrderService.executeAnOrder(dto);
-    }
-    async findReviews(dto) {
-        return this.OrderService.findOrders(dto);
     }
     async deleteOrder(id) {
         return this.OrderService.deleteOrder(id);
@@ -54,8 +51,9 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, auth_decorators_1.Auth)('admin'),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getOrder", null);
 __decorate([
@@ -67,14 +65,6 @@ __decorate([
     __metadata("design:paramtypes", [execute_dto_1.ExecuteDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "executeAnOrder", null);
-__decorate([
-    (0, auth_decorators_1.Auth)('admin'),
-    (0, common_1.Get)('search'),
-    __param(0, (0, common_1.Query)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [search_dto_1.SearchDto]),
-    __metadata("design:returntype", Promise)
-], OrderController.prototype, "findReviews", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)(),

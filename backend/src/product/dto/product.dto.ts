@@ -1,4 +1,4 @@
-import { IsArray, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 class Characterictic {
   title: string;
   property: string;
@@ -17,11 +17,10 @@ export class ProductDto {
   typeId: string;
   @IsString()
   categoryId: string;
-  @IsNumber()
-  price: number;
-
-  oldPrice?: number; // валидацию не ставим потому что свойства необязательное
-
+  @IsString()
+  price: string;
+  @IsString()
+  oldPrice: string;
   @IsArray()
   @IsString({ each: true }) //для валидации внутри массива
   files: string[];

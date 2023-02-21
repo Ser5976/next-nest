@@ -44,7 +44,6 @@ __decorate([
 ], BrandController.prototype, "createBrand", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, auth_decorators_1.Auth)('admin'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [search_dto_1.SearchDto]),

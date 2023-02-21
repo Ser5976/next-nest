@@ -65,8 +65,18 @@ let ReviewsService = class ReviewsService {
             return { message: 'отзыв обновлён' };
         throw new common_1.NotFoundException('отзыв не обновлён');
     }
-    async getAllReviews() {
-        const allReviews = await this.ReviewsModel.find()
+    async getAllReviews(dto) {
+        let options = {};
+        if (dto.name) {
+            options = {
+                $or: [
+                    {
+                        name: new RegExp(dto.name, 'i'),
+                    },
+                ],
+            };
+        }
+        const allReviews = await this.ReviewsModel.find(options)
             .populate('userId')
             .sort({ createdAt: 'desc' })
             .exec();
@@ -74,13 +84,6 @@ let ReviewsService = class ReviewsService {
             throw new common_1.NotFoundException('Отзывы не получены');
         const quantity = await this.ReviewsModel.find().count().exec();
         return { allReviews, quantity };
-    }
-    async findReviews(dto) {
-        console.log('Поиск:', dto);
-        const reviews = await this.ReviewsModel.find({
-            $or: [{ name: new RegExp(dto.name, 'i') }],
-        }).populate('userId');
-        return reviews;
     }
     async responseReview(id, dto) {
         const responseReview = await this.ReviewsModel.findByIdAndUpdate(id, {

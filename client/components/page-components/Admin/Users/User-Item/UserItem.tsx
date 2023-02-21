@@ -2,7 +2,6 @@ import styles from './UserItem.module.css';
 import { FC, useState } from 'react';
 import { UserItemProps } from './UserItem.props';
 import { BsHouse, BsPerson, BsTelephoneForward } from 'react-icons/bs';
-import { AiOutlineMail } from 'react-icons/ai';
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md';
 import { TiDeleteOutline } from 'react-icons/ti';
 import cn from 'classnames';
@@ -10,7 +9,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 
-const UserItem: FC<UserItemProps> = ({ users }): JSX.Element => {
+const UserItem: FC<UserItemProps> = ({ users, refech }): JSX.Element => {
   //открытие скрытого блока
   const [show, setShow] = useState('');
   const hiddenBlockHandler = () => {
@@ -24,12 +23,14 @@ const UserItem: FC<UserItemProps> = ({ users }): JSX.Element => {
   // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
 
-  // удаление отзыва(только админ)
+  // удаление пользователя(только админ)
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteUser } = useMutation(AdminService.deleteUser, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос
-      queryClient.invalidateQueries('users-for-admin');
+      // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
+      // поэтому- refech
+      refech();
       toast.success('Пользователь удалён');
     },
     onError: (error: any) => {
@@ -58,7 +59,9 @@ const UserItem: FC<UserItemProps> = ({ users }): JSX.Element => {
         <TiDeleteOutline
           className={styles.icon3}
           onClick={() => {
-            if (window.confirm(`Вы действительно хотите удалить отзыв`)) {
+            if (
+              window.confirm(`Вы действительно хотите удалить пользователя`)
+            ) {
               removeUser();
             }
           }}

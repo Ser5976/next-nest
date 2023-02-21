@@ -1,0 +1,16 @@
+.form {
+  @apply mt-[3px];
+}
+.container {
+  @apply flex;
+}
+.block1 {
+  @apply w-1/2 overflow-y-auto h-[500px] px-2;
+}
+.block2 {
+  @apply w-1/2;
+}
+
+.button {
+  @apply border my-5 rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500 opacity-70 text-white transition-opacity cursor-pointer hover:opacity-100;
+}

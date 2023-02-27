@@ -10,7 +10,7 @@ import AddArticleModal from './Add-Article/AddArticleModal';
 import { IArticle } from '../../../../store/customers/interface.customers';
 
 const Articles: FC<ArticlesProps> = ({}): JSX.Element => {
-  //открытие модального окна для редактирование постера
+  //открытие модального окна для редактирование стать
   const [show, setShow] = useState(false);
   //стейт для выбранной статьи
   const [articel, setArticel] = useState<IArticle | ''>('');
@@ -34,7 +34,7 @@ const Articles: FC<ArticlesProps> = ({}): JSX.Element => {
     }
   );
   // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
-  // поэтому- этот костыль(и+1 к рендеренгу)
+  // поэтому- этот костыль
   useEffect(() => {
     refetch();
   }, []);

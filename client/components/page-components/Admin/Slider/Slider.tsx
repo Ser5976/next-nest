@@ -22,6 +22,8 @@ const Slider: FC<SliderProps> = ({}): JSX.Element => {
     },
     enabled: false,
   });
+  // это костыль для перезапуска useQuery,
+  // при удалении из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
   useEffect(() => {
     refetch();
   }, [refetch]);

@@ -7,7 +7,9 @@ import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 import { IType } from '../../../../../store/type-product/interface.typeProduct';
 
-const ProductTypeItem: FC<ProductTypeItemProps> = ({ type }): JSX.Element => {
+const ProductTypeItem: FC<ProductTypeItemProps> = ({
+  type, //данные типа
+}): JSX.Element => {
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
 
@@ -15,7 +17,7 @@ const ProductTypeItem: FC<ProductTypeItemProps> = ({ type }): JSX.Element => {
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteType } = useMutation(AdminService.deleteType, {
     onSuccess: (data) => {
-      // работа с кэшем, что бы не делать новый запрос(кастылёк)
+      // работа с кэшем, что бы не делать новый запрос(костылёк)
       //получаем данные из кэша,удаляем удалённый тип и перезаписываем кэш(фишка из react-query  )
       queryClient.setQueriesData<IType[] | undefined>(
         'product type',

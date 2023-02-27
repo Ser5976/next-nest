@@ -12,15 +12,15 @@ import { useDebounce } from '../useDebounce';
 import { SearchInputAdmin } from '../Search-Input/SearchInputAdmin';
 
 const News: FC<NewsProps> = ({}): JSX.Element => {
-  //открытие модального окна для редактирование постера
+  //открытие модального окна для редактирование новостей
   const [show, setShow] = useState(false);
-  //стейт для инпута(поиск пользователя)
+  //стейт для инпута(поиск)
   const [searchTerm, setSearchTerm] = useState('');
   //обработчик инпута
   const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  //кастомный хук для задержки времени передачи данных из инпута поиска пользователя в запрос useQuery
+  //кастомный хук для задержки времени передачи данных из инпута поиска  в запрос useQuery
   const debouncedSearch = useDebounce(searchTerm, 700);
   //стейт для выбранной новости
   const [selectedNews, setSelectedNews] = useState<INews | ''>('');

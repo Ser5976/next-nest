@@ -10,9 +10,9 @@ import TextEditor from '../../../../../ui/Text-Editor/TextEditor';
 import { stripHtml } from 'string-strip-html';
 
 const AddArticleForm: FC<AddArticleFormProps> = ({
-  setShow,
-  refetch,
-  article,
+  setShow, //закрывает модальное окно
+  refetch, //делает повторный запрос в useQuery
+  article, //статья
 }): JSX.Element => {
   // добавляем статью
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
@@ -52,7 +52,7 @@ const AddArticleForm: FC<AddArticleFormProps> = ({
 
   const onSubmit = (data: IAddArticle) => {
     // console.log('article:', data);
-    // если есть данные о статье значить редактируем иначе создаём статью
+    // если есть  статья значить редактируем иначе создаём статью
     if (article) {
       editArticle({ id: article._id, data });
     } else {

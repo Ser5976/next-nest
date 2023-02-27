@@ -22,11 +22,15 @@ const schema = yup.object().shape({
     .required('Пожалуйста,выберите файл!'),
 });
 
-const SliderForm: FC<SliderFormProps> = ({ refetch }): JSX.Element => {
+const SliderForm: FC<SliderFormProps> = ({
+  refetch, //делает повторный запрос в useQuery
+}): JSX.Element => {
   // добавление картинки в слайдер
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: addToSlider } = useMutation(AdminService.addToSlider, {
     onSuccess: () => {
+      // чтобы передать undefined  в vulue для инпута,тем самым удалим файл из выбранных файлов
+      setValue('files', undefined);
       // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
       // поэтому- refetch
       refetch();
@@ -56,7 +60,6 @@ const SliderForm: FC<SliderFormProps> = ({ refetch }): JSX.Element => {
   const onSubmit = (data: ISliderForm) => {
     // console.log('Фото:', data);
     if (data.files) addToSlider(data.files[0]); //добавляем изображение в базу
-    setValue('files', undefined); // чтобы передать undefined  в vulue для инпута
   };
   return (
     <>

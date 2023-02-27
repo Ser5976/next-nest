@@ -6,10 +6,10 @@ import PosterForm from './Poster-Form/PosterForm';
 import Image from 'next/image';
 
 const PosterModal: FC<PosterModalProps> = ({
-  show,
-  setShow,
-  poster,
-  refetch
+  show, //открытие модального окна
+  setShow, //закрытие модального окна
+  poster, // данные постера
+  refetch, ////делает повторный запрос в useQuery
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);

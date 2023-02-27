@@ -1,5 +1,4 @@
 import styles from './ProductType.module.css';
-import cn from 'classnames';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { ProductTypeProps } from './ProdyctType.props';
 import { LayoutAdmin } from '../LayoutAdmin';
@@ -13,15 +12,15 @@ import AddTypeModal from './Add-Type/AddTypeModal';
 
 const ProductType: FC<ProductTypeProps> = ({}): JSX.Element => {
   console.log('рендер');
-  //открытие модального окна для редактирование постера
+  // стейт открытие модального окна для добавление типа
   const [show, setShow] = useState(false);
-  //стейт для инпута(поиск пользователя)
+  //стейт для инпута(поиск типа)
   const [searchTerm, setSearchTerm] = useState('');
   //обработчик инпута
   const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  //кастомный хук для задержки времени передачи данных из инпута поиска пользователя в запрос useQuery
+  //кастомный хук для задержки времени передачи данных из инпута поиска  в запрос useQuery
   const debouncedSearch = useDebounce(searchTerm, 700);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
@@ -41,6 +40,7 @@ const ProductType: FC<ProductTypeProps> = ({}): JSX.Element => {
       },
     }
   );
+
   useEffect(() => {
     refetch();
   }, [searchTerm]);

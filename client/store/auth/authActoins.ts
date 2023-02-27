@@ -1,11 +1,7 @@
 import { toast } from 'react-toastify'; //библиотечка по аллертам
-import { saveToStorage, errorCatch, removeTokensStorage } from './auth.helper';
-import { API } from './../../constants/url';
+import { saveToStorage, errorCatch } from './auth.helper';
 import { IAuth } from './../../components/page-components/Auth/interfaceAuth'; //типизация посылаемых данных из формы(email password)
-import { IAuthResponse } from './interface.auth'; // типизация респонса(ответа)
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { AuthService } from './auth.service'; //сервисы запросов на бэкэнд (авторизация)
 
 //регистрация

@@ -36,14 +36,13 @@ const Menu: FC<MenuProps> = ({
     freshOrdersQuantity === ordersQuantity
       ? ordersQuantity
       : `${freshOrdersQuantity} / ${ordersQuantity}`;
-  // данные по заказам
+  // данные по новстям
   const countReviews =
     freshReviewsQuantity === reviewsQuantity
       ? reviewsQuantity
       : `${freshReviewsQuantity} / ${reviewsQuantity}`;
 
   const router = useRouter();
-  // переменные количества для бэйджа
 
   return (
     <div className={styles.container}>

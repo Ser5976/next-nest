@@ -5,14 +5,15 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import AddArticleForm from './Add-Article-Form/AddArticleForm';
 
 const AddArticleModal: FC<AddArticleModalProps> = ({
-  show,
-  setShow,
-  setArticle,
-  refetch,
-  article,
+  show, //открытие модального окна
+  setShow, //используем для закрытия модального окна
+  setArticle, // для очищения стейта выбранной статьи
+  refetch, //делает повторный запрос в useQuery
+  article, //статья
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
-    if (e.target.id === 'container') setShow(false); //это что бы по клику на область вне формы закрывалась модальное окно
+    //это что бы по клику на область вне формы закрывалась модальное окно
+    if (e.target.id === 'container') setShow(false);
   };
   if (!show) return null;
   const handlerClose = () => {

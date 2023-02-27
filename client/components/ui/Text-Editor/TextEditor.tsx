@@ -14,6 +14,7 @@ const TextEditor: FC<TextEditorProps> = ({
   error,
   value,
 }) => {
+  // здесь мы используем специальную библиотеку по редактированию текста
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const [isUpdated, setIsUpdated] = useState(false);

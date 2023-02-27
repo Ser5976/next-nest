@@ -2,6 +2,7 @@ import { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 export interface MenuProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  //это флаги для отображения активной ссылки в меню
   activeMenu?:
     | 'orders'
     | 'reviews'
@@ -14,5 +15,4 @@ export interface MenuProps
     | 'brand'
     | 'for-customers'
     | 'news';
-  //это флаги для отображения активной ссылки в меню
 }

@@ -10,8 +10,8 @@ import TextEditor from '../../../../../ui/Text-Editor/TextEditor';
 import { stripHtml } from 'string-strip-html';
 
 const AddNewsForm: FC<AddNewsFormProps> = ({
-  setShow,
-  refetch,
+  setShow, //закрыть модального окна
+  refetch, // делает повторный запрос в useQuery
   selectedNews,
 }): JSX.Element => {
   // добавляем новость

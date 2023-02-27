@@ -5,8 +5,8 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import AddBrandForm from './Add-Brand-Form/AddBrandForm';
 
 const AddBrandModal: FC<AddBrandModalProps> = ({
-  show,
-  setShow,
+  show, //открытие модального окна
+  setShow, //для закрытия модального окна
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);

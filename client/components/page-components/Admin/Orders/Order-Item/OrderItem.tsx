@@ -3,19 +3,21 @@ import { FC, useState } from 'react';
 import { OrderItemProps } from './OrderItem.props';
 import { MdOutlineVisibility } from 'react-icons/md';
 import { TiDeleteOutline } from 'react-icons/ti';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 import { dateFormatting } from '../../../../../utils/date-formatting';
 import { BsCircle, BsCheck2Circle } from 'react-icons/bs';
 import OrderModal from '../Order-Modal/OrderModal';
 
-const OrderItem: FC<OrderItemProps> = ({ order, refech }): JSX.Element => {
-  const { name } = order;
+const OrderItem: FC<OrderItemProps> = ({
+  order, //данные о заказе
+  refech, //делает повторный запрос в useQuery
+}): JSX.Element => {
   //открытие модального окна для оформление заказа
   const [show, setShow] = useState(false);
 
-  // удаление заказа(только админ)
+  // удаление заказа
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteOrder } = useMutation(AdminService.deleteOrder, {
     onSuccess: () => {

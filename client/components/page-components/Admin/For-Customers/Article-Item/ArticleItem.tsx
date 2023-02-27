@@ -8,9 +8,9 @@ import { toast } from 'react-toastify';
 import { VscEdit } from 'react-icons/vsc';
 
 const ArticleItem: FC<ArticleItemProps> = ({
-  article,
-  refetch,
-  setShow,
+  article, //статья
+  refetch, //делает повторный запрос в useQuery
+  setShow, //закрытие модального окна
   setArticle, //сохраняем выбранную статью в стэйт для, редактирования
 }): JSX.Element => {
   // удаление статьи
@@ -27,6 +27,7 @@ const ArticleItem: FC<ArticleItemProps> = ({
       toast.error('статья не удалён,что-то пошло не так');
     },
   });
+  // открываем модальное окно для редактирование новости,передаём в стейт выбранную новость для редактирования
   const editHandler = () => {
     setShow(true);
     setArticle(article);

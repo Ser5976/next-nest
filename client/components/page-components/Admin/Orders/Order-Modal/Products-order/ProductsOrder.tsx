@@ -4,8 +4,11 @@ import { ProductsOrderProps } from './ProductsOrder.props';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ProductsOrder: FC<ProductsOrderProps> = ({ products }): JSX.Element => {
+const ProductsOrder: FC<ProductsOrderProps> = ({
+  products, //данные о товарах
+}): JSX.Element => {
   // console.log('product', products);
+  // это сами заказанные товары или товар
   return (
     <>
       <h2 className={styles.h2}>Заказанные товары</h2>

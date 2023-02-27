@@ -11,7 +11,7 @@ import CategoryProductItem from './CategoryProduct-Item/CategoryProductItem';
 import AddCategoryModal from './Add-Category/AddCategoryModal';
 
 const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
-  //открытие модального окна для редактирование постера
+  //открытие модального окна для редактирование категории товара
   const [show, setShow] = useState(false);
   //стейт для инпута(поиск пользователя)
   const [searchTerm, setSearchTerm] = useState('');
@@ -19,7 +19,7 @@ const CategoryProduct: FC<CategoryProductProps> = ({}): JSX.Element => {
   const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  //кастомный хук для задержки времени передачи данных из инпута поиска пользователя в запрос useQuery
+  //кастомный хук для задержки времени передачи данных из инпута поиска  в запрос useQuery
   const debouncedSearch = useDebounce(searchTerm, 700);
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами

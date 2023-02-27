@@ -8,7 +8,10 @@ import { toast } from 'react-toastify';
 import { VscEdit } from 'react-icons/vsc';
 import PosterModal from '../Poster-Modal/PosterModal';
 
-const PosterItem: FC<PosterItemProps> = ({ poster, refetch }): JSX.Element => {
+const PosterItem: FC<PosterItemProps> = ({
+  poster, //данные постера
+  refetch, //делает повторный запрос в useQuery
+}): JSX.Element => {
   //открытие модального окна для редактирование постера
   const [show, setShow] = useState(false);
 
@@ -58,7 +61,12 @@ const PosterItem: FC<PosterItemProps> = ({ poster, refetch }): JSX.Element => {
           }}
         />
       </div>
-      <PosterModal poster={poster} show={show} setShow={setShow} refetch={refetch} />
+      <PosterModal
+        poster={poster}
+        show={show}
+        setShow={setShow}
+        refetch={refetch}
+      />
     </>
   );
 };

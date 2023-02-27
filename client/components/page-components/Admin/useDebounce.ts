@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 export const useDebounce = <T>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
+  // данные из инпута поиска передаем в value , подключаем setTimeout() для задержки времени и возращаем данные назад
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
-
+    // это для удаления setTimeout() при завершении жизненного цикла компонента
     return () => {
       clearTimeout(handler);
     };

@@ -5,15 +5,8 @@
   @apply text-lg font-semibold text-gray-600;
 }
 .productType {
-  @apply grid grid-cols-3 gap-5  text-gray-600;
+  @apply grid grid-cols-3 gap-5 py-5  text-gray-600;
 }
 .productType a {
   @apply text-ellipsis overflow-hidden hover:text-red-400;
-}
-
-.brands {
-  @apply flex gap-3 flex-wrap py-5;
-}
-.brands li {
-  @apply border rounded-full py-2 px-3 text-xs uppercase hover:text-red-400 hover:bg-pink-50 text-gray-500;
 }

@@ -28,7 +28,7 @@ export class ProductService {
   ) {}
   //создание товара
   async create(dto: ProductDto) {
-    console.log('доставка товара', dto);
+    // console.log('доставка товара', dto);
     //добавление брэнда в тип товара
     // получаем тип товара
     const typeProduct: ProductTypeModel = await this.ProductTypeModel.findById(

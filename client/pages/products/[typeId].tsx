@@ -40,9 +40,9 @@ const Products: NextPage<ProductsProps> = ({
 // прописываем пути(ключи в объекте params это то, что в квадратных скобках,)
 export const getStaticPaths = async () => {
   const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
-  //здесь ограничили количества типов(берём только 1) т.к. fallback: true, остальные будут подгружаться сами
+  //здесь ограничили количества типов(берём только 11) т.к. fallback: true, остальные будут подгружаться сами
   // это чтобы при сборке небыло дахера страниц(будет долго загружаться)
-  const paths = productType.slice(0, 1).map((type) => {
+  const paths = productType.slice(0, 12).map((type) => {
     return { params: { typeId: type._id } };
   });
   return {

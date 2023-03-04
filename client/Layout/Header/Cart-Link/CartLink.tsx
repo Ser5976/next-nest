@@ -8,9 +8,9 @@ import { IUser } from '../../../store/auth/interface.auth';
 
 export const CartLink: FC<CartLinkProps> = ({}) => {
   const { authReducer, userReducer } = useData();
-  //костыль,чтобы обойти ошибку гидрации,другой способ -динамический импорт не работает
-  //суть в том ,что данные на прямую из стора,через useData,рендерется и на серваке, а данных сервак не получает,
-  // а клиент получает и происходит конфликт,useEffect этот вопрос решает.
+  //костыль,чтобы обойти ошибку гидрации,другой способ -это динамический импорт
+  // авторизацию мы сделали на клиенте, сервак  next не видит и ругается
+  //useEffect этот вопрос решает.
   const [user, setUser] = useState<IUser | null>(null);
   useEffect(() => {
     setUser(authReducer.user);

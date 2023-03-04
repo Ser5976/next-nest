@@ -10,14 +10,9 @@ import { useQuery } from 'react-query';
 import { HeaderService } from '../../header-service/header.service'; //сервис для запросов
 import { useActions } from '../../store/useActions';
 import { CartLink } from './Cart-Link/CartLink';
-import dynamic from 'next/dynamic';
 import { FC } from 'react';
 
-/* const DynamicCartLink = dynamic(() => import('./Cart-Link/CartLink'), {
-  ssr: false,
-});
- */
-export const Header: FC<HeaderProps> = ({ className, ...props }) => {
+export const Header: FC<HeaderProps> = ({}) => {
   //получаем экшены из редюсера при помощи кастомного хука useActions();
   const { getUser, getError } = useActions();
   //получаем данные  из редюссоров при помощи кастомного хука useData();
@@ -27,27 +22,23 @@ export const Header: FC<HeaderProps> = ({ className, ...props }) => {
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
   //получаем  все данные (из базы) по юзеру и записываем их в стор(редакс)
-  const { data: dataUser } = useQuery(
-    'user-profile',
-    () => HeaderService.getUserProfile(),
-    {
-      onSuccess: (dataUser) => {
-        // console.log('success работает:', dataUser);
-        // передаём данные в стор
-        getError(false);
-        getUser(dataUser);
-      },
-      onError: () => {
-        getError(true);
-      },
-      enabled: !!authReducer.user, //делает запрос только при авторизованности
-    }
-  );
+  useQuery('user-profile', () => HeaderService.getUserProfile(), {
+    onSuccess: (dataUser) => {
+      // console.log('success работает:', dataUser);
+      // передаём данные в стор
+      getError(false);
+      getUser(dataUser);
+    },
+    onError: () => {
+      getError(true);
+    },
+    enabled: !!authReducer.user, //делает запрос только при авторизованности
+  });
   // console.log('User', userProfile);
 
   return (
     <>
-      <header className={cn(className, styles.header)} {...props}>
+      <header className={cn(styles.header)}>
         <ul className={styles.header1}>
           {forCustomersReducer.forCustomers.length === 0 && (
             <h1>Нет данных!!!</h1>

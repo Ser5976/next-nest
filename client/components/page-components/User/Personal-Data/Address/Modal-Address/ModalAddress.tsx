@@ -5,9 +5,9 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import FormPersonal from './Form-Address/FormAddress';
 
 const ModalAddress: FC<ModalAddressProps> = ({
-  show,
-  setShow,
-  address,
+  show, //открытие модального окна
+  setShow, //закрытие модального окна
+  address, //данные по адрессу
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);

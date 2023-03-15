@@ -15,6 +15,7 @@ const Favourites: FC<FavouritesProps> = ({ product }): JSX.Element => {
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
   const queryClient = useQueryClient();
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
+  // добавление или если есть удаление товара из массива favourites у юзера
   const { mutate } = useMutation(ProductService.setFavourites, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос

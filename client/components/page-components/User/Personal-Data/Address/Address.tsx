@@ -5,7 +5,9 @@ import { BsHouse } from 'react-icons/bs';
 import { VscEdit } from 'react-icons/vsc';
 import ModalAddress from './Modal-Address/ModalAddress';
 
-const Address: FC<AddressProps> = ({ address }): JSX.Element => {
+const Address: FC<AddressProps> = ({
+  address, //данне по адрессу
+}): JSX.Element => {
   //открытие модального окна для редактирование имени юзера
   const [show, setShow] = useState(false);
   return (

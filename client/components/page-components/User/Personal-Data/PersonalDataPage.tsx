@@ -8,10 +8,12 @@ import Email from './Email/Email';
 import Password from './Password/Password';
 import Phone from './Phone/Phone';
 import Address from './Address/Address';
+import PersonalDataSkeleton from './PersonalData-Skeleton/PersonalDataSkeletont';
 
 const PersonalDataPage: FC<PersonalDataPageProps> = ({}): JSX.Element => {
-  const { userReducer } = useData(); //получаем из стора  все данные по юзеру при помощи кастомного хука useData()
-  const { userProfile, isError } = userReducer;
+  const {
+    userReducer: { userProfile, isError, isLoading },
+  } = useData(); //получаем из стора  все данные по юзеру при помощи кастомного хука useData()
 
   return (
     <LayoutUser activeMenu="personal-data">
@@ -19,7 +21,9 @@ const PersonalDataPage: FC<PersonalDataPageProps> = ({}): JSX.Element => {
         Личные данные
       </h1>
       <ul>
-        {isError ? (
+        {isLoading ? (
+          <PersonalDataSkeleton />
+        ) : isError ? (
           <h1 className=" text-center font-semibold text-red-600 mt-2">
             Что то пошло не так!
           </h1>

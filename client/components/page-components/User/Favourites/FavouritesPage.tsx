@@ -1,13 +1,14 @@
-import styles from './FavouritesPage.module.css';
 import { FC } from 'react';
 import { FavouritesPageProps } from './FavouritesPage.props';
 import { useData } from '../../../../store/useData';
 import ProductItem from '../../Products/ProductItem/ProductItem';
 import { LayoutUser } from '../LayoutUser';
+import SkeletonProduct from '../../../ui/ProductItem-Skeleton/SkeletonProduct';
 
 const FavouritesPage: FC<FavouritesPageProps> = ({}): JSX.Element => {
   const { userReducer } = useData(); //получаем из стора  все данные по юзеру при помощи кастомного хука useData()
-  const { userProfile, isError } = userReducer;
+  const { userProfile, isError, isLoading } = userReducer;
+
   return (
     <LayoutUser activeMenu="favourites">
       <div>
@@ -15,7 +16,9 @@ const FavouritesPage: FC<FavouritesPageProps> = ({}): JSX.Element => {
           Избранные товары
         </h1>
         <ul>
-          {isError ? (
+          {isLoading ? (
+            <SkeletonProduct item={4} />
+          ) : isError ? (
             <h1 className=" text-center font-semibold text-red-600 mt-2">
               Что то пошло не так!
             </h1>

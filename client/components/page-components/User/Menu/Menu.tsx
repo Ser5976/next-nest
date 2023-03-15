@@ -18,9 +18,9 @@ const Menu: FC<MenuProps> = ({
   activeMenu, //флаг для активной ссылки
 }): JSX.Element => {
   //получаем данные  из редюссоров при помощи кастомного хука useData();
-  const { authReducer, userReducer } = useData();
+  const { userReducer } = useData();
   const { userProfile } = userReducer;
-  const { user } = authReducer;
+
   //получаем экшены(логаут и очистка стейта юзера) из редюсера при помощи кастомного хука useActions();
   const { logout, clearUser } = useActions();
   const router = useRouter();

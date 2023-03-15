@@ -4,6 +4,7 @@ import { IUserProfile, IUserInitialState } from './interface.user';
 const initialState: IUserInitialState = {
   userProfile: {} as IUserProfile,
   isError: false,
+  isLoading: true,
 };
 
 export const userSlice = createSlice({
@@ -13,10 +14,12 @@ export const userSlice = createSlice({
   reducers: {
     getError: (state, action: PayloadAction<boolean>) => {
       state.isError = action.payload;
+      state.isLoading = false;
     },
     getUser: (state, action: PayloadAction<IUserProfile | undefined>) => {
       // console.log('работает редюсер:', action);
       state.userProfile = action.payload;
+      state.isLoading = false;
     },
     // нужен для очистки стейта userProfile, когда выходим из аккаунта
     clearUser: (state) => {

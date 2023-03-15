@@ -6,7 +6,9 @@ import { dateFormatting } from '../../../utils/date-formatting'; //для фор
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import parse from 'html-react-parser';
 
-const NewsItem: FC<NewsItemProps> = ({ news }): JSX.Element => {
+const NewsItem: FC<NewsItemProps> = ({
+  news, //новость
+}): JSX.Element => {
   return (
     <div className={styles.container}>
       <div className="flex relative">

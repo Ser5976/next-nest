@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { NewsListProps } from './NewsList.props';
 import { dateFormatting } from '../../../utils/date-formatting'; //для форматирования даты
 
-const NewsList: FC<NewsListProps> = ({ news }): JSX.Element => {
+const NewsList: FC<NewsListProps> = ({
+  news, // массив новостей
+}): JSX.Element => {
   return (
     <div className={styles.container}>
       <Link href="/">

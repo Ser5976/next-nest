@@ -13,7 +13,6 @@ const SliderItem: FC<SliderItemProps> = ({ slider }): JSX.Element => {
         objectPosition="center"
         src={`${process.env.NEXT_PUBLIC_DOMAIN}/${slider.picture}`}
         alt="изображения нет"
-        unoptimized
         priority
       />
     </div>

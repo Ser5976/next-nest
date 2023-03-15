@@ -5,7 +5,9 @@ import { AiOutlineMail } from 'react-icons/ai';
 import { VscEdit } from 'react-icons/vsc';
 import ModalEmail from './Modal-Email/ModalEmail';
 
-const Email: FC<EmailProps> = ({ email }): JSX.Element => {
+const Email: FC<EmailProps> = ({
+  email, // данные по email
+}): JSX.Element => {
   //открытие модального окна для редактирование имени юзера
   const [show, setShow] = useState(false);
   return (

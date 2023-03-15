@@ -4,12 +4,14 @@ import { PopularItemProps } from './PopularItem.props';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-//import RatingStar from '../../../../ui/Rating/RatingStar';
+
 const RatingStar = dynamic(() => import('../../../../ui/Rating/RatingStar'), {
   ssr: false,
 });
 
-const PopularItem: FC<PopularItemProps> = ({ popular }): JSX.Element => {
+const PopularItem: FC<PopularItemProps> = ({
+  popular, // популярный товар
+}): JSX.Element => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.picture}>
@@ -18,10 +20,9 @@ const PopularItem: FC<PopularItemProps> = ({ popular }): JSX.Element => {
           objectFit="contain"
           src={`${process.env.NEXT_PUBLIC_DOMAIN}/${popular.files[0]}`}
           alt="картинка"
-          unoptimized
           priority
           width={300}
-          height={170}
+          height={300}
         />
       </div>
       <div className={styles.productData}>

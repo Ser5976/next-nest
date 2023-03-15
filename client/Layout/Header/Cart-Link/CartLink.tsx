@@ -16,7 +16,7 @@ export const CartLink: FC<CartLinkProps> = ({}) => {
     setUser(authReducer.user);
   }, [authReducer.user]);
   return (
-    <Link href={user ? '/cart' : '/auth'}>
+    <Link href={user ? '/cart' : '/auth?redirect=/cart'}>
       <a className={styles.cart}>
         Корзина
         <BsCart className={styles.cartIcon} />

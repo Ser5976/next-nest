@@ -6,12 +6,11 @@ import {
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 
-//сервис для запроса на сервак
 export interface IEditReview {
   reviewId: string;
   text: string;
 }
-
+//сервис для запроса на сервак
 export const UserService = {
   //а удаление отзыва сервис в ProductService removeReview
 

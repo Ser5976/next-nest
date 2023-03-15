@@ -22,8 +22,8 @@ const CartPage: NextPageAuth = () => {
 CartPage.isOnlyUser = true; //только для авторизованных
 
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<ProfileProps> =
-  wrapper.getStaticProps((store) => async () => {
+export const getStaticProps: GetStaticProps<CartProps> = wrapper.getStaticProps(
+  (store) => async () => {
     //---------- для Header-----------------------------------//
     //получение forCustomers (для клиентов)
     const forCustomers = await HeaderService.getForCustomers(); // кастомный сервис для запроса  для клиентов
@@ -41,9 +41,10 @@ export const getStaticProps: GetStaticProps<ProfileProps> =
       props: { forCustomers, categoryProduct, productType },
       revalidate: 10,
     };
-  });
+  }
+);
 
-interface ProfileProps {
+interface CartProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];

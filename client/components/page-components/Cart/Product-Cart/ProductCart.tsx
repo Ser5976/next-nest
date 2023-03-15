@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import styles from './ProductCart.module.css';
-import cn from 'classnames';
 import { ProductCartProps } from './ProductCart.props';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,9 +9,9 @@ import { toast } from 'react-toastify';
 import { BsCircle, BsCheck2Circle } from 'react-icons/bs';
 
 const ProductCart: FC<ProductCartProps> = ({
-  productCart,
-  addOrder,
-  deleteOrder,
+  productCart, //товар для корзины
+  addOrder, //функция для добавление в заказ товара
+  deleteOrder, //функция для удаление товара из заказа
 }): JSX.Element => {
   //для изменение иконки заказа в ProductCart
   const [orderActive, setOrderActive] = useState('');
@@ -26,7 +25,7 @@ const ProductCart: FC<ProductCartProps> = ({
     setOrderActive(''); //изменяем иконку заказа
     deleteOrder(productCart.productId); //удаляем товар из заказа
   };
-  //создаём объект товара для добавления в корзину
+  //создаём объект товара для добавления в заказ
   const productData: IAddCart = {
     name: productCart.name,
     price: productCart.price,
@@ -46,7 +45,7 @@ const ProductCart: FC<ProductCartProps> = ({
         queryClient.invalidateQueries('cart');
       },
       onError: (error: any) => {
-        toast.error('Отзыв не отправлен,что-то пошло не так');
+        toast.error('Что-то пошло не так');
       },
     }
   );
@@ -57,7 +56,7 @@ const ProductCart: FC<ProductCartProps> = ({
       queryClient.invalidateQueries('cart');
     },
     onError: (error: any) => {
-      toast.error('Товар не добавлен,что-то пошло не так');
+      toast.error('Что-то пошло не так');
     },
   });
   //удаляем товар из корзины

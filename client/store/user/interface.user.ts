@@ -34,4 +34,5 @@ export interface IUserProfile {
 export interface IUserInitialState {
   userProfile: IUserProfile | undefined;
   isError: boolean;
+  isLoading: boolean;
 }

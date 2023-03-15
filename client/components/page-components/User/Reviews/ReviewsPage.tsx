@@ -9,10 +9,13 @@ import { ProductService } from '../../Product-Page/product.service'; //серв�
 import { toast } from 'react-toastify';
 import { dateFormatting } from '../../../../utils/date-formatting'; //кастомная ф-я по форматированию даты
 import EditReview from './Edit-review/EditReview';
+import ReviewsSkeleton from './Reviews-Skeleton/ReviewsSkeletont';
 
 const ReviewsPage: FC<ReviewsPageProps> = ({}): JSX.Element => {
-  const { userReducer } = useData(); //получаем из стора  все данные по юзеру при помощи кастомного хука useData()
-  const { userProfile, isError } = userReducer;
+  const {
+    userReducer: { userProfile, isError, isLoading },
+  } = useData(); //получаем из стора  все данные по юзеру при помощи кастомного хука useData()
+
   // флаг для открытие формы  "редактировать отзыв"
   const [openForm, setOpenForm] = useState(false);
   //флаг чтобы форма открывалась только у редактируемого отзыва
@@ -42,7 +45,9 @@ const ReviewsPage: FC<ReviewsPageProps> = ({}): JSX.Element => {
       <div>
         <h1 className="text-2xl text-gray-600 font-semibold mb-5">Отзывы</h1>
         <ul>
-          {isError ? (
+          {isLoading ? (
+            <ReviewsSkeleton item={5} />
+          ) : isError ? (
             <h1 className=" text-center font-semibold text-red-600 mt-2">
               Что то пошло не так!
             </h1>

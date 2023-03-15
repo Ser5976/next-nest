@@ -28,7 +28,7 @@ export const authSlice = createSlice({
       state.user = action.payload?.user;
     },
     //ошибка
-    [registration.rejected.type]: (state, action: PayloadAction<string>) => {
+    [registration.rejected.type]: (state) => {
       state.isLoading = false;
       state.user = null;
     },

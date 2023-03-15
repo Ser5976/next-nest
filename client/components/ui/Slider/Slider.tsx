@@ -6,6 +6,7 @@ import { SliderProps } from './Slider.props';
 import SliderItem from './Slider-Item/SliderItem';
 
 const Slider: FC<SliderProps> = ({ sliders }): JSX.Element => {
+  console.log('slider:', sliders);
   return (
     <>
       {sliders.length === 0 ? (

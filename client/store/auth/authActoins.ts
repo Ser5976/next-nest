@@ -1,11 +1,7 @@
 import { toast } from 'react-toastify'; //библиотечка по аллертам
-import { saveToStorage, errorCatch, removeTokensStorage } from './auth.helper';
-import { API } from './../../constants/url';
+import { errorCatch } from './auth.helper';
 import { IAuth } from './../../components/page-components/Auth/interfaceAuth'; //типизация посылаемых данных из формы(email password)
-import { IAuthResponse } from './interface.auth'; // типизация респонса(ответа)
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { AuthService } from './auth.service'; //сервисы запросов на бэкэнд (авторизация)
 
 //регистрация
@@ -15,10 +11,7 @@ export const registration = createAsyncThunk(
     try {
       // получаем данные по регистрации
       const response = await AuthService.register(data);
-      // общая функция: записываем юзера в localStorage и в куки токены(auth.helper)
-      if (response.data.accessToken) {
-        saveToStorage(response.data);
-      }
+
       toast.success('Вы зарегистрированы'); //показываем клиенту
       return response.data;
     } catch (error: any) {
@@ -40,10 +33,7 @@ export const login = createAsyncThunk(
     try {
       //делаем запрос и получаем данные по авторизации
       const response = await AuthService.login(data);
-      // общая функция: записываем юзера в localStorage и в куки токены(auth.helper)
-      if (response.data.accessToken) {
-        saveToStorage(response.data);
-      }
+
       toast.success(`Здравствуйте ${response.data.user.email}!`); //показываем клиенту
       return response.data;
     } catch (error: any) {

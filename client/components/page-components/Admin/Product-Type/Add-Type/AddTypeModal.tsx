@@ -5,8 +5,8 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import AddTypeForm from './Add-Type-Form/AddTypeForm';
 
 const AddTypeModal: FC<AddTypeModalProps> = ({
-  show,
-  setShow,
+  show, //открытие модального окна
+  setShow, // закрытие модального окна
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);

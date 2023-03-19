@@ -1,5 +1,4 @@
 import { GetStaticProps, NextPage } from 'next';
-import axios from 'axios';
 import { Auth } from '../components/page-components/Auth/Auth';
 import { Layout } from '../Layout/Layout';
 import { wrapper } from '../store/store';

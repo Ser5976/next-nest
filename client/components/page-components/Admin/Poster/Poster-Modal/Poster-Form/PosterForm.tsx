@@ -22,7 +22,10 @@ const schema = yup.object().shape({
     .required('Пожалуйста,выберите файл!'),
 });
 
-const PosterForm: FC<PosterFormProps> = ({ poster, refetch }): JSX.Element => {
+const PosterForm: FC<PosterFormProps> = ({
+  poster, //данные постера
+  refetch, //делает повторный запрос в useQuery
+}): JSX.Element => {
   // изменение постера
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: updatePoster } = useMutation(AdminService.updatePoster, {

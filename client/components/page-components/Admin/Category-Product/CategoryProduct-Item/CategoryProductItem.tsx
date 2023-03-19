@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { ICategoryProduct } from '../../../../../store/category-product/interface.categoryProduct';
 
 const CategoryProductItem: FC<CategoryProductItemProps> = ({
-  category,
+  category, // данные категории товара
 }): JSX.Element => {
   // //хук useQueryClient, из react-query
   const queryClient = useQueryClient();
@@ -17,7 +17,7 @@ const CategoryProductItem: FC<CategoryProductItemProps> = ({
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteCategory } = useMutation(AdminService.deleteCategory, {
     onSuccess: (data) => {
-      // работа с кэшем, что бы не делать новый запрос(кастылёк)
+      // работа с кэшем, что бы не делать новый запрос(костылёк)
       //получаем данные из кэша,удаляем удалённый тип и перезаписываем кэш(фишка изreact-query  )
       queryClient.setQueriesData<ICategoryProduct[] | undefined>(
         'category product',

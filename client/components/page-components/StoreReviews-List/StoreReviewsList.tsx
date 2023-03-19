@@ -48,7 +48,7 @@ const StoreReviewsList: FC<StoreReviewsListProps> = ({}): JSX.Element => {
   // console.log('isLoading', isLoading);
   // console.log('isError', isError);
 
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
   const queryClient = useQueryClient();
 
   // удаление отзыва(только админ)

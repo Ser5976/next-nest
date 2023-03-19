@@ -7,15 +7,17 @@ import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 import { IBrand } from '../../../../../store/category-product/interface.categoryProduct';
 
-const BrandItem: FC<BrandItemProps> = ({ brand }): JSX.Element => {
+const BrandItem: FC<BrandItemProps> = ({
+  brand, //брэнд
+}): JSX.Element => {
   // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
 
-  // удаление типа
+  // удаление брэнда
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteBrand } = useMutation(AdminService.deleteBrand, {
     onSuccess: (data) => {
-      // работа с кэшем, что бы не делать новый запрос(кастылёк)
+      // работа с кэшем, что бы не делать новый запрос(костылёк)
       //получаем данные из кэша,удаляем удалённый тип и перезаписываем кэш(фишка изreact-query  )
       queryClient.setQueriesData<IBrand[] | undefined>(
         'brand',

@@ -7,13 +7,15 @@ import { SearhInputProps } from './SearchInput.props';
 
 export const SearchInput = ({}: SearhInputProps): JSX.Element => {
   const { push } = useRouter();
+  // стейт для поискового инпута
   const [search, setSearch] = useState('');
-  // посылаем данные после нажатия на кнопку поиска
+  // посылаем данные инпута, после нажатия на кнопку поиска, в адресную строку(URL)
+  //и переходим на страницу SearchPage,где используем эти данные,передаём на сервак, для поиска
   const handlerSubmit = () => {
     push(`/products/search?text=${search}`);
     setSearch('');
   };
-  // посылаем данные после нажатия на кнопку энтер
+  // тоже но только после нажатия на кнопку энтер
   const pressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && search !== '') {
       push(`/products/search?text=${search}`);

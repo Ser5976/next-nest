@@ -5,11 +5,14 @@ import { BsHouse, BsPerson, BsTelephoneForward } from 'react-icons/bs';
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md';
 import { TiDeleteOutline } from 'react-icons/ti';
 import cn from 'classnames';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 
-const UserItem: FC<UserItemProps> = ({ users, refech }): JSX.Element => {
+const UserItem: FC<UserItemProps> = ({
+  users, //данные о пользователе
+  refech, //делает повторный запрос в useQuery
+}): JSX.Element => {
   //открытие скрытого блока
   const [show, setShow] = useState('');
   const hiddenBlockHandler = () => {
@@ -20,10 +23,8 @@ const UserItem: FC<UserItemProps> = ({ users, refech }): JSX.Element => {
     }
   };
   const { personalData, email, phone, address } = users;
-  // //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
-  const queryClient = useQueryClient();
 
-  // удаление пользователя(только админ)
+  // удаление пользователя
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteUser } = useMutation(AdminService.deleteUser, {
     onSuccess: () => {
@@ -37,6 +38,7 @@ const UserItem: FC<UserItemProps> = ({ users, refech }): JSX.Element => {
       toast.error('Пользователь не удалён,что-то пошло не так');
     },
   });
+  // запускаем удаление пользователя
   const removeUser = () => {
     deleteUser(users._id);
   };

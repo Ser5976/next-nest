@@ -7,14 +7,16 @@ import { AdminService } from '../../admin.service';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 
-const SliderItem: FC<SliderItemProps> = ({ slider, refetch }): JSX.Element => {
+const SliderItem: FC<SliderItemProps> = ({
+  slider, //масссив данных слайдера
+  refetch, //делает повторный запрос в useQuery
+}): JSX.Element => {
   // console.log('sliderItem:', slider);
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
   // удаление изображения(url из базы)
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: deleteImage } = useMutation(AdminService.deleteImage, {
     onSuccess: () => {
-      // чтобы не делать повторный запрос, удаляем удалённую  картинку из массива сами
+      // делаем повторный запрос useQuery
       // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
       // поэтому- refetch
       refetch();

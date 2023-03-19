@@ -2,7 +2,7 @@ export declare class QueryParametrsDto {
     typeId: string;
     page: string;
     limit?: number;
-    brandId?: string;
+    brandId?: string | string[];
     minPrice?: string;
     maxPrice?: string;
 }

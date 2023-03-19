@@ -5,8 +5,8 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import AddCategoryForm from './Add-Category-Form/AddCategoryForm';
 
 const AddCategoryModal: FC<AddCategoryModalProps> = ({
-  show,
-  setShow,
+  show, //открыть модальное окно
+  setShow, // для закрытия модального окна
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);

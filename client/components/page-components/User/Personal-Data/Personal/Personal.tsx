@@ -5,7 +5,9 @@ import { BsPerson } from 'react-icons/bs';
 import { VscEdit } from 'react-icons/vsc';
 import ModalPersonal from './Modal-Personal/ModalPersonal';
 
-const Personal: FC<PersonalProps> = ({ personalData }): JSX.Element => {
+const Personal: FC<PersonalProps> = ({
+  personalData, // данные по юзеру
+}): JSX.Element => {
   //открытие модального окна для редактирование имени юзера
   const [show, setShow] = useState(false);
   return (

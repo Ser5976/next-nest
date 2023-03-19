@@ -13,6 +13,9 @@ import {
   IPhone,
 } from '../../../store/user/interface.user';
 
+// жуть, получился здоровый файл
+// все сервисы  запросов для админки и некоторые интервейсы,корява нооо как есть
+
 // некоторые интерфейсы
 //для пользователей
 export interface IUsers {
@@ -108,7 +111,9 @@ export interface IBrand {
   updatedAt: string;
 }
 
-//сервис для запроса на сервак
+//сервис для запроса на сервак, не используем try/catch для отлова ошибок
+//т.к. все сервисы буду использоваться в react-query, а он сам разберётся с ошибкой
+// это объект с методами
 export const AdminService = {
   // используем кастомный axios(в него уже введён токен),
   //---------Users-----------
@@ -142,7 +147,7 @@ export const AdminService = {
     return reviewsForAdmin;
   },
 
-  //удаление пользователя
+  //удаление озыва
   async deleteReviews(reviewsId: string) {
     console.log(' удаление отзыва ');
     await customAxios.delete(`${API.reviews}/${reviewsId}`);
@@ -317,7 +322,7 @@ export const AdminService = {
     return brands;
   },
 
-  //удаление типа
+  //удаление брэнда
   async deleteBrand(brandId: string) {
     console.log(' удаление бранда ');
     const remoteBrand = await customAxios.delete<IBrand>(
@@ -344,7 +349,7 @@ export const AdminService = {
     await customAxios.put(`${API.customers}/${data.id}`, data.data);
   },
 
-  //удаление новости
+  //удаление статьи
   async deleteArticle(articleId: string) {
     console.log(' удаление статьи ');
     const article = await customAxios.delete<IArticle>(
@@ -380,7 +385,7 @@ export const AdminService = {
     return news;
   },
   //----products-----------
-  //добавление новости
+  //добавление товара
   async addProduct(
     data: Omit<IProduct, '_id' | '_v' | 'createdAt' | 'updatedAt' | 'rating'>
   ) {
@@ -388,7 +393,7 @@ export const AdminService = {
     const product = await customAxios.post(API.product, data);
     return product;
   },
-  //получение(или поиск) новостей
+  //получение(или поиск) товара
   async getProducts(name: string) {
     console.log(' получение товаров');
     const { data: dataProducts } = await axios.get<{
@@ -411,7 +416,7 @@ export const AdminService = {
     await customAxios.put(`${API.product}/${data.productId}`, data.product);
   },
 
-  //удаление новости
+  //удаление товара
   async deleteProduct(productId: string) {
     console.log(' удаление товара ');
     const news = await customAxios.delete<INews>(`${API.product}/${productId}`);

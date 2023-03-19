@@ -21,15 +21,6 @@ let FavoritesService = class FavoritesService {
     constructor(UserModel) {
         this.UserModel = UserModel;
     }
-    async getFavorites(id) {
-        const favorites = await this.UserModel.findById(id)
-            .populate('favorites')
-            .exec()
-            .then((data) => data.favorites);
-        if (favorites)
-            return favorites;
-        throw new common_1.NotFoundException('Список избранных продуктов не получен');
-    }
     async setFavorites(user, productId) {
         const { _id, favorites } = user;
         const newFavorites = this.UserModel.findByIdAndUpdate(_id, {

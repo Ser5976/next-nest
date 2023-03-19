@@ -11,8 +11,8 @@ import { RiErrorWarningLine } from 'react-icons/ri';
 import { dateFormattingBirthday } from '../../../../../../../utils/date-formatting';
 
 const FormPersonal: FC<FormPersonalProps> = ({
-  setShow,
-  personalData,
+  setShow, //закрытие модального окна
+  personalData, // данные по юзеру
 }): JSX.Element => {
   const {
     handleSubmit,

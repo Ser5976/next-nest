@@ -12,27 +12,28 @@ import { useDebounce } from '../useDebounce';
 import OrderItem from './Order-Item/OrderItem';
 
 const Orders: FC<OrdersProps> = ({}): JSX.Element => {
-  //стейт для инпута(поиск пользователя)
+  //стейт для инпута(поиск)
   const [searchTerm, setSearchTerm] = useState('');
   //обработчик инпута
   const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  //кастомный хук для задержки времени передачи данных из инпута поиска пользователя в запрос useQuery
+  //кастомный хук для задержки времени передачи данных из инпута поиска  в запрос useQuery
   const debouncedSearch = useDebounce(searchTerm, 700);
 
-  //получаем данные по заказам из стэйта
+  //получаем данные по количеству  заказов из стэйта
   const {
-    adminReducer: { ordersQuantity },
+    adminReducer: { ordersQuantity, freshOrdersQuantity },
   } = useData();
 
-  // получаем экшены
+  // получаем экшен для изменения количества заказов.
+
   const { getOrdersQuantity, getFreshOrdersQuantity } = useActions();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
 
-  //получаем  все заказы и записываем их в стор(редакс)
+  //получаем  все данные (из базы) по заказам, количество записываем в стор(редакс,а там и в локалстор)
   const {
     isLoading,
     refetch,
@@ -43,11 +44,14 @@ const Orders: FC<OrdersProps> = ({}): JSX.Element => {
 
     {
       onSuccess: (ordersData) => {
-        // смотрим если количество пользователе в базе поменялось, только тогда меняем
+        // смотрим если количество заказов в базе поменялось, только тогда меняем
         if (ordersQuantity !== ordersData.quantity) {
           getOrdersQuantity(ordersData.quantity);
         }
-        getFreshOrdersQuantity(ordersData.quantity);
+        // тоже только со freshOrdersQuantity
+        if (freshOrdersQuantity !== ordersData.quantity) {
+          getFreshOrdersQuantity(ordersData.quantity);
+        }
       },
       onError: () => {
         toast.error('данные не получены, попробуйте ещё раз');

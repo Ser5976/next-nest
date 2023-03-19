@@ -10,7 +10,9 @@ import { useData } from '../../../../store/useData';
 import { useRouter } from 'next/router';
 import Review from '../Review/Review';
 
-const Tabs: FC<TabsProps> = ({ product }): JSX.Element => {
+const Tabs: FC<TabsProps> = ({
+  product, //данные товара
+}): JSX.Element => {
   const router = useRouter();
   const { authReducer } = useData(); // данные о авторизации
   // флаг чтобы менять вкладки

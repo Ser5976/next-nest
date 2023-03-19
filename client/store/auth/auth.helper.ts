@@ -1,4 +1,4 @@
-import { ITokens, IAuthResponse } from './interface.auth';
+import { IAuthResponse } from './interface.auth';
 import Cookies from 'js-cookie'; //библиотека для работы с куками(запись,удаление)
 
 // записываем токены в куки

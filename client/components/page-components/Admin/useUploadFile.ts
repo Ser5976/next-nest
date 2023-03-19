@@ -3,18 +3,20 @@ import { AdminService } from './admin.service';
 import { UseMutateFunction, useMutation } from 'react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
 
-// Этот хук можно использовать в input type='file',которой в свою очередь используется в react hook form
+// Этот хук можно использовать в input type='file',которой в свою очередь использует  react hook form
 // он работает с серваком с одной стороны и react hook form с другой
 //кастомный хук(используем react-query  ),который последовательно отправляет файл изображения на сервер
-//(при помощи useMutation(upload)),
-//где  из файла создаётся и возвращается  имя файла с расширением в виде строки,
+//(при помощи useMutation()),
+//на серваке  из файла создаётся и возвращается  имя файла с расширением в виде строки,
 //а также записывается имя файла с расширением в виде строки в специальную папку uploads(как url)
-//дальше полученное имя файла с расширением в виде строки передаётся в react hook form, при помощие его onChange
-// если в react hook form имеется файл(что происхдит редактировании, передаем в currentFile),
-//то мы их объеденяем с выбранным файлом и передаем в onChange
-//  так же в этом хуке при помощи useMutation(removeUrlFolder) удаляем файл из папки uploads(это делает сервак )
+//дальше полученное имя файла с расширением в виде строки передаётся в react hook form, при помощи его onChange
+// если в react hook form имеется дефолтное состояние(при редактировании),то передаём его в наш хук currentFile
+// состояние selectedFiles хранит в себе данные из дефолтного состояния currentFile, если оно есть,
+//а так же текущий выбранный файла
+//дальше всю эту смесь посылаем в onChange react hook form
+//так же в этом хуке при помощи useMutation() передаём информацию для удаления файла из папки uploads(это делает сервак)
 
-// прикольно затипизировали функцию
+// это типизация функции
 type TypeUpload = (
   onChange: (...event: any) => void, // метод из react hook form
   currentFile: string[] | [] | undefined // если есть файл в react hook form, то будет здесь
@@ -28,12 +30,13 @@ export const useUploadFile: TypeUpload = (onChange, currentFile) => {
   const [selectedFiles, setSelectedFiles] = useState<string[] | [] | undefined>(
     currentFile
   );
-  // для актуальности
+  // блин приходится эффектить ,чтобы  актульная информация поподала в selectedFiles
   useEffect(() => {
+    console.log('эффект useUploadFile работает ');
     setSelectedFiles(currentFile);
   }, [currentFile]);
 
-  console.log('файл из стейта:', selectedFiles);
+  console.log('файл из стейта useUploadFile:', selectedFiles);
   // посылаем файл на сервак и получаем имя файла с расширением в виде массива строк
   // и отдаём это в  onChange(из react hook form),а тот отдаст на запись в базу данных
   const { mutate: upload } = useMutation(AdminService.uploadImage, {

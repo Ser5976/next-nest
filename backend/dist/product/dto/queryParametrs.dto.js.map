@@ -1,1 +1,1 @@
-{"version":3,"file":"queryParametrs.dto.js","sourceRoot":"","sources":["../../../src/product/dto/queryParametrs.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAqD;AAErD,MAAa,iBAAiB;CAW7B;AARC;IADC,IAAA,0BAAQ,GAAE;;+CACE;AAHf,8CAWC"}
+{"version":3,"file":"queryParametrs.dto.js","sourceRoot":"","sources":["../../../src/product/dto/queryParametrs.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA2C;AAE3C,MAAa,iBAAiB;CAW7B;AARC;IADC,IAAA,0BAAQ,GAAE;;+CACE;AAHf,8CAWC"}

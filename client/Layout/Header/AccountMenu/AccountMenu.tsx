@@ -18,12 +18,10 @@ import { useActions } from '../../../store/useActions'; //кастомный х�
 import { useRouter } from 'next/router';
 
 export const AccountMenu = ({
-  className,
   userProfile, // все данные по юзеру
-  ...props
 }: AccountMenuProps): JSX.Element => {
   //кастомный хук (используем для закрытия dropdown по клику снаружи)
-  const { ref, isShow, setIsShow } = useClickOutside(true);
+  const { refElement, isShow, setIsShow } = useClickOutside(true);
   //получаем данные  из редюссоров при помощи кастомного хука useData();
   const { authReducer } = useData();
   //получаем экшены из редюсера при помощи кастомного хука useActions();
@@ -31,8 +29,8 @@ export const AccountMenu = ({
   const router = useRouter();
 
   //костыль,чтобы обойти ошибку гидрации,другой способ -это динамический импорт
-  //суть в том ,что данные на прямую из стора,через useData,рендерется и на серваке, а данных сервак не получает,
-  // а клиент получает и происходит конфликт,useEffect этот вопрос решает.
+  // авторизацию мы сделали на клиенте, сервак  next не видит и ругается
+  //useEffect этот вопрос решает.
   const [user, setUser] = useState<IUser | null>(null);
   useEffect(() => {
     setUser(authReducer.user);
@@ -56,10 +54,9 @@ export const AccountMenu = ({
   return (
     <>
       <button
-        className={cn(className, styles.account)}
-        ref={ref}
+        className={cn(styles.account)}
+        ref={refElement}
         onClick={() => setIsShow(!isShow)}
-        {...props}
       >
         {user ? (
           <BsPerson className={styles.icons1} />

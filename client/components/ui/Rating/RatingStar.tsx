@@ -1,5 +1,5 @@
 import styles from './RatingStar.module.css';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { RatingStarProps } from './RatingStar.props';
 import { Rating } from 'react-simple-star-rating'; // по дэфолту звёзды становяться вертикально
 //  у svg дисплей block ,меняем его на inline ,чтобы стали горизонтально(см. RatingStar.module.css)

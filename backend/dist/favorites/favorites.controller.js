@@ -23,21 +23,10 @@ let FavoritesController = class FavoritesController {
     constructor(FavoritesService) {
         this.FavoritesService = FavoritesService;
     }
-    async getFavorites(_id) {
-        return this.FavoritesService.getFavorites(_id);
-    }
     async setFavorites(user, productId) {
         return this.FavoritesService.setFavorites(user, productId);
     }
 };
-__decorate([
-    (0, common_1.Get)(),
-    (0, auth_decorators_1.Auth)(),
-    __param(0, (0, user_decorator_1.User)('_id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], FavoritesController.prototype, "getFavorites", null);
 __decorate([
     (0, common_1.Put)(':productId'),
     (0, auth_decorators_1.Auth)(),

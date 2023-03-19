@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class QueryParametrsDto {
   typeId: string;
@@ -7,7 +7,7 @@ export class QueryParametrsDto {
 
   limit?: number;
 
-  brandId?: string;
+  brandId?: string | string[];
 
   minPrice?: string; //диапазон цены товары,для выборки
   maxPrice?: string;

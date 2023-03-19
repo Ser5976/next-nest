@@ -1,0 +1,14 @@
+.wrapper {
+  @apply border-b py-1;
+}
+.first {
+  @apply w-[10%];
+}
+
+.second {
+  @apply w-[15%];
+}
+
+.fhird {
+  @apply w-[100%];
+}

@@ -9,9 +9,10 @@ import { errorCatch } from '../../../../store/auth/auth.helper';
 import { Textarea } from '../../../ui/Textarea/Textarea';
 
 const FormResponse: FC<FormResponseProps> = ({
-  setShow,
-  reviewId,
-  update,
+  setShow, //закрытие модального окна
+  reviewId, //айдишник отзыва
+  update, //это имя запроса в useQuery, которые мы делаем для получения отзывов
+  //он нужен для того чтобы при изменении отзывов, нужный useQuery сделал повторный запрос
 }): JSX.Element => {
   const {
     handleSubmit,

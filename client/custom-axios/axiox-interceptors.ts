@@ -21,22 +21,31 @@ customAxios.interceptors.request.use((config) => {
 customAxios.interceptors.response.use(
   (config) => config,
   async (error) => {
-    const originalRequest = error.config;
-    console.log(' где же ты');
+    console.log(
+      'Error from interceptor(перехватил ошибку интерцептор):',
+      error
+    );
+    const originalRequest = error.config; //это наш запрос
+
+    //делаем прверку на ошибку,на имеющейся запрос, и на то что это не повторный запрос, для этого сами вносим свойство _isRetry
     if (
       (error.response.status === 401 || errorCatch(error) === 'Unauthorized') &&
       error.config &&
       !error.config._isRetry
     ) {
+      // если проверку прошёл присваеваем true _isRetry и посылаем запрос на бэкэнд для создания новых токенов
       originalRequest._isRetry = true;
-      console.log('я здесь');
+      console.log('Ошибка проверку прошла,интерцептор');
+      // если refresh token валидный проискодит обновление токенов и записывает токены в куки и поторно axios
+      // делает запрос, если нет делаем logout
       try {
-        console.log(' сейчас здесь');
         await AuthService.getNewTokens();
-        console.log('теперь здесь');
+        console.log('рефреш токен валидный,послылаем новые запрос');
         return customAxios.request(originalRequest);
       } catch (error) {
-        console.log('ошиииибка');
+        console.log(
+          'ошиииибка,рефреш токен невалидный, выходими из авторизации'
+        );
         removeTokensStorage();
       }
     }

@@ -8,7 +8,9 @@ import { toast } from 'react-toastify';
 import { Input } from '../../../../../../ui/Input/Input';
 import { errorCatch } from '../../../../../../../store/auth/auth.helper';
 
-const FormEmail: FC<FormEmailProps> = ({ setShow }): JSX.Element => {
+const FormEmail: FC<FormEmailProps> = ({
+  setShow, //закрытие модального окна
+}): JSX.Element => {
   const {
     handleSubmit,
     register,

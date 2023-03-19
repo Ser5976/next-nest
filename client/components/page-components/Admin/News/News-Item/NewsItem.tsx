@@ -8,9 +8,9 @@ import { toast } from 'react-toastify';
 import { VscEdit } from 'react-icons/vsc';
 
 const NewsItem: FC<NewsItemProps> = ({
-  news,
-  refetch,
-  setShow,
+  news, //данне новости
+  refetch, //делает повторный запрос в useQuery
+  setShow, //закрытие модального окна
   setSelectedNews, //сохраняем выбранную новость в стэйт для, редактирования
 }): JSX.Element => {
   // удаление новости
@@ -25,6 +25,7 @@ const NewsItem: FC<NewsItemProps> = ({
       toast.error('Новость не удалёна,что-то пошло не так');
     },
   });
+  // открываем модальное окно для редактирование новости,передаём в стейт выбранную новость для редактирования
   const editHandler = () => {
     setShow(true);
     setSelectedNews(news);

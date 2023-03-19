@@ -6,9 +6,9 @@ import FormOrder from './Order-Form/OrderForm';
 import ProductsOrder from './Products-order/ProductsOrder';
 
 const OrderModal: FC<OrderModalProps> = ({
-  show,
-  setShow,
-  order,
+  show, //открытие модального окна
+  setShow, //закрытие модального окна
+  order, //данные о заказе
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false);

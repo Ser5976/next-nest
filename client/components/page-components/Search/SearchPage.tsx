@@ -8,10 +8,12 @@ import ProductItem from '../Products/ProductItem/ProductItem';
 import { SearchService } from './search.service';
 
 const SearchPage: FC<SearchPageProps> = ({}): JSX.Element => {
+  // роутер некста,
   const router = useRouter();
+  // объект query содержит query параметры из адресной строки(передали из инпута  search), используем их для запроса
   const { query } = router;
 
-  console.log(query);
+  console.log('Query:', query);
 
   const {
     isLoading,

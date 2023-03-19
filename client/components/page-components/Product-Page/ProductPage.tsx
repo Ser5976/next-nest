@@ -17,12 +17,12 @@ import { CartService, IAddCart } from '../Cart/cart.service';
 import { toast } from 'react-toastify';
 
 const ProductPage: FC<ProductPageProps> = ({
-  product,
-  productType,
+  product, // данные по выбранному товару(получаем через getStaticProps)
+  productType, // массив типов товара,для костыля по навигации,вычисляем на какую страницу  типа товара перейти
 }): JSX.Element => {
   const router = useRouter();
   const { authReducer } = useData();
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
   const queryClient = useQueryClient();
   //добавляем товар в просмотренные(viewed) хук useMutation(), из react-query,он посылает post,put,delete запросы
   const { mutate: viewed } = useMutation(ProductService.setViewed, {
@@ -39,6 +39,7 @@ const ProductPage: FC<ProductPageProps> = ({
   }, []);
   //активный класс для картинок
   const [index, setIndex] = useState(0);
+
   //определяем имя типа товара для навигации
   const typeName = productType?.find((el) => el._id === product.typeId);
 
@@ -103,7 +104,6 @@ const ProductPage: FC<ProductPageProps> = ({
                   objectFit="contain"
                   src={`${process.env.NEXT_PUBLIC_DOMAIN}/${f}`}
                   alt="картинка"
-                  unoptimized
                   priority
                   width={50}
                   height={50}
@@ -119,7 +119,6 @@ const ProductPage: FC<ProductPageProps> = ({
               objectFit="contain"
               src={`${process.env.NEXT_PUBLIC_DOMAIN}/${product.files[index]}`}
               alt="картинка"
-              unoptimized
               priority
               width={50}
               height={50}

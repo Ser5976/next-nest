@@ -10,7 +10,7 @@ import { useAuthRedirect } from './useAuthRedirect';
 import { useActions } from '../../../store/useActions'; // кастомный хук для получения экшенов(диспач уже в нём и типизация)
 import { useRouter } from 'next/router';
 
-export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
+export const Auth = ({}: AuthProps): JSX.Element => {
   useAuthRedirect(); // вернёмся на ту страницу с которой нас редиректнули
   // выбор авторизации(логин или регистрация)
   const [type, setType] = useState<'login' | 'registration'>('login');
@@ -56,7 +56,7 @@ export const Auth = ({ className, ...props }: AuthProps): JSX.Element => {
   };
 
   return (
-    <div className={cn(className, styles.wrapper)} {...props}>
+    <div className={cn(styles.wrapper)}>
       <div className={styles.modal}>
         <h3 className="text-lg text-gray-600 font-medium text-center">
           {type === 'login' ? 'Вход' : 'Регистрация'}

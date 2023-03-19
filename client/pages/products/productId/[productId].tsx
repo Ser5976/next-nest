@@ -33,7 +33,7 @@ const ProductId = ({ product, productType }: ProductIdProps) => {
   );
 };
 
-// прописываем пути(ключи в объекте params это то, что в квадратных скобках,)
+// прописываем пути(ключи в объекте params это то, что в квадратных скобках -динамический роут,)
 export const getStaticPaths = async () => {
   const allProducts = await ProductsService.getAllProducts(); //кастомный сервис для запроса  выбранного товара
   //здесь ограничили количества типов(берём только 1) т.к. fallback: true, остальные будут подгружаться сами
@@ -42,6 +42,7 @@ export const getStaticPaths = async () => {
   const paths = allProducts.slice(0, 1).map((type) => {
     return { params: { productId: type._id } };
   });
+  console.log('paths', paths);
   return {
     paths: paths,
     fallback: true, //это для того ,чтобы подгружались новые динамические пути

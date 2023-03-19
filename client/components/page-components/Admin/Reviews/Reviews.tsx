@@ -28,18 +28,18 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
   //кастомный хук для задержки времени передачи данных из инпута поиска пользователя в запрос useQuery
   const debouncedSearch = useDebounce(searchTerm, 700);
 
-  //получаем данные по пользователям из стэйта
+  //получаем данные по количеству отзывов из стэйта
   const {
-    adminReducer: { reviewsQuantity },
+    adminReducer: { reviewsQuantity, freshReviewsQuantity },
   } = useData();
 
-  // получаем экшены
+  // получаем экшен для изменения количества отзывов.
   const { getReviewsQuantity, getFreshReviewsQuantity } = useActions();
 
   // билиотека react-query,которая работает с запросами (получает,кэширует,синхронизирует,обновляет)
   //useQuery работает с GET запросами
 
-  //получаем  все данные (из базы) по отзывам (записываем в стор(редакс,а там и в локалстор) только количества
+  //получаем  все данные (из базы) по отзывам, количество записываем в стор(редакс,а там и в локалстор)
   const {
     isLoading,
     refetch,
@@ -50,8 +50,12 @@ const Reviews: FC<ReviewsProps> = ({}): JSX.Element => {
 
     {
       onSuccess: (reviewsForAdmin) => {
+        // смотрим если количество отзывов в базе поменялось, только тогда меняем
         if (reviewsQuantity !== reviewsForAdmin.quantity) {
           getReviewsQuantity(reviewsForAdmin.quantity);
+        }
+        // тоже, только freshReviewsQuantity
+        if (freshReviewsQuantity !== reviewsForAdmin.quantity) {
           getFreshReviewsQuantity(reviewsForAdmin.quantity);
         }
       },

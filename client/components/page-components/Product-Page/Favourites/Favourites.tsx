@@ -1,20 +1,23 @@
 import styles from './Favourites.module.css';
 import { FC } from 'react';
 import { FavouritesProps } from './Favourites.props';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { ProductService } from '../product.service';
 import { MdFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 import { useData } from '../../../../store/useData';
 import { useRouter } from 'next/router';
 
-const Favourites: FC<FavouritesProps> = ({ product }): JSX.Element => {
+const Favourites: FC<FavouritesProps> = ({
+  product, //данные товара
+}): JSX.Element => {
   const router = useRouter();
   //данные о авторизации и все данные по юзеру
   const { authReducer, userReducer } = useData();
   const { userProfile } = userReducer;
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый
   const queryClient = useQueryClient();
   // подключаем хук useMutation(), из react-query,он посылает post,put,delete запросы
+  // добавление или если есть удаление товара из массива favourites у юзера
   const { mutate } = useMutation(ProductService.setFavourites, {
     onSuccess: () => {
       // при успешном изменении делает повторный запрос

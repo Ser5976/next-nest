@@ -5,7 +5,10 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { SliderProps } from './Slider.props';
 import SliderItem from './Slider-Item/SliderItem';
 
-const Slider: FC<SliderProps> = ({ sliders }): JSX.Element => {
+const Slider: FC<SliderProps> = ({
+  sliders, //масссив картинок
+}): JSX.Element => {
+  console.log('slider:', sliders);
   return (
     <>
       {sliders.length === 0 ? (

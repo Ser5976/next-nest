@@ -6,7 +6,9 @@ import { useMutation } from 'react-query';
 import { IRatinProduct, ProductService } from '../../product.service'; //сервис для отправки данных на сервак
 import { toast } from 'react-toastify';
 
-const Estimation: FC<EstimationProps> = ({ product }): JSX.Element => {
+const Estimation: FC<EstimationProps> = ({
+  product, //данные о товаре
+}): JSX.Element => {
   const [rating, setRating] = useState(0);
   //console.log(rating);
   //получение рэйтинга из Rating

@@ -1,4 +1,5 @@
 import { InputFileProps } from './InputFile.props';
+import cn from 'classnames';
 import styles from './InputFile.module.css';
 import { useUploadFile } from '../useUploadFile';
 import Image from 'next/image';
@@ -20,12 +21,14 @@ export const InputFile: FC<InputFileProps> = ({
   const [dataFromValue, setDataFromValue] = useState<string[] | undefined | []>(
     undefined
   );
-
+  console.log('image, inputFile:', image);
+  console.log('dataFromValue, inputFile:', dataFromValue);
   //помогает открыть инпут,т.к. мы его сделали невидимым
   const inputRef = useRef<any>();
 
   // чтобы перерендерить при изменении value
   useEffect(() => {
+    console.log('эффект inputFile работает ');
     setDataFromValue(image);
   }, [image]);
 
@@ -47,6 +50,11 @@ export const InputFile: FC<InputFileProps> = ({
 
     removeUrlFolder(file);
   };
+  // костыль для блокировки инпута,чтобы нельзя было выбрать более 2-х файлов
+  // нужно там где не нужно выбрать больше одного фалы
+  // почему тогда 2? просто уже установил yup, написал костыли для ошибок, короче чисто для примера
+  const disabled =
+    !multiple && (dataFromValue ? dataFromValue.length === 2 : false);
 
   return (
     <div className={styles.wrapper}>
@@ -54,8 +62,17 @@ export const InputFile: FC<InputFileProps> = ({
         className={styles.wrapperInput}
         onClick={() => inputRef.current.click()}
       >
-        <div className={styles.button}> Выберите файл</div>
+        <div
+          className={cn({
+            [styles.button]: !disabled,
+            [styles.disabledButton]: disabled,
+          })}
+        >
+          {' '}
+          Выберите файл
+        </div>
         <input
+          disabled={disabled}
           multiple={multiple}
           type="file"
           onChange={uploadImage}

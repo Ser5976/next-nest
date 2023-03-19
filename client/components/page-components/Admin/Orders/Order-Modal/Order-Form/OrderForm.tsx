@@ -7,7 +7,11 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AdminService } from '../../../admin.service';
 import { toast } from 'react-toastify';
 
-const OrderForm: FC<OrderFormProps> = ({ order }): JSX.Element => {
+const OrderForm: FC<OrderFormProps> = ({
+  order, //данные о заказе
+}): JSX.Element => {
+  // это не форма а вёрстка под форму
+  // также здесь логика о выполнении заказа
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
 

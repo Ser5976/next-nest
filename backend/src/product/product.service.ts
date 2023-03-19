@@ -11,7 +11,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { Types } from 'mongoose';
 import { AdminSearchDto } from './dto/admin.search.dto';
-import { isNotEmpty } from 'class-validator';
 
 @Injectable()
 export class ProductService {
@@ -28,7 +27,7 @@ export class ProductService {
   ) {}
   //создание товара
   async create(dto: ProductDto) {
-    console.log('доставка товара', dto);
+    // console.log('доставка товара', dto);
     //добавление брэнда в тип товара
     // получаем тип товара
     const typeProduct: ProductTypeModel = await this.ProductTypeModel.findById(

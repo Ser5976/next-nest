@@ -30,7 +30,6 @@ let ProductService = class ProductService {
         this.UserModel = UserModel;
     }
     async create(dto) {
-        console.log('доставка товара', dto);
         const typeProduct = await this.ProductTypeModel.findById(dto.typeId);
         const checkBrand = typeProduct.brand.includes(new mongoose_1.Types.ObjectId(dto.brandId));
         if (!checkBrand) {

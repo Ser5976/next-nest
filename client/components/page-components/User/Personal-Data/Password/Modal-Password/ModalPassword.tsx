@@ -5,8 +5,8 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import FormPassword from './Form-Password/FormPassword';
 
 const ModalPassword: FC<ModalPasswordProps> = ({
-  show,
-  setShow,
+  show, //открытие модального окна
+  setShow, //закрытие модального окна
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false); // чтобы закрыть по клику на любую точку контейнера

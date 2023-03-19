@@ -9,12 +9,14 @@ import { SearchInputAdmin } from '../Search-Input/SearchInputAdmin';
 import PosterItem from './Poster-Item/PosterItem';
 import AddPosterModal from './Add-Poster/AddPosterModal';
 
-const Poster: FC<PosterProps> = ({ productType }): JSX.Element => {
-  //открытие модального окна для редактирование постера
+const Poster: FC<PosterProps> = ({
+  productType, //массив типов товаров
+}): JSX.Element => {
+  // стейт открытие модального окна для редактирование постера
   const [show, setShow] = useState(false);
   //стэйт для постера
   const [posters, setPoster] = useState<IPoster[] | undefined>([]);
-  //стейт для инпута(поиск пользователя)
+  //стейт для инпута(поиск)
   const [searchTerm, setSearchTerm] = useState('');
   //обработчик инпута
   const handlerInput = (e: ChangeEvent<HTMLInputElement>) => {

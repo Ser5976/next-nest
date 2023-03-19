@@ -40,7 +40,7 @@ export const HomeServise = {
       const { data: news } = await axios.get<INews[]>(API.news);
       return news;
     } catch (error) {
-      console.log('я работаю');
+      // console.log('я работаю');
       toast.error('Что-то пошло не так');
       const news: INews[] = [];
       return news;
@@ -54,7 +54,7 @@ export const HomeServise = {
       );
       return reviews;
     } catch (error) {
-      console.log('я работаю');
+      // console.log('я работаю');
       toast.error('Что-то пошло не так');
       const reviews: IStoreReviews[] = [];
       return reviews;

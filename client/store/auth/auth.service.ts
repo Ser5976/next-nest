@@ -10,7 +10,7 @@ import { removeTokensStorage, saveToStorage } from './auth.helper';
 export const AuthService = {
   async register(data: IAuth) {
     const response = await axios.post<IAuthResponse>(API.auth.register, data);
-
+    // общая функция: записываем юзера в localStorage и в куки токены(auth.helper)
     if (response.data.accessToken) {
       saveToStorage(response.data);
     }
@@ -19,7 +19,7 @@ export const AuthService = {
   //логин
   async login(data: IAuth) {
     const response = await axios.post<IAuthResponse>(API.auth.login, data);
-
+    // общая функция: записываем юзера в localStorage и в куки токены(auth.helper)
     if (response.data.accessToken) {
       saveToStorage(response.data);
     }

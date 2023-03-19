@@ -7,7 +7,9 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../../../../ui/Input/Input';
 
-const AddBrandForm: FC<AddBrandFormProps> = ({ setShow }): JSX.Element => {
+const AddBrandForm: FC<AddBrandFormProps> = ({
+  setShow, //для закрытия  модального окна
+}): JSX.Element => {
   //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном  запросе
   const queryClient = useQueryClient();
   // добавляем тип

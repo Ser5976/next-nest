@@ -2,10 +2,11 @@ import { FC } from 'react';
 import styles from './ProductPopular.module.css';
 import cn from 'classnames';
 import { ProductPopularProps } from './ProductPopular.props';
-import Link from 'next/link';
 import PopularItem from './PopularItem/PopularItem';
 
-const ProductPopular: FC<ProductPopularProps> = ({ popular }): JSX.Element => {
+const ProductPopular: FC<ProductPopularProps> = ({
+  popular, // массив товаров которые часто просматриваются(первых 6 товаров)
+}): JSX.Element => {
   return (
     <div>
       <h1 className="font-semibold text-gray-600 mb-2">Популярные товары</h1>

@@ -15,7 +15,7 @@ const StoreReviewForm: FC<StoreReviewFormProps> = ({
 }): JSX.Element => {
   const {
     userReducer: { userProfile },
-  } = useData(); // получаем данные по юзеру и немножку деструтуризируем
+  } = useData(); // получаем данные по юзеру
   // console.log('Name',userProfile?.personalData.name)
   const {
     handleSubmit,
@@ -25,7 +25,7 @@ const StoreReviewForm: FC<StoreReviewFormProps> = ({
   } = useForm<IAddStoreReview>({
     mode: 'onChange',
   });
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
   const queryClient = useQueryClient();
   // хук useMutation из react-query,выполняет пост запросы, отправляем отзыв
   const { mutate: addStoreReview } = useMutation(

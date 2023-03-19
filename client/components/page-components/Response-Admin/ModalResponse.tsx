@@ -5,10 +5,11 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import FormResponse from './Form-Response/FormResponse';
 
 const ModalResponse: FC<ModalResponseProps> = ({
-  show,
-  setShow,
-  reviewId,
-  update,
+  show, // открыть модальное окно
+  setShow, //закрыть модальное окно
+  reviewId, //айдишник отзыва
+  update, //это имя запроса в useQuery, которые мы делаем для получения отзывов
+  //он нужен для того чтобы при изменении отзывов, нужный useQuery сделал повторный запрос
 }): JSX.Element | null => {
   const handleOnClose = (e: any) => {
     if (e.target.id === 'container') setShow(false); // чтобы закрыть по клику на любую точку контейнера

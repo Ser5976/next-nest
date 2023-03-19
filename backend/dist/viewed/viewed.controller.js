@@ -23,21 +23,10 @@ let ViewedController = class ViewedController {
     constructor(ViewedService) {
         this.ViewedService = ViewedService;
     }
-    async getViewed(_id) {
-        return this.ViewedService.getViewed(_id);
-    }
     async setViewed(user, productId) {
         return this.ViewedService.setViewed(user, productId);
     }
 };
-__decorate([
-    (0, common_1.Get)(),
-    (0, auth_decorators_1.Auth)(),
-    __param(0, (0, user_decorator_1.User)('_id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], ViewedController.prototype, "getViewed", null);
 __decorate([
     (0, common_1.Put)(':productId'),
     (0, auth_decorators_1.Auth)(),

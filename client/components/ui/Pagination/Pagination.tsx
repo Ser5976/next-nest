@@ -15,6 +15,7 @@ const Pagination: FC<PaginationProps> = ({
   const baseUrl = process.env.NEXT_PUBLIC_DOMAIN;
   // создаём объект в котором будем формировать адресную строку при помощи конструктора(new URL(l))
   const productsUrl = new URL('products', baseUrl);
+  // console.log(' paginate productsUrl:', productsUrl);
   // все данные ,которые нам нужны для запроса, содержаться в объекте query(useRouter)
   //но у него (если у него будет значение масссив ) не мапит массив из-за типизации
   // поэтому создаём новый объект с его помощью
@@ -27,7 +28,7 @@ const Pagination: FC<PaginationProps> = ({
   //а при создании адреса при помощи конструктора это не получается
   delete objQuery.page;
   delete objQuery.typeId;
-  // console.log('Page:', objQuery);
+  console.log('Page:', objQuery);
   // создаём непосредственно поисковую часть адреса, т.е. мы вносим данные в свойтво search ,
   //который находится в объекте productsUrl
   //все данные записываются в строку как query параметры(?свойство=значение&)
@@ -42,7 +43,7 @@ const Pagination: FC<PaginationProps> = ({
       productsUrl.searchParams.append(key, String(query[key]));
     }
   }
-
+  // console.log(' change productsUrl:', productsUrl);
   // расчёт просмотренных товаров
   const viewedProduct = () => {
     let quatity = page * limit;
@@ -58,7 +59,7 @@ const Pagination: FC<PaginationProps> = ({
   const handlePageClick = (event: any) => {
     productsUrl.searchParams.append('page', event?.selected + 1);
 
-    //  console.log('ProductsUrl:', productsUrl);
+    // console.log('ProductsUrl3:', productsUrl);
 
     // формируем ссылку
     push(`/products/${query.typeId}${productsUrl.search}`);

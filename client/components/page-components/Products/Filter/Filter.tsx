@@ -7,7 +7,9 @@ import Brand from './Brand/Brand';
 import { useRouter } from 'next/router';
 import { createQueryParameters, changingFilterHistory } from './utility'; // безумные костыли,смотри utility
 
-const Filter: FC<FilterProps> = ({ typeName }): JSX.Element => {
+const Filter: FC<FilterProps> = ({
+  typeName, //данные по типу
+}): JSX.Element => {
   const router = useRouter();
   // переменная флаг нужна  для изменения фильтра при перемещении по истории в странице товаров
   const path = router.asPath;

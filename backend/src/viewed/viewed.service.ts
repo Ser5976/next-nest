@@ -10,7 +10,8 @@ export class ViewedService {
     @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
   ) {}
   //получаем массив просмотренных товаров
-  async getViewed(id: string) {
+  // этот запрос не нужен, но удалять не хочу т.к. есть пример с then
+  /* async getViewed(id: string) {
     const viewed = await this.UserModel.findById(id)
       .populate('viewed')
       .sort({ createdAt: 'desc' })
@@ -18,7 +19,8 @@ export class ViewedService {
       .then((data) => data.viewed); // так можно получить только поле viewed
     if (viewed) return viewed;
     throw new NotFoundException('Список просмотренных  продуктов не получен');
-  }
+  } */
+
   // записываем  только если  товара нет в массиве просмотренных
   async setViewed(user: UserModel, productId: string) {
     const { _id, viewed } = user;

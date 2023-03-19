@@ -12,11 +12,12 @@ import Filter from './Filter/Filter';
 import { useQueryProducts } from './useQueryProducts'; //кастомный хук в который входит useQuery
 
 const ProductsList: FC<ProductsListProps> = ({
-  productType, // массив типов товара
+  productType, // массив типов товара(для вывода названия типа товаров на странице)
   typeId, //id типа товара, выбранного из адресной строки
   poster, //картинка и текст для страницы с типом товаров
 }): JSX.Element => {
   const router = useRouter();
+  // console.log('useRouter:', router);
   const { query } = router;
   const [limit, setLimit] = useState<number>(1); //стейт для лимита
 
@@ -25,7 +26,7 @@ const ProductsList: FC<ProductsListProps> = ({
 
   //маленький костыль для вывода названия типа товаров
   const typeName = productType?.find((el) => el._id === typeId);
-  // console.log('query:', query);
+  console.log('query:', query);
 
   //это для сортировки(по рейтингу,по цене)замутил примитивный кастомный хук
   const { rating, priceUp, priceDown, toggleRating, toogglePrice } =

@@ -10,8 +10,10 @@ import { toast } from 'react-toastify';
 import { BsChatRight } from 'react-icons/bs';
 import ModalResponse from '../../Response-Admin/ModalResponse';
 
-const Review: FC<ReviewProps> = ({ review }): JSX.Element => {
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном пост запросе
+const Review: FC<ReviewProps> = ({
+  review, // массив отзывов
+}): JSX.Element => {
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос
   const queryClient = useQueryClient();
   const { authReducer } = useData(); //получаем данные о авторизации
 

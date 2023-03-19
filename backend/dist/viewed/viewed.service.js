@@ -21,16 +21,6 @@ let ViewedService = class ViewedService {
     constructor(UserModel) {
         this.UserModel = UserModel;
     }
-    async getViewed(id) {
-        const viewed = await this.UserModel.findById(id)
-            .populate('viewed')
-            .sort({ createdAt: 'desc' })
-            .exec()
-            .then((data) => data.viewed);
-        if (viewed)
-            return viewed;
-        throw new common_1.NotFoundException('Список просмотренных  продуктов не получен');
-    }
     async setViewed(user, productId) {
         const { _id, viewed } = user;
         const newViewed = this.UserModel.findByIdAndUpdate(_id, {

@@ -11,7 +11,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { Types } from 'mongoose';
 import { AdminSearchDto } from './dto/admin.search.dto';
-import { isNotEmpty } from 'class-validator';
 
 @Injectable()
 export class ProductService {

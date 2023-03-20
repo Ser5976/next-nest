@@ -12,20 +12,17 @@ import Filter from './Filter/Filter';
 import { useQueryProducts } from './useQueryProducts'; //кастомный хук в который входит useQuery
 
 const ProductsList: FC<ProductsListProps> = ({
-  productType, // массив типов товара(для вывода названия типа товаров на странице)
-  typeId, //id типа товара, выбранного из адресной строки
+  type, //данные выбранного типа
   poster, //картинка и текст для страницы с типом товаров
 }): JSX.Element => {
   const router = useRouter();
   // console.log('useRouter:', router);
   const { query } = router;
-  const [limit, setLimit] = useState<number>(1); //стейт для лимита
+  const [limit, setLimit] = useState<number>(3); //стейт для лимита
 
   //номер активной сраницы.Через useState не делал, потому что router.query при первом рендеринге даёт undef.
   const page = Number(query.page ? query.page : '1');
 
-  //маленький костыль для вывода названия типа товаров
-  const typeName = productType?.find((el) => el._id === typeId);
   console.log('query:', query);
 
   //это для сортировки(по рейтингу,по цене)замутил примитивный кастомный хук
@@ -47,7 +44,7 @@ const ProductsList: FC<ProductsListProps> = ({
     isLoading,
     data: products,
     error,
-  } = useQueryProducts(objectQuery, rating, priceDown, priceUp, typeId);
+  } = useQueryProducts(objectQuery, rating, priceDown, priceUp, type._id);
 
   // console.log('response:', products);
 
@@ -62,7 +59,7 @@ const ProductsList: FC<ProductsListProps> = ({
           </Link>
           <h1 className="text-2xl text-gray-600 font-semibold mt-5 mb-2">
             {' '}
-            {typeName?.name}
+            {type.name}
           </h1>
           {poster && (
             <div className={styles.poster}>
@@ -107,7 +104,7 @@ const ProductsList: FC<ProductsListProps> = ({
             </div>
           )}
         </div>
-        <Filter typeName={typeName} />
+        <Filter typeName={type} />
       </div>
       {Number(products?.pageQty) > 1 && (
         <Pagination

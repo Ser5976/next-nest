@@ -2,6 +2,7 @@ import { IProduct } from './../Home/home.service';
 import axios from 'axios';
 import { API } from '../../../constants/url';
 import { IFilteredProduct, IPoster } from './ProductsList.props';
+import { IType } from '../../../store/type-product/interface.typeProduct';
 
 //сервис для запроса на сервак
 
@@ -29,6 +30,18 @@ export const ProductsService = {
     } catch (error) {
       const product = {} as IProduct;
       return product;
+    }
+  },
+  // получение типа товара (здесь с try catch, потому что запрос будет через getStaticProps)
+  async getType(typeId: string | string[] | undefined) {
+    try {
+      const { data: type } = await axios.get<IType>(
+        `${API.productType}/${typeId}`
+      );
+      return type;
+    } catch (error) {
+      const type = {} as IType;
+      return type;
     }
   },
   // получение списка отфильтрованных  товаров

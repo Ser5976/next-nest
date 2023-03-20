@@ -21,18 +21,13 @@ const ProductsList = dynamic(
 );
 
 const Products: NextPage<ProductsProps> = ({
-  typeId, //id типа товара, выбранного из адресной строки
-  productType, // массив типов товара
+  type, //данные по типу
   poster, //картинка и текст для страницы с типом товаров
 }) => {
   return (
     <Layout title=" Products" description="Тренировочный проект eCommerce">
       <div>
-        <ProductsList
-          typeId={typeId}
-          productType={productType}
-          poster={poster}
-        />
+        <ProductsList poster={poster} type={type} />
       </div>
     </Layout>
   );
@@ -68,15 +63,18 @@ export const getStaticProps: GetStaticProps<ProductsProps> =
     //получение productType
     const productType = await HeaderService.getProductType(); //кастомный сервис для запроса  типов продуктов
     store.dispatch(getProductType(productType));
-    // получение постера для типа товаров
+    //---------- получение для типа товаров---------------//
+    //получение постера
     const poster = await ProductsService.getPosterType(params?.typeId);
+    //получение выбранного типа товара
+    const type = await ProductsService.getType(params?.typeId);
 
     return {
       props: {
         forCustomers,
         categoryProduct,
         productType,
-        typeId: params?.typeId,
+        type,
         poster,
       },
       revalidate: 10,
@@ -87,7 +85,7 @@ interface ProductsProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];
-  typeId: string | string[] | undefined;
+  type: IType;
   poster: IPoster | null;
 }
 

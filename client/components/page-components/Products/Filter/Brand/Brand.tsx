@@ -24,12 +24,13 @@ const Brand: FC<BrandProps> = ({
     }
     return setCheckBox(brandIdList);
   };
+  console.log('typeName:', typeName);
   //console.log('checked:', checked);
   return (
     <div className={styles.container}>
       <h1>Производители</h1>
       <div className="flex flex-wrap">
-        {typeName?.brand.map((brand) => {
+        {typeName.brand.map((brand) => {
           return (
             <div className={styles.brand} key={brand._id}>
               <label>

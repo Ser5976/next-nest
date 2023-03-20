@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { SearchDto } from './dto/search.dto';
+import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
 
 @Controller('product-type')
 export class ProductTypeController {
@@ -29,6 +30,11 @@ export class ProductTypeController {
   @Get()
   async getProductType(@Query() dto?: SearchDto) {
     return this.ProductTypeService.getProductType(dto);
+  }
+  //получение выбранного типа
+  @Get(':id')
+  async get(@Param('id', IdValidationPipe) id: string) {
+    return await this.ProductTypeService.byIdType(id);
   }
 
   // удаление типа товара

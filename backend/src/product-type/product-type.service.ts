@@ -51,6 +51,15 @@ export class ProductTypeService {
     return productsTypes;
   }
 
+  //получение получение выбранного типа
+  async byIdType(id: string) {
+    const type = await this.ProductTypeModel.findById(id)
+      .populate('brand')
+      .exec();
+    if (!type) throw new NotFoundException('Такого товара не существует!');
+    return type;
+  }
+
   // удаление типа товара
   async removeProductType(id: string) {
     //делаем запрос на товары, если товар с таким типом существует, то не удаляем

@@ -53,6 +53,14 @@ let ProductTypeService = class ProductTypeService {
             throw new common_1.NotFoundException('Типы не получены');
         return productsTypes;
     }
+    async byIdType(id) {
+        const type = await this.ProductTypeModel.findById(id)
+            .populate('brand')
+            .exec();
+        if (!type)
+            throw new common_1.NotFoundException('Такого товара не существует!');
+        return type;
+    }
     async removeProductType(id) {
         const product = await this.ProductModel.findOne({ typeId: id });
         if (product)

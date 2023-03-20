@@ -18,6 +18,7 @@ const product_type_service_1 = require("./product-type.service");
 const common_1 = require("@nestjs/common");
 const auth_decorators_1 = require("../auth/decorators/auth.decorators");
 const search_dto_1 = require("./dto/search.dto");
+const id_validation_pipe_1 = require("../pipes/id.validation.pipe");
 let ProductTypeController = class ProductTypeController {
     constructor(ProductTypeService) {
         this.ProductTypeService = ProductTypeService;
@@ -27,6 +28,9 @@ let ProductTypeController = class ProductTypeController {
     }
     async getProductType(dto) {
         return this.ProductTypeService.getProductType(dto);
+    }
+    async get(id) {
+        return await this.ProductTypeService.byIdType(id);
     }
     async removeProductType(id) {
         return this.ProductTypeService.removeProductType(id);
@@ -48,6 +52,13 @@ __decorate([
     __metadata("design:paramtypes", [search_dto_1.SearchDto]),
     __metadata("design:returntype", Promise)
 ], ProductTypeController.prototype, "getProductType", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id', id_validation_pipe_1.IdValidationPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductTypeController.prototype, "get", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, auth_decorators_1.Auth)('admin'),

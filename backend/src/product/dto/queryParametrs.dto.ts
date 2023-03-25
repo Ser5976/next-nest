@@ -2,8 +2,8 @@ import { IsString } from 'class-validator';
 
 export class QueryParametrsDto {
   typeId: string;
-  @IsString()
-  page: string;
+
+  page?: string;
 
   limit?: number;
 

@@ -106,6 +106,7 @@ export class ProductService {
     // console.log('Dto:', dto);
     //пагинация
     let offset = Number(page) * Number(limit) - Number(limit);
+    console.log('offset', offset);
 
     let opition = {};
 

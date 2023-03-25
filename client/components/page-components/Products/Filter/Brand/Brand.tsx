@@ -6,17 +6,14 @@ const Brand: FC<BrandProps> = ({
   typeName, // объект выбранного типа товара
   checkBox, // состояние,массив брэндов
   setCheckBox, //изменение состояния
-  checked, // объект состояния  именя брэнда :булевое значение
-  setChecked, // для изменения булевого значения
 }): JSX.Element => {
   // изменяем массив брэндов взависимости от активности чекбокса
   // метод splice удаляет из массива значение(по индексу)
   // indexOf находит индекс заданного значения,
-  //а также управляем галочкой(checked),понадобится для очистки формы
 
   const checkboxHandler = (e: any, name: string) => {
     let brandIdList = [...checkBox];
-    setChecked({ ...checked, [name]: e.target.checked });
+    // setChecked({ ...checked, [name]: e.target.checked });
     if (e.target.checked) {
       brandIdList = [...checkBox, e.target.value];
     } else {
@@ -38,7 +35,7 @@ const Brand: FC<BrandProps> = ({
                   type="checkbox"
                   name={brand.name}
                   value={brand._id}
-                  checked={checked[brand.name] ? checked[brand.name] : false}
+                  checked={checkBox ? checkBox.includes(brand._id) : false}
                   onChange={(e) => checkboxHandler(e, brand.name)}
                 />{' '}
                 <span>{brand.name}</span>

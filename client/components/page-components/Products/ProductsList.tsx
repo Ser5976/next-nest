@@ -10,6 +10,7 @@ import { useSortCustom } from './useSortCustom';
 import Sort from './Sort/Sort'; //компонент для сортировки (по цене,рейтингу)
 import Filter from './Filter/Filter';
 import { useQueryProducts } from './useQueryProducts'; //кастомный хук в который входит useQuery
+import SkeletonProduct from '../../ui/ProductItem-Skeleton/SkeletonProduct';
 
 const ProductsList: FC<ProductsListProps> = ({
   type, //данные выбранного типа
@@ -31,7 +32,6 @@ const ProductsList: FC<ProductsListProps> = ({
 
   //формируем объек запроса
   const objectQuery: any = {
-    page,
     limit,
     ...query,
   };
@@ -44,7 +44,7 @@ const ProductsList: FC<ProductsListProps> = ({
     isLoading,
     data: products,
     error,
-  } = useQueryProducts(objectQuery, rating, priceDown, priceUp, type._id);
+  } = useQueryProducts(objectQuery, rating, priceDown, priceUp, query.typeId);
 
   // console.log('response:', products);
 
@@ -77,31 +77,31 @@ const ProductsList: FC<ProductsListProps> = ({
             </div>
           )}
 
-          <Sort
-            rating={rating}
-            priceDown={priceDown}
-            priceUp={priceUp}
-            toggleRating={toggleRating}
-            toogglePrice={toogglePrice}
-          />
           {error ? (
             <h1 className=" text-center font-semibold text-red-600 mt-2">
               Что то пошло не так!
             </h1>
           ) : isLoading ? (
-            <h1 className="text-center font-semibold  text-gray-600 mt-2">
-              Загрузка...
-            </h1>
+            <SkeletonProduct item={4} />
           ) : products?.allProduct.length === 0 ? (
             <h1 className=" text-center font-semibold text-gray-600 mt-2">
               Товаров по данному запросу не найдено!
             </h1>
           ) : (
-            <div>
-              {products?.allProduct?.map((product) => {
-                return <ProductItem key={product._id} product={product} />;
-              })}
-            </div>
+            <>
+              <Sort
+                rating={rating}
+                priceDown={priceDown}
+                priceUp={priceUp}
+                toggleRating={toggleRating}
+                toogglePrice={toogglePrice}
+              />
+              <div>
+                {products?.allProduct?.map((product) => {
+                  return <ProductItem key={product._id} product={product} />;
+                })}
+              </div>
+            </>
           )}
         </div>
         <Filter typeName={type} />

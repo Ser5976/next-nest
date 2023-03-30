@@ -11,6 +11,4 @@ export interface BrandProps
   typeName: IType;
   checkBox: string[];
   setCheckBox: Dispatch<SetStateAction<string[]>>;
-  // checked: { [key: string]: boolean };
-  // setChecked: Dispatch<SetStateAction<{ [key: string]: boolean }>>;
 }

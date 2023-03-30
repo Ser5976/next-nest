@@ -11,9 +11,8 @@ const Brand: FC<BrandProps> = ({
   // метод splice удаляет из массива значение(по индексу)
   // indexOf находит индекс заданного значения,
 
-  const checkboxHandler = (e: any, name: string) => {
+  const checkboxHandler = (e: any) => {
     let brandIdList = [...checkBox];
-    // setChecked({ ...checked, [name]: e.target.checked });
     if (e.target.checked) {
       brandIdList = [...checkBox, e.target.value];
     } else {
@@ -21,8 +20,7 @@ const Brand: FC<BrandProps> = ({
     }
     return setCheckBox(brandIdList);
   };
-  console.log('typeName:', typeName);
-  //console.log('checked:', checked);
+
   return (
     <div className={styles.container}>
       <h1>Производители</h1>
@@ -36,7 +34,7 @@ const Brand: FC<BrandProps> = ({
                   name={brand.name}
                   value={brand._id}
                   checked={checkBox ? checkBox.includes(brand._id) : false}
-                  onChange={(e) => checkboxHandler(e, brand.name)}
+                  onChange={checkboxHandler}
                 />{' '}
                 <span>{brand.name}</span>
               </label>

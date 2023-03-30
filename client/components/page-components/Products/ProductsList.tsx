@@ -46,7 +46,7 @@ const ProductsList: FC<ProductsListProps> = ({
     error,
   } = useQueryProducts(objectQuery, rating, priceDown, priceUp, query.typeId);
 
-  // console.log('response:', products);
+  console.log('response:', products);
 
   return (
     <>

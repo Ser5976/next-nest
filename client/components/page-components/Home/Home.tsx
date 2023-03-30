@@ -5,6 +5,7 @@ import News from './News/News';
 import Reviews from './Reviews/Reviews';
 import Slider from '../../ui/Slider/Slider';
 import ProductPopular from './Product-Popular/ProductPopular';
+import { useRouter } from 'next/router';
 
 const Home: FC<HomeProps> = ({
   news,
@@ -13,6 +14,8 @@ const Home: FC<HomeProps> = ({
   popular,
 }): JSX.Element => {
   // console.log(sliders);
+  const { query, push } = useRouter();
+  console.log('Home query:', query);
   return (
     <div className={styles.container}>
       <div className={styles.section1}>
@@ -24,6 +27,15 @@ const Home: FC<HomeProps> = ({
       <div className={styles.section2}>
         <News news={news} />
         <Reviews reviews={reviews} />
+        <button
+          onClick={() => {
+            push(
+              '/?проц/propety=черный&проц/propety=белый&сис/property=wind&сис/property=lin'
+            );
+          }}
+        >
+          Нажать
+        </button>
       </div>
     </div>
   );

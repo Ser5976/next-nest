@@ -5,16 +5,25 @@
 
 export const createQueryParameters = (
   dataPrice: number[],
-  dataCheckBox: string[],
+  dataCheckBoxB: string[],
+  dataCheckBoxP: { title: string; property: string }[],
   productsUrl: URL
 ) => {
   if (dataPrice[0] > 0 || dataPrice[1] < 10000) {
     productsUrl.searchParams.append('minPrice', String(dataPrice[0]));
     productsUrl.searchParams.append('maxPrice', String(dataPrice[1]));
   }
-  if (dataCheckBox.length > 0) {
-    dataCheckBox.map((id) => {
+  if (dataCheckBoxB.length > 0) {
+    dataCheckBoxB.map((id) => {
       return productsUrl.searchParams.append('brandId', id);
+    });
+  }
+  if (dataCheckBoxP.length > 0) {
+    dataCheckBoxP.map((element) => {
+      return productsUrl.searchParams.append(
+        `${element.title}`,
+        element.property
+      );
     });
   }
 

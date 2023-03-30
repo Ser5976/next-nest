@@ -6,4 +6,5 @@ export interface ProductTypeModel extends Base {
 export declare class ProductTypeModel extends TimeStamps {
     name: string;
     brand: Ref<BrandModel>[];
+    characteristic: any[];
 }

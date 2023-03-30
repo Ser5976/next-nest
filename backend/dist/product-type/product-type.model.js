@@ -23,5 +23,9 @@ __decorate([
     (0, typegoose_1.prop)({ ref: () => brand_model_1.BrandModel }),
     __metadata("design:type", Array)
 ], ProductTypeModel.prototype, "brand", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", Array)
+], ProductTypeModel.prototype, "characteristic", void 0);
 exports.ProductTypeModel = ProductTypeModel;
 //# sourceMappingURL=product-type.model.js.map

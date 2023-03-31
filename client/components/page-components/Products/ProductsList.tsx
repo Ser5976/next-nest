@@ -19,7 +19,7 @@ const ProductsList: FC<ProductsListProps> = ({
   const router = useRouter();
   // console.log('useRouter:', router);
   const { query } = router;
-  const [limit, setLimit] = useState<number>(1); //стейт для лимита
+  const [limit, setLimit] = useState<number>(3); //стейт для лимита
 
   //номер активной сраницы.Через useState не делал, потому что router.query при первом рендеринге даёт undef.
   const page = Number(query.page ? query.page : '1');

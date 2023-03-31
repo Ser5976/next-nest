@@ -39,7 +39,6 @@ const Filter: FC<FilterProps> = ({
       copyQuery[key] = query[key];
     } */
     const copyQuery = { ...query };
-    console.log('copyQuery:', copyQuery);
 
     // работаем с данными, которые мы знаем и последовательно удаляем их из copyQuery
     if (copyQuery.brandId) {
@@ -60,7 +59,8 @@ const Filter: FC<FilterProps> = ({
     } else setPrice([0, 10000]);
 
     delete copyQuery.typeId;
-
+    delete copyQuery.page;
+    console.log('copyQuery:', copyQuery);
     // и вот он, костыль!!!
     // делаем проверку в copyQuery, если там что то есть, значит это наши характеристики
     // дальше большая муть по переделки структуры данных

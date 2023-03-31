@@ -9,6 +9,7 @@ export const createQueryParameters = (
   dataCheckBoxP: { title: string; property: string }[],
   productsUrl: URL
 ) => {
+  // console.log('url:', productsUrl);
   if (dataPrice[0] > 0 || dataPrice[1] < 10000) {
     productsUrl.searchParams.append('minPrice', String(dataPrice[0]));
     productsUrl.searchParams.append('maxPrice', String(dataPrice[1]));

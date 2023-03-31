@@ -159,7 +159,7 @@ export class ProductService {
     const { typeId, brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
 
     //создаём объект запроса
-    const option: any = { $and: [{ typeId }, { page }] };
+    const option: any = { $and: [{ typeId }] };
 
     //создаём клон dto,чтобы в последствии вычислить все пришедшие характеристики(мы не знаем их ключи)
     //постепенно удаляя те значения которые мы знаем

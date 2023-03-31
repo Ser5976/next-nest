@@ -109,7 +109,7 @@ let ProductService = class ProductService {
     }
     async getFilteredProducts(dto) {
         const { typeId, brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
-        const option = { $and: [{ typeId }, { page }] };
+        const option = { $and: [{ typeId }] };
         const copyDto = Object.assign({}, dto);
         delete copyDto.typeId;
         delete copyDto.page;

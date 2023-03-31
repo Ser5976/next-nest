@@ -1,4 +1,3 @@
-import { OptionDto } from './dto/option.dto';
 import { UserModel } from './../user/user.model';
 import { CartModel } from './../cart/cart.model';
 import { SearchDto } from './dto/search.dto';
@@ -26,7 +25,7 @@ export class ProductService {
     private readonly CartModel: ModelType<CartModel>,
     @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
   ) {}
-  //создание товара
+  //-----------создание товара------------------------------------------------------------------------------
   async create(dto: ProductDto) {
     // console.log('доставка товара', dto);
     //добавление брэнда в тип товара
@@ -46,6 +45,7 @@ export class ProductService {
         },
       );
     }
+
     //--переделываем массив объектов характиристик товара  и записываем его в выбранный тип(для фильтров)--
     //создаём массив объектов характеристик ,которые есть в типе(для изменения)
 
@@ -68,7 +68,7 @@ export class ProductService {
           if (newChar.title === char.title) {
             if (!newChar.property.includes(char.property)) {
               characteristicType[index].property.push(char.property);
-            }
+            } //???
           }
         });
       });
@@ -96,7 +96,7 @@ export class ProductService {
       },
     );
 
-    //----------------------------------------------------------------------------------------------
+    //--------//
 
     //добавление типа товара и брэнда в категорию товара
     // получаем категорию товара
@@ -134,7 +134,7 @@ export class ProductService {
     return product;
   }
 
-  // получение(или поиск для админа) всех товаров
+  //------------ получение(или поиск для админа) всех товаров---------------------------------------------
   async getProducts(dto?: AdminSearchDto) {
     let options = {};
     if (dto.name) {
@@ -153,59 +153,62 @@ export class ProductService {
     return { products, quantity };
   }
 
-  //получение  товаров(фильтрация,сортировка,пагинация)
+  //---------получение  товаров(фильтрация,сортировка,пагинация)-----------------------------------------
   async getFilteredProducts(dto: QueryParametrsDto) {
-    const { brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
-    delete dto.limit; // в этом dto limit не нужен
-    // это чтобы вычислить все пришедшие характеристики(мы не знаем их ключи)
+    // console.log('Dto:', dto);
+    const { typeId, brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
+
+    //создаём объект запроса
+    const option: any = { $and: [{ typeId }, { page }] };
+
+    //создаём клон dto,чтобы в последствии вычислить все пришедшие характеристики(мы не знаем их ключи)
+    //постепенно удаляя те значения которые мы знаем
     const copyDto = { ...dto };
     delete copyDto.typeId;
     delete copyDto.page;
+    delete copyDto.limit;
 
-    // console.log('Dto:', dto);
-    //пагинация
+    //пагинация(расчитываем offset,для запроса с пагинацией )
     let offset = Number(page) * Number(limit) - Number(limit);
-    console.log('offset', offset);
+    // console.log('offset', offset);
 
-    let option: OptionDto = { ...dto };
-    //костыль для характеристик товара
+    // добавления полученных брэндов  в запрос
     if (brandId) {
-      delete copyDto.brandId;
+      // делаем проверку т.к.  может быть и строка
       const brand =
         typeof brandId === 'object' ? { $in: [...brandId] } : brandId;
 
-      option = { ...option, brandId: brand };
+      delete copyDto.brandId;
+      option.$and.push({ brandId: brand });
     }
 
-    //костыль для характеристик товара
-
-    // костыль для сравнение цены больше или ровно($gte) и меньше или ровно($lte)
+    // формируем объект запроса для  цены, больше или ровно($gte) и меньше или ровно($lte)
     if (minPrice && maxPrice) {
-      delete copyDto.maxPrice;
-      delete copyDto.minPrice;
-
       const price = {
         $gte: Number(minPrice),
         $lte: Number(maxPrice),
       }; //формируем объект для цены{price:{$gte:число,$lte:число}}
-      delete option.minPrice; // удаляем данные из объекта, которые нам  не нужны для запроса(это числовой диапазон)
-      delete option.maxPrice;
-      option = { ...option, price };
+
+      delete copyDto.maxPrice;
+      delete copyDto.minPrice;
+
+      option.$and.push({ price });
     }
 
-    // формируем объек для характеристик {"characteristic.property":{$in:["...",...]}}
-    const arrProperty: any = [];
+    // формируем объект запроса  для характеристик товара {"characteristic.property":{$in:["...",...]}}
+    // здесь немножко замутил
+    console.log('copyDto', copyDto);
     if (Object.keys(copyDto).length !== 0) {
-      // создаём массив данных ,которые находятся в объекте copyDto
+      const arrProperty: any = []; // сюда будем складывать наши сформированнее объекты
+      // создаём массив данных из объектов,которые остались в copyDto
       const arrCopyDto: any[] = [];
       for (const key in copyDto) {
         arrCopyDto.push({ [key]: copyDto[key] });
       }
 
       // переделываем данные
-
       arrCopyDto.forEach((item) => {
-        // добываем название ключей
+        // добываем название ключей,чтобы найти потом значения
         const key = Object.keys(item);
 
         // делаем проверку т.к.  может быть и строка
@@ -219,19 +222,13 @@ export class ProductService {
           });
         }
       });
+      option.$and.push(...arrProperty);
     }
-    // формируем option уже для запроса
-    // т.к. запрос сложный пришлось заморочиться
-    // создаём массив объектов запроса и вставляем в нашу заготовку
-    // $and оператор выборки при котором документ должен строго соответсвовать выбранным кретериям
-    const arrOption = [];
-    for (const key in option) {
-      arrOption.push({ [key]: option[key] });
-    }
-    const newOption = { $and: [...arrOption, ...arrProperty] };
-    console.log('Option:', newOption);
 
-    const filteredProducts = await this.ProductModel.find(newOption)
+    console.log('Option:', option);
+
+    // и наконец сам запрос
+    const filteredProducts = await this.ProductModel.find(option)
       .sort({ createdAt: 'desc' })
       .skip(offset)
       .limit(Number(limit));
@@ -242,7 +239,7 @@ export class ProductService {
     return { filteredProducts, count, pageQty };
   }
 
-  //получение товара
+  //-------------получение товара-------------------------------------------------------------------------
   async byIdProduct(id: string) {
     const product = await this.ProductModel.findById(id).exec();
     // костыль, изменяем countOpenend,чтобы вычислить какой продукт больше смотрели(популярный)
@@ -264,7 +261,7 @@ export class ProductService {
 
     return foundProduct;
   }
-  // получение популярных товаров
+  //---------------- получение популярных товаров-------------------------------------------------------------
   async getPopularProducts() {
     const popularProducts = await this.ProductModel.find({
       coundOpened: { $gt: 0 },
@@ -276,7 +273,7 @@ export class ProductService {
     if (!popularProducts) throw new NotFoundException('товары не получены');
     return popularProducts;
   }
-  //получение последних 6-ти товаров
+  //--------------получение последних 6-ти товаров---------------------------------------------------------------
   async getLatestProduct() {
     const latestProduct = await this.ProductModel.find()
       .sort({ createdAt: 'desc' })
@@ -285,7 +282,7 @@ export class ProductService {
     if (!latestProduct) throw new NotFoundException('товары не получены');
     return latestProduct;
   }
-  // обновление товара
+  //---------------обновление товара-----------------------------------------------------------------------------
   async updateProduct(id: string, dto: ProductDto) {
     // ---перезаписываем массив объектов характиристик товара в типе товара---
 
@@ -329,7 +326,7 @@ export class ProductService {
       },
     );
 
-    //----------------------------------------------------------------
+    //---//
     //изменяем продук
     const newProduct = await this.ProductModel.findByIdAndUpdate(id, dto, {
       new: true,
@@ -338,7 +335,7 @@ export class ProductService {
     return newProduct;
   }
 
-  // удаление товара
+  //--------------удаление товара------------------------------------------------------------------------------
   async deleteProduct(id: string) {
     const deleteProduct = await this.ProductModel.findByIdAndDelete(id).exec();
     if (!deleteProduct) {

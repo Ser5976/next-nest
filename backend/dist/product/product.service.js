@@ -108,32 +108,30 @@ let ProductService = class ProductService {
         return { products, quantity };
     }
     async getFilteredProducts(dto) {
-        const { brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
-        delete dto.limit;
+        const { typeId, brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
+        const option = { $and: [{ typeId }, { page }] };
         const copyDto = Object.assign({}, dto);
         delete copyDto.typeId;
         delete copyDto.page;
+        delete copyDto.limit;
         let offset = Number(page) * Number(limit) - Number(limit);
-        console.log('offset', offset);
-        let option = Object.assign({}, dto);
         if (brandId) {
-            delete copyDto.brandId;
             const brand = typeof brandId === 'object' ? { $in: [...brandId] } : brandId;
-            option = Object.assign(Object.assign({}, option), { brandId: brand });
+            delete copyDto.brandId;
+            option.$and.push({ brandId: brand });
         }
         if (minPrice && maxPrice) {
-            delete copyDto.maxPrice;
-            delete copyDto.minPrice;
             const price = {
                 $gte: Number(minPrice),
                 $lte: Number(maxPrice),
             };
-            delete option.minPrice;
-            delete option.maxPrice;
-            option = Object.assign(Object.assign({}, option), { price });
+            delete copyDto.maxPrice;
+            delete copyDto.minPrice;
+            option.$and.push({ price });
         }
-        const arrProperty = [];
+        console.log('copyDto', copyDto);
         if (Object.keys(copyDto).length !== 0) {
+            const arrProperty = [];
             const arrCopyDto = [];
             for (const key in copyDto) {
                 arrCopyDto.push({ [key]: copyDto[key] });
@@ -151,14 +149,10 @@ let ProductService = class ProductService {
                     });
                 }
             });
+            option.$and.push(...arrProperty);
         }
-        const arrOption = [];
-        for (const key in option) {
-            arrOption.push({ [key]: option[key] });
-        }
-        const newOption = { $and: [...arrOption, ...arrProperty] };
-        console.log('Option:', newOption);
-        const filteredProducts = await this.ProductModel.find(newOption)
+        console.log('Option:', option);
+        const filteredProducts = await this.ProductModel.find(option)
             .sort({ createdAt: 'desc' })
             .skip(offset)
             .limit(Number(limit));

@@ -28,6 +28,7 @@ export class ProductService {
   //-----------создание товара------------------------------------------------------------------------------
   async create(dto: ProductDto) {
     // console.log('доставка товара', dto);
+
     //добавление брэнда в тип товара
     // получаем тип товара
     const typeProduct = await this.ProductTypeModel.findById(dto.typeId);
@@ -68,7 +69,7 @@ export class ProductService {
           if (newChar.title === char.title) {
             if (!newChar.property.includes(char.property)) {
               characteristicType[index].property.push(char.property);
-            } //???
+            }
           }
         });
       });
@@ -148,7 +149,7 @@ export class ProductService {
     }
     const products = await this.ProductModel.find(options).exec();
     if (!products) throw new NotFoundException('товары не получены');
-    //получения колическтва товаров
+    //получения количества товаров
     const quantity = await this.ProductModel.find().count().exec();
     return { products, quantity };
   }
@@ -197,7 +198,7 @@ export class ProductService {
 
     // формируем объект запроса  для характеристик товара {"characteristic.property":{$in:["...",...]}}
     // здесь немножко замутил
-    console.log('copyDto', copyDto);
+    //  console.log('copyDto', copyDto);
     if (Object.keys(copyDto).length !== 0) {
       const arrProperty: any = []; // сюда будем складывать наши сформированнее объекты
       // создаём массив данных из объектов,которые остались в copyDto

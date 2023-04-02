@@ -129,7 +129,6 @@ let ProductService = class ProductService {
             delete copyDto.minPrice;
             option.$and.push({ price });
         }
-        console.log('copyDto', copyDto);
         if (Object.keys(copyDto).length !== 0) {
             const arrProperty = [];
             const arrCopyDto = [];

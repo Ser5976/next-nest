@@ -19,7 +19,6 @@ const Filter: FC<FilterProps> = ({
   const [checkBoxP, setCheckBoxP] = useState<any[]>([]); // состояние для выбранных брэндов
 
   //console.log('price:', price);
-  console.log('checkBoxP:', checkBoxP);
 
   // берём данные из адресной строки(URL) при помощи useRouter и записываем в стейты фильтра
   // это даёт возможность отражать актуальное значение фильтров(при перезагруки или переходам по истории)
@@ -141,7 +140,7 @@ const Filter: FC<FilterProps> = ({
         setCheckBox={setCheckBoxB}
       />
       <Characteristics
-        typeName={typeName}
+        characteristics={typeName.characteristic}
         checkBox={checkBoxP}
         setCheckBox={setCheckBoxP}
       />

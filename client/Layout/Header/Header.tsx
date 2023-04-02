@@ -15,7 +15,7 @@ import { FC } from 'react';
 export const Header: FC<HeaderProps> = ({}) => {
   //получаем экшены из редюсера при помощи кастомного хука useActions();
   const { getUser, getError } = useActions();
-  //получаем данные  из редюссоров при помощи кастомного хука useData();
+  //получаем данные  из редюсеров при помощи кастомного хука useData();
   const {
     forCustomersReducer,
     productTypeReducer,

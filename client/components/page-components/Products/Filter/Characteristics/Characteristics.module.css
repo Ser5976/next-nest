@@ -6,8 +6,11 @@
   @apply text-gray-600 mb-4 text-sm font-semibold;
 }
 .container h2 {
-  @apply text-gray-600 mb-2 text-sm;
+  @apply mb-2 text-sm underline cursor-pointer hover:text-red-400;
 }
-.container label {
+.openProperty {
   @apply flex items-baseline gap-1 text-gray-600 text-xs;
+}
+.closeProperty {
+  @apply hidden;
 }

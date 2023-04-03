@@ -1,4 +1,5 @@
 import styles from './SelectForm.module.css';
+import cn from 'classnames';
 import { FC } from 'react';
 import { SelectFormProps } from './SelectForm.props';
 import { useFormContext } from 'react-hook-form';
@@ -8,6 +9,7 @@ const SelectForm: FC<SelectFormProps> = ({
   categoryProduct, // массив категорий товара
   productType, // массив типов товара
   brands, // массив брэндов товара
+  selectedProduct, //выбранный товар из стейта(используем для блокировки селектов,если эта форма для редактирование)
 }): JSX.Element => {
   const {
     register,
@@ -24,7 +26,11 @@ const SelectForm: FC<SelectFormProps> = ({
           {...register('categoryId', {
             required: 'Выберите категорию!',
           })}
-          className={styles.select}
+          className={cn({
+            [styles.select]: !!!selectedProduct,
+            [styles.selectDisabled]: !!selectedProduct,
+          })}
+          disabled={!!selectedProduct}
         >
           <option value="" className=" text-gray-400">
             Выберите категорию
@@ -48,7 +54,11 @@ const SelectForm: FC<SelectFormProps> = ({
           {...register('typeId', {
             required: 'Выберите тип!',
           })}
-          className={styles.select}
+          className={cn({
+            [styles.select]: !!!selectedProduct,
+            [styles.selectDisabled]: !!selectedProduct,
+          })}
+          disabled={!!selectedProduct}
         >
           <option value="" className=" text-gray-400">
             Выберите тип
@@ -70,7 +80,11 @@ const SelectForm: FC<SelectFormProps> = ({
           {...register('brandId', {
             required: 'Выберите брэнд!',
           })}
-          className={styles.select}
+          className={cn({
+            [styles.select]: !!!selectedProduct,
+            [styles.selectDisabled]: !!selectedProduct,
+          })}
+          disabled={!!selectedProduct}
         >
           <option value="" className=" text-gray-400">
             Выберите брэнд

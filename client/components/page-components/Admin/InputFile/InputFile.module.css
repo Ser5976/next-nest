@@ -8,7 +8,7 @@
   @apply hidden;
 }
 .button {
-  @apply inline-block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500 opacity-70 text-white transition-opacity cursor-pointer hover:opacity-100;
+  @apply inline-block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-500  text-white transition-opacity cursor-pointer hover:bg-blue-600;
 }
 .disabledButton {
   @apply inline-block border rounded-full text-sm font-semibold px-[15px] py-2 bg-blue-300 opacity-70 text-white transition-opacity;

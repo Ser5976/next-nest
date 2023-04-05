@@ -1,13 +1,11 @@
-import { IsString } from 'class-validator';
-
 export class QueryParametrsDto {
   typeId: string;
-  @IsString()
-  page: string;
+
+  page?: string;
 
   limit?: number;
 
-  brandId?: string | string[];
+  brandId?: any;
 
   minPrice?: string; //диапазон цены товары,для выборки
   maxPrice?: string;

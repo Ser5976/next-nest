@@ -25,14 +25,14 @@ export class ProductService {
     private readonly CartModel: ModelType<CartModel>,
     @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
   ) {}
-  //создание товара
+  //-----------создание товара------------------------------------------------------------------------------
   async create(dto: ProductDto) {
     // console.log('доставка товара', dto);
+
     //добавление брэнда в тип товара
     // получаем тип товара
-    const typeProduct: ProductTypeModel = await this.ProductTypeModel.findById(
-      dto.typeId,
-    );
+    const typeProduct = await this.ProductTypeModel.findById(dto.typeId);
+
     // проверяем есть ли в массиве brand такой брэнд
     const checkBrand = typeProduct.brand.includes(
       new Types.ObjectId(dto.brandId),
@@ -46,6 +46,59 @@ export class ProductService {
         },
       );
     }
+
+    //--переделываем массив объектов характиристик товара  и записываем его в выбранный тип(для фильтров)--
+    //создаём массив объектов характеристик ,которые есть в типе(для изменения)
+
+    const characteristicType = typeProduct.characteristic;
+
+    // делаем проверку,если массив  typeProduct.characteristic пустой,создаём всё с нуля
+    //если нет, то делаем проверку на похожие title
+    // если такой title есть, проверяем существование значения property,
+    //добавляем значение в массив property если нету
+    if (characteristicType.length === 0) {
+      dto.characteristic.forEach((char) => {
+        characteristicType.push({
+          title: char.title,
+          property: [char.property],
+        });
+      });
+    } else {
+      characteristicType.forEach((newChar, index) => {
+        dto.characteristic.forEach((char) => {
+          if (newChar.title === char.title) {
+            if (!newChar.property.includes(char.property)) {
+              characteristicType[index].property.push(char.property);
+            }
+          }
+        });
+      });
+    }
+    //проверяем если такого title в typeProduct.characteristic нет создаем объект ({title:"",property:["",...]})
+    dto.characteristic.forEach((char) => {
+      const check = characteristicType.find((newChar) => {
+        return char.title === newChar.title;
+      });
+      console.log('check:', check);
+      if (!check) {
+        characteristicType.push({
+          title: char.title,
+          property: [char.property],
+        });
+      }
+    });
+
+    //console.log('tP:', characteristicType);
+    // перезаписываем characteristic в типе
+    await this.ProductTypeModel.updateOne(
+      { _id: dto.typeId },
+      {
+        characteristic: characteristicType,
+      },
+    );
+
+    //--------//
+
     //добавление типа товара и брэнда в категорию товара
     // получаем категорию товара
     const categoryProduct: CategoryProductModel =
@@ -81,7 +134,8 @@ export class ProductService {
     if (!product) throw new NotFoundException('Товар не создан');
     return product;
   }
-  // получение(или поиск для админа) всех товаров
+
+  //------------ получение(или поиск для админа) всех товаров---------------------------------------------
   async getProducts(dto?: AdminSearchDto) {
     let options = {};
     if (dto.name) {
@@ -95,48 +149,98 @@ export class ProductService {
     }
     const products = await this.ProductModel.find(options).exec();
     if (!products) throw new NotFoundException('товары не получены');
-    //получения колическтва товаров
+    //получения количества товаров
     const quantity = await this.ProductModel.find().count().exec();
     return { products, quantity };
   }
 
-  //получение  товаров(фильтрация,сортировка,пагинация)
+  //---------получение  товаров(фильтрация,сортировка,пагинация)-----------------------------------------
   async getFilteredProducts(dto: QueryParametrsDto) {
-    const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
     // console.log('Dto:', dto);
-    //пагинация
+    const { typeId, brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
+
+    //создаём объект запроса
+    const option: any = { $and: [{ typeId }] };
+
+    //создаём клон dto,чтобы в последствии вычислить все пришедшие характеристики(мы не знаем их ключи)
+    //постепенно удаляя те значения которые мы знаем
+    const copyDto = { ...dto };
+    delete copyDto.typeId;
+    delete copyDto.page;
+    delete copyDto.limit;
+
+    //пагинация(расчитываем offset,для запроса с пагинацией )
     let offset = Number(page) * Number(limit) - Number(limit);
+    // console.log('offset', offset);
 
-    let opition = {};
+    // добавления полученных брэндов  в запрос
+    if (brandId) {
+      // делаем проверку т.к.  может быть и строка
+      const brand =
+        typeof brandId === 'object' ? { $in: [...brandId] } : brandId;
 
-    // костыль для сравнение цены больше или ровно($gte) и меньше или ровно($lte)
+      delete copyDto.brandId;
+      option.$and.push({ brandId: brand });
+    }
+
+    // формируем объект запроса для  цены, больше или ровно($gte) и меньше или ровно($lte)
     if (minPrice && maxPrice) {
       const price = {
         $gte: Number(minPrice),
         $lte: Number(maxPrice),
       }; //формируем объект для цены{price:{$gte:число,$lte:число}}
-      delete dto.minPrice; // удаляем данные из объекта, которые нам  не нужны для запроса(это числовой диапазон)
-      delete dto.maxPrice;
-      delete dto.limit;
 
-      // console.log(query);
-      opition = { ...dto, price };
-    } else {
-      opition = dto;
+      delete copyDto.maxPrice;
+      delete copyDto.minPrice;
+
+      option.$and.push({ price });
     }
-    console.log('Option:', opition);
-    const filteredProducts = await this.ProductModel.find(opition)
+
+    // формируем объект запроса  для характеристик товара {"characteristic.property":{$in:["...",...]}}
+    // здесь немножко замутил
+    //  console.log('copyDto', copyDto);
+    if (Object.keys(copyDto).length !== 0) {
+      const arrProperty: any = []; // сюда будем складывать наши сформированнее объекты
+      // создаём массив данных из объектов,которые остались в copyDto
+      const arrCopyDto: any[] = [];
+      for (const key in copyDto) {
+        arrCopyDto.push({ [key]: copyDto[key] });
+      }
+
+      // переделываем данные
+      arrCopyDto.forEach((item) => {
+        // добываем название ключей,чтобы найти потом значения
+        const key = Object.keys(item);
+
+        // делаем проверку т.к.  может быть и строка
+        if (typeof item[key[0]] === 'object') {
+          arrProperty.push({
+            'characteristic.property': { $in: item[key[0]] },
+          });
+        } else {
+          arrProperty.push({
+            'characteristic.property': item[key[0]],
+          });
+        }
+      });
+      option.$and.push(...arrProperty);
+    }
+
+    console.log('Option:', option);
+
+    // и наконец сам запрос
+    const filteredProducts = await this.ProductModel.find(option)
       .sort({ createdAt: 'desc' })
       .skip(offset)
       .limit(Number(limit));
-    const count = await this.ProductModel.find(opition).count();
+    const count = await this.ProductModel.find(option).count();
     //рассчёт количества страниц,для пагинации
     const pageQty = Math.ceil(count / limit);
 
     return { filteredProducts, count, pageQty };
   }
 
-  //получение товара
+  //-------------получение товара-------------------------------------------------------------------------
   async byIdProduct(id: string) {
     const product = await this.ProductModel.findById(id).exec();
     // костыль, изменяем countOpenend,чтобы вычислить какой продукт больше смотрели(популярный)
@@ -158,7 +262,7 @@ export class ProductService {
 
     return foundProduct;
   }
-  // получение популярных товаров
+  //---------------- получение популярных товаров-------------------------------------------------------------
   async getPopularProducts() {
     const popularProducts = await this.ProductModel.find({
       coundOpened: { $gt: 0 },
@@ -170,7 +274,7 @@ export class ProductService {
     if (!popularProducts) throw new NotFoundException('товары не получены');
     return popularProducts;
   }
-  //получение последних 6-ти товаров
+  //--------------получение последних 6-ти товаров---------------------------------------------------------------
   async getLatestProduct() {
     const latestProduct = await this.ProductModel.find()
       .sort({ createdAt: 'desc' })
@@ -179,15 +283,60 @@ export class ProductService {
     if (!latestProduct) throw new NotFoundException('товары не получены');
     return latestProduct;
   }
-  // обновление товара
+  //---------------обновление товара-----------------------------------------------------------------------------
   async updateProduct(id: string, dto: ProductDto) {
+    // ---перезаписываем массив объектов характиристик товара в типе товара---
+
+    const typeProduct = await this.ProductTypeModel.findById(dto.typeId);
+    const characteristicType = typeProduct.characteristic;
+
+    if (characteristicType.length === 0) {
+      dto.characteristic.forEach((char) => {
+        characteristicType.push({
+          title: char.title,
+          property: [char.property],
+        });
+      });
+    } else {
+      characteristicType.forEach((newChar, index) => {
+        dto.characteristic.forEach((char) => {
+          if (newChar.title === char.title) {
+            if (!newChar.property.includes(char.property)) {
+              characteristicType[index].property.push(char.property);
+            }
+          }
+        });
+      });
+    }
+    dto.characteristic.forEach((char) => {
+      const check = characteristicType.find((newChar) => {
+        return char.title === newChar.title;
+      });
+      if (!check) {
+        characteristicType.push({
+          title: char.title,
+          property: [char.property],
+        });
+      }
+    });
+
+    await this.ProductTypeModel.updateOne(
+      { _id: dto.typeId },
+      {
+        characteristic: characteristicType,
+      },
+    );
+
+    //---//
+    //изменяем продук
     const newProduct = await this.ProductModel.findByIdAndUpdate(id, dto, {
       new: true,
     }).exec();
     if (!newProduct) throw new NotFoundException('Обнавление не произошло');
     return newProduct;
   }
-  // удаление товара
+
+  //--------------удаление товара------------------------------------------------------------------------------
   async deleteProduct(id: string) {
     const deleteProduct = await this.ProductModel.findByIdAndDelete(id).exec();
     if (!deleteProduct) {

@@ -15,7 +15,7 @@ import { FC } from 'react';
 export const Header: FC<HeaderProps> = ({}) => {
   //получаем экшены из редюсера при помощи кастомного хука useActions();
   const { getUser, getError } = useActions();
-  //получаем данные  из редюссоров при помощи кастомного хука useData();
+  //получаем данные  из редюсеров при помощи кастомного хука useData();
   const {
     forCustomersReducer,
     productTypeReducer,
@@ -70,13 +70,11 @@ export const Header: FC<HeaderProps> = ({}) => {
           )}
           {productTypeReducer.productType.slice(0, 11).map((element) => {
             return (
-              <a
-                href={`/products/${element._id}`}
-                key={element._id}
-                className=" hover:bg-red-400 py-3 px-5 truncate max-w-[200px]"
-              >
-                {element.name}
-              </a>
+              <Link href={`/products/${element._id}`} key={element._id}>
+                <a className=" hover:bg-red-400 py-3 px-5 truncate max-w-[200px]">
+                  {element.name}
+                </a>
+              </Link>
             );
           })}
         </ul>

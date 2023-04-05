@@ -103,6 +103,7 @@ const ProductForm: FC<ProductFormProps> = ({
             categoryProduct={categoryProduct}
             brands={brands}
             productType={productType}
+            selectedProduct={selectedProduct}
           />
           <div className={styles.container}>
             <div className={styles.block1}>

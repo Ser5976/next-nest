@@ -10,22 +10,20 @@ import { useSortCustom } from './useSortCustom';
 import Sort from './Sort/Sort'; //компонент для сортировки (по цене,рейтингу)
 import Filter from './Filter/Filter';
 import { useQueryProducts } from './useQueryProducts'; //кастомный хук в который входит useQuery
+import SkeletonProduct from '../../ui/ProductItem-Skeleton/SkeletonProduct';
 
 const ProductsList: FC<ProductsListProps> = ({
-  productType, // массив типов товара(для вывода названия типа товаров на странице)
-  typeId, //id типа товара, выбранного из адресной строки
+  type, //данные выбранного типа
   poster, //картинка и текст для страницы с типом товаров
 }): JSX.Element => {
   const router = useRouter();
   // console.log('useRouter:', router);
   const { query } = router;
-  const [limit, setLimit] = useState<number>(1); //стейт для лимита
+  const [limit, setLimit] = useState<number>(3); //стейт для лимита
 
   //номер активной сраницы.Через useState не делал, потому что router.query при первом рендеринге даёт undef.
   const page = Number(query.page ? query.page : '1');
 
-  //маленький костыль для вывода названия типа товаров
-  const typeName = productType?.find((el) => el._id === typeId);
   console.log('query:', query);
 
   //это для сортировки(по рейтингу,по цене)замутил примитивный кастомный хук
@@ -34,7 +32,6 @@ const ProductsList: FC<ProductsListProps> = ({
 
   //формируем объек запроса
   const objectQuery: any = {
-    page,
     limit,
     ...query,
   };
@@ -47,9 +44,9 @@ const ProductsList: FC<ProductsListProps> = ({
     isLoading,
     data: products,
     error,
-  } = useQueryProducts(objectQuery, rating, priceDown, priceUp, typeId);
+  } = useQueryProducts(objectQuery, rating, priceDown, priceUp, query.typeId);
 
-  // console.log('response:', products);
+  console.log('response:', products);
 
   return (
     <>
@@ -62,7 +59,7 @@ const ProductsList: FC<ProductsListProps> = ({
           </Link>
           <h1 className="text-2xl text-gray-600 font-semibold mt-5 mb-2">
             {' '}
-            {typeName?.name}
+            {type.name}
           </h1>
           {poster && (
             <div className={styles.poster}>
@@ -80,34 +77,34 @@ const ProductsList: FC<ProductsListProps> = ({
             </div>
           )}
 
-          <Sort
-            rating={rating}
-            priceDown={priceDown}
-            priceUp={priceUp}
-            toggleRating={toggleRating}
-            toogglePrice={toogglePrice}
-          />
           {error ? (
             <h1 className=" text-center font-semibold text-red-600 mt-2">
               Что то пошло не так!
             </h1>
           ) : isLoading ? (
-            <h1 className="text-center font-semibold  text-gray-600 mt-2">
-              Загрузка...
-            </h1>
+            <SkeletonProduct item={4} />
           ) : products?.allProduct.length === 0 ? (
             <h1 className=" text-center font-semibold text-gray-600 mt-2">
               Товаров по данному запросу не найдено!
             </h1>
           ) : (
-            <div>
-              {products?.allProduct?.map((product) => {
-                return <ProductItem key={product._id} product={product} />;
-              })}
-            </div>
+            <>
+              <Sort
+                rating={rating}
+                priceDown={priceDown}
+                priceUp={priceUp}
+                toggleRating={toggleRating}
+                toogglePrice={toogglePrice}
+              />
+              <div>
+                {products?.allProduct?.map((product) => {
+                  return <ProductItem key={product._id} product={product} />;
+                })}
+              </div>
+            </>
           )}
         </div>
-        <Filter typeName={typeName} />
+        <Filter typeName={type} />
       </div>
       {Number(products?.pageQty) > 1 && (
         <Pagination

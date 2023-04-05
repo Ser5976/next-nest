@@ -9,4 +9,6 @@ export class ProductTypeModel extends TimeStamps {
   name: string;
   @prop({ ref: () => BrandModel })
   brand: Ref<BrandModel>[];
+  @prop()
+  characteristic: any[];
 }

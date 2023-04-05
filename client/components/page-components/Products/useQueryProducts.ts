@@ -7,7 +7,7 @@ export const useQueryProducts = (
   rating: boolean, // сортировка по рейтигу
   priceDown: boolean, // сортировка по цене вниз
   priceUp: boolean, //сортировка пр цене вверх
-  typeId: string | string[] | undefined
+  typeId: string | string[] | undefined //айдишник типа
 ) => {
   return useQuery(
     ['product list', objectQuery],

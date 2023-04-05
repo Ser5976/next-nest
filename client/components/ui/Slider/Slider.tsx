@@ -8,7 +8,7 @@ import SliderItem from './Slider-Item/SliderItem';
 const Slider: FC<SliderProps> = ({
   sliders, //масссив картинок
 }): JSX.Element => {
-  console.log('slider:', sliders);
+  // console.log('slider:', sliders);
   return (
     <>
       {sliders.length === 0 ? (

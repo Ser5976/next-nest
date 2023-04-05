@@ -5,7 +5,7 @@
   @apply text-sm  font-semibold text-gray-600;
 }
 .button {
-  @apply text-blue-500 opacity-70   text-sm font-semibold     cursor-pointer hover:opacity-100;
+  @apply text-blue-500 hover:text-blue-600   text-sm cursor-pointer border-b border-dashed border-blue-500 hover:border-blue-600;
 }
 .container {
   @apply overflow-y-auto px-2 h-[460px];
@@ -21,7 +21,7 @@
   @apply mb-2 text-gray-400;
 }
 .textarea {
-  @apply mt-1 mb-6 text-sm text-gray-500;
+  @apply mt-1 mb-6;
 }
 .icon2 {
   @apply absolute top-0 right-[-5px] fill-gray-600 hover:fill-red-400 w-5 h-5 cursor-pointer;

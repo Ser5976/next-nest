@@ -20,7 +20,6 @@ export interface IFilteredProduct {
 
 export interface ProductsListProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  typeId: string | string[] | undefined;
-  productType: IType[];
+  type: IType;
   poster: IPoster | null;
 }

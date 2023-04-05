@@ -2,8 +2,11 @@
   @apply flex justify-around;
 }
 .select {
-  @apply outline-none text-blue-400  text-sm font-semibold px-[15px] py-2 cursor-pointer;
+  @apply outline-none text-gray-600   text-sm  px-[15px] py-2 cursor-pointer hover:text-blue-600 underline;
 }
 .errorMessage {
   @apply absolute top-[25px] left-5 text-red-500 text-xs;
+}
+.selectDisabled {
+  @apply outline-none text-gray-400   text-sm  px-[15px] py-2;
 }

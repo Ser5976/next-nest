@@ -37,6 +37,41 @@ let ProductService = class ProductService {
                 $push: { brand: dto.brandId },
             });
         }
+        const characteristicType = typeProduct.characteristic;
+        if (characteristicType.length === 0) {
+            dto.characteristic.forEach((char) => {
+                characteristicType.push({
+                    title: char.title,
+                    property: [char.property],
+                });
+            });
+        }
+        else {
+            characteristicType.forEach((newChar, index) => {
+                dto.characteristic.forEach((char) => {
+                    if (newChar.title === char.title) {
+                        if (!newChar.property.includes(char.property)) {
+                            characteristicType[index].property.push(char.property);
+                        }
+                    }
+                });
+            });
+        }
+        dto.characteristic.forEach((char) => {
+            const check = characteristicType.find((newChar) => {
+                return char.title === newChar.title;
+            });
+            console.log('check:', check);
+            if (!check) {
+                characteristicType.push({
+                    title: char.title,
+                    property: [char.property],
+                });
+            }
+        });
+        await this.ProductTypeModel.updateOne({ _id: dto.typeId }, {
+            characteristic: characteristicType,
+        });
         const categoryProduct = await this.CategoryProductModel.findById(dto.categoryId);
         const checkType = categoryProduct.productType.includes(new mongoose_1.Types.ObjectId(dto.typeId));
         if (!checkType) {
@@ -73,28 +108,54 @@ let ProductService = class ProductService {
         return { products, quantity };
     }
     async getFilteredProducts(dto) {
-        const { minPrice, maxPrice, page = 1, limit = 3 } = dto;
+        const { typeId, brandId, minPrice, maxPrice, page = 1, limit = 3 } = dto;
+        const option = { $and: [{ typeId }] };
+        const copyDto = Object.assign({}, dto);
+        delete copyDto.typeId;
+        delete copyDto.page;
+        delete copyDto.limit;
         let offset = Number(page) * Number(limit) - Number(limit);
-        let opition = {};
+        if (brandId) {
+            const brand = typeof brandId === 'object' ? { $in: [...brandId] } : brandId;
+            delete copyDto.brandId;
+            option.$and.push({ brandId: brand });
+        }
         if (minPrice && maxPrice) {
             const price = {
                 $gte: Number(minPrice),
                 $lte: Number(maxPrice),
             };
-            delete dto.minPrice;
-            delete dto.maxPrice;
-            delete dto.limit;
-            opition = Object.assign(Object.assign({}, dto), { price });
+            delete copyDto.maxPrice;
+            delete copyDto.minPrice;
+            option.$and.push({ price });
         }
-        else {
-            opition = dto;
+        if (Object.keys(copyDto).length !== 0) {
+            const arrProperty = [];
+            const arrCopyDto = [];
+            for (const key in copyDto) {
+                arrCopyDto.push({ [key]: copyDto[key] });
+            }
+            arrCopyDto.forEach((item) => {
+                const key = Object.keys(item);
+                if (typeof item[key[0]] === 'object') {
+                    arrProperty.push({
+                        'characteristic.property': { $in: item[key[0]] },
+                    });
+                }
+                else {
+                    arrProperty.push({
+                        'characteristic.property': item[key[0]],
+                    });
+                }
+            });
+            option.$and.push(...arrProperty);
         }
-        console.log('Option:', opition);
-        const filteredProducts = await this.ProductModel.find(opition)
+        console.log('Option:', option);
+        const filteredProducts = await this.ProductModel.find(option)
             .sort({ createdAt: 'desc' })
             .skip(offset)
             .limit(Number(limit));
-        const count = await this.ProductModel.find(opition).count();
+        const count = await this.ProductModel.find(option).count();
         const pageQty = Math.ceil(count / limit);
         return { filteredProducts, count, pageQty };
     }
@@ -135,6 +196,41 @@ let ProductService = class ProductService {
         return latestProduct;
     }
     async updateProduct(id, dto) {
+        const typeProduct = await this.ProductTypeModel.findById(dto.typeId);
+        const characteristicType = typeProduct.characteristic;
+        if (characteristicType.length === 0) {
+            dto.characteristic.forEach((char) => {
+                characteristicType.push({
+                    title: char.title,
+                    property: [char.property],
+                });
+            });
+        }
+        else {
+            characteristicType.forEach((newChar, index) => {
+                dto.characteristic.forEach((char) => {
+                    if (newChar.title === char.title) {
+                        if (!newChar.property.includes(char.property)) {
+                            characteristicType[index].property.push(char.property);
+                        }
+                    }
+                });
+            });
+        }
+        dto.characteristic.forEach((char) => {
+            const check = characteristicType.find((newChar) => {
+                return char.title === newChar.title;
+            });
+            if (!check) {
+                characteristicType.push({
+                    title: char.title,
+                    property: [char.property],
+                });
+            }
+        });
+        await this.ProductTypeModel.updateOne({ _id: dto.typeId }, {
+            characteristic: characteristicType,
+        });
         const newProduct = await this.ProductModel.findByIdAndUpdate(id, dto, {
             new: true,
         }).exec();

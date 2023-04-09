@@ -2,16 +2,15 @@ import styles from './Characteristics.module.css';
 import React, { FC, useEffect, useState } from 'react';
 import cn from 'classnames';
 import { CharacteristicsProps } from './Characteristics.props';
-import { useRouter } from 'next/router';
+import { sortingPropertis } from '../utility'; // сортирова значений в массиве характеристик
 
 const Characteristics: FC<CharacteristicsProps> = ({
   characteristics, // массив характеристик из типа товара
   checkBox, // состояние,массив характеристк
   setCheckBox, //изменение состояния
 }): JSX.Element => {
-  const router = useRouter();
-  // console.log('router:', router);
   console.log('characteristics:', characteristics);
+  console.log('checkbox:', checkBox);
   //костылёк для поддержания  заголовков характеристик открытыми при перезагрузке
   //если есть выбраное свойство фильтра этого заголовка
   useEffect(() => {
@@ -63,7 +62,7 @@ const Characteristics: FC<CharacteristicsProps> = ({
                 >
                   {char.title}
                 </h2>
-                {char.property.map((property) => {
+                {sortingPropertis(char.property).map((property) => {
                   return (
                     <label
                       key={property}
@@ -73,8 +72,8 @@ const Characteristics: FC<CharacteristicsProps> = ({
                     >
                       <input
                         type="checkbox"
-                        name={property}
-                        value={property}
+                        name={String(property)}
+                        value={String(property)}
                         onChange={(e) => checkboxHandler(e, char.title)}
                         checked={
                           !!checkBox.find((e) => e.property === property)

@@ -9,7 +9,7 @@ export interface IType {
   _id: string;
   name: string;
   brand: IBrand[];
-  characteristic: ICharacteristics[] | [];
+  characteristic: ICharacteristics[];
   createdAt: string;
   updatedAt: string;
   __v: number;

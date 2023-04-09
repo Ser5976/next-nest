@@ -9,6 +9,6 @@ import {
 export interface CharacteristicsProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   characteristics: ICharacteristics[];
-  checkBox: any[];
+  checkBox: { title: string; property: string }[];
   setCheckBox: Dispatch<SetStateAction<{ title: string; property: string }[]>>;
 }

@@ -16,7 +16,9 @@ const Filter: FC<FilterProps> = ({
   // стейты фильтра
   const [price, setPrice] = useState([0, 10000]); //состояние для выбранного диапазона цен
   const [checkBoxB, setCheckBoxB] = useState<string[]>([]); // состояние для выбранных брэндов
-  const [checkBoxP, setCheckBoxP] = useState<any[]>([]); // состояние для выбранных брэндов
+  const [checkBoxP, setCheckBoxP] = useState<
+    { title: string; property: string }[]
+  >([]); // состояние для выбранных характеристик
 
   //console.log('price:', price);
 

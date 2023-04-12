@@ -31,7 +31,6 @@ const Brand: FC<BrandProps> = ({
               <label>
                 <input
                   type="checkbox"
-                  name={brand.name}
                   value={brand._id}
                   checked={checkBox ? checkBox.includes(brand._id) : false}
                   onChange={checkboxHandler}

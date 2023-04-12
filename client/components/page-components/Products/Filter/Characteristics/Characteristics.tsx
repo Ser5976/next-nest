@@ -35,11 +35,14 @@ const Characteristics: FC<CharacteristicsProps> = ({
   // метод splice удаляет из массива значение(по индексу)
   // indexOf находит индекс заданного значения,
 
-  const checkboxHandler = (e: any, title: string) => {
+  const checkboxHandler = (e: any) => {
     let propertyList = [...checkBox];
 
     if (e.target.checked) {
-      propertyList = [...checkBox, { title, property: e.target.value }];
+      propertyList = [
+        ...checkBox,
+        { title: e.target.name, property: e.target.value },
+      ];
     } else {
       propertyList = checkBox.filter((item) => {
         return item.property !== e.target.value;
@@ -72,9 +75,9 @@ const Characteristics: FC<CharacteristicsProps> = ({
                     >
                       <input
                         type="checkbox"
-                        name={String(property)}
+                        name={char.title}
                         value={String(property)}
-                        onChange={(e) => checkboxHandler(e, char.title)}
+                        onChange={checkboxHandler}
                         checked={
                           !!checkBox.find((e) => e.property === property)
                         }

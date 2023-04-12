@@ -3,8 +3,6 @@
 //все данные записываются в строку как query параметры(?свойство=значение&)
 // а потом мы берём эти данные productsUrl.search и вставляем в адресную строку
 
-import { number } from 'yup';
-
 export const createQueryParameters = (
   dataPrice: number[],
   dataCheckBoxB: string[],
@@ -35,19 +33,10 @@ export const createQueryParameters = (
 
 //костыль для сортировки по возрастанию числовых значений в свойствах характеристик
 export const sortingPropertis = (property: string[]) => {
-  let result: string[] | number[] = [...property];
-  // переопределяем все значения в number
-  const arrayNumber = property.map((item) => Number(item));
-
-  //проверка значений массива на NaN(если есть хоть один NaN возвращает true)
-  const check = arrayNumber.some((item) => {
-    if (isNaN(item)) {
-      return true;
-    }
+  const result = property.sort((a, b) => {
+    const numA = parseFloat(a);
+    const numB = parseFloat(b);
+    return numA - numB;
   });
-  // сортировка массия ,если в массиве все числа
-  if (!check) {
-    result = arrayNumber.sort((a, b) => a - b);
-  }
   return result;
 };

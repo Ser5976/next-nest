@@ -25,7 +25,7 @@ const ReviewForm: FC<ReviewFormProps> = ({
 }): JSX.Element => {
   const {
     userReducer: { userProfile },
-  } = useData(); // получаем данные по юзеру и немножку деструтуризируем
+  } = useData(); // получаем данные по юзеру и немножко деструтуризируем
   // console.log('Name',userProfile?.personalData.name)
   const {
     handleSubmit,
@@ -67,7 +67,7 @@ const ReviewForm: FC<ReviewFormProps> = ({
           <div>Имя:</div>
           <Input
             type="text"
-            defaultValue={userProfile?.personalData.name}
+            defaultValue={userProfile?.personalData.name?userProfile?.personalData.name:userProfile?.email}
             className={styles.input}
             scale="small"
             {...register('name', {

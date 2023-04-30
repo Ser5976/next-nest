@@ -32,9 +32,13 @@ const FormPhone: FC<FormPhoneProps> = ({ setShow }): JSX.Element => {
       toast.success('Телефон изменён');
     },
     onError: (error: any) => {
-      error.response.status === 401 || error.response.status === 400 //условие, чтобы мы показали наше сосбщение написанное в бэке
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        error.response.status === 401 || error.response.status === 400 //условие, чтобы мы показали наше сосбщение написанное в бэке
         ? toast.error(errorCatch(error)) //errorCatch-функция ,которая обрабатывает сообщение ошибки(ошибка может быть в массиве или строке)
         : toast.error('Что-то пошло не так,попробуйте ещё раз!'); // а это для сообщений, которые мы не обработали
+      }
     },
   });
 

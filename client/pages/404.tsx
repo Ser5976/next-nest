@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import React from 'react';
 import { HeaderService } from '../header-service/header.service';
 import { Layout } from '../Layout/Layout';
@@ -10,7 +10,7 @@ import { wrapper } from '../store/store';
 import { getProductType } from '../store/type-product/catecoryProductSlice';
 import { IType } from '../store/type-product/interface.typeProduct';
 
-const ErrorPage = () => {
+const ErrorPage:NextPage<ErrorProps> = () => {
   return (
     <Layout title="Error">
       <h1 className=" text-lg font-bold text-center mt-10">Not Found</h1>

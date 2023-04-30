@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { errorCatch, removeTokensStorage } from '../store/auth/auth.helper';
@@ -40,13 +41,14 @@ customAxios.interceptors.response.use(
       // делает запрос, если нет делаем logout
       try {
         await AuthService.getNewTokens();
-        console.log('рефреш токен валидный,послылаем новые запрос');
+        console.log('refresh токен валидный,послылаем новые запрос');
         return customAxios.request(originalRequest);
       } catch (error) {
         console.log(
           'ошиииибка,рефреш токен невалидный, выходими из авторизации'
         );
-        removeTokensStorage();
+      window.location.reload()//если refresh невалидный делаем перезагрузку страницы,ну а дальше работает AuthProvider
+      
       }
     }
     throw error;

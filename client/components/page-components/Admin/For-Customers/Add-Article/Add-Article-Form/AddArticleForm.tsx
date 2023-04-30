@@ -25,7 +25,12 @@ const AddArticleForm: FC<AddArticleFormProps> = ({
       setShow(false); //закрываем модальное окно
     },
     onError: (error: any) => {
-      toast.error(error.response.data.message);
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        setShow(false)
+        toast.error('Что-то пошло не так');
+      }
     },
   });
   //редактируем статью
@@ -37,7 +42,12 @@ const AddArticleForm: FC<AddArticleFormProps> = ({
       setShow(false); //закрываем модальное окно
     },
     onError: (error: any) => {
-      toast.error(error.response.data.message);
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        setShow(false)
+        toast.error('Что-то пошло не так');
+      }
     },
   });
 

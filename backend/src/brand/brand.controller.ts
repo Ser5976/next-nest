@@ -29,7 +29,7 @@ export class BrandController {
   @Get()
   //Закоментировал @Auth, потому что один из запросов делаю из getStaticProps,а это серверная часть,
   // авторизация у меня только на клиенте, а новые запросы писать пока лень
-  // @Auth('admin')
+  // @Auth('admin'),если админ отработает AuthProvider
   async getBrands(@Query() dto?: SearchDto) {
     return this.BrandService.getBrands(dto);
   }

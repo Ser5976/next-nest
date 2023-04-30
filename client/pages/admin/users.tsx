@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 import React from 'react';
-//import Users from '../../components/page-components/Admin/Users/Users';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
 import { NextPageAuth } from '../../providers/auth/auth.types';

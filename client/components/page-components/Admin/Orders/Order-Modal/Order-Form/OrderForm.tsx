@@ -24,7 +24,12 @@ const OrderForm: FC<OrderFormProps> = ({
       toast.success(' Заказ отмечен как выполненный');
     },
     onError: (error: any) => {
-      toast.error('Что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
+    
     },
   });
   const orderCompleted = () => {

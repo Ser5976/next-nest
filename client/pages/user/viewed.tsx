@@ -1,8 +1,9 @@
-import { GetStaticProps } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import React from 'react';
 import ViewedPage from '../../components/page-components/User/Viewed/ViewedPage';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
+import { NextPageAuth } from '../../providers/auth/auth.types';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
 import { ICategoryProduct } from '../../store/category-product/interface.categoryProduct';
 import { getForCustomers } from '../../store/customers/customersSlice';
@@ -11,7 +12,7 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
-const Viewed = () => {
+const Viewed:NextPageAuth<ViewedProps> = () => {
   return (
     <Layout title="User-page">
       <ViewedPage />
@@ -21,7 +22,7 @@ const Viewed = () => {
 Viewed.isOnlyUser = true; //только для авторизованных
 
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<ErrorProps> =
+export const getStaticProps: GetStaticProps<ViewedProps> =
   wrapper.getStaticProps((store) => async () => {
     //---------- для Header-----------------------------------//
     //получение forCustomers (для клиентов)
@@ -42,7 +43,7 @@ export const getStaticProps: GetStaticProps<ErrorProps> =
     };
   });
 
-interface ErrorProps {
+interface ViewedProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];

@@ -58,6 +58,7 @@ export class AuthService {
     if (!refreshToken)
       throw new UnauthorizedException('войдите в систему пожалуйста');
     const result = await this.jwtService.verifyAsync(refreshToken);
+    //console.log('result:', result);
     if (!result) throw new UnauthorizedException('токен невалидный');
     const user = await this.UserModel.findById(result._id);
 

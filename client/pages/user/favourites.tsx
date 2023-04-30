@@ -3,6 +3,7 @@ import React from 'react';
 import FavouritesPage from '../../components/page-components/User/Favourites/FavouritesPage';
 import { HeaderService } from '../../header-service/header.service';
 import { Layout } from '../../Layout/Layout';
+import { NextPageAuth } from '../../providers/auth/auth.types';
 import { getCategoryProduct } from '../../store/category-product/catecoryProductSlice';
 import { ICategoryProduct } from '../../store/category-product/interface.categoryProduct';
 import { getForCustomers } from '../../store/customers/customersSlice';
@@ -11,7 +12,7 @@ import { wrapper } from '../../store/store';
 import { getProductType } from '../../store/type-product/catecoryProductSlice';
 import { IType } from '../../store/type-product/interface.typeProduct';
 
-const Favourites = () => {
+const Favourites:NextPageAuth<FavouritesProps> = () => {
   return (
     <Layout title="User-page">
       <FavouritesPage />
@@ -21,7 +22,7 @@ const Favourites = () => {
 Favourites.isOnlyUser = true; //только для авторизованных
 
 // подключаем редакс к getStaticProps при помощи wrapper
-export const getStaticProps: GetStaticProps<ErrorProps> =
+export const getStaticProps: GetStaticProps<FavouritesProps> =
   wrapper.getStaticProps((store) => async () => {
     //---------- для Header-----------------------------------//
     //получение forCustomers (для клиентов)
@@ -42,7 +43,7 @@ export const getStaticProps: GetStaticProps<ErrorProps> =
     };
   });
 
-interface ErrorProps {
+interface FavouritesProps {
   forCustomers: IArticle[];
   categoryProduct: ICategoryProduct[];
   productType: IType[];

@@ -22,7 +22,12 @@ const AddTypeForm: FC<AddTypeFormProps> = ({
       setShow(false); // закрытие модального окна
     },
     onError: (error: any) => {
-      toast.error(error.response.data.message);
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        setShow(false)
+        toast.error('Что-то пошло не так');
+      }
     },
   });
 

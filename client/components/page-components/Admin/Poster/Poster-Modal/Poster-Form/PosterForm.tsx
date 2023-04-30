@@ -38,7 +38,11 @@ const PosterForm: FC<PosterFormProps> = ({
       setValue('files', undefined); // чтобы передать undefined  в vulue для инпута
     },
     onError: (error: any) => {
-      toast.error('постер не изменён,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
   //удаление url изображения из папки uploads
@@ -48,7 +52,9 @@ const PosterForm: FC<PosterFormProps> = ({
       toast.success('файл удалён из папки uploads ');
     },
     onError: (error: any) => {
-      toast.error('файл не удалён,что-то пошло не так');
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
 

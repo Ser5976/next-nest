@@ -16,6 +16,7 @@ export const saveToStorage = (data: IAuthResponse) => {
 export const removeTokensStorage = () => {
   Cookies.remove('accessToken');
   Cookies.remove('refreshToken');
+  localStorage.removeItem('user'); // удаление юзера из localStorage
 };
 // обработка  сообщений ошибки
 export const errorCatch = (error: any): string =>

@@ -22,7 +22,11 @@ const SliderItem: FC<SliderItemProps> = ({
       refetch();
     },
     onError: (error: any) => {
-      toast.error('Изображение  не удалёно,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
   // удаление изображения (url из папки uploads)
@@ -31,7 +35,11 @@ const SliderItem: FC<SliderItemProps> = ({
       toast.success('Изображение удалено из папки uploads ');
     },
     onError: (error: any) => {
-      toast.error('Изображение  не удалёно,что-то пошло не так');
+   //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Изображение не удалено из папки uploads');
+      }
     },
   });
   // запуск удаление изабражения из базы и папки uploads

@@ -28,7 +28,7 @@ export const AuthService = {
   //выход из системы
   logout() {
     removeTokensStorage(); //удаление токенов из куки
-    localStorage.removeItem('user'); // удаление юзера из localStorage
+    
   },
   // проверка токена,получение нового токина, или выход из авторизации, если токен не валиден
   async getNewTokens() {

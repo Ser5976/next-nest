@@ -4,7 +4,6 @@ import { ICategoryProduct } from './../../../store/category-product/interface.ca
 import { API } from '../../../constants/url';
 import customAxios from '../../../custom-axios/axiox-interceptors';
 import { IType } from '../../../store/type-product/interface.typeProduct';
-import axios from 'axios';
 import { IArticle } from '../../../store/customers/interface.customers';
 import { ICart } from '../Cart/cart.service';
 import {
@@ -14,7 +13,7 @@ import {
 } from '../../../store/user/interface.user';
 
 // жуть, получился здоровый файл
-// все сервисы  запросов для админки и некоторые интервейсы,корява нооо как есть
+// все сервисы  запросов для админки и некоторые интерфейсы,корява нооо как есть
 
 // некоторые интерфейсы
 //для пользователей
@@ -293,7 +292,7 @@ export const AdminService = {
   //получение(и поиск) типа товара
   async getProductType(name: string) {
     console.log(' получение типа для админа');
-    const { data: productsTypes } = await axios.get<IType[]>(API.productType, {
+    const { data: productsTypes } = await customAxios.get<IType[]>(API.productType, {
       params: { name },
     });
     return productsTypes;
@@ -340,7 +339,7 @@ export const AdminService = {
   //получение статей
   async getArticles() {
     console.log(' получение статей');
-    const { data: articles } = await axios.get<IArticle[]>(API.customers);
+    const { data: articles } = await customAxios.get<IArticle[]>(API.customers);
     return articles;
   },
   //редактирование статьи
@@ -367,7 +366,7 @@ export const AdminService = {
   //получение(или поиск) новостей
   async getNews(name: string) {
     console.log(' получение новостей');
-    const { data: news } = await axios.get<INews[]>(API.news, {
+    const { data: news } = await customAxios.get<INews[]>(API.news, {
       params: { name },
     });
     return news;
@@ -396,7 +395,7 @@ export const AdminService = {
   //получение(или поиск) товара
   async getProducts(name: string) {
     console.log(' получение товаров');
-    const { data: dataProducts } = await axios.get<{
+    const { data: dataProducts } = await customAxios.get<{
       products: IProduct[];
       quantity: number;
     }>(API.product, {

@@ -37,7 +37,12 @@ const ProductForm: FC<ProductFormProps> = ({
       setShow(false);
     },
     onError: (error: any) => {
-      toast.error('товар не создан,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        setShow(false)
+        toast.error('Что-то пошло не так');
+      }
     },
   });
   // редактирование товара
@@ -50,7 +55,11 @@ const ProductForm: FC<ProductFormProps> = ({
       setSelectedProduct(null);
     },
     onError: (error: any) => {
-      toast.error('товар не создан,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
   // Так как форма получается большой, подключаем useFormContext(классная штука),

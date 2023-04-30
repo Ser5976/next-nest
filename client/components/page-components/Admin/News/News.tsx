@@ -45,7 +45,7 @@ const News: FC<NewsProps> = ({}): JSX.Element => {
   );
   // из-за долбанного window.confirm херова работает queryClient.invalidateQueries(не всегда срабатывает)
   // поэтому- этот костыль(и+1 к рендеренгу)
-  console.log('рендеринг');
+ // console.log('рендеринг');
   useEffect(() => {
     refetch();
   }, [searchTerm]);

@@ -37,7 +37,11 @@ const SliderForm: FC<SliderFormProps> = ({
       toast.success('Изображение добавлено ');
     },
     onError: (error: any) => {
-      toast.error('Изображение не добавлено,что-то пошло не так');
+   //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
   const {

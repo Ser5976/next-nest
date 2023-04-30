@@ -24,7 +24,12 @@ const ArticleItem: FC<ArticleItemProps> = ({
       toast.success('статья удалена');
     },
     onError: (error: any) => {
-      toast.error('статья не удалён,что-то пошло не так');
+//здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
+      
     },
   });
   // открываем модальное окно для редактирование новости,передаём в стейт выбранную новость для редактирования

@@ -3,7 +3,6 @@ import { Auth } from '../components/page-components/Auth/Auth';
 import { Layout } from '../Layout/Layout';
 import { wrapper } from '../store/store';
 import { IArticle } from '../store/customers/interface.customers';
-import { API } from '../constants/url';
 import { getForCustomers } from '../store/customers/customersSlice';
 import { ICategoryProduct } from '../store/category-product/interface.categoryProduct';
 import { getCategoryProduct } from '../store/category-product/catecoryProductSlice';

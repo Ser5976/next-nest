@@ -31,7 +31,11 @@ const ProductTypeItem: FC<ProductTypeItemProps> = ({
       toast.success('Тип продукта удалён');
     },
     onError: (error: any) => {
-      toast.error(error.response?.data.message);
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
 

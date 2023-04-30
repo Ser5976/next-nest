@@ -59,7 +59,7 @@ const ProductsList: FC<ProductsListProps> = ({
           </Link>
           <h1 className="text-2xl text-gray-600 font-semibold mt-5 mb-2">
             {' '}
-            {type.name}
+            {type?.name}
           </h1>
           {poster && (
             <div className={styles.poster}>

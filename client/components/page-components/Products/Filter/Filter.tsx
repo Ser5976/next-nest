@@ -142,7 +142,7 @@ const Filter: FC<FilterProps> = ({
         setCheckBox={setCheckBoxB}
       />
       <Characteristics
-        characteristics={typeName.characteristic}
+        characteristics={typeName?.characteristic}
         checkBox={checkBoxP}
         setCheckBox={setCheckBoxP}
       />

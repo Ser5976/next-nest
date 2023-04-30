@@ -28,7 +28,11 @@ const ReviewsItem: FC<ReviewsItemProps> = ({
       toast.success('отзыв удалён');
     },
     onError: (error: any) => {
-      toast.error('отзыв не удалён,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
   const removeReview = () => {

@@ -24,7 +24,11 @@ const ProductItem: FC<ProductItemProps> = ({
       toast.success('Товар удалена');
     },
     onError: (error: any) => {
-      toast.error('Товар не удалён,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('товар не удалён что-то пошло не так');
+      }
     },
   });
 
@@ -34,7 +38,9 @@ const ProductItem: FC<ProductItemProps> = ({
       toast.success('Изображение удалено из папки uploads ');
     },
     onError: (error: any) => {
-      toast.error('Изображение  не удалёно,что-то пошло не так');
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('изображение не удалено что-то пошло не так');
+      }
     },
   });
   // запуск удаление изабражения из базы и папки uploads

@@ -27,7 +27,11 @@ const OrderItem: FC<OrderItemProps> = ({
       toast.success('Заказ удалён');
     },
     onError: (error: any) => {
-      toast.error('Заказ не удалён,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так');
+      }
     },
   });
 

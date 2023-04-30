@@ -33,7 +33,11 @@ const FormPersonal: FC<FormPersonalProps> = ({
         queryClient.invalidateQueries('user-profile');
       },
       onError: (error: any) => {
-        toast.error('Что-то пошло не так');
+        //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так,попробуйте ещё раз!'); 
+      }
       },
     }
   );

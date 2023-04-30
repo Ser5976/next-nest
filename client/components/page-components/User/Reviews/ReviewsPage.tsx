@@ -37,7 +37,11 @@ const ReviewsPage: FC<ReviewsPageProps> = ({}): JSX.Element => {
       toast.success('Отзыв удалён');
     },
     onError: (error: any) => {
-      toast.error('Отзыв не удалён,что-то пошло не так');
+      //здесь показываем ошибку только когда это не 'Unauthorized',
+      //при 'Unauthorized' отработает AuthProvider
+      if(error.response.data.message !== 'Unauthorized'){
+        toast.error('Что-то пошло не так,попробуйте ещё раз!');
+      }
     },
   });
   return (

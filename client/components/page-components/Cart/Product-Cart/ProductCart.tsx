@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './ProductCart.module.css';
 import { ProductCartProps } from './ProductCart.props';
 import Link from 'next/link';
@@ -16,6 +16,7 @@ const ProductCart: FC<ProductCartProps> = ({
   //для изменение иконки заказа в ProductCart
   const [orderActive, setOrderActive] = useState('');
   //заказать товар
+  
   const orderProduct = () => {
     setOrderActive(productCart._id); //изменяем иконку заказа
     addOrder(productCart); //добавляем товар из корзины в заказ
@@ -25,7 +26,7 @@ const ProductCart: FC<ProductCartProps> = ({
     setOrderActive(''); //изменяем иконку заказа
     deleteOrder(productCart.productId); //удаляем товар из заказа
   };
-  //создаём объект товара для добавления в заказ
+  //создаём объект товара для добавления 
   const productData: IAddCart = {
     name: productCart.name,
     price: productCart.price,
@@ -42,7 +43,9 @@ const ProductCart: FC<ProductCartProps> = ({
     {
       onSuccess: () => {
         // при успешном изменении делает повторный запрос
-        queryClient.invalidateQueries('cart');
+        queryClient.invalidateQueries('cart')
+       
+        
       },
       onError: (error: any) => {
         toast.error('Что-то пошло не так');
@@ -73,6 +76,19 @@ const ProductCart: FC<ProductCartProps> = ({
       },
     }
   );
+  //управление уменьшением количества  товара
+  const handlerMinus=  ()=>{
+    reduceQuantities(productCart._id)
+    // если в это время стейте зазаза есть данные то удаляем,что бы не было несоответствия
+    if(orderActive===productCart._id) cancelOrder()
+  }
+  //управление увеличением количества  товара
+  const handlerPlus=  ()=>{
+    addProduct(productCart)
+    // если в это время стейте зазаза есть данные то удаляем,что бы не было несоответствия
+    if(orderActive===productCart._id) cancelOrder()
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.product}>
@@ -94,12 +110,12 @@ const ProductCart: FC<ProductCartProps> = ({
       <div className={styles.wrapperQuantiti}>
         <div
           className={styles.minus}
-          onClick={() => reduceQuantities(productCart._id)}
+          onClick={handlerMinus}
         >
           -
         </div>
         <div className={styles.quantity}>{productCart.quantity}</div>
-        <div className={styles.plus} onClick={() => addProduct(productData)}>
+        <div className={styles.plus} onClick={handlerPlus}>
           +
         </div>
       </div>

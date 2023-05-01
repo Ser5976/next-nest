@@ -25,11 +25,12 @@ const Cart: FC<CartProps> = ({}): JSX.Element => {
 
   //добавляем выбранный товар из корзины в заказ
   const addOrder = (productCart: ICart) => {
-    setOrder([...order, productCart]); //добавляем товар из корзины в  стейт заказа
+    //добавляем товар из корзины в  стейт заказа преворительно удалив однотипный
+    setOrder([...order,productCart]); 
   };
   //удаляем выбранный товар  из заказа
   const deleteOrder = (productCartId: string) => {
-    const newOrder = order.filter((item) => item.productId !== productCartId);
+    const newOrder = order.filter(el => el.productId !== productCartId);
     setOrder(newOrder);
   };
   // console.log(order);

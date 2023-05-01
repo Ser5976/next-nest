@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC,useState } from 'react';
 import styles from './ProductCart.module.css';
 import { ProductCartProps } from './ProductCart.props';
 import Link from 'next/link';
@@ -16,7 +16,6 @@ const ProductCart: FC<ProductCartProps> = ({
   //для изменение иконки заказа в ProductCart
   const [orderActive, setOrderActive] = useState('');
   //заказать товар
-  
   const orderProduct = () => {
     setOrderActive(productCart._id); //изменяем иконку заказа
     addOrder(productCart); //добавляем товар из корзины в заказ
@@ -26,15 +25,8 @@ const ProductCart: FC<ProductCartProps> = ({
     setOrderActive(''); //изменяем иконку заказа
     deleteOrder(productCart.productId); //удаляем товар из заказа
   };
-  //создаём объект товара для добавления 
-  const productData: IAddCart = {
-    name: productCart.name,
-    price: productCart.price,
-    picture: productCart.picture,
-    oldPrice: productCart.oldPrice,
-    productId: productCart.productId,
-  };
-  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос при успешном delete запросе
+  
+  //хук useQueryClient, из react-query,используется чтобы сделать повторый запрос 
   const queryClient = useQueryClient();
   // хук useMutation из react-query,выполняет post,put,delete запросы
   // уменьшаем количество однотипных товаров
@@ -43,9 +35,7 @@ const ProductCart: FC<ProductCartProps> = ({
     {
       onSuccess: () => {
         // при успешном изменении делает повторный запрос
-        queryClient.invalidateQueries('cart')
-       
-        
+        queryClient.invalidateQueries('cart')  
       },
       onError: (error: any) => {
         toast.error('Что-то пошло не так');
@@ -79,13 +69,19 @@ const ProductCart: FC<ProductCartProps> = ({
   //управление уменьшением количества  товара
   const handlerMinus=  ()=>{
     reduceQuantities(productCart._id)
-    // если в это время стейте зазаза есть данные то удаляем,что бы не было несоответствия
+    // если в  стейте заказа есть данные то удаляем,что бы не было несоответствия
     if(orderActive===productCart._id) cancelOrder()
   }
   //управление увеличением количества  товара
   const handlerPlus=  ()=>{
     addProduct(productCart)
-    // если в это время стейте зазаза есть данные то удаляем,что бы не было несоответствия
+    // если в стейте заказа есть данные то удаляем,что бы не было несоответствия
+    if(orderActive===productCart._id) cancelOrder()
+  }
+   //управление удалением  товара
+   const handlerDelete=  ()=>{
+    deleteProduct(productCart._id)
+    // если в  стейте заказа есть данные то удаляем,что бы не было несоответствия
     if(orderActive===productCart._id) cancelOrder()
   }
 
@@ -137,7 +133,7 @@ const ProductCart: FC<ProductCartProps> = ({
       </div>
       <div
         className={styles.delete}
-        onClick={() => deleteProduct(productCart._id)}
+        onClick={handlerDelete}
       >
         Удалить
       </div>

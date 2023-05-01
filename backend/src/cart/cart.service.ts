@@ -14,6 +14,7 @@ export class CartService {
   ) {}
   //добавляем товар в корзину
   async addCart(userId: string, dto: CartDto) {
+    console.log('CartDto:',dto)
     const { productId } = dto;
     // проверяем если такой товар есть,увеличиваем quantity(количества) на +1 и изменяем стоимость,если нет добавляем в модель
     const product = await this.CartModel.findOne({ userId, productId }).exec();

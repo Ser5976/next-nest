@@ -24,6 +24,7 @@ let CartService = class CartService {
         this.UserModel = UserModel;
     }
     async addCart(userId, dto) {
+        console.log('CartDto:', dto);
         const { productId } = dto;
         const product = await this.CartModel.findOne({ userId, productId }).exec();
         if (product) {

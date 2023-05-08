@@ -5,7 +5,6 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 const initialState: ITypeState = {
   productType: [],
-  isLoading: false,
 };
 
 export const productTypeSlice = createSlice({

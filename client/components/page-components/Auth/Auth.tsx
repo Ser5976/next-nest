@@ -8,7 +8,6 @@ import { Input } from '../../ui/Input/Input';
 import { Button } from '../../ui/Button/Button';
 import { useAuthRedirect } from './useAuthRedirect';
 import { useActions } from '../../../store/useActions'; // кастомный хук для получения экшенов(диспач уже в нём и типизация)
-import { useRouter } from 'next/router';
 
 export const Auth = ({}: AuthProps): JSX.Element => {
   useAuthRedirect(); // вернёмся на ту страницу с которой нас редиректнули
@@ -17,8 +16,6 @@ export const Auth = ({}: AuthProps): JSX.Element => {
 
   const { login, registration } = useActions();
 
-  const router = useRouter();
-  //console.log(router);
   // выбор регистрация или логин
   const handleType = () => {
     if (type === 'login') {
@@ -71,7 +68,7 @@ export const Auth = ({}: AuthProps): JSX.Element => {
               pattern: {
                 value:
                   //регулярное выражения - валидация email
-                  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  /\S+@\S+\.\S+/,
                 message: 'Неправильный формат электронной почты',
               },
             })}

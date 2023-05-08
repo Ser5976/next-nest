@@ -9,5 +9,4 @@ export interface IArticle {
 }
 export interface IInitialState {
   forCustomers: IArticle[];
-  isLoading: boolean;
 }

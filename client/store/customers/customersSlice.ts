@@ -4,7 +4,6 @@ import { IInitialState, IArticle } from './interface.customers';
 
 const initialState: IInitialState = {
   forCustomers: [],
-  isLoading: false,
 };
 
 export const forCustomersSlice = createSlice({

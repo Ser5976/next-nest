@@ -17,5 +17,4 @@ export interface IType {
 
 export interface ITypeState {
   productType: IType[];
-  isLoading: boolean;
 }

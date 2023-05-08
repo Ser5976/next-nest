@@ -26,5 +26,4 @@ export interface ICategoryProduct {
 
 export interface ICategoryProductState {
   categoryProduct: ICategoryProduct[];
-  isLoading: boolean;
 }

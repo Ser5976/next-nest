@@ -1,5 +1,6 @@
 import { CategoryProps } from './Category.props';
 import styles from './Category.module.css';
+import Link from 'next/link';
 
 export const Category = ({
   category, // выбранная категория для каталога
@@ -11,9 +12,9 @@ export const Category = ({
       <ul className={styles.productType}>
         {category?.productType.map((type) => {
           return (
-            <a href={`/products/${type._id}`} key={type._id}>
-              {type.name}
-            </a>
+            <Link href={`/products/${type._id}`} key={type._id}>
+              <a>{type.name}</a>
+            </Link>
           );
         })}
       </ul>

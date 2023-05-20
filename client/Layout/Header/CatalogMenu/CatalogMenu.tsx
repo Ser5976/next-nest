@@ -6,9 +6,11 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { useData } from '../../../store/useData';
 import { Category } from './Category/Category';
 import { ICategoryProduct } from '../../../store/category-product/interface.categoryProduct';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export const CatalogMenu = ({}: CatalogMenuProps): JSX.Element => {
+  const router = useRouter();
   // стейт для открытие каталога
   const [isShow, setIsShow] = useState(true);
 
@@ -30,6 +32,9 @@ export const CatalogMenu = ({}: CatalogMenuProps): JSX.Element => {
 
     setCategory(selectedCategory);
   };
+  useEffect(() => {
+    setIsShow(true);
+  }, [router.asPath]);
 
   return (
     <>

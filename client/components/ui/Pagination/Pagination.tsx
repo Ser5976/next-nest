@@ -17,7 +17,7 @@ const Pagination: FC<PaginationProps> = ({
   const productsUrl = new URL('products', baseUrl);
   // console.log(' paginate productsUrl:', productsUrl);
   // все данные ,которые нам нужны для запроса, содержаться в объекте query(useRouter)
-  //но у него (если у него будет значение масссив ) не мапит массив из-за типизации
+  //но у него (если у него будет значение массив ) не мапит массив из-за типизации
   // поэтому создаём новый объект с его помощью
   let objQuery: any = {};
   for (const key in query) {

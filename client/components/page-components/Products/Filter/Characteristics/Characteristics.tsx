@@ -32,9 +32,6 @@ const Characteristics: FC<CharacteristicsProps> = ({
   };
 
   // изменяем массив характеристик в стейте взависимости от активности чекбокса
-  // метод splice удаляет из массива значение(по индексу)
-  // indexOf находит индекс заданного значения,
-
   const checkboxHandler = (e: any) => {
     let propertyList = [...checkBox];
 

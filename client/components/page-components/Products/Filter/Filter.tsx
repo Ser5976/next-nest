@@ -106,6 +106,8 @@ const Filter: FC<FilterProps> = ({
 
   // отправка параметров в адресную строку для запроса,работа фильтра
   const filterProducts = () => {
+    const encoded = encodeURIComponent(JSON.stringify(checkBoxB));
+    console.log('encoded', encoded);
     //находим базовый url
     const baseUrl = process.env.NEXT_PUBLIC_DOMAIN;
     // создаём объект, в котором будем формировать search строку, при помощи конструктора(new URL())

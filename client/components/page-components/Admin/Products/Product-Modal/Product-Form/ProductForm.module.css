@@ -7,6 +7,22 @@
 .block1 {
   @apply w-1/2 overflow-y-auto h-[500px] px-2;
 }
+.block1::-webkit-scrollbar {
+  width: 5px;
+}
+
+.block1::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.block1::-webkit-scrollbar-thumb {
+  @apply bg-slate-400 rounded-sm;
+}
+
+.block1::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500;
+}
+
 .block2 {
   @apply w-1/2;
 }

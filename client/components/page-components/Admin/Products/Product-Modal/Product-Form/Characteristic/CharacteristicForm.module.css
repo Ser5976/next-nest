@@ -1,6 +1,7 @@
 .headerWrapper {
   @apply flex justify-between p-2;
 }
+
 .header {
   @apply text-sm  font-semibold text-gray-600;
 }
@@ -9,6 +10,21 @@
 }
 .container {
   @apply overflow-y-auto px-2 h-[460px];
+}
+.container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.container::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.container::-webkit-scrollbar-thumb {
+  @apply bg-slate-400 rounded-sm;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500;
 }
 .wrapper {
   @apply flex gap-1 relative;

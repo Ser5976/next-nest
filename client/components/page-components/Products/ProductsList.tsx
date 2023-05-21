@@ -21,9 +21,6 @@ const ProductsList: FC<ProductsListProps> = ({
   const { query } = router;
   const [limit, setLimit] = useState<number>(3); //стейт для лимита
 
-  //номер активной сраницы.Через useState не делал, потому что router.query при первом рендеринге даёт undef.
-  const page = Number(query.page ? query.page : '1');
-
   console.log('query:', query);
 
   //это для сортировки(по рейтингу,по цене)замутил примитивный кастомный хук
@@ -48,6 +45,16 @@ const ProductsList: FC<ProductsListProps> = ({
 
   console.log('response:', products);
 
+  //номер активной сраницы, для пагинации.
+  //Через useState не делал, потому что router.query при первом рендеринге даёт undef.
+  // Делаем прверку ,если в адресную строку введут номер страницы больше количесствостраниц
+  const page = Number(
+    query.page
+      ? Number(query.page) <= Number(products?.pageQty)
+        ? query.page
+        : '1'
+      : '1'
+  );
   return (
     <>
       <div className={styles.container}>

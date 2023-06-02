@@ -13,7 +13,7 @@
   display: none;
 }
 .show {
-  @apply absolute  top-[130px] right-[300px] z-30  bg-white shadow-md rounded-md;
+  @apply absolute  top-[130px] right-[300px] z-20  bg-white shadow-md rounded-md;
 }
 .link {
   @apply relative pl-9 block py-1 hover:bg-red-50 hover:text-red-400 text-sm;

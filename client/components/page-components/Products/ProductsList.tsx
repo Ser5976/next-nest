@@ -47,7 +47,7 @@ const ProductsList: FC<ProductsListProps> = ({
 
   //номер активной сраницы, для пагинации.
   //Через useState не делал, потому что router.query при первом рендеринге даёт undef.
-  // Делаем прверку ,если в адресную строку введут номер страницы больше количесствостраниц
+  // Делаем прверку ,если в адресную строку введут номер страницы больше количесство страниц
   const page = Number(
     query.page
       ? Number(query.page) <= Number(products?.pageQty)

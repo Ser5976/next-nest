@@ -27,12 +27,16 @@ let AuthService = class AuthService {
         const candidate = await this.UserModel.findOne({ email: dto.email });
         if (candidate)
             throw new common_1.BadRequestException('Пользователь с таким email уже есть');
+        const admin = await this.UserModel.find({ isAdmin: true });
         const salt = await (0, bcryptjs_1.genSalt)(7);
         const newUser = new this.UserModel({
             email: dto.email,
             password: await (0, bcryptjs_1.hash)(dto.password, salt),
         });
         const user = await newUser.save();
+        if (!admin) {
+            await this.UserModel.updateOne({ _id: user._id }, { isAdmin: true });
+        }
         const tokens = await this.generatePairToken(String(user._id));
         return Object.assign({ user: this.returnUserFields(user) }, tokens);
     }

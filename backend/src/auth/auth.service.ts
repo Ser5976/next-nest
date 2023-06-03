@@ -24,6 +24,8 @@ export class AuthService {
     const candidate = await this.UserModel.findOne({ email: dto.email });
     if (candidate)
       throw new BadRequestException('Пользователь с таким email уже есть');
+    // проверка на существования админа в базе
+    const admin = await this.UserModel.find({ isAdmin: true });
     // хэширование пароля
     const salt = await genSalt(7);
 
@@ -32,6 +34,10 @@ export class AuthService {
       password: await hash(dto.password, salt),
     });
     const user = await newUser.save();
+    //первый юзер в базе автоматически станет админом
+    if (!admin) {
+      await this.UserModel.updateOne({ _id: user._id }, { isAdmin: true });
+    }
 
     // создаём токены
     const tokens = await this.generatePairToken(String(user._id));

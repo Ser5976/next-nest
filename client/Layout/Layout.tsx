@@ -17,6 +17,7 @@ export const Layout: FC<LayoutProps> = ({ children, title, description }) => {
         <main className=" grow ">{children}</main>
         <Footer />
       </div>
+    
     </>
   );
 };

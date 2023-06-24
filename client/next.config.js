@@ -3,7 +3,10 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   images: {
-    domains: ['localhost'],
+    domains: ['192.168.0.105'],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

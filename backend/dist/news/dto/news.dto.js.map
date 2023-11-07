@@ -1,1 +1,1 @@
-{"version":3,"file":"news.dto.js","sourceRoot":"","sources":["../../../src/news/dto/news.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA2C;AAE3C,MAAa,OAAO;CAKnB;AAHC;IADC,IAAA,0BAAQ,GAAE;;qCACE;AAEb;IADC,IAAA,0BAAQ,GAAE;;qCACE;AAJf,0BAKC"}
+{"version":3,"file":"news.dto.js","sourceRoot":"","sources":["../../../src/news/dto/news.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA2C;AAE3C,MAAa,OAAO;CAKnB;AAJC;IAAC,IAAA,0BAAQ,GAAE;;qCACE;AACb;IAAC,IAAA,0BAAQ,GAAE;;qCACE;AAJf,0BAKC"}

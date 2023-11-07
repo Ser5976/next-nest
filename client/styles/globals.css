@@ -51,7 +51,7 @@ input[type='number'] {
   @apply top-[14px] w-[10px] h-[15px];
 }
 body {
-  @apply overflow-y-scroll;
+  @apply overflow-y-scroll min-w-[1500px];
 }
 body::-webkit-scrollbar {
   width: 8px;

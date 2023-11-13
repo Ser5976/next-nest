@@ -27,8 +27,8 @@ const AddArticleForm: FC<AddArticleFormProps> = ({
     onError: (error: any) => {
       //здесь показываем ошибку только когда это не 'Unauthorized',
       //при 'Unauthorized' отработает AuthProvider
-      if(error.response.data.message !== 'Unauthorized'){
-        setShow(false)
+      if (error.response.data.message !== 'Unauthorized') {
+        setShow(false);
         toast.error('Что-то пошло не так');
       }
     },
@@ -44,8 +44,8 @@ const AddArticleForm: FC<AddArticleFormProps> = ({
     onError: (error: any) => {
       //здесь показываем ошибку только когда это не 'Unauthorized',
       //при 'Unauthorized' отработает AuthProvider
-      if(error.response.data.message !== 'Unauthorized'){
-        setShow(false)
+      if (error.response.data.message !== 'Unauthorized') {
+        setShow(false);
         toast.error('Что-то пошло не так');
       }
     },
@@ -61,7 +61,6 @@ const AddArticleForm: FC<AddArticleFormProps> = ({
   });
 
   const onSubmit = (data: IAddArticle) => {
-    // console.log('article:', data);
     // если есть  статья значить редактируем иначе создаём статью
     if (article) {
       editArticle({ id: article._id, data });

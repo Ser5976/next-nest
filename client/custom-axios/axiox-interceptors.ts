@@ -47,8 +47,7 @@ customAxios.interceptors.response.use(
         console.log(
           'ошиииибка,рефреш токен невалидный, выходими из авторизации'
         );
-      window.location.reload()//если refresh невалидный делаем перезагрузку страницы,ну а дальше работает AuthProvider
-      
+        // window.location.reload()//если refresh невалидный делаем перезагрузку страницы,ну а дальше работает AuthProvider
       }
     }
     throw error;
